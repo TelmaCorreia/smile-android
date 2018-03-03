@@ -1,27 +1,126 @@
 apply plugin: 'com.android.application'
 
+// Versioning
+def version = "0.0.1"
+def build = 1
+
 android {
-    compileSdkVersion 26
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
     defaultConfig {
         applicationId "com.thesis.smile"
-        minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode build
+        versionName version
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "int", "VERSION_BUILD", "${build}"
+
     }
+
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
+
+    flavorDimensions "versionCode"
+    productFlavors {
+        prod {
+            manifestPlaceholders = [app_name: "Smile"]
+
+            buildConfigField "String", "BASE_API_URL", '""'
+            buildConfigField "String", "BASE_API_VERSION", '""'
+
+            resValue "string", "facebook_app_id", ""
+        }
+        qa {
+            applicationIdSuffix '.qa'
+            manifestPlaceholders = [app_name: "Smile qa"]
+
+            buildConfigField "String", "BASE_API_URL", '""'
+            buildConfigField "String", "BASE_API_VERSION", '""'
+
+            resValue "string", "facebook_app_id", ""
+        }
+
+        dev {
+            applicationIdSuffix '.dev'
+            manifestPlaceholders = [app_name: "Smile dev"]
+
+            buildConfigField "String", "BASE_API_URL", '""'
+            buildConfigField "String", "BASE_API_VERSION", '""'
+
+            resValue "string", "facebook_app_id", ""
+        }
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+
+    // Android core
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta4'
+    implementation "android.arch.lifecycle:extensions:$rootProject.architectureComponentsVersion"
+    implementation "android.arch.lifecycle:common-java8:$rootProject.architectureComponentsVersion"
+
+    // Rx
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rootProject.rxBindingVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:$rootProject.rxBindingVersion"
+
+    // Network
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$rootProject.rxRelayVersion"
+
+    // Dagger
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
+    // UX
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
+
+    // Utils
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.jakewharton.timber:timber:4.6.0'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+
+    //Tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    //Permissions
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
 }
