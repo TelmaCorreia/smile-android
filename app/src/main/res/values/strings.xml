@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">smile</string>
+
+    <!--Login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="button_login">Login</string>
+    <string name="sentence_register">Ainda não tem conta? <u>Registe-se agora</u></string>
+    <string name="sentence_recover_password">Esqueceu-se da palavra-passe? <u>Recuperar</u></string>
+
+    <!-- Register -->
+    <string name="prompt_first_name">Nome</string>
+    <string name="prompt_last_name">Sobrenome</string>
+    <string name="button_register">Registar</string>
 </resources>

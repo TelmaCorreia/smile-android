@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+
+    <color name="colorPrimary">#52c7b8</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FFB300</color>
+
+    <!-- Navigation bar -->
+    <color name="colorNavigationBar">#000000</color>
+    <color name="colorBackground">#FFFFFF</color>
+
+    <!-- General colors -->
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorTextGrey">#757575</color>
+    <color name="colorDividerGrey">#666666</color>
+    <color name="colorUnderline">#009688</color>
+
+    <!-- Button colors -->
+    <color name="colorButtonBackground">#52c7b8</color>
+    <color name="colorButtonBackgroundDisabled">#6452c7b8</color>
+
+
 </resources>
