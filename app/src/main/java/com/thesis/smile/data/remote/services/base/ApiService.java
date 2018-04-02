@@ -7,7 +7,7 @@ import com.thesis.smile.data.remote.exceptions.http.InternetConnectionException;
 import com.thesis.smile.data.remote.exceptions.http.NotFoundException;
 import com.thesis.smile.data.remote.exceptions.http.ServerException;
 import com.thesis.smile.data.remote.exceptions.http.UnauthorizedException;
-import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeOutException;
+import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
 import com.thesis.smile.data.remote.exceptions.api.InvalidCredentialsException;
 import com.thesis.smile.data.remote.models.response.ErrorResponse;
 

@@ -10,9 +10,8 @@ import android.view.View;
 import com.thesis.smile.BR;
 import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
-import com.thesis.smile.data.remote.utils.exceptions.api.ForceUpdateException;
-import com.thesis.smile.data.remote.utils.exceptions.http.ConnectionTimeoutException;
-import com.thesis.smile.data.remote.utils.exceptions.http.GenericErrorException;
+import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
+import com.thesis.smile.data.remote.exceptions.http.GenericErrorException;
 import com.thesis.smile.presentation.utils.actions.AppUpdatesEvents;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.utils.ResourceProvider;
@@ -74,9 +73,7 @@ public class BaseViewModel extends ViewModel implements Observable{
 
     protected void onError(Throwable e){
         if(!(e instanceof ConnectionTimeoutException)) {
-            if (e instanceof ForceUpdateException) {
-                getAppUpdatesEvents().showForceUpdate();
-            } else if (e instanceof GenericErrorException) {
+            if (e instanceof GenericErrorException) {
                 getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_generic));
             } else if (BuildConfig.DEBUG) {
                 throw new RuntimeException(e);

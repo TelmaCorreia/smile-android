@@ -4,6 +4,7 @@ import android.databinding.Bindable;
 import android.text.TextUtils;
 
 import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.BR;
 import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.InvalidCredentialsException;
