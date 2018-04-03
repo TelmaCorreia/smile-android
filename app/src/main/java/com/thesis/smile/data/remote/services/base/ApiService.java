@@ -29,6 +29,11 @@ public class ApiService {
     protected Retrofit retrofit;
     protected ApiError apiError;
 
+    public ApiService(Retrofit retrofit, ApiError apiError) {
+        this.retrofit = retrofit;
+        this.apiError = apiError;
+    }
+
     protected <T> SingleTransformer<Response<T>, Response<T>> networkTransform() {
         return upstream -> upstream
                 .onErrorResumeNext(throwable -> Single.error(mapThrowable(throwable)))

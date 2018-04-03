@@ -3,6 +3,7 @@ package com.thesis.smile.di.modules;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thesis.smile.BuildConfig;
+import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.utils.HeaderAuthenticationInterceptor;
 import com.thesis.smile.data.remote.utils.LocalDateDeserializer;
 import com.thesis.smile.data.remote.utils.LocalDateSerializer;
@@ -83,6 +84,12 @@ public class NetworkModule {
                 .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
                 .create();
+    }
+
+    @Provides
+    @Singleton
+    ApiError provideApiError(){
+        return new ApiError();
     }
 
 

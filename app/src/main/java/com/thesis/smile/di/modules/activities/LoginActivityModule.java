@@ -1,7 +1,6 @@
 package com.thesis.smile.di.modules.activities;
 
-import com.thesis.smile.presentation.authentication.LoginActivity;
-import com.thesis.smile.presentation.splash.SplashActivity;
+import com.thesis.smile.presentation.authentication.login.LoginActivity;
 
 import dagger.Module;
 

@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.authentication;
+package com.thesis.smile.presentation.authentication.login;
 
 import android.databinding.Bindable;
 import android.text.TextUtils;
@@ -28,10 +28,11 @@ public class LoginViewModel extends BaseViewModel {
     private String email = "";
     private String password = "";
 
-    private PublishRelay<Event> startLoginOnservable = PublishRelay.create();
+    private PublishRelay<Event> startLoginObservable = PublishRelay.create();
 
     @Inject
-    public LoginViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
+    public LoginViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
+                          UiEvents uiEvents) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
         this.accountManager = accountManager;
@@ -67,7 +68,7 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     public void onLoginClick() {
-        login(email, password);
+       // login(email, password);
 
     }
 
@@ -93,7 +94,7 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     private void onLoginComplete(){
-        startLoginOnservable.accept(new Event());
+        startLoginObservable.accept(new Event());
     }
 
 
@@ -115,7 +116,7 @@ public class LoginViewModel extends BaseViewModel {
 
 
     Observable<Event> observeStartLogin(){
-        return startLoginOnservable;
+        return startLoginObservable;
     }
 
 

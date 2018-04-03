@@ -2,8 +2,11 @@ package com.thesis.smile.data.preferences;
 
 import android.content.Context;
 
+import javax.inject.Inject;
+
 public class SharedPrefs extends BasePreferences {
 
+    @Inject
     SharedPrefs(Context context) {
         super(context);
     }

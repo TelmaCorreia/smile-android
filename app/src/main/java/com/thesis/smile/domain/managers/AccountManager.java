@@ -34,13 +34,6 @@ public class AccountManager {
     private Completable onLoginSuccess(LoginRemote loginRemote){
         Log.d(TAG,"Login/Register Successful");
 
-        sharedPrefs.saveUserToken( loginRemote.getToken());
-        return new Completable() {
-            @Override
-            protected void subscribeActual(CompletableObserver s) {
-
-            }
-        };
-        //return usersRepository.saveUser(UserMapper.INSTANCE.remoteToLocal(loginRemote.getUserRemote()));
+        return Completable.fromAction(() -> sharedPrefs.saveUserToken(loginRemote.getToken()));
     }
 }

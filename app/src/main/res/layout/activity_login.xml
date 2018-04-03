@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.thesis.smile.presentation.authentication.LoginViewModel"/>
+            type="com.thesis.smile.presentation.authentication.login.LoginViewModel"/>
     </data>
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        tools:context=".presentation.authentication.LoginActivity">
+        tools:context=".presentation.authentication.login.LoginActivity">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"

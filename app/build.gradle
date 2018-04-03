@@ -46,7 +46,7 @@ android {
         prod {
             manifestPlaceholders = [app_name: "Smile"]
 
-            buildConfigField "String", "BASE_API_URL", '""'
+            buildConfigField "String", "BASE_API_URL", '"http://tellma.m-iti.org:8080"'
             buildConfigField "String", "BASE_API_VERSION", '""'
 
             resValue "string", "facebook_app_id", ""

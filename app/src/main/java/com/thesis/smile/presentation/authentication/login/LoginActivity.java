@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.authentication;
+package com.thesis.smile.presentation.authentication.login;
 import android.content.Context;
 import android.content.Intent;
 
@@ -10,7 +10,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
