@@ -12,7 +12,6 @@ import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
 import com.thesis.smile.data.remote.exceptions.http.GenericErrorException;
-import com.thesis.smile.presentation.utils.actions.AppUpdatesEvents;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -30,7 +29,6 @@ public class BaseViewModel extends ViewModel implements Observable{
     private ResourceProvider resourceProvider;
     private SchedulerProvider schedulerProvider;
     private UiEvents uiEvents;
-    private AppUpdatesEvents appUpdatesEvents;
 
     protected final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -40,11 +38,10 @@ public class BaseViewModel extends ViewModel implements Observable{
     private boolean empty = false;
     private boolean error = false;
 
-    public BaseViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, AppUpdatesEvents appUpdatesEvents) {
+    public BaseViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
         this.resourceProvider = resourceProvider;
         this.schedulerProvider = schedulerProvider;
         this.uiEvents = uiEvents;
-        this.appUpdatesEvents = appUpdatesEvents;
     }
 
     protected ResourceProvider getResourceProvider() {
@@ -67,9 +64,6 @@ public class BaseViewModel extends ViewModel implements Observable{
         compositeDisposable.addAll(ds);
     }
 
-    protected AppUpdatesEvents getAppUpdatesEvents(){
-        return appUpdatesEvents;
-    }
 
     protected void onError(Throwable e){
         if(!(e instanceof ConnectionTimeoutException)) {

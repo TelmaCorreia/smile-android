@@ -8,8 +8,24 @@
     <string name="sentence_register">Ainda não tem conta? <u>Registe-se agora</u></string>
     <string name="sentence_recover_password">Esqueceu-se da palavra-passe? <u>Recuperar</u></string>
 
-    <!-- Register -->
+    <!-- Register user details -->
     <string name="prompt_first_name">Nome</string>
     <string name="prompt_last_name">Sobrenome</string>
     <string name="button_register">Registar</string>
+
+    <!-- Register energy details -->
+    <string name="title_energy_details">Detalhes do Contrato de energia eléctrica</string>
+    <string name="sentence_energy_details_info">A energia aqui recolhida é apenas visivel para si</string>
+    <string name="sentence_energy_details_help">Onde obter esta informação?</string>
+    <string name="prompt_category">Tensão de distribuição</string>
+    <string name="prompt_power">Potência Contratada</string>
+    <string name="prompt_tariff">Tarifa</string>
+    <string name="prompt_cycle">Ciclo</string>
+    <string name="button_save">Guardar</string>
+    <string-array name="category_array">
+        <item>BTN</item>
+        <item>BTN-S</item>
+    </string-array>
+
+
 </resources>

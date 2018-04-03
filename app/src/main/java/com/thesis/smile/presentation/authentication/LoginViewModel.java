@@ -11,7 +11,6 @@ import com.thesis.smile.data.remote.exceptions.api.InvalidCredentialsException;
 import com.thesis.smile.data.remote.exceptions.http.UnauthorizedException;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.presentation.base.BaseViewModel;
-import com.thesis.smile.presentation.utils.actions.AppUpdatesEvents;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.Event;
@@ -32,8 +31,8 @@ public class LoginViewModel extends BaseViewModel {
     private PublishRelay<Event> startLoginOnservable = PublishRelay.create();
 
     @Inject
-    public LoginViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, AppUpdatesEvents appUpdatesEvents) {
-        super(resourceProvider, schedulerProvider, uiEvents, appUpdatesEvents);
+    public LoginViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
+        super(resourceProvider, schedulerProvider, uiEvents);
 
         this.accountManager = accountManager;
 

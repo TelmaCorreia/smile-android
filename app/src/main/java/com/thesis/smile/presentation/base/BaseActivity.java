@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 
 import com.thesis.smile.BR;
-import com.thesis.smile.presentation.utils.actions.AppUpdatesEvents;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.UiMessages;
 import com.thesis.smile.presentation.utils.transitions.ActivityTransition;
@@ -34,9 +33,6 @@ public abstract class BaseActivity<ViewBinding extends ViewDataBinding, ViewMode
 
     @Inject
     UiMessages uiMessages;
-
-    @Inject
-    AppUpdatesEvents appUpdatesEvents;
 
     @Inject
     ViewModelFactory<ViewModel> viewModelFactory;
@@ -155,10 +151,6 @@ public abstract class BaseActivity<ViewBinding extends ViewDataBinding, ViewMode
 
     protected ResourceProvider getResourceProvider() {
         return resourceProvider;
-    }
-
-    protected AppUpdatesEvents getAppUpdatesEvents(){
-        return appUpdatesEvents;
     }
 
     public FragmentTransitionManager getFragmentTransitionManager() {
