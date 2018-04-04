@@ -14,6 +14,7 @@ import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
@@ -29,10 +30,12 @@ public class LoginViewModel extends BaseViewModel {
     private String password = "";
 
     private PublishRelay<Event> startLoginObservable = PublishRelay.create();
+    private PublishRelay<Event> openRegisterObservable = PublishRelay.create();
+    private PublishRelay<Event> openMainObservable = PublishRelay.create();
 
     @Inject
     public LoginViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
-                          UiEvents uiEvents) {
+                          UiEvents uiEvents, AccountManager accountManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
         this.accountManager = accountManager;
@@ -68,9 +71,14 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     public void onLoginClick() {
-       // login(email, password);
+       login(email, password);
 
     }
+
+    public void onRegisterClick() {
+        openRegisterObservable.accept(new NavigationEvent());
+    }
+
 
     private void login(String email, String password) {
 
@@ -117,6 +125,12 @@ public class LoginViewModel extends BaseViewModel {
 
     Observable<Event> observeStartLogin(){
         return startLoginObservable;
+    }
+    Observable<Event> observeOpenRegister(){
+        return openRegisterObservable;
+    }
+    Observable<Event> observeOpenMain(){
+        return openMainObservable;
     }
 
 

@@ -39,16 +39,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.AppCompatEditText
+                    <EditText
                         style="@style/TextInputField"
                         android:id="@+id/etFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_first_name"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:text="@={viewModel.firstName}"
-                        tools:text="Telma"/>
+                        android:text="@={viewModel.firstName}" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -56,14 +53,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.AppCompatEditText
+                    <EditText
                         style="@style/TextInputField"
                         android:id="@+id/etLastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_last_name"
-                        android:maxLines="1"
-                        android:singleLine="true"
                         android:text="@={viewModel.lastName}"
                         tools:text="Correia"/>
 
@@ -73,14 +68,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.AppCompatEditText
+                    <EditText
                         style="@style/TextInputField"
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_email"
-                        android:maxLines="1"
-                        android:singleLine="true"
                         android:text="@={viewModel.email}"
                         tools:text="smile@gmail.com"/>
 
@@ -90,14 +83,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.AppCompatEditText
+                    <EditText
                         style="@style/TextInputField"
                         android:id="@+id/etPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_password"
-                        android:maxLines="1"
-                        android:singleLine="true"
                         android:inputType="textPassword"
                         android:text="@={viewModel.password}"
                         tools:text="Smile2018!"/>
@@ -108,14 +99,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.v7.widget.AppCompatEditText
+                    <EditText
                         style="@style/TextInputField"
                         android:id="@+id/etConfirmPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_password"
-                        android:maxLines="1"
-                        android:singleLine="true"
                         android:inputType="textPassword"
                         android:text="@={viewModel.confirmPassword}"
                         tools:text="Smile2018!"/>

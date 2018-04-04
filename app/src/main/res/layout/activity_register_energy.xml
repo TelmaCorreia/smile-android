@@ -32,11 +32,13 @@
                     style="@style/TextTitles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
                     android:text="@string/title_energy_details" />
                 <TextView
                     style="@style/TextSubtitles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="56dp"
                     android:text="@string/sentence_energy_details_info" />
 
                 <Spinner
@@ -46,6 +48,12 @@
                     android:layout_height="wrap_content"
                     android:entries="@array/category_array"/>
 
+                <include
+                    android:id="@+id/infoCategory"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="16dp"
+                    layout="@layout/layout_help" />
 
                 <Spinner
                     style="@style/TextInputField"
@@ -53,15 +61,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <include
+                    android:id="@+id/infoCategory"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="16dp"
+                    layout="@layout/layout_help" />
+
                 <Spinner
+                    style="@style/TextInputField"
                     android:id="@+id/spTariff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <include
+                    android:id="@+id/infoCategory"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="16dp"
+                    layout="@layout/layout_help" />
+
                 <Spinner
+                    style="@style/TextInputField"
                     android:id="@+id/spCycle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <include
+                    android:id="@+id/infoCategory"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    layout="@layout/layout_help" />
 
                 <Button
                     style="@style/Button"

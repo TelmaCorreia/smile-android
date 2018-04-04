@@ -57,6 +57,8 @@
         <item name="android:textColorHint">@color/colorTextGrey</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
 
     </style>
 
@@ -77,6 +79,12 @@
         <item name="android:textColor">@color/colorTextGrey</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="TextHelp">
+        <item name="android:textColor">@color/colorTextGrey</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">12sp</item>
 
     </style>
 
