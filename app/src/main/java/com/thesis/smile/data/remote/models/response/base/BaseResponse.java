@@ -8,15 +8,15 @@ import com.google.gson.annotations.SerializedName;
 public class BaseResponse<T> {
 
     @Expose
-    @SerializedName("Code")
+    @SerializedName("code")
     private String code;
 
     @Expose
-    @SerializedName("Exception")
+    @SerializedName("exception")
     private String exception;
 
     @Expose
-    @SerializedName("Data")
+    @SerializedName("data")
     private T data;
 
     public BaseResponse(){}

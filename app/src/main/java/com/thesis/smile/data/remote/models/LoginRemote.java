@@ -6,11 +6,11 @@ import com.thesis.smile.data.remote.models.User;
 
 public class LoginRemote {
 
-    @SerializedName("Token")
+    @SerializedName("token")
     @Expose
     private String token;
 
-    @SerializedName("User")
+    @SerializedName("user")
     @Expose
     private User userRemote;
 
