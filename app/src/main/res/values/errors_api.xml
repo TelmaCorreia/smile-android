@@ -2,4 +2,6 @@
 <resources>
     <string name="err_api_invalid_login">Email e/ou password inválidos.</string>
     <string name="err_api_invalid_email">Email inválido.</string>
+    <string name="err_api_invalid_password">Password inválida.</string>
+
 </resources>

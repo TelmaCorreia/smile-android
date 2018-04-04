@@ -40,7 +40,7 @@ public class AccountManager {
 
     private Completable onLoginSuccess(LoginRemote loginRemote){
         Log.d(TAG,"Login/Register Successful");
-
-        return Completable.fromAction(() -> sharedPrefs.saveUserToken(loginRemote.getToken()));
+        sharedPrefs.saveUserToken(loginRemote.getToken());
+        return Completable.fromAction(() -> sharedPrefs.saveUserData(loginRemote.getUserRemote()));
     }
 }

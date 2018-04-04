@@ -3,6 +3,7 @@ package com.thesis.smile.presentation.splash;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivitySplashBinding;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
+import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
@@ -32,13 +33,13 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
                     finish();
                 });
 
-       /* getViewModel()
+       getViewModel()
                 .observeOpenMain()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {
-                    MainActivity.launch(this);
+                    RegisterUserActivity.launch(this); //FIXME: mainacivity
                     finish();
-                });*/
+                });
 
     }
 }

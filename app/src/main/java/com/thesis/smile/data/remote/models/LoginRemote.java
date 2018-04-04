@@ -2,7 +2,6 @@ package com.thesis.smile.data.remote.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.thesis.smile.data.remote.models.User;
 
 public class LoginRemote {
 
@@ -12,15 +11,15 @@ public class LoginRemote {
 
     @SerializedName("user")
     @Expose
-    private User userRemote;
+    private UserRemote userRemote;
 
     public LoginRemote(){}
 
-    public User getUserRemote() {
+    public UserRemote getUserRemote() {
         return this.userRemote;
     }
 
-    public void setUserRemote(User userRemote){
+    public void setUserRemote(UserRemote userRemote){
         this.userRemote = userRemote;
     }
 

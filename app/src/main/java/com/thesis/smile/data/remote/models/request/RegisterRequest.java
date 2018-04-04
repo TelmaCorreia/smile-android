@@ -4,7 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.thesis.smile.data.remote.models.EnergyParams;
 
-public class RegisterRequest {
+import java.io.Serializable;
+
+public class RegisterRequest implements Serializable{
 
     @Expose
     @SerializedName("email")

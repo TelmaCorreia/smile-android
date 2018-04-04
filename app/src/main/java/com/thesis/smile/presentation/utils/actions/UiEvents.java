@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
-@ActivityScope
+@Singleton
 public class UiEvents {
 
     private PublishRelay<ToastEvent> toastRelay = PublishRelay.create();

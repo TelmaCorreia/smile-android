@@ -9,6 +9,8 @@ import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.InvalidCredentialsException;
 import com.thesis.smile.data.remote.exceptions.http.UnauthorizedException;
+import com.thesis.smile.data.remote.models.UserRemote;
+import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
@@ -30,6 +32,7 @@ public class RegisterUserViewModel extends BaseViewModel {
     private String email = "";
     private String password = "";
     private String confirmPassword = "";
+    private RegisterRequest user = new RegisterRequest();
 
     private PublishRelay<Event> nextObservable = PublishRelay.create();
 
@@ -98,7 +101,7 @@ public class RegisterUserViewModel extends BaseViewModel {
 
     @Bindable
     public boolean isNextEnabled() {
-        return !(firstName.isEmpty() || lastName.isEmpty() || isEmailValid(email) || isPasswordValid(password, confirmPassword));
+        return !(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty());
     }
 
     private boolean isEmailValid(String email) {
@@ -110,8 +113,23 @@ public class RegisterUserViewModel extends BaseViewModel {
     }
 
     public void onNextClick() {
-        //TODO: send user info - intent
 
+        if (!isEmailValid(email)){
+            getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_invalid_email));
+        }else if (!isPasswordValid(password, confirmPassword)){
+            getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_invalid_password));
+        }else{
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            nextObservable.accept(new Event());
+        }
+
+    }
+
+    public RegisterRequest getRegisterRequest() {
+        return user;
     }
 
     Observable<Event> observeNext(){
