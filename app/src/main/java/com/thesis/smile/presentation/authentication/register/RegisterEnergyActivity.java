@@ -2,6 +2,7 @@ package com.thesis.smile.presentation.authentication.register;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
@@ -34,6 +35,14 @@ public class RegisterEnergyActivity extends BaseActivity<ActivityRegisterEnergyB
 
     @Override
     protected void initViews(ActivityRegisterEnergyBinding binding) {
+
+       /* String[] categories = getViewModel().getConfigs().getCategories().values().toArray(new String[0]);
+        String[] powers = getViewModel().getConfigs().getPower().values().toArray(new String[0]);
+
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spCategory.setAdapter(adapter);*/
+
 
     }
 

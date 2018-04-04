@@ -28,7 +28,6 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
 
     @Override
     protected void initViews(ActivityRegisterUserBinding binding) {
-
     }
 
     @Override

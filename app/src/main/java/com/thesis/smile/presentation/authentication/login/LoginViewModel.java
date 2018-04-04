@@ -9,7 +9,9 @@ import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.InvalidCredentialsException;
 import com.thesis.smile.data.remote.exceptions.http.UnauthorizedException;
+import com.thesis.smile.data.remote.models.ConfigsRemote;
 import com.thesis.smile.domain.managers.AccountManager;
+import com.thesis.smile.domain.managers.UtilsManager;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
@@ -20,11 +22,13 @@ import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public class LoginViewModel extends BaseViewModel {
 
     private AccountManager accountManager;
+    private UtilsManager utilsManager;
 
     private String email = "";
     private String password = "";
@@ -35,10 +39,11 @@ public class LoginViewModel extends BaseViewModel {
 
     @Inject
     public LoginViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
-                          UiEvents uiEvents, AccountManager accountManager) {
+                          UiEvents uiEvents, AccountManager accountManager, UtilsManager utilsManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
         this.accountManager = accountManager;
+        this.utilsManager = utilsManager;
 
     }
 
@@ -76,6 +81,19 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     public void onRegisterClick() {
+
+        if (!utilsManager.registerDataExists()){
+            utilsManager.getConfigsFromServer()
+                    .doOnSubscribe(this::addDisposable)
+                    .compose(schedulersTransformSingleIo())
+                    .subscribe(this::onConfigsReceived, this::onError);
+        }
+
+
+    }
+
+    private void onConfigsReceived(ConfigsRemote configsRemote) {
+        utilsManager.saveConfigs(configsRemote);
         openRegisterObservable.accept(new NavigationEvent());
     }
 

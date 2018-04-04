@@ -59,7 +59,8 @@
                     style="@style/TextInputField"
                     android:id="@+id/spPower"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:selectedItemPosition="@={viewModel.powerSelectedItem}"/>
 
                 <include
                     android:id="@+id/infoCategory"
