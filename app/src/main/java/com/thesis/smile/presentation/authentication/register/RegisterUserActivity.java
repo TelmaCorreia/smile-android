@@ -48,7 +48,7 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {
                     RegisterEnergyActivity.launch(this, getViewModel().getRegisterRequest());
-                    finish();
+                    //finish();
                 });
 
     }

@@ -1,8 +1,10 @@
 package com.thesis.smile.presentation.authentication.register;
 
 import android.databinding.Bindable;
+import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
@@ -17,6 +19,7 @@ import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
@@ -32,19 +35,16 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     private AccountManager accountManager;
     private UtilsManager utilsManager;
 
-    private ArrayList<String> powers = new ArrayList<>();
-    private ArrayList<String> tariffs = new ArrayList<>();
-    private ArrayList<String> cycles = new ArrayList<>();
-
-    private Integer powerSelectedItem = 0;
-    private Integer categorySelectedItem = 0;
     private String category = "";
     private String power = "";
     private String tariff = "";
     private String cycle = "";
 
-
     private PublishRelay<Event> registerObservable = PublishRelay.create();
+    private PublishRelay<NavigationEvent> openGeneralInfoObservable = PublishRelay.create();
+    private PublishRelay<NavigationEvent> openCycleInfoObservable = PublishRelay.create();
+
+
 
     @Inject
     public RegisterEnergyViewModel(ResourceProvider resourceProvider,
@@ -68,7 +68,6 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.registerEnabled);
     }
 
-
     @Bindable
     public String getPower() {
         return power;
@@ -89,6 +88,7 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         this.tariff = tariff;
         notifyPropertyChanged(BR.tariff);
         notifyPropertyChanged(BR.registerEnabled);
+        notifyPropertyChanged(BR.cycleVisible);
     }
 
     @Bindable
@@ -107,9 +107,24 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         return !(category.isEmpty() || power.isEmpty() || tariff.isEmpty() || cycle.isEmpty());
     }
 
+    @Bindable
+    public boolean isCycleVisible() {
+        return !tariff.isEmpty() && !tariff.equals(getResourceProvider().getString(R.string.tariff_without_cycle));
+
+    }
+
     public void onRegisterClick() {
+
         register(category, power, tariff, cycle);
 
+    }
+
+    public void onGenerlaInfoClick() {
+        openGeneralInfoObservable.accept(new NavigationEvent());
+    }
+
+    public void onCycleInfoClick() {
+        openCycleInfoObservable.accept(new NavigationEvent());
     }
 
 
@@ -119,6 +134,14 @@ public class RegisterEnergyViewModel extends BaseViewModel {
 
     Observable<Event> observeRegister(){
         return registerObservable;
+    }
+
+    Observable<NavigationEvent> observeOpenGeneralInfo(){
+        return openGeneralInfoObservable;
+    }
+
+    Observable<NavigationEvent> observeOpenCycleInfo(){
+        return openCycleInfoObservable;
     }
 
 

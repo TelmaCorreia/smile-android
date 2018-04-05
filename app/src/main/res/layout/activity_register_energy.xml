@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.thesis.smile.presentation.authentication.register.RegisterEnergyViewModel"/>
@@ -51,6 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="16dp"
+                    android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
                     layout="@layout/layout_help" />
 
                 <android.support.v7.widget.AppCompatSpinner
@@ -60,10 +61,11 @@
                     android:layout_height="wrap_content" />
 
                 <include
-                    android:id="@+id/infoCategory"
+                    android:id="@+id/infoPower"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="16dp"
+                    android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
                     layout="@layout/layout_help" />
 
                 <android.support.v7.widget.AppCompatSpinner
@@ -73,22 +75,26 @@
                     android:layout_height="wrap_content" />
 
                 <include
-                    android:id="@+id/infoCategory"
+                    android:id="@+id/infoTariff"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="16dp"
+                    android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
                     layout="@layout/layout_help" />
 
                 <android.support.v7.widget.AppCompatSpinner
                     style="@style/TextInputField"
                     android:id="@+id/spCycle"
+                    android:visibility="@{viewModel.cycleVisible ? View.VISIBLE : View.GONE}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <include
-                    android:id="@+id/infoCategory"
+                    android:id="@+id/infoCycle"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:visibility="@{viewModel.cycleVisible ? View.VISIBLE : View.GONE}"
+                    android:onClick="@{v -> viewModel.onCycleInfoClick()}"
                     layout="@layout/layout_help" />
 
                 <Button
