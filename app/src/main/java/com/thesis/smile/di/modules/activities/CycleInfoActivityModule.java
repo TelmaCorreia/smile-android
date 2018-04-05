@@ -1,7 +1,6 @@
 package com.thesis.smile.di.modules.activities;
 
-import com.thesis.smile.presentation.authentication.register.energy.CycleInfoActivity;
-import com.thesis.smile.presentation.authentication.register.energy.GeneralInfoActivity;
+import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoActivity;
 
 import dagger.Module;
 

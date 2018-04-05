@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.authentication.register.energy;
+package com.thesis.smile.presentation.authentication.register.energy.info;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,4 +27,18 @@ public class GeneralInfoActivity  extends BaseActivity<ActivityGeneralInfoBindin
     protected void initViews(ActivityGeneralInfoBinding binding) {
 
     }
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+
+        getViewModel().observeClose()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    finish();
+                });
+    }
+
+
+
 }

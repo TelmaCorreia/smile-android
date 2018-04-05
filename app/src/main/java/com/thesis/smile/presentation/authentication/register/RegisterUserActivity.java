@@ -4,10 +4,8 @@ import android.content.Intent;
 
 import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
-import com.thesis.smile.data.remote.models.UserRemote;
-import com.thesis.smile.databinding.ActivityLoginBinding;
 import com.thesis.smile.databinding.ActivityRegisterUserBinding;
-import com.thesis.smile.presentation.authentication.login.LoginViewModel;
+import com.thesis.smile.presentation.authentication.register.energy.RegisterEnergyActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
 
 public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBinding, RegisterUserViewModel> {

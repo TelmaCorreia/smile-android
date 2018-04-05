@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.authentication.register;
+package com.thesis.smile.presentation.authentication.register.energy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.databinding.ActivityRegisterEnergyBinding;
 
-import com.thesis.smile.presentation.authentication.register.energy.CycleInfoActivity;
-import com.thesis.smile.presentation.authentication.register.energy.GeneralInfoActivity;
+import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoActivity;
+import com.thesis.smile.presentation.authentication.register.energy.info.GeneralInfoActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
 

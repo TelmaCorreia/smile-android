@@ -20,7 +20,7 @@
     <string name="prompt_category">Tensão de distribuição</string>
     <string name="prompt_power">Potência Contratada</string>
     <string name="prompt_tariff">Tarifa</string>
-    <string name="prompt_cycle">cycle</string>
+    <string name="prompt_cycle">Ciclo</string>
     <string name="button_register">Registar</string>
     <string name="tariff_without_cycle">Simples</string>
     <string name="no_cycle">NA</string>
@@ -32,8 +32,8 @@
     <string name="tariff">Tarifa</string>
 
     <!-- Cycle Info -->
-    <string name="cycle_info_title">Onde encontrar informação sobre o seu cycle:</string>
-    <string name="cycle_info_par1">Para saber qual o seu cycle contratado deve contactar a sua empresa de eletricidade (Empresa de Eletricidade da Madeira).
+    <string name="cycle_info_title">Onde encontrar informação sobre o seu ciclo:</string>
+    <string name="cycle_info_par1">Para saber qual o seu ciclo contratado deve contactar a sua empresa de eletricidade (Empresa de Eletricidade da Madeira).
         Poderá fazê-lo através dos seguintes contactos:</string>
     <string name="cycle_contact1">Lojas da EEM, abertas das 8h30 às 12h30 e das 13h30 às 16h00</string>
     <string name="cycle_contact2">Linha da EEM: 800 221 187 (chamada gratuita)</string>

@@ -35,17 +35,17 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".presentation.authentication.register.RegisterEnergyActivity"
+            android:name=".presentation.authentication.register.energy.RegisterEnergyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".presentation.authentication.register.energy.GeneralInfoActivity"
+            android:name=".presentation.authentication.register.energy.info.GeneralInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".presentation.authentication.register.energy.CycleInfoActivity"
+            android:name=".presentation.authentication.register.energy.info.CycleInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 

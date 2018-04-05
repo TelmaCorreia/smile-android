@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.authentication.register;
+package com.thesis.smile.presentation.authentication.register.energy;
 
 import android.databinding.Bindable;
 import android.databinding.ObservableField;
@@ -43,8 +43,6 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     private PublishRelay<Event> registerObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openGeneralInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openCycleInfoObservable = PublishRelay.create();
-
-
 
     @Inject
     public RegisterEnergyViewModel(ResourceProvider resourceProvider,

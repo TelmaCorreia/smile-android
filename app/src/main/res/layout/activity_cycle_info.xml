@@ -2,40 +2,50 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<android.support.constraint.ConstraintLayout
+    <data>
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoViewModel"/>
+    </data>
+
+<LinearLayout
     style="@style/Common"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/TextTitles"
-        android:id="@+id/tvTitle"
+
+    <LinearLayout
+        android:id="@+id/llTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="16dp"
-        android:gravity="left"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@id/ivClose"
-        android:text="@string/cycle_info_title"/>
+        android:gravity="top">
 
-    <ImageView
-        android:id="@+id/ivClose"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/ic_close"/>
+        <TextView
+            style="@style/TextTitles"
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_weight="7"
+            android:text="@string/info_title"/>
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_weight="3"
+            android:gravity="right"
+            android:onClick="@{v -> viewModel.onCloseClick()}"
+            android:src="@drawable/ic_close"/>
+
+    </LinearLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/llDescription"
@@ -43,7 +53,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginBottom="36dp"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/llTitle"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
@@ -106,5 +116,5 @@
 
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
 </layout>

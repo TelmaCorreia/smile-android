@@ -8,10 +8,10 @@ import com.thesis.smile.di.modules.activities.RegisterUserActivityModule;
 import com.thesis.smile.di.modules.activities.SplashActivityModule;
 import com.thesis.smile.di.scopes.ActivityScope;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
-import com.thesis.smile.presentation.authentication.register.RegisterEnergyActivity;
+import com.thesis.smile.presentation.authentication.register.energy.RegisterEnergyActivity;
 import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
-import com.thesis.smile.presentation.authentication.register.energy.CycleInfoActivity;
-import com.thesis.smile.presentation.authentication.register.energy.GeneralInfoActivity;
+import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoActivity;
+import com.thesis.smile.presentation.authentication.register.energy.info.GeneralInfoActivity;
 import com.thesis.smile.presentation.splash.SplashActivity;
 
 import dagger.Module;

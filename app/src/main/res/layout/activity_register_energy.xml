@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.thesis.smile.presentation.authentication.register.RegisterEnergyViewModel"/>
+            type="com.thesis.smile.presentation.authentication.register.energy.RegisterEnergyViewModel"/>
     </data>
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        tools:context=".presentation.authentication.register.RegisterEnergyActivity">
+        tools:context=".presentation.authentication.register.energy.RegisterEnergyActivity">
 
             <android.support.v4.widget.NestedScrollView
                 android:layout_height="match_parent"

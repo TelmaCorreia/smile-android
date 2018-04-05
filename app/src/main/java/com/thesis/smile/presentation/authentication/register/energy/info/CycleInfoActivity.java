@@ -1,11 +1,10 @@
-package com.thesis.smile.presentation.authentication.register.energy;
+package com.thesis.smile.presentation.authentication.register.energy.info;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityCycleInfoBinding;
-import com.thesis.smile.presentation.authentication.register.RegisterEnergyActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
 
 public class CycleInfoActivity extends BaseActivity<ActivityCycleInfoBinding, CycleInfoViewModel> {
@@ -27,5 +26,16 @@ public class CycleInfoActivity extends BaseActivity<ActivityCycleInfoBinding, Cy
     @Override
     protected void initViews(ActivityCycleInfoBinding binding) {
 
+    }
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+
+        getViewModel().observeClose()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    finish();
+                });
     }
 }
