@@ -20,5 +20,10 @@
     <color name="colorButtonBackground">#52c7b8</color>
     <color name="colorButtonBackgroundDisabled">#6452c7b8</color>
 
+    <!-- Spinner colors-->
+    <color name="colorSpinnerSelectedBackground">#bdbdbd</color>
+
+
+
 
 </resources>

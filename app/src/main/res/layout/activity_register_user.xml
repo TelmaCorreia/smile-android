@@ -118,7 +118,7 @@
                     android:layout_marginTop="48dp"
                     android:enabled="@{viewModel.nextEnabled}"
                     android:onClick="@{v -> viewModel.onNextClick()}"
-                    android:text="@string/button_register"/>
+                    android:text="@string/button_next"/>
 
             </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.thesis.smile.presentation.authentication.register;
 import android.databinding.Bindable;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.BuildConfig;
@@ -25,8 +26,6 @@ import io.reactivex.Observable;
 
 public class RegisterUserViewModel extends BaseViewModel {
 
-    private AccountManager accountManager;
-
     private String firstName = "";
     private String lastName = "";
     private String email = "";
@@ -39,8 +38,6 @@ public class RegisterUserViewModel extends BaseViewModel {
     @Inject
     public RegisterUserViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
         super(resourceProvider, schedulerProvider, uiEvents);
-
-        this.accountManager = accountManager;
 
     }
 
@@ -128,8 +125,10 @@ public class RegisterUserViewModel extends BaseViewModel {
 
     }
 
-    public RegisterRequest getRegisterRequest() {
-        return user;
+    public String getRegisterRequest() {
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        return json;
     }
 
     Observable<Event> observeNext(){

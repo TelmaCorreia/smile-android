@@ -6,7 +6,7 @@ import com.thesis.smile.data.remote.models.EnergyParams;
 
 import java.io.Serializable;
 
-public class RegisterRequest implements Serializable{
+public class RegisterRequest{
 
     @Expose
     @SerializedName("email")

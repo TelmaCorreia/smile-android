@@ -87,6 +87,8 @@ public class LoginViewModel extends BaseViewModel {
                     .doOnSubscribe(this::addDisposable)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onConfigsReceived, this::onError);
+        }else{
+            openRegisterObservable.accept(new NavigationEvent());
         }
 
 

@@ -41,13 +41,11 @@
                     android:layout_marginBottom="56dp"
                     android:text="@string/sentence_energy_details_info" />
 
-                <Spinner
+                <android.support.v7.widget.AppCompatSpinner
                     style="@style/TextInputField"
                     android:id="@+id/spCategory"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/category_array"/>
-
+                    android:layout_height="wrap_content" />
                 <include
                     android:id="@+id/infoCategory"
                     android:layout_height="wrap_content"
@@ -55,12 +53,11 @@
                     android:layout_marginBottom="16dp"
                     layout="@layout/layout_help" />
 
-                <Spinner
+                <android.support.v7.widget.AppCompatSpinner
                     style="@style/TextInputField"
                     android:id="@+id/spPower"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:selectedItemPosition="@={viewModel.powerSelectedItem}"/>
+                    android:layout_height="wrap_content" />
 
                 <include
                     android:id="@+id/infoCategory"
@@ -69,7 +66,7 @@
                     android:layout_marginBottom="16dp"
                     layout="@layout/layout_help" />
 
-                <Spinner
+                <android.support.v7.widget.AppCompatSpinner
                     style="@style/TextInputField"
                     android:id="@+id/spTariff"
                     android:layout_width="match_parent"
@@ -82,7 +79,7 @@
                     android:layout_marginBottom="16dp"
                     layout="@layout/layout_help" />
 
-                <Spinner
+                <android.support.v7.widget.AppCompatSpinner
                     style="@style/TextInputField"
                     android:id="@+id/spCycle"
                     android:layout_width="match_parent"
@@ -101,7 +98,7 @@
                     android:layout_marginTop="48dp"
                     android:enabled="@{viewModel.registerEnabled}"
                     android:onClick="@{v -> viewModel.onRegisterClick()}"
-                    android:text="@string/button_save"/>
+                    android:text="@string/button_next"/>
 
             </LinearLayout>
 

@@ -32,14 +32,12 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     private AccountManager accountManager;
     private UtilsManager utilsManager;
 
-    private ArrayList<String> categories = new ArrayList<>();
     private ArrayList<String> powers = new ArrayList<>();
     private ArrayList<String> tariffs = new ArrayList<>();
     private ArrayList<String> cycles = new ArrayList<>();
 
-    private ObservableInt powerSelectedItem = new ObservableInt();
-
-
+    private Integer powerSelectedItem = 0;
+    private Integer categorySelectedItem = 0;
     private String category = "";
     private String power = "";
     private String tariff = "";
@@ -69,6 +67,7 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.category);
         notifyPropertyChanged(BR.registerEnabled);
     }
+
 
     @Bindable
     public String getPower() {
@@ -108,31 +107,23 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         return !(category.isEmpty() || power.isEmpty() || tariff.isEmpty() || cycle.isEmpty());
     }
 
-    @Bindable
-    public ObservableInt getPowerSelectedItem() {
-        return powerSelectedItem;
-    }
-
-    public void setPowerSelectedItem(ObservableInt powerSelectedItem) {
-        this.powerSelectedItem = powerSelectedItem;
-    }
-
     public void onRegisterClick() {
         register(category, power, tariff, cycle);
 
     }
 
+
     private void register(String category, String power, String tariff, String cycle) {
     }
 
-    public ConfigsRemote getConfigs(){
-        return utilsManager.getConfigs();
-    }
 
     Observable<Event> observeRegister(){
         return registerObservable;
     }
 
 
+    public ConfigsRemote getConfigs() {
 
+        return utilsManager.getConfigs();
+    }
 }

@@ -2,6 +2,7 @@ package com.thesis.smile.presentation.authentication.register;
 import android.content.Context;
 import android.content.Intent;
 
+import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.databinding.ActivityLoginBinding;
@@ -28,6 +29,15 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
 
     @Override
     protected void initViews(ActivityRegisterUserBinding binding) {
+
+        if (BuildConfig.DEBUG){
+            getViewModel().setFirstName("Telma");
+            getViewModel().setLastName("Correia");
+            getViewModel().setEmail("tc@gmail.com");
+            getViewModel().setPassword("Smile2018@");
+            getViewModel().setConfirmPassword("Smile2018@");
+
+        }
     }
 
     @Override
