@@ -49,7 +49,7 @@
                 <include
                     android:id="@+id/infoCategory"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
                     layout="@layout/layout_help" />
@@ -63,7 +63,7 @@
                 <include
                     android:id="@+id/infoPower"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
                     layout="@layout/layout_help" />
@@ -77,7 +77,7 @@
                 <include
                     android:id="@+id/infoTariff"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
                     layout="@layout/layout_help" />
@@ -92,7 +92,7 @@
                 <include
                     android:id="@+id/infoCycle"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:visibility="@{viewModel.cycleVisible ? View.VISIBLE : View.GONE}"
                     android:onClick="@{v -> viewModel.onCycleInfoClick()}"
                     layout="@layout/layout_help" />
@@ -102,8 +102,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="48dp"
-                    android:enabled="@{viewModel.registerEnabled}"
-                    android:onClick="@{v -> viewModel.onRegisterClick()}"
+                    android:enabled="@{viewModel.nextEnabled}"
+                    android:onClick="@{v -> viewModel.onNextClick()}"
                     android:text="@string/button_next"/>
 
             </LinearLayout>

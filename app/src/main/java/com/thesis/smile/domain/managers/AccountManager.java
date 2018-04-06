@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.models.LoginRemote;
+import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.data.remote.services.LoginService;
 
 import java.lang.reflect.Type;
@@ -32,9 +33,8 @@ public class AccountManager {
                 .flatMapCompletable(this::onLoginSuccess);
     }
 
-    public Completable register(String firstName, String lastName, String email, String password,
-                                String type, int power, int category, int cycle, int tariff) {
-        return loginService.register(email, password, firstName, lastName, type, power, category, cycle, tariff )
+    public Completable register(RegisterRequest request) {
+        return loginService.register(request)
                 .flatMapCompletable(this::onLoginSuccess);
     }
 

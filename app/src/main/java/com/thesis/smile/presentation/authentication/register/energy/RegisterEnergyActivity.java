@@ -85,7 +85,7 @@ public class RegisterEnergyActivity extends BaseActivity<ActivityRegisterEnergyB
 
         String[] tariffs = getViewModel().getConfigs().getTariff().values().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterTariffs = new ArrayAdapter(this,R.layout.layout_spinner_item, tariffs);
-        adapterPowers.setDropDownViewResource(R.layout.layout_spinner_dropdown);
+        adapterTariffs.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spTariff.setAdapter(
                 new NothingSelectedSpinnerAdapter(
                         adapterTariffs, R.layout.layout_spinner_item_nothing_selected_tariff,this));
@@ -106,7 +106,7 @@ public class RegisterEnergyActivity extends BaseActivity<ActivityRegisterEnergyB
 
         String[] cycles = getViewModel().getConfigs().getCycle().values().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterCycles = new ArrayAdapter(this,R.layout.layout_spinner_item, cycles);
-        adapterPowers.setDropDownViewResource(R.layout.layout_spinner_dropdown);
+        adapterCycles.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spCycle.setAdapter(
                 new NothingSelectedSpinnerAdapter(
                         adapterCycles, R.layout.layout_spinner_item_nothing_selected_cycle,this));
@@ -146,15 +146,20 @@ public class RegisterEnergyActivity extends BaseActivity<ActivityRegisterEnergyB
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {
                     CycleInfoActivity.launch(this);
-                   // finish();
                 });
 
         getViewModel().observeOpenGeneralInfo()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {
                     GeneralInfoActivity.launch(this);
-                  //  finish();
                 });
+
+        getViewModel().observeNext()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    RegisterEquipmentActivity.launch(this, getViewModel().getRegisterRequest(request));
+                });
+
 
     }
 }

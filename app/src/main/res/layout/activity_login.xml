@@ -19,6 +19,7 @@
         tools:context=".presentation.authentication.login.LoginActivity">
 
         <android.support.design.widget.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -36,9 +37,10 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp">
+            android:layout_marginTop="36dp">
 
             <android.support.v7.widget.AppCompatEditText
                 style="@style/TextInputField"

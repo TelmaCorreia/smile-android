@@ -37,7 +37,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {
                     RegisterUserActivity.launch(this);
-                    finish();
                 });
 
         getViewModel().observeStartLogin()

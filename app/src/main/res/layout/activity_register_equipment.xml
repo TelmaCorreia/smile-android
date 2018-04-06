@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.authentication.register.energy.RegisterEquipmentViewModel"/>
+    </data>
+
+    <LinearLayout
+        style="@style/Common"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:context=".presentation.authentication.register.energy.RegisterEnergyActivity">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/title_user_topoloy" />
+
+                <RadioGroup
+                    android:id="@+id/user_topology"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        style="@style/Text3"
+                        android:id="@+id/rbConsumer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:buttonTint="@color/colorBlack"
+                        android:text="@string/option_consumer"/>
+
+                    <RadioButton
+                        style="@style/Text3"
+                        android:id="@+id/rbProsumer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorBlack"
+                        android:text="@string/option_prosumer"/>
+
+                </RadioGroup>
+                <TextView
+                    style="@style/TextTitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/title_equipment" />
+
+                <TextView
+                    style="@style/TextSubtitles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="56dp"
+                    android:text="@string/sentence_energy_details_info" />
+
+
+                <LinearLayout
+                    android:id="@+id/llEquipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:enabled="@{viewModel.equipmentEnabled}">
+                    <android.support.v7.widget.AppCompatSpinner
+                        style="@style/TextInputField"
+                        android:id="@+id/spBattery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <include
+                        android:id="@+id/infoCategory"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="16dp"
+                        android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
+                        layout="@layout/layout_help" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        style="@style/TextInputField"
+                        android:id="@+id/spSolarPanel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <include
+                        android:id="@+id/infoPower"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="16dp"
+                        android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
+                        layout="@layout/layout_help" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        style="@style/TextInputField"
+                        android:id="@+id/spSmartMeter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <include
+                        android:id="@+id/infoTariff"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginBottom="16dp"
+                        android:onClick="@{v -> viewModel.onGenerlaInfoClick()}"
+                        layout="@layout/layout_help" />
+
+                </LinearLayout>
+
+
+
+                <Button
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    android:enabled="@{viewModel.registerEnabled}"
+                    android:onClick="@{v -> viewModel.onRegisterClick()}"
+                    android:text="@string/button_register"/>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+</layout>

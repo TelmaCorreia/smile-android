@@ -29,18 +29,23 @@ public class RegisterRequest{
     private String type;
 
     @Expose
+    @SerializedName("visible")
+    private boolean visible;
+
+    @Expose
     @SerializedName("energyParams")
     private EnergyParams energyParams;
 
     public RegisterRequest(){}
 
     public RegisterRequest(String firstName, String lastName, String email, String password,
-                           String type, EnergyParams energyParams) {
+                           String type, boolean visible, EnergyParams energyParams) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.type = type;
+        this.visible = visible;
         this.energyParams = energyParams;
     }
 
@@ -74,5 +79,29 @@ public class RegisterRequest{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public EnergyParams getEnergyParams() {
+        return energyParams;
+    }
+
+    public void setEnergyParams(EnergyParams energyParams) {
+        this.energyParams = energyParams;
     }
 }

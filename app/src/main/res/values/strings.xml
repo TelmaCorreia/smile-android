@@ -15,15 +15,26 @@
 
     <!-- Register energy details -->
     <string name="title_energy_details">Detalhes do Contrato de energia eléctrica</string>
-    <string name="sentence_energy_details_info">A energia aqui recolhida é apenas visivel para si</string>
+    <string name="sentence_energy_details_info">A informação aqui recolhida é apenas visivel para si</string>
     <string name="sentence_energy_details_help">Onde obter esta informação?</string>
     <string name="prompt_category">Tensão de distribuição</string>
     <string name="prompt_power">Potência Contratada</string>
     <string name="prompt_tariff">Tarifa</string>
     <string name="prompt_cycle">Ciclo</string>
-    <string name="button_register">Registar</string>
     <string name="tariff_without_cycle">Simples</string>
     <string name="no_cycle">NA</string>
+
+    <!-- Register equipment -->
+    <string name="title_user_topoloy">Que tipo de utilizador é você?</string>
+    <string name="option_consumer">Consumidor</string>
+    <string name="option_prosumer">Produtor/Consumidor</string>
+    <string name="title_equipment">Equipamento</string>
+    <string name="subtitle_equipment">A informação aqui recolhida é apenas visivel para si</string>
+    <string name="prompt_battery_capacity">Capacidade da Bateria</string>
+    <string name="prompt_solar_panels">Paineis solares</string>
+    <string name="prompt_smart_meters">Medidores inteligentes</string>
+    <string name="button_register">Registar</string>
+
 
     <!-- Energy bill info -->
     <string name="info_title">Onde encontrar os detalhes do contrato na sua fatura:</string>
@@ -42,7 +53,18 @@
     <string name="cycle_contact5">Endereço: EEM - Empresa de Eletricidade da Madeira, S.A. Av. do Mar e das Comunidades Madeirenses, 32 9064-501 Funchal </string>
     <string name="cycle_contact6">Formulário eletrónico, a resposta a este formulário é comunicada através do email indicado no mesmo</string>
 
+    <!-- usertype -->
+    <string name="consumer">"CONSUMER"</string>
+    <string name="prosumer">"PROSUMER"</string>
 
+    <!-- Dialog Share data permissions -->
+    <string name="share_data_tilte">A aplicação precisa da sua permissão para partilhar alguns dados com a comunidade</string>
+    <string name="share_data_description">Se pretende comparar a sua utilização de energias renováveis com os seus vizinhos precisamos da sua permissão para partilhar os dados de consumo de energias renováveis.</string>
+    <string name="button_allow">Permitir</string>
+    <string name="button_not_allow">Não Permitir</string>
+
+    <!-- Toasts -->
+    <string name="userTypeAlert">Selecione um tipo de utilizador</string>
 
 
 </resources>

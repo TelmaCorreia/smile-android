@@ -24,9 +24,8 @@ public class LoginService extends ApiService{
         this.api = retrofit.create(LoginApi.class);
     }
 
-    public Single<LoginRemote> register(String firstName, String lastName, String email, String password,
-                                        String type, int power, int category, int cycle, int tariff) {
-        return api.register(new RegisterRequest(firstName, lastName,email, password,type, new EnergyParams(category, power, tariff, cycle)))
+    public Single<LoginRemote> register(RegisterRequest request) {
+        return api.register(request)
                 .compose(networkMapTransform())
                 .map(BaseResponse::getData);
     }

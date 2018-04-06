@@ -1,30 +1,22 @@
 package com.thesis.smile.presentation.authentication.register.energy;
 
 import android.databinding.Bindable;
-import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
-import android.text.TextUtils;
-import android.view.View;
 
+import com.google.gson.Gson;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
-import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
-import com.thesis.smile.data.remote.exceptions.api.InvalidCredentialsException;
-import com.thesis.smile.data.remote.exceptions.http.UnauthorizedException;
 import com.thesis.smile.data.remote.models.ConfigsRemote;
+import com.thesis.smile.data.remote.models.EnergyParams;
+import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.domain.managers.UtilsManager;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
-import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -40,7 +32,9 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     private String tariff = "";
     private String cycle = "";
 
-    private PublishRelay<Event> registerObservable = PublishRelay.create();
+    private RegisterRequest user = new RegisterRequest();
+
+    private PublishRelay<Event> nextObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openGeneralInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openCycleInfoObservable = PublishRelay.create();
 
@@ -63,7 +57,7 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     public void setCategory(String category) {
         this.category = category;
         notifyPropertyChanged(BR.category);
-        notifyPropertyChanged(BR.registerEnabled);
+        notifyPropertyChanged(BR.nextEnabled);
     }
 
     @Bindable
@@ -74,7 +68,7 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     public void setPower(String power) {
         this.power = power;
         notifyPropertyChanged(BR.power);
-        notifyPropertyChanged(BR.registerEnabled);
+        notifyPropertyChanged(BR.nextEnabled);
     }
 
     @Bindable
@@ -84,8 +78,11 @@ public class RegisterEnergyViewModel extends BaseViewModel {
 
     public void setTariff(String tariff) {
         this.tariff = tariff;
+        if (tariff.equals(getResourceProvider().getString(R.string.tariff_without_cycle))){
+            setCycle(getResourceProvider().getString(R.string.no_cycle));
+        }
         notifyPropertyChanged(BR.tariff);
-        notifyPropertyChanged(BR.registerEnabled);
+        notifyPropertyChanged(BR.nextEnabled);
         notifyPropertyChanged(BR.cycleVisible);
     }
 
@@ -97,11 +94,11 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     public void setCycle(String cycle) {
         this.cycle = cycle;
         notifyPropertyChanged(BR.cycle);
-        notifyPropertyChanged(BR.registerEnabled);
+        notifyPropertyChanged(BR.nextEnabled);
     }
 
     @Bindable
-    public boolean isRegisterEnabled() {
+    public boolean isNextEnabled() {
         return !(category.isEmpty() || power.isEmpty() || tariff.isEmpty() || cycle.isEmpty());
     }
 
@@ -111,9 +108,14 @@ public class RegisterEnergyViewModel extends BaseViewModel {
 
     }
 
-    public void onRegisterClick() {
+    public void onNextClick() {
+        ConfigsRemote configs = getConfigs();
+        if (configs.getCategories().containsValue(category) && configs.getPower().containsValue(power)
+                && configs.getTariff().containsValue(tariff) && configs.getCycle().containsValue(cycle)){
+            user.setEnergyParams(new EnergyParams(category, power, tariff, cycle));
+            nextObservable.accept(new Event());
+        }
 
-        register(category, power, tariff, cycle);
 
     }
 
@@ -126,12 +128,9 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     }
 
 
-    private void register(String category, String power, String tariff, String cycle) {
-    }
 
-
-    Observable<Event> observeRegister(){
-        return registerObservable;
+    Observable<Event> observeNext(){
+        return nextObservable;
     }
 
     Observable<NavigationEvent> observeOpenGeneralInfo(){
@@ -144,7 +143,13 @@ public class RegisterEnergyViewModel extends BaseViewModel {
 
 
     public ConfigsRemote getConfigs() {
-
         return utilsManager.getConfigs();
+    }
+
+    public String getRegisterRequest(RegisterRequest request) {
+        request.setEnergyParams(user.getEnergyParams());
+        Gson gson = new Gson();
+        String json = gson.toJson(request);
+        return json;
     }
 }
