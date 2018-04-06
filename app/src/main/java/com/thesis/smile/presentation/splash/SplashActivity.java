@@ -5,6 +5,7 @@ import com.thesis.smile.databinding.ActivitySplashBinding;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.main.MainActivity;
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
 
@@ -37,7 +38,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
                 .observeOpenMain()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {
-                    RegisterUserActivity.launch(this); //FIXME: mainacivity
+                    MainActivity.launch(this);
                     finish();
                 });
 

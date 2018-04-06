@@ -66,5 +66,12 @@
     <!-- Toasts -->
     <string name="userTypeAlert">Selecione um tipo de utilizador</string>
 
+    <!-- Navigation Bottom Bar -->
+    <string name="home">home</string>
+    <string name="historical">histórico</string>
+    <string name="transactions">transações</string>
+    <string name="ranking">ranking</string>
+
+
 
 </resources>

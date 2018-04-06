@@ -7,8 +7,11 @@
     <color name="transparent">#80000000</color>
 
     <!-- Navigation bar -->
-    <color name="colorNavigationBar">#000000</color>
+    <color name="colorNavigationBar">#009688</color>
+    <color name="colorNavigationBottomBar">#00675b</color>
     <color name="colorBackground">#FFFFFF</color>
+    <color name="colorBackgroundDisabled">#6ba7a0</color>
+
 
     <!-- General colors -->
     <color name="colorBlack">#000000</color>

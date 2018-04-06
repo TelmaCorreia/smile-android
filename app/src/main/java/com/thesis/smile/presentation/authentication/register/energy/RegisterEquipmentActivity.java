@@ -14,6 +14,7 @@ import com.thesis.smile.databinding.ActivityRegisterEquipmentBinding;
 import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoActivity;
 import com.thesis.smile.presentation.authentication.register.energy.info.GeneralInfoActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.main.MainActivity;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
@@ -104,12 +105,12 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
                 .subscribe(this::shareDataDialogEvent);
 
         //TODO: discomment
-        /*getViewModel().observeStartMain()
+        getViewModel().observeStartMain()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {
                     MainActivity.launch(this);
                     finish();
-                });*/
+                });
 
     }
 

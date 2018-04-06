@@ -6,6 +6,7 @@ import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityLoginBinding;
 import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.main.MainActivity;
 import com.thesis.smile.presentation.utils.KeyboardUtils;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
@@ -41,7 +42,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
         getViewModel().observeStartLogin()
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(event -> hideKeyboard());
+                .subscribe(event -> {
+                    hideKeyboard();
+                    MainActivity.launch(this);
+                });
     }
 
     private void hideKeyboard(){

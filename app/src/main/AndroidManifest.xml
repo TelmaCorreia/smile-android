@@ -53,6 +53,10 @@
             android:name=".presentation.authentication.register.energy.RegisterEquipmentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".presentation.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
     </application>
 

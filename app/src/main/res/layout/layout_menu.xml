@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.main.MainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/cl_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorNavigationBottomBar"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:weightSum="4"
+        tools:ignore="InvalidId">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:onClick="@{v -> viewModel.onHomeClick()}">
+
+
+            <ImageView
+                android:id="@+id/home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_home" />
+            <TextView
+                android:id="@+id/homeLabel"
+                style="@style/TextNavigationBottomBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:onClick="@{v -> viewModel.onHistoricalClick()}">
+
+            <ImageView
+                android:id="@+id/historical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_historical" />
+            <TextView
+                android:id="@+id/historicalLabel"
+                style="@style/TextNavigationBottomBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/historical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:onClick="@{v -> viewModel.onTransactionsClick()}">
+
+
+            <ImageView
+                android:id="@+id/transactions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_transaction" />
+
+            <TextView
+                android:id="@+id/transactionsLabel"
+                style="@style/TextNavigationBottomBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transactions"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:onClick="@{v -> viewModel.onRankingClick()}">
+
+
+            <ImageView
+                android:id="@+id/ranking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_transaction" />
+
+            <TextView
+                android:id="@+id/rankingLabel"
+                style="@style/TextNavigationBottomBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ranking"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</layout>
