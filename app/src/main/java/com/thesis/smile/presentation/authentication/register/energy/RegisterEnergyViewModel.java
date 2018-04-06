@@ -7,7 +7,7 @@ import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.ConfigsRemote;
-import com.thesis.smile.data.remote.models.EnergyParams;
+import com.thesis.smile.data.remote.models.EnergyParamsRemote;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.domain.managers.UtilsManager;
@@ -112,7 +112,7 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         ConfigsRemote configs = getConfigs();
         if (configs.getCategories().containsValue(category) && configs.getPower().containsValue(power)
                 && configs.getTariff().containsValue(tariff) && configs.getCycle().containsValue(cycle)){
-            user.setEnergyParams(new EnergyParams(category, power, tariff, cycle));
+            user.setEnergyParams(new EnergyParamsRemote(category, power, tariff, cycle));
             nextObservable.accept(new Event());
         }
 

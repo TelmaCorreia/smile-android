@@ -1,7 +1,6 @@
 package com.thesis.smile.data.remote.models;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class UserRemote{
 
@@ -33,7 +32,7 @@ public class UserRemote{
     private String prod_smart_meter_id;
 
     @Expose
-    private EnergyParams energyParams;
+    private EnergyParamsRemote energyParams;
 
     public UserRemote(){}
 
@@ -109,11 +108,11 @@ public class UserRemote{
         this.prod_smart_meter_id = prod_smart_meter_id;
     }
 
-    public EnergyParams getEnergyParams() {
+    public EnergyParamsRemote getEnergyParams() {
         return energyParams;
     }
 
-    public void setEnergyParams(EnergyParams energyParams) {
-        this.energyParams = energyParams;
+    public void setEnergyParams(EnergyParamsRemote energyParamsRemote) {
+        this.energyParams = energyParamsRemote;
     }
 }

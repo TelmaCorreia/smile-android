@@ -44,6 +44,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
         this.accountManager = accountManager;
         this.utilsManager = utilsManager;
+        userType=getResourceProvider().getString(R.string.consumer);
     }
 
 

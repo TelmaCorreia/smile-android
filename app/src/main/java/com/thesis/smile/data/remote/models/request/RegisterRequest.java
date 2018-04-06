@@ -2,9 +2,7 @@ package com.thesis.smile.data.remote.models.request;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.thesis.smile.data.remote.models.EnergyParams;
-
-import java.io.Serializable;
+import com.thesis.smile.data.remote.models.EnergyParamsRemote;
 
 public class RegisterRequest{
 
@@ -34,19 +32,19 @@ public class RegisterRequest{
 
     @Expose
     @SerializedName("energyParams")
-    private EnergyParams energyParams;
+    private EnergyParamsRemote energyParams;
 
     public RegisterRequest(){}
 
     public RegisterRequest(String firstName, String lastName, String email, String password,
-                           String type, boolean visible, EnergyParams energyParams) {
+                           String type, boolean visible, EnergyParamsRemote energyParamsRemote) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.type = type;
         this.visible = visible;
-        this.energyParams = energyParams;
+        this.energyParams = energyParamsRemote;
     }
 
     public String getEmail() {
@@ -97,11 +95,11 @@ public class RegisterRequest{
         this.visible = visible;
     }
 
-    public EnergyParams getEnergyParams() {
+    public EnergyParamsRemote getEnergyParams() {
         return energyParams;
     }
 
-    public void setEnergyParams(EnergyParams energyParams) {
-        this.energyParams = energyParams;
+    public void setEnergyParams(EnergyParamsRemote energyParamsRemote) {
+        this.energyParams = energyParamsRemote;
     }
 }

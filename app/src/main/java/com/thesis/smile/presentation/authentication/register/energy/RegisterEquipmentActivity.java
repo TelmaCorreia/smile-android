@@ -130,7 +130,7 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
             dialogShareData.setCloseButtonText(R.string.button_not_allow);
             dialogShareData.setDismissible(true);
             dialogShareData.setOnOkClickListener(() -> {getViewModel().setShare(true); getViewModel().setUserType(getUserType());  getViewModel().register(request); dialogShareData.dismiss();});
-            dialogShareData.setOnCloseClickListener(() ->{getViewModel().setShare(false); dialogShareData.dismiss();});
+            dialogShareData.setOnCloseClickListener(() ->{getViewModel().setShare(false); getViewModel().register(request); dialogShareData.dismiss();});
         }
         if(event instanceof OpenDialogEvent){
             dialogShareData.show();
