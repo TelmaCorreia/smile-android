@@ -22,6 +22,6 @@ public class HomeFragment extends BaseToolbarFragment<FragmentHomeBinding, HomeV
 
     @Override
     protected void initViews(FragmentHomeBinding binding) {
-        initToolbar(binding.actionBar.appBar, binding.actionBar.toolbar, false);
+        initToolbar(binding.actionBar.appBar, binding.actionBar.toolbar, false, getResources().getString(R.string.home_title));
     }
 }

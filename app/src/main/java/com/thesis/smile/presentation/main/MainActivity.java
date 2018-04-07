@@ -7,10 +7,13 @@ import android.support.v4.content.ContextCompat;
 
 import com.thesis.smile.R;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.main.historical.HistoricalFragment;
 import com.thesis.smile.presentation.main.home.HomeFragment;
 import com.thesis.smile.presentation.main.menu_events.MenuType;
 import com.thesis.smile.databinding.ActivityMainBinding;
 import com.thesis.smile.presentation.main.menu_events.OpenMenuEvent;
+import com.thesis.smile.presentation.main.ranking.RankingFragment;
+import com.thesis.smile.presentation.main.transactions.TransactionsFragment;
 
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
@@ -20,9 +23,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private static final String TAG_MENU_FRAGMENT = "menu";
 
     private HomeFragment homeFragment;
-    private HomeFragment historicalFragment;
-    private HomeFragment transactionsFragment;
-    private HomeFragment rankingFragment;
+    private HistoricalFragment historicalFragment;
+    private TransactionsFragment transactionsFragment;
+    private RankingFragment rankingFragment;
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -43,9 +46,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void initViews(ActivityMainBinding binding) {
         this.homeFragment = HomeFragment.newInstance();
-        this.historicalFragment = HomeFragment.newInstance();
-        this.transactionsFragment = HomeFragment.newInstance();
-        this.rankingFragment = HomeFragment.newInstance();
+        this.historicalFragment = HistoricalFragment.newInstance();
+        this.transactionsFragment = TransactionsFragment.newInstance();
+        this.rankingFragment = RankingFragment.newInstance();
     }
 
     @Override

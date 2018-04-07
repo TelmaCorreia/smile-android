@@ -72,6 +72,15 @@
     <string name="transactions">transações</string>
     <string name="ranking">ranking</string>
 
+    <string name="home_title">Utilização da energia</string>
+    <string name="historical_title">histórico</string>
+    <string name="transactions_title">transações</string>
+    <string name="ranking_title">ranking</string>
+    <string name="settings_title">Definições</string>
+
+
+
+
 
 
 </resources>
