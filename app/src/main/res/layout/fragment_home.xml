@@ -9,20 +9,310 @@
             name="viewModel"
             type="com.thesis.smile.presentation.main.home.HomeViewModel" />
     </data>
-
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include
-        android:id="@+id/actionBar"
-        layout="@layout/layout_toolbar"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:viewModel="@{viewModel}" />
+        android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+        <include
+            android:id="@+id/actionBar"
+            layout="@layout/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:viewModel="@{viewModel}" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actionBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Text4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_info_title" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/Text5"
+                        android:id="@+id/tvProduction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="584" />
+                    <TextView
+                        style="@style/Text5"
+                        android:paddingLeft="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/watt" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text6"
+                    android:paddingLeft="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_production_description" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/Text5"
+                        android:id="@+id/tvConsumption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="1127" />
+                    <TextView
+                        style="@style/Text5"
+                        android:paddingLeft="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/watt" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text6"
+                    android:paddingLeft="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_consumption_description" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/Text5"
+                        android:id="@+id/tvBatteryLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="21" />
+                    <TextView
+                        style="@style/Text5"
+                        android:paddingLeft="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/percentage" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/Text7"
+                        android:id="@+id/tvBatteryLevelKWH"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="1.1" />
+                    <TextView
+                        style="@style/Text7"
+                        android:paddingLeft="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kWHour" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text6"
+                    android:paddingLeft="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/battery_level_description" />
+
+                <TextView
+                    style="@style/Text4"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/today_info_title" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/energy_bought_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="16dp">
+
+                    <TextView
+                        style="@style/Text7"
+                        android:id="@+id/energy_bought"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/energy_bought"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/llBought"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text7"
+                            android:id="@+id/energy_bought_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            tools:text="0.67" />
+
+                        <TextView
+                            style="@style/Text7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/coin"
+                            android:layout_marginRight="8dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/iv_bg_circle"
+                            android:src="@drawable/ic_nav_right"
+                            android:layout_marginRight="16dp" />
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+                <TextView
+                    style="@style/Text6"
+                    android:id="@+id/tvNotEnergyBought"
+                    android:paddingLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="@string/energy_sold" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/energy_sold_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:paddingLeft="16dp">
+
+                    <TextView
+                        style="@style/Text7"
+                        android:id="@+id/energy_sold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/energy_sold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/llSold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text7"
+                            android:id="@+id/energy_sold_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            tools:text="0.67" />
+
+                        <TextView
+                            style="@style/Text7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/coin"
+                            android:layout_marginRight="8dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/iv_bg_circle"
+                            android:src="@drawable/ic_nav_right"
+                            android:layout_marginRight="16dp" />
+                    </LinearLayout>
+
+
+                </android.support.constraint.ConstraintLayout>
+
+                <TextView
+                    style="@style/Text6"
+                    android:id="@+id/tvNotEnergySold"
+                    android:paddingLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:text="@string/energy_sold" />
+
+                <TextView
+                    style="@style/Text4"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/this_week_info_title" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/Text5"
+                        android:id="@+id/tvRenewableConsumption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="40" />
+                    <TextView
+                        style="@style/Text5"
+                        android:paddingLeft="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/percentage" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/solar_consumption" />
+
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.constraint.ConstraintLayout>
+
 </layout>

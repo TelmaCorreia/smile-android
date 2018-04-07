@@ -78,6 +78,36 @@
     <string name="ranking_title">ranking</string>
     <string name="settings_title">Definições</string>
 
+    <!-- Home -->
+    <string name="current_info_title">Atualmente</string>
+    <string name="today_info_title">Hoje</string>
+    <string name="this_week_info_title">Esta semana</string>
+    <string name="current_production_description">Produção atual</string>
+    <string name="current_consumption_description">Consumo atual</string>
+    <string name="battery_level_description">Nível da bateria</string>
+    <string name="energy_bought">Total de energia comprada</string>
+    <string name="energy_sold">Total de energia vendida</string>
+    <string name="not_energy_sold">Ainda não vendeu energia hoje</string>
+    <string name="not_energy_bought">Ainda não comprou energia hoje</string>
+    <string name="solar_consumption">do seu consumo veio de energia solar</string>
+
+    <!-- Units -->
+    <string name="watt">W</string>
+    <string name="kWatt">kW</string>
+    <string name="kWHour">kWh</string>
+    <string name="percentage">%</string>
+    <string name="coin">€</string>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
