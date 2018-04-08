@@ -7,6 +7,7 @@ import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.data.remote.services.UserService;
 import com.thesis.smile.domain.exceptions.NoUserLoggedException;
 import com.thesis.smile.domain.exceptions.UserNotActiveException;
+import com.thesis.smile.domain.models.User;
 
 
 import javax.inject.Inject;
@@ -32,11 +33,10 @@ public class UserManager {
         return sharedPrefs.isUserDataPresent() ? Completable.complete() : Completable.error(NoUserLoggedException::new);
     }
 
-    public UserRemote getCurrentUser(){
+    public User getCurrentUser(){
 
         return sharedPrefs.getUserData();
     }
-
 
 
     public Completable fetchUserOnLogin(){
@@ -62,8 +62,6 @@ public class UserManager {
     }
 
 
-
-
     protected CompletableTransformer handleRemoteConnectionException(){
         return upstream -> upstream
                 .onErrorResumeNext(throwable -> {
@@ -74,7 +72,7 @@ public class UserManager {
                 });
     }
 
-    private Completable saveUser(UserRemote user) {
+    private Completable saveUser(User user) {
         return Completable.fromAction(() -> sharedPrefs.saveUserData(user));
     }
 

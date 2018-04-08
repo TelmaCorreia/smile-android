@@ -9,9 +9,9 @@ import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.InvalidCredentialsException;
 import com.thesis.smile.data.remote.exceptions.http.UnauthorizedException;
-import com.thesis.smile.data.remote.models.ConfigsRemote;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.domain.managers.UtilsManager;
+import com.thesis.smile.domain.models.Configs;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
@@ -94,7 +94,7 @@ public class LoginViewModel extends BaseViewModel {
 
     }
 
-    private void onConfigsReceived(ConfigsRemote configsRemote) {
+    private void onConfigsReceived(Configs configsRemote) {
         utilsManager.saveConfigs(configsRemote);
         openRegisterObservable.accept(new NavigationEvent());
     }

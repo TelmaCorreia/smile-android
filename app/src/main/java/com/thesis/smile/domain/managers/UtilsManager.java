@@ -1,22 +1,12 @@
 package com.thesis.smile.domain.managers;
 
 import com.thesis.smile.data.preferences.SharedPrefs;
-import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
-import com.thesis.smile.data.remote.exceptions.http.InternetConnectionException;
-import com.thesis.smile.data.remote.models.ConfigsRemote;
-import com.thesis.smile.data.remote.models.UserRemote;
-import com.thesis.smile.data.remote.services.UserService;
 import com.thesis.smile.data.remote.services.UtilsService;
-import com.thesis.smile.domain.exceptions.NoRegisterDataException;
-import com.thesis.smile.domain.exceptions.NoUserLoggedException;
-import com.thesis.smile.domain.exceptions.UserNotActiveException;
-import com.thesis.smile.presentation.utils.actions.Utils;
+import com.thesis.smile.domain.models.Configs;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Completable;
-import io.reactivex.CompletableTransformer;
 import io.reactivex.Single;
 
 @Singleton
@@ -35,18 +25,18 @@ public class UtilsManager {
         return sharedPrefs.isConfigsDataPresent();
     }
 
-    public ConfigsRemote getConfigs(){
+    public Configs getConfigs(){
 
         return sharedPrefs.getConfigs();
     }
 
-    public Single<ConfigsRemote> getConfigsFromServer(){
+    public Single<Configs> getConfigsFromServer(){
 
         return utilsService.getConfigs();
     }
 
 
-    public void saveConfigs(ConfigsRemote configs) {
+    public void saveConfigs(Configs configs) {
         sharedPrefs.saveConfigs(configs);
     }
 

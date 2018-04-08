@@ -6,6 +6,7 @@ import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.models.LoginRemote;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.data.remote.services.LoginService;
+import com.thesis.smile.domain.mapper.UserMapper;
 
 import java.lang.reflect.Type;
 
@@ -41,6 +42,6 @@ public class AccountManager {
     private Completable onLoginSuccess(LoginRemote loginRemote){
         Log.d(TAG,"Login/Register Successful");
         sharedPrefs.saveUserToken(loginRemote.getToken());
-        return Completable.fromAction(() -> sharedPrefs.saveUserData(loginRemote.getUserRemote()));
+        return Completable.fromAction(() -> sharedPrefs.saveUserData(UserMapper.INSTANCE.remoteToDomain(loginRemote.getUserRemote())));
     }
 }

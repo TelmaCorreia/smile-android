@@ -6,11 +6,13 @@ import com.google.gson.Gson;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.R;
-import com.thesis.smile.data.remote.models.ConfigsRemote;
 import com.thesis.smile.data.remote.models.EnergyParamsRemote;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.domain.managers.UtilsManager;
+import com.thesis.smile.domain.mapper.EnergyParamsMapper;
+import com.thesis.smile.domain.models.Configs;
+import com.thesis.smile.domain.models.EnergyParams;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.Event;
@@ -99,7 +101,13 @@ public class RegisterEnergyViewModel extends BaseViewModel {
 
     @Bindable
     public boolean isNextEnabled() {
-        return !(category.isEmpty() || power.isEmpty() || tariff.isEmpty() || cycle.isEmpty());
+        boolean condition = !(category.isEmpty() || power.isEmpty() || tariff.isEmpty());
+        if (!tariff.equals(getResourceProvider().getString(R.string.tariff_without_cycle))){
+            condition = condition && !cycle.isEmpty() && !cycle.equals(getResourceProvider().getString(R.string.no_cycle));
+        }else{
+            condition = condition && cycle.equals(getResourceProvider().getString(R.string.no_cycle));
+        }
+        return condition;
     }
 
     @Bindable
@@ -109,10 +117,11 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     }
 
     public void onNextClick() {
-        ConfigsRemote configs = getConfigs();
+        Configs configs = getConfigs();
         if (configs.getCategories().containsValue(category) && configs.getPower().containsValue(power)
-                && configs.getTariff().containsValue(tariff) && configs.getCycle().containsValue(cycle)){
-            user.setEnergyParams(new EnergyParamsRemote(category, power, tariff, cycle));
+                && configs.getTariff().containsValue(tariff)
+                && (configs.getCycle().containsValue(cycle) || cycle.equals(getResourceProvider().getString(R.string.no_cycle)) )){
+            user.setEnergyParams(EnergyParamsMapper.INSTANCE.domainToRemote(new EnergyParams(category, power, tariff, cycle)));
             nextObservable.accept(new Event());
         }
 
@@ -127,8 +136,6 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         openCycleInfoObservable.accept(new NavigationEvent());
     }
 
-
-
     Observable<Event> observeNext(){
         return nextObservable;
     }
@@ -142,7 +149,7 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     }
 
 
-    public ConfigsRemote getConfigs() {
+    public Configs getConfigs() {
         return utilsManager.getConfigs();
     }
 

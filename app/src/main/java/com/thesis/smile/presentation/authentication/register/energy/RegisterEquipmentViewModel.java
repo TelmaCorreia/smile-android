@@ -4,10 +4,10 @@ import android.databinding.Bindable;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
-import com.thesis.smile.data.remote.models.ConfigsRemote;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.domain.managers.UtilsManager;
+import com.thesis.smile.domain.models.Configs;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
@@ -71,6 +71,10 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         openCycleInfoObservable.accept(new NavigationEvent());
     }
 
+    public void setRequest(RegisterRequest request){
+        this.request = request;
+        register(request);
+    }
 
     public void register(RegisterRequest request) {
         if (userType.isEmpty()){
@@ -95,7 +99,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         this.request = registerRequest;
     }
 
-    public ConfigsRemote getConfigs() {
+    public Configs getConfigs() {
 
         return utilsManager.getConfigs();
     }
