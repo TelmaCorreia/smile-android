@@ -83,7 +83,9 @@ public class CustomDialog extends Dialog {
     }
 
     public void setOnCloseClickListener(OnCloseClickListener listener){
-        closeListener = listener;
+        binding.close.setOnClickListener(view -> listener.onClose());
+
+       /* closeListener = listener;
         binding.root.setOnClickListener(view -> {
             if(isDismissible) {
                 listener.onClose();
@@ -93,7 +95,7 @@ public class CustomDialog extends Dialog {
             if(isDismissible) {
                 listener.onClose();
             }
-        });
+        });*/
     }
 
     public void setDismissible(boolean isDismissible){

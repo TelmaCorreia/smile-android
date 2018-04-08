@@ -33,13 +33,7 @@ public abstract class BaseToolbarActivity<ViewBinding extends ViewDataBinding, V
     }
 
     public void initToolbar(Toolbar toolbar, boolean showToolbarNavigation, ImageView ivAction, ToolbarActionType actionType) {
-        if (toolbar == null) {
-            throw new IllegalArgumentException("toolbar must not be null.");
-        }
-        if (showToolbarNavigation){
-            toolbar.setNavigationIcon(R.drawable.ic_back);
-            toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        }
+        initToolbar(toolbar, showToolbarNavigation);
 
         this.actionType = actionType;
         switch (actionType){

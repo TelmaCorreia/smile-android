@@ -2,6 +2,7 @@ package com.thesis.smile.di.modules.activities.binding;
 
 import com.thesis.smile.di.modules.activities.CycleInfoActivityModule;
 import com.thesis.smile.di.modules.activities.GeneralInfoActivityModule;
+import com.thesis.smile.di.modules.activities.HomeDetailsActivityModule;
 import com.thesis.smile.di.modules.activities.LoginActivityModule;
 import com.thesis.smile.di.modules.activities.MainActivityModule;
 import com.thesis.smile.di.modules.activities.RegisterEnergyActivityModule;
@@ -16,6 +17,7 @@ import com.thesis.smile.presentation.authentication.register.energy.RegisterEqui
 import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoActivity;
 import com.thesis.smile.presentation.authentication.register.energy.info.GeneralInfoActivity;
 import com.thesis.smile.presentation.main.MainActivity;
+import com.thesis.smile.presentation.main.home.HomeDetailsActivity;
 import com.thesis.smile.presentation.splash.SplashActivity;
 
 import dagger.Module;
@@ -55,4 +57,8 @@ public abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = CycleInfoActivityModule.class)
     abstract CycleInfoActivity cycleInfoActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = HomeDetailsActivityModule.class)
+    abstract HomeDetailsActivity homeDetailsActivity();
 }

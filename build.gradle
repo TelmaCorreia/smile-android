@@ -33,6 +33,8 @@ ext {
 
     daggerVersion = '2.14.1'
 
+    mapperVersion = '1.2.0.Final'
+
     okHttpVersion = '3.9.0'
     retrofitVersion = '2.3.0'
 

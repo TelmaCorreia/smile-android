@@ -3,6 +3,7 @@ package com.thesis.smile.presentation.base.toolbar;
 import android.databinding.ViewDataBinding;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 
 import com.thesis.smile.R;
 import com.thesis.smile.presentation.base.BaseFragment;
@@ -12,6 +13,8 @@ public abstract class BaseToolbarFragment<ViewBinding extends ViewDataBinding, V
 
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
+
+    private ToolbarActionType actionType = ToolbarActionType.NONE;
 
     public void initToolbar(AppBarLayout appBarLayout, Toolbar toolbar){
         initToolbar(appBarLayout, toolbar, true);
@@ -40,6 +43,21 @@ public abstract class BaseToolbarFragment<ViewBinding extends ViewDataBinding, V
         getViewModel().setToolbarTitle(title);
     }
 
+    public void initToolbar(AppBarLayout appBarLayout, Toolbar toolbar, boolean showToolbarNavigation, ImageView ivAction, ToolbarActionType actionType, String title) {
+        initToolbar(appBarLayout, toolbar, showToolbarNavigation, title);
+
+        this.actionType = actionType;
+        switch (actionType){
+            case EDIT:
+                ivAction.setImageDrawable(getResourceProvider().getDrawable(R.drawable.ic_edit));
+            case HIDDEN_MENU:
+                ivAction.setImageDrawable(getResourceProvider().getDrawable(R.drawable.ic_more));
+            case NONE:
+            default:
+
+        }
+
+    }
     @Override
     protected void registerObservables() {
         super.registerObservables();
@@ -49,4 +67,6 @@ public abstract class BaseToolbarFragment<ViewBinding extends ViewDataBinding, V
         }
 
     }
+
+    protected void doAction(){}
 }

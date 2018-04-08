@@ -1,28 +1,28 @@
-package com.thesis.smile.data.remote.models;
+package com.thesis.smile.domain.models;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.Map;
 
-public class ConfigsRemote {
+public class Configs {
 
-    @Expose
+    
     private Map<Integer, String> categories;
 
-    @Expose
+    
     private Map<Integer, String> power;
 
-    @Expose
+    
     private Map<Integer, String> tariff;
 
-    @Expose
+    
     private Map<Integer, String> cycle;
 
-    @Expose
+    
     private Map<Integer, String> userType;
 
-    public ConfigsRemote(){}
-    public ConfigsRemote(Map<Integer, String> categories, Map<Integer, String> power, Map<Integer, String> tariff, Map<Integer, String> cycle, Map<Integer, String> userType) {
+    public Configs(){}
+    public Configs(Map<Integer, String> categories, Map<Integer, String> power, Map<Integer, String> tariff, Map<Integer, String> cycle, Map<Integer, String> userType) {
         this.categories = categories;
         this.power = power;
         this.tariff = tariff;
@@ -69,6 +69,4 @@ public class ConfigsRemote {
     public void setUserType(Map<Integer, String> userType) {
         this.userType = userType;
     }
-
-
 }

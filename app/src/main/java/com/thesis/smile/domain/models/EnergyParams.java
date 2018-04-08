@@ -1,19 +1,19 @@
-package com.thesis.smile.data.remote.models;
+package com.thesis.smile.domain.models;
 
 import com.google.gson.annotations.Expose;
 
-public class EnergyParamsRemote {
-    @Expose
+public class EnergyParams {
+
     private String category;
-    @Expose
+    
     private String power;
-    @Expose
+    
     private String tariff;
-    @Expose
+    
     private String cycle;
 
-    public EnergyParamsRemote(){}
-    public EnergyParamsRemote(String category, String power, String tariff, String cycle) {
+    public EnergyParams(){}
+    public EnergyParams(String category, String power, String tariff, String cycle) {
         this.category = category;
         this.power = power;
         this.tariff = tariff;

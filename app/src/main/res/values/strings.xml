@@ -91,6 +91,18 @@
     <string name="not_energy_bought">Ainda não comprou energia hoje</string>
     <string name="solar_consumption">do seu consumo veio de energia solar</string>
 
+    <!-- Home - details -->
+    <string name="buyer">Cliente</string>
+    <string name="seller">Fornecedor</string>
+    <string name="transaction_date">Data da transação</string>
+    <string name="price_kwH">Preço por kWh</string>
+    <string name="total_bought">Total da Compra</string>
+    <string name="total_sold">Total da Venda</string>
+    <string name="quantity">Quantidade</string>
+
+
+
+
     <!-- Units -->
     <string name="watt">W</string>
     <string name="kWatt">kW</string>

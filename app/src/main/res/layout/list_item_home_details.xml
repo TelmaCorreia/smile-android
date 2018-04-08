@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.constraint.ConstraintLayout
+    style="@style/Common"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/ivUser"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/iv_bg_circle"
+        android:src="@drawable/ic_person"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/llUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivUser">
+        <TextView
+            style="@style/Text7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Dinarte Correia" />
+        <TextView
+            style="@style/Text6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/seller" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/llUser">
+        <TextView
+            style="@style/Text7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="22/03/18 - 16:30 " />
+        <TextView
+            style="@style/Text6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/transaction_date" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/llUser"
+        app:layout_constraintStart_toStartOf="@id/llUser">
+
+        <TextView
+            style="@style/Text7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="0.23 €" />
+
+        <TextView
+            style="@style/Text6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/price_kwH" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/llPrice"
+        app:layout_constraintStart_toStartOf="@id/llPrice">
+
+        <TextView
+            style="@style/Text7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="0.46 €" />
+
+        <TextView
+            style="@style/Text6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/total_bought" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/llDate"
+        app:layout_constraintStart_toStartOf="@id/llDate">
+
+        <TextView
+            style="@style/Text7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2 kWh" />
+
+        <TextView
+            style="@style/Text6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/quantity" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
+</layout>

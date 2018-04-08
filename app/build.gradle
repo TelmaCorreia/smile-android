@@ -123,4 +123,8 @@ dependencies {
     //Permissions
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
+    //Mapper
+    implementation "org.mapstruct:mapstruct:$rootProject.mapperVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$rootProject.mapperVersion"
+
 }

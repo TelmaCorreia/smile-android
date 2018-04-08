@@ -3,6 +3,7 @@ package com.thesis.smile.presentation.main.home;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentHomeBinding;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarFragment;
+import com.thesis.smile.presentation.base.toolbar.ToolbarActionType;
 
 public class HomeFragment extends BaseToolbarFragment<FragmentHomeBinding, HomeViewModel> {
 
@@ -22,6 +23,7 @@ public class HomeFragment extends BaseToolbarFragment<FragmentHomeBinding, HomeV
 
     @Override
     protected void initViews(FragmentHomeBinding binding) {
-        initToolbar(binding.actionBar.appBar, binding.actionBar.toolbar, false, getResources().getString(R.string.home_title));
+        initToolbar(binding.actionBar.appBar, binding.actionBar.toolbar, false, binding.actionBar.action, ToolbarActionType.HIDDEN_MENU, getResources().getString(R.string.home_title));
     }
+
 }
