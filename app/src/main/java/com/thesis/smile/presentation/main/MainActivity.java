@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.view.MenuItem;
 
 import com.thesis.smile.R;
+import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
+import com.thesis.smile.presentation.base.toolbar.ToolbarActionType;
 import com.thesis.smile.presentation.main.historical.HistoricalFragment;
 import com.thesis.smile.presentation.main.home.HomeFragment;
 import com.thesis.smile.presentation.main.menu_events.MenuType;
@@ -16,7 +20,7 @@ import com.thesis.smile.presentation.main.ranking.RankingFragment;
 import com.thesis.smile.presentation.main.transactions.TransactionsFragment;
 
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
+public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainViewModel> {
 
     private MenuType currentMenuType;
 
@@ -49,6 +53,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         this.historicalFragment = HistoricalFragment.newInstance();
         this.transactionsFragment = TransactionsFragment.newInstance();
         this.rankingFragment = RankingFragment.newInstance();
+        initToolbar(binding.actionBar.toolbar, false, binding.actionBar.action, ToolbarActionType.HIDDEN_MENU, getResources().getString(R.string.home_title));
+
     }
 
     @Override
@@ -61,6 +67,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                         .doOnSubscribe(this::addDisposable)
                         .subscribe(this::openMenu)
         );
+
+        getViewModel()
+                .observeLogout()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    LoginActivity.launch(this);
+                    finish();
+                });
     }
 
     private void openMenu(OpenMenuEvent event) {
@@ -77,21 +91,25 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             default:
                 getBinding().menu.home.setColorFilter(ContextCompat.getColor(this, R.color.colorBackground), android.graphics.PorterDuff.Mode.MULTIPLY);
                 getBinding().menu.homeLabel.setTextColor(getResources().getColor(R.color.colorBackground));
+                getViewModel().setToolbarTitle(getResources().getString(R.string.home_title));
                 fragment = homeFragment;
                 break;
             case HISTORICAL:
                 getBinding().menu.historical.setColorFilter(ContextCompat.getColor(this, R.color.colorBackground), android.graphics.PorterDuff.Mode.MULTIPLY);
                 getBinding().menu.historicalLabel.setTextColor(getResources().getColor(R.color.colorBackground));
+                getViewModel().setToolbarTitle(getResources().getString(R.string.historical_title));
                 fragment = historicalFragment;
                 break;
             case TRANSACTIONS:
                 getBinding().menu.transactions.setColorFilter(ContextCompat.getColor(this, R.color.colorBackground), android.graphics.PorterDuff.Mode.MULTIPLY);
                 getBinding().menu.transactionsLabel.setTextColor(getResources().getColor(R.color.colorBackground));
+                getViewModel().setToolbarTitle(getResources().getString(R.string.transactions_title));
                 fragment = transactionsFragment;
                 break;
             case RANKING:
                 getBinding().menu.ranking.setColorFilter(ContextCompat.getColor(this, R.color.colorBackground), android.graphics.PorterDuff.Mode.MULTIPLY);
                 getBinding().menu.rankingLabel.setTextColor(getResources().getColor(R.color.colorBackground));
+                getViewModel().setToolbarTitle(getResources().getString(R.string.ranking_title));
                 fragment = rankingFragment;
                 break;
         }
@@ -133,4 +151,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     }
 
+    @Override
+    protected void doAction(int item) {
+        switch (item){
+            case R.id.action_settings:
+                break; //TODO
+            case R.id.action_logout: {
+                getViewModel().logout();
+                break;
+            }
+
+        }
+    }
 }

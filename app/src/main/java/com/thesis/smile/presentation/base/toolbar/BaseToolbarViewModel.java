@@ -29,6 +29,7 @@ public class BaseToolbarViewModel extends BaseViewModel {
 
     public void setToolbarTitle(String toolbarTitle){
         this.toolbarTitle = toolbarTitle;
+        notifyChange();
     }
 
     public void onActionClick(){

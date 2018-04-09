@@ -2,9 +2,10 @@ package com.thesis.smile.presentation.main.historical;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentHistoricalBinding;
+import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarFragment;
 
-public class HistoricalFragment extends BaseToolbarFragment<FragmentHistoricalBinding, HistoricalViewModel> {
+public class HistoricalFragment extends BaseFragment<FragmentHistoricalBinding, HistoricalViewModel> {
 
     public static HistoricalFragment newInstance() {
         return new HistoricalFragment();
@@ -22,6 +23,6 @@ public class HistoricalFragment extends BaseToolbarFragment<FragmentHistoricalBi
 
     @Override
     protected void initViews(FragmentHistoricalBinding binding) {
-        initToolbar(binding.actionBar.appBar, binding.actionBar.toolbar, false, getResources().getString(R.string.historical_title));
+        //initToolbar(binding.actionBar.appBar, binding.actionBar.toolbar, false, getResources().getString(R.string.historical_title));
     }
 }

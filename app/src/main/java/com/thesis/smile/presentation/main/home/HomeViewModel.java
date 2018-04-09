@@ -1,6 +1,7 @@
 package com.thesis.smile.presentation.main.home;
 
 import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.Event;
@@ -12,7 +13,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-public class HomeViewModel extends BaseToolbarViewModel {
+public class HomeViewModel extends BaseViewModel {
 
     public PublishRelay<NavigationEvent> openHomeBoughtDetails = PublishRelay.create();
     public PublishRelay<NavigationEvent> openHomeSoldDetails = PublishRelay.create();

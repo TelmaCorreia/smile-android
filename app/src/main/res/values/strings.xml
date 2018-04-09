@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">smile</string>
 
-    <!--Login -->
+    <!-- Toolbar menu -->
+    <string name="logout">logout</string>
+    <string name="settings">Definições</string>
+
+    <!-- Login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="button_login">Login</string>
@@ -34,7 +38,6 @@
     <string name="prompt_solar_panels">Paineis solares</string>
     <string name="prompt_smart_meters">Medidores inteligentes</string>
     <string name="button_register">Registar</string>
-
 
     <!-- Energy bill info -->
     <string name="info_title">Onde encontrar os detalhes do contrato na sua fatura:</string>
@@ -99,9 +102,6 @@
     <string name="total_bought">Total da Compra</string>
     <string name="total_sold">Total da Venda</string>
     <string name="quantity">Quantidade</string>
-
-
-
 
     <!-- Units -->
     <string name="watt">W</string>

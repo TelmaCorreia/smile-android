@@ -2,6 +2,9 @@ package com.thesis.smile.presentation.base.toolbar;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.thesis.smile.R;
@@ -19,6 +22,7 @@ public abstract class BaseToolbarActivity<ViewBinding extends ViewDataBinding, V
 
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
     }
 
     public void initToolbar(Toolbar toolbar, boolean showToolbarNavigation) {
@@ -39,22 +43,29 @@ public abstract class BaseToolbarActivity<ViewBinding extends ViewDataBinding, V
         switch (actionType){
             case EDIT:
                 ivAction.setImageDrawable(getResourceProvider().getDrawable(R.drawable.ic_edit));
-            case NONE:
+            case HIDDEN_MENU:
+                toolbar.inflateMenu(R.menu.toolbar_menu);
+                Menu menu = toolbar.getMenu();
+                for (int i = 0; i < menu.size(); i++) {
+                    MenuItem item = menu.getItem(i);
+                    item.setOnMenuItemClickListener(menuItem -> {
+                        doAction(item.getItemId());
+                        return true;
+                    });
+                }
+                case NONE:
             default:
 
         }
     }
 
-    @Override
-    protected void registerObservables() {
-        super.registerObservables();
+    public void initToolbar( Toolbar toolbar, boolean showToolbarNavigation, ImageView ivAction, ToolbarActionType actionType, String title) {
+        initToolbar(toolbar, showToolbarNavigation, ivAction, actionType);
+        getViewModel().setToolbarTitle(title);
 
-        getViewModel()
-                .observeAction()
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(event -> doAction());
     }
 
-    protected void doAction(){}
+
+    protected void doAction(int item){}
 
 }
