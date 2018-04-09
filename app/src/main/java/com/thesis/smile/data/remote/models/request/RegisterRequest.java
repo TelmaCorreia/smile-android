@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.thesis.smile.data.remote.models.EnergyParamsRemote;
 
+import java.io.File;
+
 public class RegisterRequest{
 
     @Expose
@@ -33,6 +35,8 @@ public class RegisterRequest{
     @Expose
     @SerializedName("energyParams")
     private EnergyParamsRemote energyParams;
+
+    private File picture;
 
     public RegisterRequest(){}
 
@@ -101,5 +105,13 @@ public class RegisterRequest{
 
     public void setEnergyParams(EnergyParamsRemote energyParamsRemote) {
         this.energyParams = energyParamsRemote;
+    }
+
+    public File getPicture() {
+        return picture;
+    }
+
+    public void setPicture(File picture) {
+        this.picture = picture;
     }
 }

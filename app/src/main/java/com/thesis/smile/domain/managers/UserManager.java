@@ -7,8 +7,11 @@ import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.data.remote.services.UserService;
 import com.thesis.smile.domain.exceptions.NoUserLoggedException;
 import com.thesis.smile.domain.exceptions.UserNotActiveException;
+import com.thesis.smile.domain.mapper.UserMapper;
 import com.thesis.smile.domain.models.User;
 
+
+import java.io.File;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,43 +36,22 @@ public class UserManager {
         return sharedPrefs.isUserDataPresent() ? Completable.complete() : Completable.error(NoUserLoggedException::new);
     }
 
+    public Completable updateUserProfilePic(File file){
+        String currentUserId = sharedPrefs.getUserToken();
+
+        return Completable.fromAction(()->
+                userService.updateUserProfilePic(currentUserId, file)
+                .map(UserMapper.INSTANCE::remoteToDomain));
+    }
+
     public User getCurrentUser(){
 
         return sharedPrefs.getUserData();
     }
 
+    public String getCurrenUserToken(){
 
-    public Completable fetchUserOnLogin(){
-        if(sharedPrefs.isUserDataPresent()){
-            return fetchUser(sharedPrefs.getUserToken());
-        }else{
-            return Completable.error(new NoUserLoggedException());
-        }
-    }
-
-    public Completable fetchUser(String userId){
-        return userService
-                .getUserWithId(userId)
-                .flatMap(user -> {
-                    if(user.isActive())
-                        return Single.just(user);
-                    else{
-                        return Single.error(new UserNotActiveException());
-                    }
-                })
-                .flatMapCompletable(this::saveUser)
-                .compose(handleRemoteConnectionException());
-    }
-
-
-    protected CompletableTransformer handleRemoteConnectionException(){
-        return upstream -> upstream
-                .onErrorResumeNext(throwable -> {
-                    if(throwable instanceof InternetConnectionException || throwable instanceof ConnectionTimeoutException)
-                        return Completable.complete();
-
-                    return upstream;
-                });
+        return sharedPrefs.getUserToken();
     }
 
     private Completable saveUser(User user) {

@@ -1,6 +1,8 @@
 package com.thesis.smile.presentation.authentication.register;
 
 import android.databinding.Bindable;
+import android.graphics.drawable.Drawable;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -15,26 +17,61 @@ import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import java.io.File;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 public class RegisterUserViewModel extends BaseViewModel {
 
+    private String profileImage = "";
     private String firstName = "";
     private String lastName = "";
     private String email = "";
     private String password = "";
     private String confirmPassword = "";
+    private File profilePictureFile;
+    private Drawable imgForeground;
     private RegisterRequest user = new RegisterRequest();
 
     private PublishRelay<Event> nextObservable = PublishRelay.create();
+    private PublishRelay<Event> editProfilePictureObservable = PublishRelay.create();
 
     @Inject
     public RegisterUserViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
+        imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_add_a_photo, null);
+
     }
+
+    @Bindable
+    public Drawable getImgForeground(){
+
+        return imgForeground;
+
+    }
+
+    @Bindable
+    public void setImgForeground(Drawable drawable){
+        this.imgForeground=drawable;
+        notifyPropertyChanged(BR.imgForeground);
+    }
+
+
+    @Bindable
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String image) {
+        this.profileImage = image;
+        notifyPropertyChanged(BR.profileImage);
+        notifyPropertyChanged(BR.nextEnabled);
+    }
+
 
     @Bindable
     public String getFirstName() {
@@ -115,6 +152,7 @@ public class RegisterUserViewModel extends BaseViewModel {
             user.setPassword(password);
             user.setFirstName(firstName);
             user.setLastName(lastName);
+            if (profilePictureFile!=null) {user.setPicture(profilePictureFile);}
             nextObservable.accept(new Event());
         }
 
@@ -126,11 +164,36 @@ public class RegisterUserViewModel extends BaseViewModel {
         return json;
     }
 
+    public void editProfilePicture(){
+        editProfilePictureObservable.accept(new Event());
+
+    }
+
     Observable<Event> observeNext(){
         return nextObservable;
     }
 
+    Observable<Event> observeEditProfilePicture(){
+        return editProfilePictureObservable;
+    }
 
+    public void setProfilePicture(File profilePictureFile) {
+        //TODO
+        this.profilePictureFile = profilePictureFile;
+        setProfileImage(profilePictureFile.getAbsolutePath());
+        /*userManager.updateUserProfilePic(file)
+                .doOnSubscribe(d -> {
+                    addDisposable(d);
+                    endEdition();
+                })
+                .subscribe(() -> {}, Timber::e);*/
+    }
 
+    public File getProfilePictureFile() {
+        return profilePictureFile;
+    }
 
+    public void setProfilePictureFile(File profilePictureFile) {
+        this.profilePictureFile = profilePictureFile;
+    }
 }

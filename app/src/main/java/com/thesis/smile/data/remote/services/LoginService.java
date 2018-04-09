@@ -8,9 +8,14 @@ import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.services.base.ApiService;
 
+import java.io.File;
+
 import javax.inject.Inject;
 
 import io.reactivex.Single;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 
 public class LoginService extends ApiService{

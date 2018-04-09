@@ -6,6 +6,7 @@ import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.managers.UtilsManager;
 import com.thesis.smile.domain.models.Configs;
 import com.thesis.smile.presentation.base.BaseViewModel;
@@ -24,6 +25,7 @@ import io.reactivex.Observable;
 public class RegisterEquipmentViewModel extends BaseViewModel {
 
     private AccountManager accountManager;
+    private UserManager userManager;
     private UtilsManager utilsManager;
     private RegisterRequest request;
 
@@ -39,11 +41,12 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     @Inject
     public RegisterEquipmentViewModel(ResourceProvider resourceProvider,
                                       SchedulerProvider schedulerProvider, UiEvents uiEvents,
-                                      AccountManager accountManager, UtilsManager utilsManager) {
+                                      AccountManager accountManager, UtilsManager utilsManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
         this.accountManager = accountManager;
         this.utilsManager = utilsManager;
+        this.userManager = userManager;
         userType=getResourceProvider().getString(R.string.consumer);
     }
 
@@ -92,6 +95,19 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     private void onRegisterComplete() {
+        if (request.getPicture()!=null){
+            userManager.updateUserProfilePic(request.getPicture())
+                    .compose(loadingTransformCompletable())
+                    .compose(schedulersTransformCompletableIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onPicComplete, this::onError);
+        }
+        else{
+            startMainObservable.accept(new NavigationEvent());
+        }
+    }
+
+    private void onPicComplete() {
         startMainObservable.accept(new NavigationEvent());
     }
 

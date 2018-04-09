@@ -110,19 +110,12 @@
     <string name="percentage">%</string>
     <string name="coin">€</string>
 
+    <!-- Camera permissions -->
+    <string name="request_permission_title">Permissão necessária</string>
+    <string name="camera_permission">A aplicação precisa de permissão para usar a câmera</string>
 
-
-
-
-
-
-
-
-
-
-
-
-
+    <!--utils-->
+    <string name="profile_picture">Profile picture</string>
 
 
 </resources>

@@ -29,11 +29,17 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    imageError="@{@drawable/ic_person}"
+                    imageUri="@{viewModel.profileImage}"
+                    android:id="@+id/ivProfile"
                     android:layout_width="70dp"
                     android:layout_height="64dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginBottom="16dp"
-                    android:src="@drawable/ic_add_a_photo" />
+                    android:foreground="@{viewModel.imgForeground}"
+                    android:onClick="@{v -> viewModel.editProfilePicture()}"
+                    tools:foreground="@drawable/ic_add_a_photo"
+                    tools:src="@drawable/ic_person" />
 
                 <android.support.design.widget.TextInputLayout
                     style="@style/TextInputLayout"

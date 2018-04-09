@@ -114,6 +114,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.jakewharton.timber:timber:4.6.0'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    implementation 'com.github.yalantis:ucrop:2.2.1'
 
     //Tests
     testImplementation 'junit:junit:4.12'

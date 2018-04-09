@@ -6,8 +6,10 @@ import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.models.LoginRemote;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.data.remote.services.LoginService;
+import com.thesis.smile.data.remote.services.UserService;
 import com.thesis.smile.domain.mapper.UserMapper;
 
+import java.io.File;
 import java.lang.reflect.Type;
 
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ public class AccountManager {
     public static final String TAG = AccountManager.class.getSimpleName();
     private SharedPrefs sharedPrefs;
     private LoginService loginService;
+    private UserService userService;
 
     @Inject
     public AccountManager(LoginService loginService, SharedPrefs sharedPrefs) {
