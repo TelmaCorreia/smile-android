@@ -65,6 +65,10 @@ public class SharedPrefs extends BasePreferences {
         return gson.fromJson(json, Configs.class);
     }
 
+    public void deleteUserData() {
+        deletePreferences(Keys.USER_TOKEN, Keys.USER_DATA);
+    }
+
     private class Keys {
         static final String USER_TOKEN = "userToken";
         static final String USER_DATA = "userData";

@@ -34,6 +34,10 @@ public class AccountManager {
                 .flatMapCompletable(this::onLoginSuccess);
     }
 
+    public Completable logout(){
+        return Completable.fromAction(() -> sharedPrefs.deleteUserData());
+    }
+
     public Completable register(RegisterRequest request) {
         return loginService.register(request)
                 .flatMapCompletable(this::onLoginSuccess);
