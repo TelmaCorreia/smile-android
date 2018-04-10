@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 public class LocalDateDeserializer implements JsonDeserializer<LocalDate> {
     @Override
     public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        OffsetDateTime theServerDoesNotReturnALocalDateButItTakesALocalDateInTheRequestAndThisIsBullshit = OffsetDateTime.parse(json.getAsJsonPrimitive().getAsString());
-        return LocalDate.from(theServerDoesNotReturnALocalDateButItTakesALocalDateInTheRequestAndThisIsBullshit);
+        LocalDate localDate = LocalDate.parse(json.getAsJsonPrimitive().getAsString());
+        return LocalDate.from(localDate);
     }
 }

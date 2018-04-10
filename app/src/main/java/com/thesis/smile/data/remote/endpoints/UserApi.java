@@ -26,7 +26,7 @@ public interface UserApi {
     Single<Response<UserResponse>> updateUserWithId(@Path("userUuid") String userId, @Body UserRemote user);
 
     @Multipart
-    @PUT("users/{userUuid}/image")
-    Single<Response<UserResponse>> updateUserImage(@Path("userUuid") String userId, @Part(encoding = "form-data") MultipartBody.Part image);
+    @PUT("users/{token}/image")
+    Single<Response<UserResponse>> updateUserImage(@Path("token") String userId, @Part(encoding = "form-data") MultipartBody.Part image);
 
 }

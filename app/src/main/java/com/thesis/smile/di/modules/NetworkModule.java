@@ -7,10 +7,13 @@ import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.utils.HeaderAuthenticationInterceptor;
 import com.thesis.smile.data.remote.utils.LocalDateDeserializer;
 import com.thesis.smile.data.remote.utils.LocalDateSerializer;
+import com.thesis.smile.data.remote.utils.LocalDateTimeDeserializer;
+import com.thesis.smile.data.remote.utils.LocalDateTimeSerializer;
 import com.thesis.smile.data.remote.utils.OffsetDateTimeDeserializer;
 import com.thesis.smile.data.remote.utils.OffsetDateTimeSerializer;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.OffsetDateTime;
 
 import java.util.concurrent.TimeUnit;
@@ -83,6 +86,8 @@ public class NetworkModule {
                 .registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeSerializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                 .create();
     }
 

@@ -37,10 +37,10 @@ public class UserManager {
     }
 
     public Completable updateUserProfilePic(File file){
-        String currentUserId = sharedPrefs.getUserToken();
+        String token = sharedPrefs.getUserToken();
 
         return Completable.fromAction(()->
-                userService.updateUserProfilePic(currentUserId, file)
+                userService.updateUserProfilePic(token, file)
                 .map(UserMapper.INSTANCE::remoteToDomain));
     }
 

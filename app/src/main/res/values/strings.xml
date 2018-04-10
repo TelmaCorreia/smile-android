@@ -116,6 +116,8 @@
 
     <!--utils-->
     <string name="profile_picture">Profile picture</string>
+    <string name="details_sold_energy">SOLD</string>
+    <string name="details_bought_energy">BOUGHT</string>
 
 
 </resources>

@@ -2,6 +2,7 @@ package com.thesis.smile.presentation.main.home;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentHomeBinding;
+import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarFragment;
 import com.thesis.smile.presentation.base.toolbar.ToolbarActionType;
@@ -24,7 +25,27 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     @Override
     protected void initViews(FragmentHomeBinding binding) {
-        //initToolbar(binding.actionBar.appBar, binding.actionBar.toolbar, false, binding.actionBar.action, ToolbarActionType.HIDDEN_MENU, getResources().getString(R.string.home_title));
     }
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+
+        getViewModel()
+                .observeOpenHomeBoughtDetails()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    HomeDetailsActivity.launch(getContext(), getResources().getString(R.string.details_bought_energy));
+                });
+
+        getViewModel()
+                .observeOpenHomeSoldDetails()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    HomeDetailsActivity.launch(getContext(), getResources().getString(R.string.details_sold_energy));
+                });
+    }
+
+
 
 }
