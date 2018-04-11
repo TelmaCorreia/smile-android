@@ -71,6 +71,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".presentation.settings.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
         <provider
             android:name=".presentation.utils.storage.GenericFileProvider"
             android:authorities="${applicationId}.provider"

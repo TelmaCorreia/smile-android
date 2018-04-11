@@ -39,6 +39,18 @@
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
+    <style name="Tabs">
+        <item name="android:background">@color/colorNavigationBar</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorButtonBackground</item>
+        <item name="tabSelectedTextColor">@color/colorWhite</item>
+        <item name="tabIndicatorColor">@color/colorYellow</item>
+        <item name="tabIndicatorHeight">4dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
     <style name="OverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="overlapAnchor">false</item>
         <item name="android:dropDownVerticalOffset">-4.0dip</item>

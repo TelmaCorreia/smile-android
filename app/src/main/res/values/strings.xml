@@ -105,6 +105,13 @@
     <string name="total_sold">Total da Venda</string>
     <string name="quantity">Quantidade</string>
 
+    <!--Settings-->
+    <string name="tab_user_settings">Definições da Conta</string>
+    <string name="tab_energy_settings">Perfil da Energia</string>
+    <string name="change_password">Mudar password</string>
+    <string name="toggle_share_data">Partilhar dados com a comunidade</string>
+    <string name="toggle_manual_config">Configurar manualmente a compra e/ou a venda de energia</string>
+
     <!-- Units -->
     <string name="watt">W</string>
     <string name="kWatt">kW</string>

@@ -16,6 +16,7 @@
     <!-- General colors -->
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorYellow">#ffeb3b</color>
     <color name="colorTextGrey">#757575</color>
     <color name="colorDividerGrey">#666666</color>
     <color name="colorBackgroundGrey">#e0e0e0</color>

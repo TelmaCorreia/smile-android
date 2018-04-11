@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.view.MenuItem;
 
 import com.thesis.smile.R;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
-import com.thesis.smile.presentation.base.BaseActivity;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
 import com.thesis.smile.presentation.base.toolbar.ToolbarActionType;
 import com.thesis.smile.presentation.main.historical.HistoricalFragment;
@@ -18,6 +16,7 @@ import com.thesis.smile.databinding.ActivityMainBinding;
 import com.thesis.smile.presentation.main.menu_events.OpenMenuEvent;
 import com.thesis.smile.presentation.main.ranking.RankingFragment;
 import com.thesis.smile.presentation.main.transactions.TransactionsFragment;
+import com.thesis.smile.presentation.settings.SettingsActivity;
 
 
 public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainViewModel> {
@@ -155,6 +154,7 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
     protected void doAction(int item) {
         switch (item){
             case R.id.action_settings:
+                SettingsActivity.launch(this);
                 break; //TODO
             case R.id.action_logout: {
                 getViewModel().logout();
