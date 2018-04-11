@@ -9,7 +9,7 @@ import java.util.List;
 public class TransactionsRemote {
 
     @Expose
-    @SerializedName("")
+    @SerializedName("transactions")
     private List<TransactionRemote> transactions;
 
     public TransactionsRemote(){}

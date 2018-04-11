@@ -1,6 +1,5 @@
 package com.thesis.smile.data.remote.endpoints;
 
-import com.thesis.smile.data.remote.models.TransactionsRemote;
 import com.thesis.smile.data.remote.models.response.CurrentEnergyDataResponse;
 import com.thesis.smile.data.remote.models.response.TransactionsResponse;
 
@@ -14,7 +13,7 @@ public interface EnergyApi {
     @GET("energy/current/{token}")
     Single<Response<CurrentEnergyDataResponse>> getCurrentEnergyData(@Path("token") String token);
 
-    @GET("energy/bough/{token}")
+    @GET("energy/bought/{token}")
     Single<Response<TransactionsResponse>> getCurrentBoughtTransactions(@Path("token") String token);
 
     @GET("energy/sold/{token}")

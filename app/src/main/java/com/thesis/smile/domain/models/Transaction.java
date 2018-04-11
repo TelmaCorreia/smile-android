@@ -1,12 +1,13 @@
 package com.thesis.smile.domain.models;
 
 
-import java.time.LocalDateTime;
+import org.threeten.bp.LocalDateTime;
 
 public class Transaction {
 
     private String name;
     private String url;
+    private String type;
     private LocalDateTime date;
     private double priceKWH;
     private int quantity;
@@ -14,9 +15,10 @@ public class Transaction {
 
     public Transaction(){}
 
-    public Transaction(String name, String url, LocalDateTime date, double priceKWH, int quantity, double total) {
+    public Transaction(String name, String url, String type, LocalDateTime date, double priceKWH, int quantity, double total) {
         this.name = name;
         this.url = url;
+        this.type = type;
         this.date = date;
         this.priceKWH = priceKWH;
         this.quantity = quantity;
@@ -69,5 +71,13 @@ public class Transaction {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

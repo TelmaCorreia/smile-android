@@ -24,6 +24,11 @@ public class TransactionsAdapter extends BindableAdapter<Transaction> {
         return new TransactionViewHolder(ListItemHomeDetailsBinding.inflate(inflater, parent, false));
     }
 
+    @Override
+    public void onBindViewHolder(BindableViewHolder<Transaction, ? extends ViewDataBinding> holder, int position) {
+        ((TransactionViewHolder) holder).setTransaction(getItem(position));
+    }
+
     class TransactionViewHolder extends BindableViewHolder<Transaction, ListItemHomeDetailsBinding> {
 
         public TransactionViewHolder(ListItemHomeDetailsBinding binding) {

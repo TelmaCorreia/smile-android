@@ -2,7 +2,8 @@ package com.thesis.smile.data.remote.models;
 
 import com.google.gson.annotations.Expose;
 
-import java.time.LocalDateTime;
+import org.threeten.bp.LocalDateTime;
+
 
 public class TransactionRemote {
 
@@ -10,6 +11,8 @@ public class TransactionRemote {
     private String name;
     @Expose
     private String url;
+    @Expose
+    private String type;
     @Expose
     private LocalDateTime date;
     @Expose
@@ -21,9 +24,10 @@ public class TransactionRemote {
 
     public TransactionRemote(){}
 
-    public TransactionRemote(String name, String url, LocalDateTime date, double priceKWH, int quantity, double total) {
+    public TransactionRemote(String name, String url, String type, LocalDateTime date, double priceKWH, int quantity, double total) {
         this.name = name;
         this.url = url;
+        this.type = type;
         this.date = date;
         this.priceKWH = priceKWH;
         this.quantity = quantity;
@@ -76,5 +80,13 @@ public class TransactionRemote {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

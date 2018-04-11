@@ -25,10 +25,12 @@ public abstract class BaseToolbarActivity<ViewBinding extends ViewDataBinding, V
 
     }
 
-    public void initToolbar(Toolbar toolbar, boolean showToolbarNavigation) {
+    public void initToolbar(Toolbar toolbar, boolean showToolbarNavigation, String title) {
         if (toolbar == null) {
             throw new IllegalArgumentException("toolbar must not be null.");
         }
+
+        getViewModel().setToolbarTitle(title);
         if (showToolbarNavigation){
             toolbar.setNavigationIcon(R.drawable.ic_back);
             toolbar.setNavigationOnClickListener(v -> onBackPressed());
@@ -36,8 +38,8 @@ public abstract class BaseToolbarActivity<ViewBinding extends ViewDataBinding, V
 
     }
 
-    public void initToolbar(Toolbar toolbar, boolean showToolbarNavigation, ImageView ivAction, ToolbarActionType actionType) {
-        initToolbar(toolbar, showToolbarNavigation);
+    public void initToolbar(Toolbar toolbar, boolean showToolbarNavigation, ImageView ivAction, ToolbarActionType actionType, String title) {
+        initToolbar(toolbar, showToolbarNavigation, title);
 
         this.actionType = actionType;
         switch (actionType){
@@ -59,11 +61,7 @@ public abstract class BaseToolbarActivity<ViewBinding extends ViewDataBinding, V
         }
     }
 
-    public void initToolbar( Toolbar toolbar, boolean showToolbarNavigation, ImageView ivAction, ToolbarActionType actionType, String title) {
-        initToolbar(toolbar, showToolbarNavigation, ivAction, actionType);
-        getViewModel().setToolbarTitle(title);
 
-    }
 
 
     protected void doAction(int item){}

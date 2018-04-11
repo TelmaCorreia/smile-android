@@ -17,6 +17,8 @@
 
 
     <ImageView
+        imageUrl="@{viewModel.url}"
+        imageError="@{@drawable/ic_person}"
         android:id="@+id/ivUser"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -37,11 +39,13 @@
             style="@style/Text7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.name}"
             tools:text="Dinarte Correia" />
         <TextView
             style="@style/Text6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.type}"
             tools:text="@string/seller" />
     </LinearLayout>
 
@@ -57,6 +61,7 @@
             style="@style/Text7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.date}"
             tools:text="22/03/18 - 16:30 " />
         <TextView
             style="@style/Text6"
@@ -79,6 +84,7 @@
             style="@style/Text7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.priceKWH}"
             tools:text="0.23 €" />
 
         <TextView
@@ -100,6 +106,7 @@
             style="@style/Text7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.total}"
             tools:text="0.46 €" />
 
         <TextView
@@ -121,6 +128,7 @@
             style="@style/Text7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.quantity}"
             tools:text="2 kWh" />
 
         <TextView
