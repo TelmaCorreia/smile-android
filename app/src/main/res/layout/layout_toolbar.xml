@@ -22,6 +22,7 @@
             android:layout_height="?actionBarSize"
             android:gravity="center"
             android:background="@color/colorNavigationBar"
+            theme="@style/Toolbar"
             tools:navigationIcon="@drawable/ic_back">
 
             <TextView

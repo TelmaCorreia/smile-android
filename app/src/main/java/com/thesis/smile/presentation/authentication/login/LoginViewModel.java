@@ -1,7 +1,10 @@
 package com.thesis.smile.presentation.authentication.login;
 
 import android.databinding.Bindable;
+import android.graphics.Color;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
@@ -13,6 +16,7 @@ import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.domain.managers.UtilsManager;
 import com.thesis.smile.domain.models.Configs;
 import com.thesis.smile.presentation.base.BaseViewModel;
+import com.thesis.smile.presentation.utils.SpanUtils;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.Event;
@@ -70,6 +74,21 @@ public class LoginViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.loginEnabled);
     }
 
+
+    @Bindable
+    public SpannableString getRegister() {
+        String content = getResourceProvider().getString(R.string.sentence_register);
+        SpannableString spString = (SpannableString) SpanUtils.underlineString(content, "Registe-se agora");
+        return spString;
+    }
+    @Bindable
+    public SpannableString getRecover() {
+
+        String content = getResourceProvider().getString(R.string.sentence_recover_password);
+        SpannableString spString = (SpannableString) SpanUtils.underlineString(content, "Recuperar");
+        return spString;
+
+    }
 
     @Bindable
     public boolean isLoginEnabled() {

@@ -60,7 +60,7 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sentence_recover_password"
+            android:text="@{viewModel.recover}"
             android:gravity="left"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:textAlignment="center"
-            android:text="@string/sentence_register"
+            android:text="@{viewModel.register}"
             android:onClick="@{v -> viewModel.onRegisterClick()}"/>
 
     </LinearLayout>

@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             app:tabMode="fixed"
             app:backgroundTint="@android:color/transparent"
+            app:tabBackground="@color/colorNavigationBar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actionBar" />
@@ -39,6 +40,8 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tabs"/>

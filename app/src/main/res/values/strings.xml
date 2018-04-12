@@ -10,7 +10,7 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_confirm_password">Confirme a Password</string>
     <string name="button_login">Login</string>
-    <string name="sentence_register">Ainda não tem conta? <u>Registe-se agora</u></string>
+    <string name="sentence_register">Ainda não tem conta? Registe-se agora</string>
     <string name="sentence_recover_password">Esqueceu-se da palavra-passe? <u>Recuperar</u></string>
 
     <!-- Register user details -->
