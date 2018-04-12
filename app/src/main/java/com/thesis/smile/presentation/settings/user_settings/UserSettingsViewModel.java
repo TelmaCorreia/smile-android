@@ -136,6 +136,9 @@ public class UserSettingsViewModel extends BaseViewModel {
         return password.equals(confirmPassword) && Utils.isPasswordValid(password);
     }
 
+    public void onToggleClick() {
+
+    }
     public void onSaveClick() {
 
         if (!isEmailValid(email)){
@@ -161,8 +164,8 @@ public class UserSettingsViewModel extends BaseViewModel {
 
     public void editProfilePicture(){
         editProfilePictureObservable.accept(new Event());
-
     }
+
 
     Observable<Event> observeNext(){
         return nextObservable;

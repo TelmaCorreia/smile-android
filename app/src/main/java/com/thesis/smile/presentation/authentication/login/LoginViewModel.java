@@ -35,6 +35,7 @@ public class LoginViewModel extends BaseViewModel {
 
     private PublishRelay<Event> startLoginObservable = PublishRelay.create();
     private PublishRelay<Event> openRegisterObservable = PublishRelay.create();
+    private PublishRelay<Event> openRecoverPasswordObservable = PublishRelay.create();
     private PublishRelay<Event> openMainObservable = PublishRelay.create();
 
     @Inject
@@ -94,6 +95,11 @@ public class LoginViewModel extends BaseViewModel {
 
     }
 
+    public void onRecoverPasswordClick() {
+
+            openRecoverPasswordObservable.accept(new NavigationEvent());
+    }
+
     private void onConfigsReceived(Configs configsRemote) {
         utilsManager.saveConfigs(configsRemote);
         openRegisterObservable.accept(new NavigationEvent());
@@ -149,8 +155,8 @@ public class LoginViewModel extends BaseViewModel {
     Observable<Event> observeOpenRegister(){
         return openRegisterObservable;
     }
-    Observable<Event> observeOpenMain(){
-        return openMainObservable;
+    Observable<Event> observeOpenRecoverPassword(){
+        return openRecoverPasswordObservable;
     }
 
 

@@ -27,9 +27,9 @@ public class SettingsViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return energySettingsFragment;
-            case 1:
                 return userSettingsFragment;
+            case 1:
+                return energySettingsFragment;
             default:
                 throw new IllegalArgumentException("Invalid position.");
         }

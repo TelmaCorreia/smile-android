@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityLoginBinding;
+import com.thesis.smile.presentation.authentication.recover_pass.RecoverPasswordActivity;
 import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
 import com.thesis.smile.presentation.main.MainActivity;
@@ -39,6 +40,13 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 .subscribe(event -> {
                     RegisterUserActivity.launch(this);
                 });
+
+        getViewModel().observeOpenRecoverPassword()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    RecoverPasswordActivity.launch(this);
+                });
+
 
         getViewModel().observeStartLogin()
                 .doOnSubscribe(this::addDisposable)

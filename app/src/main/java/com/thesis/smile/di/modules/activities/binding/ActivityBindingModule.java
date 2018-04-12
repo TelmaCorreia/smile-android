@@ -5,6 +5,7 @@ import com.thesis.smile.di.modules.activities.GeneralInfoActivityModule;
 import com.thesis.smile.di.modules.activities.HomeDetailsActivityModule;
 import com.thesis.smile.di.modules.activities.LoginActivityModule;
 import com.thesis.smile.di.modules.activities.MainActivityModule;
+import com.thesis.smile.di.modules.activities.RecoverPasswordActivityModule;
 import com.thesis.smile.di.modules.activities.RegisterEnergyActivityModule;
 import com.thesis.smile.di.modules.activities.RegisterEquipmentActivityModule;
 import com.thesis.smile.di.modules.activities.RegisterUserActivityModule;
@@ -12,6 +13,7 @@ import com.thesis.smile.di.modules.activities.SettingsActivityModule;
 import com.thesis.smile.di.modules.activities.SplashActivityModule;
 import com.thesis.smile.di.scopes.ActivityScope;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
+import com.thesis.smile.presentation.authentication.recover_pass.RecoverPasswordActivity;
 import com.thesis.smile.presentation.authentication.register.energy.RegisterEnergyActivity;
 import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
 import com.thesis.smile.presentation.authentication.register.energy.RegisterEquipmentActivity;
@@ -67,4 +69,8 @@ public abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = SettingsActivityModule.class)
     abstract SettingsActivity settingsActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = RecoverPasswordActivityModule.class)
+    abstract RecoverPasswordActivity recoverPasswordActivity();
 }

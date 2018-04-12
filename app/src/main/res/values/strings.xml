@@ -8,6 +8,7 @@
     <!-- Login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_confirm_password">Confirme a Password</string>
     <string name="button_login">Login</string>
     <string name="sentence_register">Ainda não tem conta? <u>Registe-se agora</u></string>
     <string name="sentence_recover_password">Esqueceu-se da palavra-passe? <u>Recuperar</u></string>
@@ -111,6 +112,7 @@
     <string name="change_password">Mudar password</string>
     <string name="toggle_share_data">Partilhar dados com a comunidade</string>
     <string name="toggle_manual_config">Configurar manualmente a compra e/ou a venda de energia</string>
+    <string name="button_save">Guardar</string>
 
     <!-- Units -->
     <string name="watt">W</string>
@@ -123,12 +125,14 @@
     <string name="request_permission_title">Permissão necessária</string>
     <string name="camera_permission">A aplicação precisa de permissão para usar a câmera</string>
 
+    <!-- Recover Password -->
+    <string name="title_recover_password">Introduza o seu email e a nova password</string>
+    <string name="button_recover">Recuperar Password</string>
+
     <!--utils-->
     <string name="profile_picture">Profile picture</string>
     <string name="details_sold_energy">SOLD</string>
     <string name="details_bought_energy">BOUGHT</string>
     <string name="date_format_transactions">dd/MM/aa HH:mm</string>
-
-
 
 </resources>

@@ -9,6 +9,10 @@
         <item name="android:textColorPrimary">@color/colorBlack</item>
         <item name="android:textColorSecondary">@color/colorWhite</item>
         <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
+        <item name="colorControlNormal">@color/colorDividerGrey</item>
+        <item name="colorControlActivated">@color/colorDividerGrey</item>
+        <item name="colorControlHighlight">@color/colorDividerGrey</item>
+        <item name="android:selectableItemBackground">@drawable/spinner_item_bg_pressed</item>
 
     </style>
 
@@ -92,9 +96,11 @@
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
         <item name="colorAccent">@color/colorTextGrey</item>
-        <item name="colorControlNormal">@color/colorBlack</item>
-        <item name="colorControlActivated">@color/colorBlack</item>
+        <item name="colorPrimary">@color/colorTextGrey</item>
+        <item name="colorControlNormal">@color/colorDividerGrey</item>
+        <item name="colorControlActivated">@color/colorDividerGrey</item>
     </style>
+
     <style name="TextInputLayout" parent="TextAppearance.AppCompat">
         <item name="android:textColorHint">@color/colorTextGrey</item>
         <item name="android:textSize">18sp</item>
@@ -192,6 +198,8 @@
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:background">@drawable/selector_spinner_item</item>
     </style>
 
     <style name="spinnerItemNothingSelectedStyle" parent="android:Widget.TextView.SpinnerItem">
@@ -202,10 +210,15 @@
 
     <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
         <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
         <item name="android:background">@drawable/selector_spinner_item</item>
     </style>
 
-
+    <style name="Spinner" parent="Widget.AppCompat.Spinner.Underlined">
+        <item name="colorControlNormal">@color/colorDividerGrey</item>
+        <item name="colorControlActivated">@color/colorDividerGrey</item>
+        <item name="colorControlHighlight">@color/colorDividerGrey</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
 </resources>
