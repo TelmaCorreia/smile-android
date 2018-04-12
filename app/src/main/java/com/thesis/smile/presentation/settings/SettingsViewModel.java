@@ -7,10 +7,10 @@ import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import javax.inject.Inject;
 
-public class ActivitySettingsViewModel extends BaseToolbarViewModel {{
-}
+public class SettingsViewModel extends BaseToolbarViewModel {
+
     @Inject
-    public ActivitySettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
+    public SettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
         super(resourceProvider, schedulerProvider, uiEvents);
     }
 }

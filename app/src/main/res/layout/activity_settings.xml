@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.thesis.smile.presentation.settings.ActivitySettingsViewModel" />
+            type="com.thesis.smile.presentation.settings.SettingsViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

@@ -7,10 +7,9 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivitySettingsBinding;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
-import com.thesis.smile.presentation.main.MainActivity;
 
 
-public class SettingsActivity extends BaseToolbarActivity<ActivitySettingsBinding, ActivitySettingsViewModel> {
+public class SettingsActivity extends BaseToolbarActivity<ActivitySettingsBinding, SettingsViewModel> {
 
     RxPermissions rxPermissions;
     SettingsViewPagerAdapter pagerAdapter;
@@ -26,8 +25,8 @@ public class SettingsActivity extends BaseToolbarActivity<ActivitySettingsBindin
     }
 
     @Override
-    protected Class<ActivitySettingsViewModel> viewModelClass() {
-        return ActivitySettingsViewModel.class;
+    protected Class<SettingsViewModel> viewModelClass() {
+        return SettingsViewModel.class;
     }
 
     @Override

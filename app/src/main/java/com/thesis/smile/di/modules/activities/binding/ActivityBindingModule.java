@@ -1,5 +1,6 @@
 package com.thesis.smile.di.modules.activities.binding;
 
+import com.thesis.smile.di.modules.activities.ChangePasswordModule;
 import com.thesis.smile.di.modules.activities.CycleInfoActivityModule;
 import com.thesis.smile.di.modules.activities.GeneralInfoActivityModule;
 import com.thesis.smile.di.modules.activities.HomeDetailsActivityModule;
@@ -22,6 +23,7 @@ import com.thesis.smile.presentation.authentication.register.energy.info.General
 import com.thesis.smile.presentation.main.MainActivity;
 import com.thesis.smile.presentation.main.home.HomeDetailsActivity;
 import com.thesis.smile.presentation.settings.SettingsActivity;
+import com.thesis.smile.presentation.settings.user_settings.ChangePasswordActivity;
 import com.thesis.smile.presentation.splash.SplashActivity;
 
 import dagger.Module;
@@ -73,4 +75,8 @@ public abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = RecoverPasswordActivityModule.class)
     abstract RecoverPasswordActivity recoverPasswordActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = ChangePasswordModule.class)
+    abstract ChangePasswordActivity changePasswordActivity();
 }

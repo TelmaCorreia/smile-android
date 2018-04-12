@@ -2,7 +2,10 @@ package com.thesis.smile.presentation.settings.user_settings;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentUserSettingsBinding;
+import com.thesis.smile.presentation.authentication.recover_pass.RecoverPasswordActivity;
+import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
 import com.thesis.smile.presentation.base.BaseFragment;
+import com.thesis.smile.presentation.main.MainActivity;
 import com.thesis.smile.presentation.settings.energy_settings.EnergySettingsFragment;
 
 public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBinding, UserSettingsViewModel> {
@@ -29,6 +32,19 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
 
     @Override
     protected void initViews(FragmentUserSettingsBinding binding) {
+
+    }
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+
+        getViewModel().openChangePasswordObservable()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    ChangePasswordActivity.launch(getContext());
+                });
+
 
     }
 }

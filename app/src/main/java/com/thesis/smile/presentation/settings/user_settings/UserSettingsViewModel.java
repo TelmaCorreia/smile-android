@@ -13,6 +13,7 @@ import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
@@ -34,6 +35,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     private Drawable imgForeground;
     private RegisterRequest user = new RegisterRequest();
 
+    private PublishRelay<NavigationEvent> changePasswordObservable = PublishRelay.create();
     private PublishRelay<Event> nextObservable = PublishRelay.create();
     private PublishRelay<Event> editProfilePictureObservable = PublishRelay.create();
 
@@ -139,6 +141,12 @@ public class UserSettingsViewModel extends BaseViewModel {
     public void onToggleClick() {
 
     }
+
+    public void onChangePasswordClick(){
+
+        changePasswordObservable.accept(new NavigationEvent());
+
+    }
     public void onSaveClick() {
 
         if (!isEmailValid(email)){
@@ -170,6 +178,11 @@ public class UserSettingsViewModel extends BaseViewModel {
     Observable<Event> observeNext(){
         return nextObservable;
     }
+
+    Observable<NavigationEvent> openChangePasswordObservable(){
+        return changePasswordObservable;
+    }
+
 
     Observable<Event> observeEditProfilePicture(){
         return editProfilePictureObservable;
