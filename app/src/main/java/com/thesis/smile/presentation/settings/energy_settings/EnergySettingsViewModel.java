@@ -40,7 +40,8 @@ public class EnergySettingsViewModel extends BaseViewModel {
     private PublishRelay<NavigationEvent> openCycleInfoObservable = PublishRelay.create();
 
     @Inject
-    public EnergySettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
+    public EnergySettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
+                                   UiEvents uiEvents, AccountManager accountManager, UtilsManager utilsManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
         this.accountManager = accountManager;
@@ -124,7 +125,13 @@ public class EnergySettingsViewModel extends BaseViewModel {
 
     }
 
-    public void onToggleClick(){
+    @Bindable
+    public boolean isEquipmentEnabled() {
+        return false; //could be useful int the future
+    }
+
+
+    public void onLearnMoreClick(){
 
     }
 

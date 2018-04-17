@@ -1,12 +1,8 @@
 package com.thesis.smile.domain.managers;
 
 import com.thesis.smile.data.preferences.SharedPrefs;
-import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
-import com.thesis.smile.data.remote.exceptions.http.InternetConnectionException;
-import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.data.remote.services.UserService;
 import com.thesis.smile.domain.exceptions.NoUserLoggedException;
-import com.thesis.smile.domain.exceptions.UserNotActiveException;
 import com.thesis.smile.domain.mapper.UserMapper;
 import com.thesis.smile.domain.models.User;
 
@@ -17,7 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Completable;
-import io.reactivex.CompletableTransformer;
 import io.reactivex.Single;
 
 @Singleton
@@ -44,6 +39,12 @@ public class UserManager {
                 .map(UserMapper.INSTANCE::remoteToDomain));
     }
 
+    public Single<User> updateUser(User user){
+        String token = sharedPrefs.getUserToken();
+
+        return userService.updateUserWithToken(token, user).map(UserMapper.INSTANCE::remoteToDomain);
+    }
+
     public User getCurrentUser(){
 
         return sharedPrefs.getUserData();
@@ -54,8 +55,8 @@ public class UserManager {
         return sharedPrefs.getUserToken();
     }
 
-    private Completable saveUser(User user) {
-        return Completable.fromAction(() -> sharedPrefs.saveUserData(user));
+    public void saveUser(User user) {
+        sharedPrefs.saveUserData(user);
     }
 
 

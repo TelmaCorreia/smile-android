@@ -22,6 +22,7 @@
             android:layout_width="match_parent">
 
             <LinearLayout
+                style="@style/Common"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -87,23 +88,6 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        style="@style/TextInputField"
-                        android:id="@+id/etPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
-                        android:inputType="textPassword"
-                        android:text="@={viewModel.password}"
-                        tools:text="Smile2018!"/>
-
-                </android.support.design.widget.TextInputLayout>
-
                 <android.support.constraint.ConstraintLayout
                     android:layout_marginTop="40dp"
                     android:layout_width="match_parent"
@@ -123,7 +107,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:src="@drawable/ic_nav_right"
-                        android:tint="@color/colorDividerGrey"
+                        android:tint="@color/colorWhite"
+                        android:background="@drawable/iv_bg_circle"
                         android:layout_marginRight="16dp"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -144,19 +129,31 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <android.support.v7.widget.SwitchCompat
+                        android:theme="@style/Switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        android:checked="@={viewModel.visible}"
                         app:layout_constraintTop_toTopOf="parent"/>
 
                 </android.support.constraint.ConstraintLayout>
+
+                <TextView
+                    style="@style/Text8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_gravity="start"
+                    android:text="@string/learn_more"
+                    android:onClick="@{v -> viewModel.onLearnMoreClick()}"/>
 
                 <Button
                     style="@style/Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="48dp"
+                    android:layout_marginBottom="48dp"
                     android:enabled="@{viewModel.saveEnabled}"
                     android:onClick="@{v -> viewModel.onSaveClick()}"
                     android:text="@string/button_save"/>

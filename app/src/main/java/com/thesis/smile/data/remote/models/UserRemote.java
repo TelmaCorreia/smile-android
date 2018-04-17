@@ -26,6 +26,9 @@ public class UserRemote{
     private boolean active;
 
     @Expose
+    private boolean manual;
+
+    @Expose
     private String cons_smart_meter_id;
 
     @Expose
@@ -114,5 +117,13 @@ public class UserRemote{
 
     public void setEnergyParams(EnergyParamsRemote energyParamsRemote) {
         this.energyParams = energyParamsRemote;
+    }
+
+    public boolean isManual() {
+        return manual;
+    }
+
+    public void setManual(boolean manual) {
+        this.manual = manual;
     }
 }

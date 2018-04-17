@@ -36,11 +36,10 @@ public class UserService extends ApiService{
                 .map(UserMapper.INSTANCE::remoteToDomain);
     }
 
-    public Single<User> updateUserWithId(String userId, UserRemote user){
-        return api.updateUserWithId(userId, user)
+    public Single<UserRemote> updateUserWithToken(String token, User user){
+        return api.updateUserWithToken(token, UserMapper.INSTANCE.domainToRemote(user))
                 .compose(networkMapTransform())
-                .map(BaseResponse::getData)
-                .map(UserMapper.INSTANCE::remoteToDomain);
+                .map(BaseResponse::getData);
     }
 
     public Single<UserRemote> updateUserProfilePic(String currentUserId, File file) {

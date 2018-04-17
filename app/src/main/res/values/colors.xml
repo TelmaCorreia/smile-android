@@ -29,6 +29,9 @@
     <!-- Spinner colors-->
     <color name="colorSpinnerSelectedBackground">#bdbdbd</color>
 
+    <!-- Switch -->
+    <color name="colorSwitchTrack">#a7a7a7</color>
+
 
 
 

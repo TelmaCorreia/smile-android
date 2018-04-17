@@ -9,7 +9,7 @@ public class LoginRemote {
     @Expose
     private String token;
 
-    @SerializedName("user")
+    @SerializedName("userResponse")
     @Expose
     private UserRemote userRemote;
 

@@ -9,6 +9,8 @@ import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
+import com.thesis.smile.domain.managers.UserManager;
+import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
@@ -26,29 +28,26 @@ import io.reactivex.Observable;
 public class UserSettingsViewModel extends BaseViewModel {
 
     private String profileImage = "";
-    private String firstName = "";
-    private String lastName = "";
-    private String email = "";
-    private String password = "";
-    private String confirmPassword = "";
     private File profilePictureFile;
     private Drawable imgForeground;
-    private RegisterRequest user = new RegisterRequest();
 
+    private UserManager userManager;
+    private User user;
+    private User previousUser;
     private PublishRelay<NavigationEvent> changePasswordObservable = PublishRelay.create();
-    private PublishRelay<Event> nextObservable = PublishRelay.create();
     private PublishRelay<Event> editProfilePictureObservable = PublishRelay.create();
 
     @Inject
-    public UserSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
+    public UserSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
         imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_add_a_photo, null);
+        this.userManager = userManager;
 
+        getUserFromSP();
     }
 
     @Bindable
-    public Drawable getImgForeground(){
-        return imgForeground;
+    public Drawable getImgForeground(){ return imgForeground;
     }
 
     @Bindable
@@ -60,7 +59,10 @@ public class UserSettingsViewModel extends BaseViewModel {
 
     @Bindable
     public String getProfileImage() {
-        return profileImage;
+        if (user != null){
+            return user.getUrl();
+        }
+        return null;
     }
 
     public void setProfileImage(String image) {
@@ -72,74 +74,81 @@ public class UserSettingsViewModel extends BaseViewModel {
 
     @Bindable
     public String getFirstName() {
-        return firstName;
+        if (user != null){
+            return user.getFirstName();
+        }
+        return null;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if (user != null){
+            user.setFirstName(firstName);
+        }
         notifyPropertyChanged(BR.firstName);
         notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable
     public String getLastName() {
-        return lastName;
+        if (user != null){
+            return user.getLastName();
+        }
+        return null;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if (user != null){
+           user.setLastName(lastName);
+        }
         notifyPropertyChanged(BR.lastName);
         notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable
     public String getEmail() {
-        return email;
+        if (user != null){
+            return user.getEmail();
+        }
+        return null;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (user != null){
+           user.setEmail(email);
+        }
         notifyPropertyChanged(BR.email);
         notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable
-    public String getPassword() {
-        return password;
+    public boolean isVisible() {
+        if (user != null){
+            return user.isVisible();
+        }
+        return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-        notifyPropertyChanged(BR.password);
-        notifyPropertyChanged(BR.saveEnabled);
-    }
-
-    @Bindable
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-        notifyPropertyChanged(BR.confirmPassword);
+    public void setVisible(boolean visible) {
+        if (user != null){
+            user.setVisible(visible);
+        }
+        notifyPropertyChanged(BR.visible);
         notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable
     public boolean isSaveEnabled() {
-        return !(firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty());
+        if(user!=null) {
+            return !(user.getFirstName().equals(previousUser.getFirstName())
+                    && user.getLastName().equals(previousUser.getLastName())
+                    && user.getEmail().equals(previousUser.getEmail())
+                    && user.isVisible()==previousUser.isVisible());
+        }
+        return false;
     }
 
     private boolean isEmailValid(String email) {
         return Utils.isEmailValid(email);
-    }
-
-    private boolean isPasswordValid(String password, String confirmPassword) {
-        return password.equals(confirmPassword) && Utils.isPasswordValid(password);
-    }
-
-    public void onToggleClick() {
-
     }
 
     public void onChangePasswordClick(){
@@ -149,20 +158,30 @@ public class UserSettingsViewModel extends BaseViewModel {
     }
     public void onSaveClick() {
 
-        if (!isEmailValid(email)){
+        if (!isEmailValid(user.getEmail())){
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_invalid_email));
-        }else if (!isPasswordValid(password, confirmPassword)){
-            getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_invalid_password));
         }else{
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            if (profilePictureFile!=null) {user.setPicture(profilePictureFile);}
-            nextObservable.accept(new Event());
+            userManager.updateUser(user)
+                    .compose(schedulersTransformSingleIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onUpdateComplete, this::onError);
         }
 
     }
+
+    public void onLearnMoreClick(){
+
+    }
+
+    private void onUpdateComplete(User user) {
+        userManager.saveUser(user);
+        getUiEvents().showToast(getResourceProvider().getString(R.string.msg_update_sucess));
+        this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.isVisible());
+        this.user = user;
+
+
+    }
+
 
     public String getRegisterRequest() {
         Gson gson = new Gson();
@@ -172,11 +191,6 @@ public class UserSettingsViewModel extends BaseViewModel {
 
     public void editProfilePicture(){
         editProfilePictureObservable.accept(new Event());
-    }
-
-
-    Observable<Event> observeNext(){
-        return nextObservable;
     }
 
     Observable<NavigationEvent> openChangePasswordObservable(){
@@ -206,5 +220,11 @@ public class UserSettingsViewModel extends BaseViewModel {
 
     public void setProfilePictureFile(File profilePictureFile) {
         this.profilePictureFile = profilePictureFile;
+    }
+
+    public void getUserFromSP() {
+        this.user = userManager.getCurrentUser();
+        this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.isVisible());
+        notifyChange();
     }
 }

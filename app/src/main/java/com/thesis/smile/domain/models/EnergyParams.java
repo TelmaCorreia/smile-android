@@ -1,7 +1,5 @@
 package com.thesis.smile.domain.models;
 
-import com.google.gson.annotations.Expose;
-
 public class EnergyParams {
 
     private String category;

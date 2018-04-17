@@ -1,8 +1,5 @@
 package com.thesis.smile.domain.models;
 
-import com.google.gson.annotations.Expose;
-import com.thesis.smile.data.remote.models.EnergyParamsRemote;
-
 public class User {
 
     private String firstName;
@@ -19,6 +16,8 @@ public class User {
 
     private boolean active;
 
+    private boolean manual;
+
     private String cons_smart_meter_id;
 
     private String prod_smart_meter_id;
@@ -26,6 +25,13 @@ public class User {
     private EnergyParams energyParams;
 
     public User(){}
+
+    public User(String firstName, String lastName, String email, boolean visible) {
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.email=email;
+        this.visible=visible;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -106,5 +112,12 @@ public class User {
     public void setEnergyParams(EnergyParams energyParamsRemote) {
         this.energyParams = energyParamsRemote;
     }
-    
+
+    public boolean isManual() {
+        return manual;
+    }
+
+    public void setManual(boolean manual) {
+        this.manual = manual;
+    }
 }
