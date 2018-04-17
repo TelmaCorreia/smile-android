@@ -72,13 +72,13 @@
 
     <!-- Navigation Bottom Bar -->
     <string name="home">home</string>
-    <string name="historical">histórico</string>
+    <string name="historical">Hhistórico</string>
     <string name="transactions">transações</string>
     <string name="ranking">ranking</string>
 
     <string name="home_title">Utilização da energia</string>
     <string name="historical_title">histórico</string>
-    <string name="transactions_title">transações</string>
+    <string name="transactions_title">Transações</string>
     <string name="ranking_title">ranking</string>
     <string name="settings_title">Definições</string>
     <string name="recover_pass_title">Recuperação da password</string>
@@ -142,6 +142,50 @@
     <string name="details_sold_energy">SOLD</string>
     <string name="details_bought_energy">BOUGHT</string>
     <string name="date_format_transactions">dd/MM/aa HH:mm</string>
+
+    <!-- Transactions -->
+    <string name="tab_buy">Configurar venda</string>
+    <string name="tab_sell">Configurar compra</string>
+    <string name="tab_historical_transactions">Histórico das Transações</string>
+    <string name="mandatory_field">Campo obrigatório</string>
+    <string name="optional_fields">Campos opcionais</string>
+    <string name="plus">+</string>
+    <string name="hint_price">00</string>
+
+    <!-- Transactions: Sell-->
+    <string name="sell_enegery">Vender energia aos meus vizinhos</string>
+    <string name="eem_value">Ver o valor que eu pago à EEM</string>
+    <string name="concrete_price_">Preço específico</string>
+    <string name="price_plus">Valor que eu pago por kWh</string>
+    <string name="battery_title">Bateria</string>
+    <string name="battery_description">Selecione a quantidade de energia que pretende armazenar para auto-consumo</string>
+    <string name="timers_sell_title">Configuração dos periodos de venda</string>
+    <string name="timers_sell_description">Selecione o(s) intervalo(s) de tempo para vender enrergia</string>
+    <string name="consumers_title">Consumidores</string>
+    <string name="consumers_description">Selecione os vizinhos a quem quer vender energia</string>
+    <string name="battery_capacity"> / 3.0 </string>
+
+    <!-- Transactions: Buy -->
+    <string name="buy_enegery">Vender energia aos meus vizinhos</string>
+    <string name="price_lower_EEM">Mais barato do que pago à EEM</string>
+    <string name="price_EEM_plus">Valor que pago à EEM</string>
+    <string name="price_EEM_plus_explanation">Selecione esta opção se está disposto a pagar mais do que o valor que paga à EEM</string>
+    <string name="timers_buy_title">Configuração dos periodos de compra</string>
+    <string name="timers_buy_description">Selecione o(s) intervalo(s) de tempo para comprar enrergia</string>
+    <string name="suppliers_title">Fornecedores</string>
+    <string name="suppliers_description">Selecione os vizinhos a quem quer comprar energia</string>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </resources>

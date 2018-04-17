@@ -8,7 +8,7 @@ import com.thesis.smile.databinding.FragmentEnergySettingsBinding;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
 
-public class EnergySettingsFragment  extends BaseFragment<FragmentEnergySettingsBinding, EnergySettingsViewModel> {
+public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsBinding, EnergySettingsViewModel> {
 
     public static EnergySettingsFragment newInstance() {
         EnergySettingsFragment f = new EnergySettingsFragment();

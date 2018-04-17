@@ -91,8 +91,6 @@
         <item name="android:minWidth">64dp</item>
     </style>
 
-
-
     <!-- Form input field-->
     <style name="TextInputField" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/colorBlack</item>
@@ -239,5 +237,12 @@
     <style name="Switch">
         <item name="thumbTint">@color/colorWhite</item>
         <item name="trackTint">@color/switch_color</item>
+    </style>
+
+    <!-- Divider -->
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/colorDividerGrey</item>
     </style>
 </resources>
