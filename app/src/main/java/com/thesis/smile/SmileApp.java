@@ -28,4 +28,5 @@ public class SmileApp extends DaggerApplication {
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
         return DaggerApplicationComponent.builder().create(this);
     }
+
 }

@@ -12,31 +12,39 @@
         android:id="@+id/ivUser"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/iv_bg_circle"
-        android:src="@drawable/ic_person"
+        android:src="@drawable/ic_delete"
+        android:tint="@color/colorDividerGrey"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <LinearLayout
         android:id="@+id/llUser"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:orientation="vertical"
+        android:gravity="left"
+        android:textAlignment="center"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivUser">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivUser"
+        app:layout_constraintEnd_toStartOf="@id/switchCompact">
         <TextView
             style="@style/Text7"
-            android:id="@+id/name"
+            android:id="@+id/tvHours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Dinarte Correia" />
+            tools:text="Das 19:00 às 00:00" />
         <TextView
-            style="@style/Text6"
-            android:id="@+id/role"
+            style="@style/Text7"
+            android:id="@+id/tvDays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/seller" />
+            android:lines="2"
+            tools:text="segunda, terça, quarta, sexta e domingo" />
+
     </LinearLayout>
 
     <android.support.v7.widget.SwitchCompat
@@ -46,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 

@@ -72,7 +72,7 @@
 
     <!-- Navigation Bottom Bar -->
     <string name="home">home</string>
-    <string name="historical">Hhistórico</string>
+    <string name="historical">histórico</string>
     <string name="transactions">transações</string>
     <string name="ranking">ranking</string>
 
