@@ -4,6 +4,9 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.SeekBar;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentSellBinding;
@@ -14,6 +17,8 @@ import com.thesis.smile.presentation.base.adapters.DividerItemDecoration;
 import com.thesis.smile.presentation.main.transactions.expandable_list.NeighbourAdapter;
 import com.thesis.smile.presentation.utils.views.CustomItemDecoration;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,12 +55,33 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         //instantiate your adapter with the list of genres
         Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
+        //FIXME item decoration
         CustomItemDecoration dividerItemDecoration = new CustomItemDecoration(dividerDrawable);
         NeighbourAdapter adapter = new NeighbourAdapter(getContext(), neighbourHeaders);
         binding.consumers.setLayoutManager(layoutManager);
         binding.consumers.setAdapter(adapter);
         binding.consumers.addItemDecoration(dividerItemDecoration);
 
+        binding.sbBattery.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                double value = round(i/100.0, 2);
+                String sValue = String.valueOf(value);
+
+                binding.etBatteryLevel.setText(sValue);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
     }
 
@@ -65,17 +91,15 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
 
     }
 
-   /* private ArrayList<ParentObject> generateConsumers() {
-        ArrayList<ParentObject> parentObjects = new ArrayList<>();
-        ArrayList<Object> childList = new ArrayList<>();
-        childList.add(new Neighbour("Daniel Garigali", "consumidor", "", true));
-        childList.add(new Neighbour("Luisa Barros", "consumidor", "", true));
-        childList.add(new Neighbour("Dino Vasconcelos", "consumidor", "", false));
-        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description));
-        neighbourHeader.setChildObjectList(childList);
-        parentObjects.add(neighbourHeader);
-        return parentObjects;
-    }*/
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+
 
 
 }

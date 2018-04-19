@@ -230,11 +230,12 @@
                     android:layout_height="wrap_content">
 
                     <android.support.v7.widget.AppCompatSeekBar
+                        android:id="@+id/sbBattery"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:thumbTint="@color/colorButtonBackground"
-                        android:progress="50"
-                        android:max="100"
+                        android:progress="0"
+                        android:max="300"
                         android:progressBackgroundTint="@color/colorTextGrey"
                         android:progressTint="@color/colorButtonBackground"
                         app:layout_constraintStart_toStartOf="parent"
@@ -251,6 +252,7 @@
 
                         <br.com.sapereaude.maskedEditText.MaskedEditText
                             style="@style/Text7"
+                            android:id="@+id/etBatteryLevel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="phone"
