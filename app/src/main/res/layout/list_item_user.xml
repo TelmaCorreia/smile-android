@@ -17,27 +17,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/llUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivUser">
         <TextView
             style="@style/Text7"
             android:id="@+id/name"
+            android:layout_marginLeft="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Dinarte Correia" />
-        <TextView
-            style="@style/Text6"
-            android:id="@+id/role"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/seller" />
-    </LinearLayout>
+            tools:text="Dinarte Correia"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivUser"/>
 
     <android.support.v7.widget.SwitchCompat
         android:id="@+id/switchCompact"

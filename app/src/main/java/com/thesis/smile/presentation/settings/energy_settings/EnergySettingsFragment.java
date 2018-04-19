@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentEnergySettingsBinding;
 import com.thesis.smile.presentation.base.BaseFragment;
+import com.thesis.smile.presentation.utils.KeyboardUtils;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
 
 public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsBinding, EnergySettingsViewModel> {
@@ -115,4 +116,6 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
         });
 
     }
+
+
 }

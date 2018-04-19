@@ -12,9 +12,12 @@ import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentSellBinding;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.NeighbourHeader;
+import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.base.adapters.DividerItemDecoration;
 import com.thesis.smile.presentation.main.transactions.expandable_list.NeighbourAdapter;
+import com.thesis.smile.presentation.main.transactions.info_price.InfoPriceActivity;
+import com.thesis.smile.presentation.main.transactions.timers.TimersActivity;
 import com.thesis.smile.presentation.utils.views.CustomItemDecoration;
 
 import java.math.BigDecimal;
@@ -42,16 +45,8 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     @Override
     protected void initViews(FragmentSellBinding binding) {
 
-        List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
-        List<Neighbour> neighbours = new ArrayList<>();
-        neighbours.add(new Neighbour("Filipe Magalhães", "Consumidor", "", true));
-        neighbours.add(new Neighbour("Marta Magalhães", "Consumidor", "", true));
-        neighbours.add(new Neighbour("Filipe Melo", "Consumidor", "", true));
-        neighbours.add(new Neighbour("Miguel Silva", "Consumidor", "", false));
 
-        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
-        neighbourHeaders.add(neighbourHeader);
-
+        List<NeighbourHeader> neighbourHeaders = getConsumers();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         //instantiate your adapter with the list of genres
         Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
@@ -89,6 +84,18 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     protected void registerObservables() {
         super.registerObservables();
 
+        getViewModel().observeOpenPriceInfo()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    InfoPriceActivity.launch(getContext());
+                });
+
+        getViewModel().observeOpenTimer()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    TimersActivity.launch(getContext());
+                });
+
     }
 
     public static double round(double value, int places) {
@@ -100,6 +107,18 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     }
 
 
+    public List<NeighbourHeader> getConsumers() {
+        List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
+        List<Neighbour> neighbours = new ArrayList<>();
+        neighbours.add(new Neighbour("Selecionar todos", true, false));
+        neighbours.add(new Neighbour("Filipe Magalhães", "Consumidor", "", true));
+        neighbours.add(new Neighbour("Marta Magalhães", "Consumidor", "", true));
+        neighbours.add(new Neighbour("Filipe Melo", "Consumidor", "", true));
+        neighbours.add(new Neighbour("Miguel Silva", "Consumidor", "", false));
 
+        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
+        neighbourHeaders.add(neighbourHeader);
 
+        return neighbourHeaders;
+    }
 }

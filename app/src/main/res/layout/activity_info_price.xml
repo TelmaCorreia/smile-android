@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.main.transactions.info_price.InfoPriceViewModel" />
+    </data>
+
+    <LinearLayout
+        style="@style/Common"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="top">
+
+            <TextView
+                style="@style/TextTitles"
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_weight="7"
+                android:text="@string/price_info_title"/>
+            <ImageView
+                android:id="@+id/ivClose"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:onClick="@{v -> viewModel.onCloseClick()}"
+                android:src="@drawable/ic_close"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llTitle">
+
+                <TextView
+                    android:id="@+id/tvOne"
+                    style="@style/Text6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/price_info_subtitle_one"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPriceOne"
+                    style="@style/Text5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@{viewModel.priceOne}"
+                    app:layout_constraintEnd_toStartOf="@id/tvCoinOne"
+                    app:layout_constraintRight_toLeftOf="@id/tvCoinOne"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="0.1894" />
+
+                <TextView
+                    android:id="@+id/tvDescriptionOne"
+                    style="@style/Text6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/price_info_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvPriceOne"
+                    app:layout_constraintTop_toBottomOf="@id/tvPriceOne" />
+
+                <TextView
+                    android:id="@+id/tvCoinOne"
+                    style="@style/Text5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/coin"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llTitle">
+
+                <TextView
+                    android:id="@+id/tvTwo"
+                    style="@style/Text6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/price_info_subtitle_one"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPriceTwo"
+                    style="@style/Text5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@{viewModel.priceOne}"
+                    app:layout_constraintEnd_toStartOf="@id/tvCoinTwo"
+                    app:layout_constraintRight_toLeftOf="@id/tvCoinTwo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="0.1894" />
+
+                <TextView
+                    android:id="@+id/tvDescriptionTwo"
+                    style="@style/Text6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/price_info_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvPriceTwo"
+                    app:layout_constraintTop_toBottomOf="@id/tvPriceTwo" />
+
+                <TextView
+                    android:id="@+id/tvCoinTwo"
+                    style="@style/Text5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/coin"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <!--<view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/colorDividerGrey"/>-->
+
+            <View style="@style/Divider"/>
+
+            <TextView
+                style="@style/Text11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:text="@string/price_info_link"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                style="@style/Text11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/price_info_subtitle_one"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

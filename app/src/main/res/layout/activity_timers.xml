@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.main.transactions.timers.TimersViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/actionBar"
+            layout="@layout/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:viewModel="@{viewModel}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="28dp"
+            android:layout_marginLeft="28dp"
+            app:layout_constraintTop_toBottomOf="@id/actionBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Text10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timers_from"
+                android:layout_marginBottom="8dp"/>
+            <EditText
+                style="@style/Text5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBackgroundGrey"
+                android:padding="8dp"
+                android:text="@={viewModel.from}"
+                android:textColorHint="@color/colorBlack"
+                android:onClick="@{v -> viewModel.onTimerFromClick()}"
+                android:hint="00:00"/>
+
+            <TextView
+                style="@style/Text10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timers_to"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                style="@style/Text5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBackgroundGrey"
+                android:padding="8dp"
+                android:textColorHint="@color/colorBlack"
+                android:text="@={viewModel.to}"
+                android:onClick="@{v -> viewModel.onTimerToClick()}"
+                android:hint="00:00"/>
+
+            <TextView
+                style="@style/Text10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timers_week_days"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.dpro.widgets.WeekdaysPicker
+                android:id="@+id/weekdays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{v -> viewModel.onWeekDaysPickerClick()}"
+                app:background_color="@color/colorBackgroundGrey"
+                app:highlight_color="@color/colorUnderline"
+                app:sunday_first_day="false" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="48dp"
+                android:enabled="@{viewModel.saveEnabled}"
+                android:onClick="@{v -> viewModel.onSaveClick()}"
+                android:text="@string/button_save"/>
+
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

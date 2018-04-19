@@ -9,17 +9,18 @@ import com.thesis.smile.R;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 
-public class NeighbourChildViewHolder extends ChildViewHolder {
+public class SelectAllChildViewHolder extends ChildViewHolder {
 
     public TextView name;
     public ImageView pic;
     public SwitchCompat switchCompat;
 
-    public NeighbourChildViewHolder(View itemView) {
+    public SelectAllChildViewHolder(View itemView) {
         super(itemView);
 
         name = (TextView) itemView.findViewById(R.id.name);
         pic = (ImageView) itemView.findViewById(R.id.ivUser);
+        pic.setVisibility(View.INVISIBLE);
         switchCompat = (SwitchCompat) itemView.findViewById(R.id.switchCompact);
 
     }
@@ -29,16 +30,5 @@ public class NeighbourChildViewHolder extends ChildViewHolder {
         switchCompat.setChecked(neighbour.isVisible());
     }
 
-    public void setName(TextView name) {
-        this.name = name;
-    }
 
-
-    public void setPic(ImageView pic) {
-        this.pic = pic;
-    }
-
-    public void setSwitchCompat(SwitchCompat switchCompat) {
-        this.switchCompat = switchCompat;
-    }
 }

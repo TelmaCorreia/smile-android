@@ -83,6 +83,7 @@
                         android:layout_height="27dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
+                        android:onClick="@{v -> viewModel.onPriceInfoClick()}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvPriceTitle">
 
@@ -103,8 +104,9 @@
                     <RadioGroup
                         android:id="@+id/rg_price_buy"
                         android:layout_width="match_parent"
-                        android:layout_height="77dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:onCheckedChanged="@{viewModel.onPriceChanged}"
                         app:layout_constraintTop_toBottomOf="@+id/llHelp">
 
                         <RadioButton
@@ -127,12 +129,22 @@
 
                     </RadioGroup>
 
+                    <TextView
+                        style="@style/TextHelp"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:lines="2"
+                        android:text="@string/price_EEM_plus_explanation"
+                        android:layout_marginLeft="28dp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/rg_price_buy"/>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
+                        app:layout_constraintBottom_toBottomOf="@id/rg_price_buy">
 
                         <TextView
                             style="@style/Text7"
@@ -147,6 +159,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="phone"
                             android:typeface="monospace"
+                            android:enabled="@{viewModel.plusPriceEditable}"
                             mask:allowed_chars="1234567890"
                             mask:mask="##.##"
                             android:hint="0000"
@@ -169,6 +182,66 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/optional_fields"/>
+
+                <android.support.constraint.ConstraintLayout
+                    style="@style/Common"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toStartOf="@id/bt_add"
+                        app:layout_constraintStart_toStartOf="parent">
+                        <TextView
+                            style="@style/TextTitles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/timers_buy_title" />
+
+                        <TextView
+                            style="@style/TextSubtitles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/timers_buy_description" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/bt_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_add"
+                        android:tint="@color/colorWhite"
+                        android:background="@drawable/iv_bg_circle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:onClick="@{v -> viewModel.onAddTimerClick()}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    style="@style/Common"
+                    android:id="@+id/timers_buy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <View style="@style/Divider"/>
+
+                <android.support.v7.widget.RecyclerView
+                    style="@style/Common"
+                    android:id="@+id/suppliers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
 
 
 

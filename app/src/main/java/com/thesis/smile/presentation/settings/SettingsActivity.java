@@ -2,11 +2,13 @@ package com.thesis.smile.presentation.settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivitySettingsBinding;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
+import com.thesis.smile.presentation.utils.KeyboardUtils;
 
 
 public class SettingsActivity extends BaseToolbarActivity<ActivitySettingsBinding, SettingsViewModel> {
@@ -38,6 +40,24 @@ public class SettingsActivity extends BaseToolbarActivity<ActivitySettingsBindin
         pagerAdapter = new SettingsViewPagerAdapter(getSupportFragmentManager(), getResourceProvider());
         binding.viewpager.setAdapter(pagerAdapter);
         binding.tabs.setupWithViewPager(binding.viewpager);
+
+        binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                    KeyboardUtils.hideKeyboard(SettingsActivity.this);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 }

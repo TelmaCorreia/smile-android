@@ -3,6 +3,7 @@ package com.thesis.smile.presentation.settings.user_settings;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentUserSettingsBinding;
 import com.thesis.smile.presentation.base.BaseFragment;
+import com.thesis.smile.presentation.utils.KeyboardUtils;
 
 public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBinding, UserSettingsViewModel> {
 
@@ -28,7 +29,6 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
 
     @Override
     protected void initViews(FragmentUserSettingsBinding binding) {
-
     }
 
     @Override
@@ -42,6 +42,5 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
                 });
 
     }
-
 
 }

@@ -9,13 +9,18 @@ import com.thesis.smile.R;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.NeighbourHeader;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
+import com.thoughtbot.expandablerecyclerview.MultiTypeExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
+import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 
 import java.util.List;
 
-public class NeighbourAdapter extends ExpandableRecyclerViewAdapter<NeighbourParentViewHolder,NeighbourChildViewHolder> {
+public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<NeighbourParentViewHolder,ChildViewHolder> {
 
     private LayoutInflater inflater;
+    public static final int SELECT_ALL_VIEW_TYPE = 3;
+    public static final int NEIGHBOUR_VIEW_TYPE = 4;
+    /** Use values > 2. That's because ExpandableListPosition.CHILD and ExpandableListPositon.GROUP are 1 and 2 respectively so they are already taken.**/
 
     public NeighbourAdapter(Context context, List<? extends ExpandableGroup> groups) {
         super(groups);
@@ -25,26 +30,57 @@ public class NeighbourAdapter extends ExpandableRecyclerViewAdapter<NeighbourPar
 
     @Override
     public NeighbourParentViewHolder onCreateGroupViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_group, viewGroup, false);
-        return new NeighbourParentViewHolder(view);
+        View selectAll = inflater.inflate(R.layout.list_item_group, viewGroup, false);
+        return new NeighbourParentViewHolder(selectAll);
     }
 
     @Override
-    public NeighbourChildViewHolder onCreateChildViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = inflater.inflate(R.layout.list_item_user, viewGroup, false);
-        return new NeighbourChildViewHolder(view);
+    public ChildViewHolder onCreateChildViewHolder(ViewGroup viewGroup, int viewType) {
+
+        switch (viewType) {
+            case SELECT_ALL_VIEW_TYPE:
+                View selectAll = inflater.inflate(R.layout.list_item_user, viewGroup, false);
+                return new SelectAllChildViewHolder(selectAll);
+            case NEIGHBOUR_VIEW_TYPE:
+                View neighbour =  inflater.inflate(R.layout.list_item_user, viewGroup, false);
+                return new NeighbourChildViewHolder(neighbour);
+            default:
+                throw new IllegalArgumentException("Invalid viewType");
+        }
     }
 
     @Override
-    public void onBindChildViewHolder(NeighbourChildViewHolder holder, int flatPosition, ExpandableGroup group,
+    public void onBindChildViewHolder(ChildViewHolder holder, int flatPosition, ExpandableGroup group,
                                       int childIndex) {
-        final Neighbour neighbour = ((NeighbourHeader) group).getItems().get(childIndex);
-        holder.onBind(neighbour);
+
+        int viewType = getItemViewType(flatPosition);
+        Neighbour neighbour = ((NeighbourHeader) group).getItems().get(childIndex);
+        switch (viewType) {
+            case SELECT_ALL_VIEW_TYPE:
+                ((SelectAllChildViewHolder) holder).onBind(neighbour);
+                break;
+            case NEIGHBOUR_VIEW_TYPE:
+                ((NeighbourChildViewHolder) holder).onBind(neighbour);
+        }
     }
 
     @Override
     public void onBindGroupViewHolder(NeighbourParentViewHolder holder, int flatPosition, ExpandableGroup group) {
         holder.setTitle(group);
+    }
+
+    @Override
+    public int getChildViewType(int position, ExpandableGroup group, int childIndex) {
+        if (((NeighbourHeader) group).getItems().get(childIndex).isSelectAll()) {
+            return SELECT_ALL_VIEW_TYPE;
+        } else {
+            return NEIGHBOUR_VIEW_TYPE;
+        }
+    }
+
+    @Override
+    public boolean isChild(int viewType) {
+        return viewType == SELECT_ALL_VIEW_TYPE || viewType == NEIGHBOUR_VIEW_TYPE;
     }
 
 

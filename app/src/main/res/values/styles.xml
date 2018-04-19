@@ -192,6 +192,24 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="Text9">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Text10">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text11">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <style name="TextNavigationBottomBar">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:fontFamily">@font/roboto_regular</item>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 
 import com.thesis.smile.R;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
@@ -17,6 +18,7 @@ import com.thesis.smile.presentation.main.menu_events.OpenMenuEvent;
 import com.thesis.smile.presentation.main.ranking.RankingFragment;
 import com.thesis.smile.presentation.main.transactions.TransactionsFragment;
 import com.thesis.smile.presentation.settings.SettingsActivity;
+import com.thesis.smile.presentation.utils.KeyboardUtils;
 
 
 public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainViewModel> {
@@ -119,7 +121,6 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
                 .replace(R.id.fragment, fragment, TAG_MENU_FRAGMENT)
                 .runOnCommit(() -> getFragmentTransitionManager().clearOverriddenPopAnimation())
                 .commitAllowingStateLoss();
-
         this.currentMenuType = menuType;
     }
 
@@ -163,4 +164,6 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
 
         }
     }
+
+
 }
