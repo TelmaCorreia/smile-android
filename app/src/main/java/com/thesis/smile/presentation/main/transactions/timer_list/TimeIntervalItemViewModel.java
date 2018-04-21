@@ -49,7 +49,7 @@ public class TimeIntervalItemViewModel extends BaseViewModelInstance{
 
         for(int i=0; i< days.size(); i++){
             if (i==days.size()-2){
-                result += days.get(i) + " e";
+                result += days.get(i) + " e ";
             }else if (i < days.size()-1){
                 result += days.get(i)+", ";
             }else {

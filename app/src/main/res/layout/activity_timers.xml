@@ -46,7 +46,7 @@
                 android:background="@color/colorBackgroundGrey"
                 android:padding="8dp"
                 android:text="@={viewModel.from}"
-                android:textColorHint="@color/colorBlack"
+                android:textColorHint="@color/colorTextGrey"
                 android:onClick="@{v -> viewModel.onTimerFromClick()}"
                 android:hint="00:00"/>
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorBackgroundGrey"
                 android:padding="8dp"
-                android:textColorHint="@color/colorBlack"
+                android:textColorHint="@color/colorTextGrey"
                 android:text="@={viewModel.to}"
                 android:onClick="@{v -> viewModel.onTimerToClick()}"
                 android:hint="00:00"/>

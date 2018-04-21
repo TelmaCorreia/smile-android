@@ -60,8 +60,7 @@ public class TimersActivity extends BaseToolbarActivity<ActivityTimersBinding, T
             getViewModel().setFrom(timeInterval.getFrom());
             getViewModel().setTo(timeInterval.getTo());
             getViewModel().setSelectedDaysStrings(timeInterval.getWeekDaysString());
-            //FIXME
-            // getBinding().weekdays.setSelectedDays(timeInterval.getWeekdays());
+            getBinding().weekdays.setSelectedDays(timeInterval.getWeekdays());
         }
     }
 

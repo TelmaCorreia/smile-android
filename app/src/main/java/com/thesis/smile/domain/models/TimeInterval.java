@@ -3,6 +3,7 @@ package com.thesis.smile.domain.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TimeInterval implements Parcelable{
@@ -28,6 +29,9 @@ public class TimeInterval implements Parcelable{
         to = in.readString();
         weekDaysString = in.createStringArrayList();
         activated = in.readByte() != 0;
+        List<Integer> list = new ArrayList<>();
+        in.readList(list, List.class.getClassLoader());
+        weekDays = list;
     }
 
     public static final Creator<TimeInterval> CREATOR = new Creator<TimeInterval>() {
@@ -93,5 +97,7 @@ public class TimeInterval implements Parcelable{
         parcel.writeString(to);
         parcel.writeStringList(weekDaysString);
         parcel.writeByte((byte) (activated ? 1 : 0));
+        parcel.writeList(weekDays);
+
     }
 }

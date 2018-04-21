@@ -74,7 +74,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 double value = round(i/100.0, 2);
-                String sValue = String.valueOf(value);
+                String sValue = String.format("%.2f", value);
 
                 binding.etBatteryLevel.setText(sValue);
 
