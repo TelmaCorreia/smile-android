@@ -104,7 +104,6 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::shareDataDialogEvent);
 
-        //TODO: discomment
         getViewModel().observeStartMain()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {

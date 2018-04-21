@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.main.transactions.timer_list.TimeIntervalItemViewModel"/>
+    </data>
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="8dp"
@@ -14,6 +20,7 @@
         android:layout_height="40dp"
         android:src="@drawable/ic_delete"
         android:tint="@color/colorDividerGrey"
+        android:onClick="@{v -> viewModel.onDeleteTimerClick()}"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -27,21 +34,51 @@
         android:orientation="vertical"
         android:gravity="left"
         android:textAlignment="center"
+        android:onClick="@{v -> viewModel.onTimerClick()}"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivUser"
         app:layout_constraintEnd_toStartOf="@id/switchCompact">
-        <TextView
-            style="@style/Text7"
-            android:id="@+id/tvHours"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Das 19:00 às 00:00" />
+            android:orientation="horizontal">
+            <TextView
+                style="@style/Text7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="@string/timers_from" />
+            <TextView
+                style="@style/Text7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.from}"
+                tools:text="19:00" />
+
+            <TextView
+                style="@style/Text7"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timers_to" />
+            <TextView
+                style="@style/Text7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.to}"
+                tools:text="20:00" />
+
+        </LinearLayout>
+
         <TextView
             style="@style/Text7"
             android:id="@+id/tvDays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{viewModel.weekDays}"
             android:lines="2"
             tools:text="segunda, terça, quarta, sexta e domingo" />
 
@@ -53,9 +90,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:checked="@={viewModel.activated}"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
+</layout>

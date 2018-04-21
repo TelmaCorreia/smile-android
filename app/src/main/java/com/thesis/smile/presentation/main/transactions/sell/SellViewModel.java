@@ -1,16 +1,23 @@
 package com.thesis.smile.presentation.main.transactions.sell;
 
 import android.databinding.Bindable;
+import android.databinding.ObservableList;
 import android.widget.RadioGroup;
 
 import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.domain.models.TimeInterval;
+import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
+import com.thesis.smile.presentation.utils.databinding.ExclusiveObservableList;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 import com.thesis.smile.BR;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,6 +30,9 @@ public class SellViewModel extends BaseViewModel {
     private boolean sell = true;
     private boolean option1 = true;
     private boolean option2 = false;
+    private final ExclusiveObservableList<TimeInterval> timeIntervals;
+
+
 
     private PublishRelay<NavigationEvent> openPriceInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openTimerObservable = PublishRelay.create();
@@ -31,6 +41,7 @@ public class SellViewModel extends BaseViewModel {
     @Inject
     public SellViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
         super(resourceProvider, schedulerProvider, uiEvents);
+        timeIntervals = new ExclusiveObservableList<>();
     }
     @Bindable
     public boolean isSell() {
@@ -91,12 +102,28 @@ public class SellViewModel extends BaseViewModel {
         openTimerObservable.accept(new NavigationEvent());
     }
 
+    public void addTimeInterval(TimeInterval timeInterval){
+        if (timeIntervals!=null){
+            timeIntervals.add(timeInterval);
+        }
+    }
+
+    public void removeTimerInterval(TimeInterval timeInterval){
+        if (timeIntervals!=null){
+            timeIntervals.remove(timeInterval);
+        }
+    }
+
     Observable<NavigationEvent> observeOpenPriceInfo(){
         return openPriceInfoObservable;
     }
 
     Observable<NavigationEvent> observeOpenTimer(){
         return openTimerObservable;
+    }
+
+    public ObservableList<TimeInterval> getTimeIntervals() {
+        return timeIntervals;
     }
 
 

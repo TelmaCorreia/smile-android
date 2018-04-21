@@ -166,4 +166,11 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        transactionsFragment.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+
 }

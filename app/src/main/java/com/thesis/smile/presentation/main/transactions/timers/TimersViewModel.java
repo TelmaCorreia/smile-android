@@ -2,10 +2,13 @@ package com.thesis.smile.presentation.main.transactions.timers;
 
 import android.databinding.Bindable;
 
+import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
-import com.thesis.smile.R;
+import com.thesis.smile.domain.models.TimeInterval;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
+import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
@@ -14,11 +17,20 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 public class TimersViewModel extends BaseToolbarViewModel {
 
     private String from = "";
     private String to = "";
     private List<Integer> selectedDays = new ArrayList<>();
+    private List<String> selectedDaysStrings = new ArrayList<>();
+
+
+    TimeInterval timeInterval;
+    private PublishRelay<DialogEvent> timerFromDialogObservable = PublishRelay.create();
+    private PublishRelay<DialogEvent> timerToDialogObservable = PublishRelay.create();
+    private PublishRelay<Event> saveObservable = PublishRelay.create();
 
 
     @Inject
@@ -60,15 +72,18 @@ public class TimersViewModel extends BaseToolbarViewModel {
         notifyPropertyChanged(BR.saveEnabled);
     }
 
-    public void onTimerFromClick(){
+    public void setSelectedDaysStrings(List<String> selectedDays) {
+        this.selectedDaysStrings = selectedDays;
+    }
 
+    public void onTimerFromClick(){
+        timerFromDialogObservable.accept(new DialogEvent());
     }
     public void onTimerToClick(){
-
+        timerToDialogObservable.accept(new DialogEvent());
     }
 
     public void onWeekDaysPickerClick(){
-
     }
 
     @Bindable
@@ -76,8 +91,24 @@ public class TimersViewModel extends BaseToolbarViewModel {
        return !(from.isEmpty() || to.isEmpty() || selectedDays.isEmpty());
     }
 
-    public void onSaveClick(){
+    public TimeInterval getTimeInterval() {
+        return timeInterval;
+    }
 
+    public void onSaveClick(){
+        timeInterval = new TimeInterval(from, to, selectedDays, selectedDaysStrings );
+        saveObservable.accept(new Event());
+    }
+
+    Observable<DialogEvent> observeTimerFromDialog(){
+        return timerFromDialogObservable;
+    }
+
+    Observable<DialogEvent> observeTimerToDialog(){
+        return timerToDialogObservable;
+    }
+    Observable<Event> observeSave(){
+        return saveObservable;
     }
 
 

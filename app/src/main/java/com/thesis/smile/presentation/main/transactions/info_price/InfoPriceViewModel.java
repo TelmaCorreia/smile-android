@@ -23,7 +23,6 @@ public class InfoPriceViewModel extends BaseViewModel {
     private List<Integer> selectedDays = new ArrayList<>();
     private PublishRelay<NavigationEvent> closeObservable = PublishRelay.create();
 
-
     @Inject
     public InfoPriceViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
         super(resourceProvider, schedulerProvider, uiEvents);
@@ -42,7 +41,7 @@ public class InfoPriceViewModel extends BaseViewModel {
 
     @Bindable
     public String getLink() {
-        return "0.0982"; //fixme
+        return "https://www.eem.pt/media/324637/monofolha_tarif_btn_ts_2018.pdf"; //fixme
     }
 
     public void onCloseClick(){

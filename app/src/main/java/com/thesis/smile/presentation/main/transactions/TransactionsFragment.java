@@ -1,5 +1,6 @@
 package com.thesis.smile.presentation.main.transactions;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 
 import com.thesis.smile.R;
@@ -59,5 +60,14 @@ public class TransactionsFragment extends BaseFragment<FragmentTransactionsBindi
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==1 || requestCode ==3){
+            pagerAdapter.getSellFragment().onActivityResult(requestCode, resultCode, data);
+        }else{
+            pagerAdapter.getBuyFragment().onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

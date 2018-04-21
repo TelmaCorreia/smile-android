@@ -178,8 +178,8 @@
 
     <!-- Transactions Timers -->
     <string name="timers_title">Períodos do dia</string>
-    <string name="timers_from">Das</string>
-    <string name="timers_to">Às</string>
+    <string name="timers_from">Das </string>
+    <string name="timers_to">Às </string>
     <string name="timers_week_days">Dias da semana</string>
 
     <!-- Price info -->
