@@ -96,6 +96,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".presentation.main.transactions.transaction_details.TransactionDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
         <provider
             android:name=".presentation.utils.storage.GenericFileProvider"
             android:authorities="${applicationId}.provider"

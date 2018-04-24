@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.main.transactions.transaction_details.TransactionDetailsViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/actionBar"
+            layout="@layout/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:viewModel="@{viewModel}" />
+
+        <LinearLayout
+            android:id="@+id/llDate"
+            style="@style/Common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/actionBar"
+            app:layout_constraintBottom_toTopOf="@id/llConsumer">
+
+            <TextView
+                style="@style/Text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.date}"
+                tools:text="16/03/2018" />
+
+            <TextView
+                style="@style/Text6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_date" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llConsumer"
+            style="@style/Common"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llDate"
+            app:layout_constraintBottom_toTopOf="@id/llTotal">
+
+            <TextView
+                style="@style/Text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.client}"
+                tools:text="Maria Dinis" />
+
+            <TextView
+                style="@style/Text6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_details_client" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSupplier"
+            style="@style/Common"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="28dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llDate"
+            app:layout_constraintBottom_toTopOf="@id/llTotal">
+
+            <TextView
+                style="@style/Text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.supplier}"
+                tools:text="Paulo Barreto" />
+
+            <TextView
+                style="@style/Text6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_details_supplier" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTotal"
+            style="@style/Common"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llConsumer"
+            app:layout_constraintBottom_toTopOf="@id/llQuantity">
+
+            <TextView
+                style="@style/Text5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.total}"
+                tools:text="0.52 €" />
+
+            <TextView
+                style="@style/Text12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_details_total" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llQuantity"
+            style="@style/Common"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llTotal">
+
+            <TextView
+                style="@style/Text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.quantity}"
+                tools:text="2 kWh" />
+
+            <TextView
+                style="@style/Text6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/quantity" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPriceKWh"
+            style="@style/Common"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:orientation="vertical"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llTotal">
+
+            <TextView
+                style="@style/Text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.priceKWH}"
+                tools:text="0.26 €" />
+
+            <TextView
+                style="@style/Text6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price_kwH" />
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

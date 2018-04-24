@@ -67,7 +67,7 @@
             style="@style/Text6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/transaction_date" />
+            android:text="@string/transaction_date" />
     </LinearLayout>
 
 
@@ -91,7 +91,7 @@
             style="@style/Text6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/price_kwH" />
+            android:text="@string/price_kwH" />
     </LinearLayout>
 
     <LinearLayout
@@ -113,7 +113,7 @@
             style="@style/Text6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/total_bought" />
+            android:text="@string/total_bought" />
     </LinearLayout>
 
     <LinearLayout
@@ -135,7 +135,7 @@
             style="@style/Text6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/quantity" />
+            android:text="@string/quantity" />
     </LinearLayout>
 
 

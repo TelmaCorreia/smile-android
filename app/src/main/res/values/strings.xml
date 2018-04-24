@@ -176,11 +176,36 @@
     <string name="suppliers_title">Fornecedores</string>
     <string name="suppliers_description">Selecione os vizinhos a quem quer comprar energia</string>
 
+    <!-- Transactions: historical -->
+    <string name="transactions_historical_title">Movimentos das transações</string>
+    <string name="transactions_win_title">Já ganhou com a aplicação</string>
+    <string name="transactions_buy_title">Já comprou de energias renováveis</string>
+    <string name="transactions_last_30_days">Últimos 30 dias</string>
+    <string name="transactions_specific_period">Periodo específico</string>
+    <string name="transactions_menu_all">Todas as transações</string>
+    <string name="transactions_menu_sell">Vendas</string>
+    <string name="transactions_menu_buy">Compras</string>
+    <string name="transactions_today">Hoje</string>
+    <string name="transactions_yesterday">Ontem</string>
+    <string name="transactions_sell">venda</string>
+    <string name="transactions_buy">compra</string>
+    <string name="transactions_date_format">dd/mm/aaaa</string>
+
+
     <!-- Transactions Timers -->
     <string name="timers_title">Períodos do dia</string>
     <string name="timers_from">Das </string>
     <string name="timers_to">Às </string>
     <string name="timers_week_days">Dias da semana</string>
+
+    <!-- Transaction Details -->
+    <string name="transaction_details_title">Detalhes da transação</string>
+    <string name="transaction_details_client">Cliente</string>
+    <string name="transaction_details_supplier">Fornecedor</string>
+    <string name="transaction_details_total">Valor total da venda</string>
+
+
+
 
     <!-- Price info -->
     <string name="price_info_title">A sua tarifa de compra de energia</string>

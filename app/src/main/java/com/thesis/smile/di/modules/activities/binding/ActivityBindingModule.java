@@ -14,6 +14,7 @@ import com.thesis.smile.di.modules.activities.RegisterUserActivityModule;
 import com.thesis.smile.di.modules.activities.SettingsActivityModule;
 import com.thesis.smile.di.modules.activities.SplashActivityModule;
 import com.thesis.smile.di.modules.activities.TimersActivityModule;
+import com.thesis.smile.di.modules.activities.TransactionDetailsActivityModule;
 import com.thesis.smile.di.scopes.ActivityScope;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.authentication.recover_pass.RecoverPasswordActivity;
@@ -26,6 +27,7 @@ import com.thesis.smile.presentation.main.MainActivity;
 import com.thesis.smile.presentation.main.home.HomeDetailsActivity;
 import com.thesis.smile.presentation.main.transactions.info_price.InfoPriceActivity;
 import com.thesis.smile.presentation.main.transactions.timers.TimersActivity;
+import com.thesis.smile.presentation.main.transactions.transaction_details.TransactionDetailsActivity;
 import com.thesis.smile.presentation.settings.SettingsActivity;
 import com.thesis.smile.presentation.settings.user_settings.ChangePasswordActivity;
 import com.thesis.smile.presentation.splash.SplashActivity;
@@ -91,4 +93,8 @@ public abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = InfoPriceActivityModule.class)
     abstract InfoPriceActivity infoPriceActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = TransactionDetailsActivityModule.class)
+    abstract TransactionDetailsActivity transactionDetailsActivity();
 }

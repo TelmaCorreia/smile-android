@@ -21,6 +21,210 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|center_horizontal"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Text6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:lines="2"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:text="@string/transactions_win_title"/>
+
+                        <TextView
+                            style="@style/Text5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.sales}"
+                            android:textAlignment="center"
+                            tools:text="0.34€"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Text6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:lines="2"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:text="@string/transactions_buy_title"/>
+
+                        <TextView
+                            style="@style/Text5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="@{viewModel.purchases}"
+                            tools:text="0.34€"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <TextView
+                    style="@style/Text4"
+                    android:layout_marginTop="28dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transactions_historical_title"/>
+
+            <LinearLayout
+                style="@style/Common"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spPeriod"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spType"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                style="@style/Common"
+                android:id="@+id/llSetPeriod"
+                android:visibility="@{viewModel.setPeriodVisible}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Text10"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="24dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/timers_from"/>
+
+                    <TextView
+                        style="@style/Text10"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="24dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/timers_to"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginRight="8dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:tint="@color/colorTextGrey"
+                            android:onClick="@{v -> viewModel.onInitialDateClick()}"
+                            android:src="@drawable/ic_date"/>
+
+                        <EditText
+                            style="@style/Text7"
+                            android:id="@+id/spInitialDate"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@{viewModel.initialDate}"
+                            android:onClick="@{v -> viewModel.onInitialDateClick()}"
+                            android:hint="@string/transactions_date_format"
+                            android:enabled="false"
+                            android:textColorHint="@color/colorTextGrey"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:tint="@color/colorTextGrey"
+                            android:onClick="@{v -> viewModel.onFinalDateClick()}"
+                            android:src="@drawable/ic_date"/>
+
+                        <EditText
+                            style="@style/Text7"
+                            android:id="@+id/spFinalDate"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@{viewModel.finalDate}"
+                            android:hint="@string/transactions_date_format"
+                            android:enabled="false"
+                            android:onClick="@{v -> viewModel.onFinalDateClick()}"
+                            android:textColorHint="@color/colorTextGrey"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                style="@style/Common"
+                android:id="@+id/historicalTransactions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/llSetPeriod"/>
+
+            </LinearLayout>
+
 
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

@@ -271,7 +271,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="@{viewModel.energySoldInvisible}"
-                    android:text="@string/energy_sold" />
+                    android:text="@string/not_energy_sold" />
 
                 <TextView
                     style="@style/Text4"
