@@ -10,10 +10,31 @@
             type="com.thesis.smile.presentation.main.ranking.RankingViewModel" />
     </data>
 
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            style="@style/Text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ranking_title_top"/>
+
+        <android.support.v7.widget.RecyclerView
+            style="@style/Common"
+            android:id="@+id/rankingList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 </layout>

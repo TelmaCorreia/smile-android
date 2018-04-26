@@ -4,6 +4,8 @@
     android:id="@android:id/text1"
     style="@style/spinnerDropDownItemStyle"
     android:singleLine="true"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:layout_width="match_parent"
     android:checkMark="@color/colorTextGrey"
     android:layout_height="52dp" />

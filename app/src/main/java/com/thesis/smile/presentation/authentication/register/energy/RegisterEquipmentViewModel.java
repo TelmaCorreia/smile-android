@@ -116,7 +116,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     public Configs getConfigs() {
-
         return utilsManager.getConfigs();
     }
     Observable<Event> observeRegister(){

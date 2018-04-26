@@ -87,9 +87,9 @@
     <string name="ranking">ranking</string>
 
     <string name="home_title">Utilização da energia</string>
-    <string name="historical_title">histórico</string>
+    <string name="historical_title">Histórico da utilização de energia</string>
     <string name="transactions_title">Transações</string>
-    <string name="ranking_title">ranking</string>
+    <string name="ranking_title">Ranking</string>
     <string name="settings_title">Definições</string>
     <string name="recover_pass_title">Recuperação da password</string>
 
@@ -214,15 +214,19 @@
     <string name="transaction_details_supplier">Fornecedor</string>
     <string name="transaction_details_total">Valor total da venda</string>
 
-
-
-
     <!-- Price info -->
     <string name="price_info_title">A sua tarifa de compra de energia</string>
     <string name="price_info_subtitle_one">Horas fora de vazio</string>
     <string name="price_info_subtitle_two">Horas de vazio</string>
     <string name="price_info_description">Preço estipulado por kWh pela Empresa de Electrecidade da Madeira (EEM)</string>
     <string name="price_info_link">Para mais informações sobre as tarifas da EEM:</string>
+
+    <!-- Ranking -->
+    <string name="ranking_title_top">Top 20: veja quem consumiu mais energia solar!</string>
+    <string name="ranking_current_week_title">Ranking desta semana</string>
+    <string name="ranking_previous_week_title">Ranking da semana anterior</string>
+    <string name="ranking_general_week_title">Ranking</string>
+
 
 
 
