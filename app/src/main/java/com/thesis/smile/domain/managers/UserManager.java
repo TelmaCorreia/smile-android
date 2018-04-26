@@ -4,6 +4,7 @@ import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.services.UserService;
 import com.thesis.smile.domain.exceptions.NoUserLoggedException;
 import com.thesis.smile.domain.mapper.UserMapper;
+import com.thesis.smile.domain.models.EnergyParams;
 import com.thesis.smile.domain.models.User;
 
 
@@ -43,6 +44,12 @@ public class UserManager {
         String token = sharedPrefs.getUserToken();
 
         return userService.updateUserWithToken(token, user).map(UserMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<User> updateEnergyParams(User user){
+        String token = sharedPrefs.getUserToken();
+
+        return userService.updateEnergyParamsWithToken(token, user).map(UserMapper.INSTANCE::remoteToDomain);
     }
 
     public User getCurrentUser(){

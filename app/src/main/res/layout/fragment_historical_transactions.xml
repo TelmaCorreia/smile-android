@@ -179,7 +179,6 @@
                             android:text="@{viewModel.initialDate}"
                             android:onClick="@{v -> viewModel.onInitialDateClick()}"
                             android:hint="@string/transactions_date_format"
-                            android:enabled="false"
                             android:textColorHint="@color/colorTextGrey"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -206,7 +205,6 @@
                             android:layout_weight="1"
                             android:text="@{viewModel.finalDate}"
                             android:hint="@string/transactions_date_format"
-                            android:enabled="false"
                             android:onClick="@{v -> viewModel.onFinalDateClick()}"
                             android:textColorHint="@color/colorTextGrey"
                             android:layout_height="wrap_content" />

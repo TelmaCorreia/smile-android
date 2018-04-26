@@ -82,10 +82,6 @@ public class SellViewModel extends BaseViewModel {
         this.etBatteryLevel = etBatteryLevel;
     }*/
 
-    public void onCheckedChanged(boolean checked) {
-        this.sell=checked;
-    }
-
     public void onPriceInfoClick(){
         openPriceInfoObservable.accept(new NavigationEvent());
     }

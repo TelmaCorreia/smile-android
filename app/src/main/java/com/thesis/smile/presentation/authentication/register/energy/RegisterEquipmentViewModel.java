@@ -29,14 +29,14 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private UtilsManager utilsManager;
     private RegisterRequest request;
 
-    private boolean share;
+    private boolean manual;
     private String userType;
 
     private PublishRelay<Event> registerObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openGeneralInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openCycleInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> startMainObservable = PublishRelay.create();
-    private PublishRelay<DialogEvent> shareDialogObservable = PublishRelay.create();
+    private PublishRelay<DialogEvent> automaticConfigDialogObservable = PublishRelay.create();
 
     @Inject
     public RegisterEquipmentViewModel(ResourceProvider resourceProvider,
@@ -62,7 +62,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     public void onRegisterClick() {
-        shareDialogObservable.accept(new OpenDialogEvent());
+        automaticConfigDialogObservable.accept(new OpenDialogEvent());
         registerObservable.accept(new Event());
     }
 
@@ -84,7 +84,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
             getUiEvents().showToast(getResourceProvider().getString(R.string.userTypeAlert));
         }else{
             request.setType(userType);
-            request.setVisible(share);
+            request.setVisible(manual);
             accountManager.register(request)
                     .compose(loadingTransformCompletable())
                     .compose(schedulersTransformCompletableIo())
@@ -135,17 +135,17 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         return openCycleInfoObservable;
     }
 
-    Observable<DialogEvent> observeShareDialog(){
-        return shareDialogObservable;
+    Observable<DialogEvent> observeAutomaticConfigDialog(){
+        return automaticConfigDialogObservable;
     }
 
 
-    public boolean isShare() {
-        return share;
+    public boolean isManual() {
+        return manual;
     }
 
-    public void setShare(boolean share) {
-        this.share = share;
+    public void setManual(boolean manual) {
+        this.manual = manual;
     }
 
     public void setUserType(String userType) {

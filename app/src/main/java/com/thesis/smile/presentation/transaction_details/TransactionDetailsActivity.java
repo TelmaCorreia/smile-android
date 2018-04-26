@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.main.transactions.transaction_details;
+package com.thesis.smile.presentation.transaction_details;
 
 import android.content.Context;
 import android.content.Intent;

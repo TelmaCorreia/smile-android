@@ -1,6 +1,5 @@
 package com.thesis.smile.presentation.main.transactions.historical_transactions;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,9 +10,11 @@ import com.thesis.smile.databinding.FragmentHistoricalTransactionsBinding;
 import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.main.transactions.historical_transactions.list.HistoricalTransactionAdapter;
-import com.thesis.smile.presentation.main.transactions.transaction_details.TransactionDetailsActivity;
+import com.thesis.smile.presentation.transaction_details.TransactionDetailsActivity;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.Calendar;
 
@@ -68,13 +69,13 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i > 0) {
-                    getViewModel().setTimePeriod(transactionsTypeMenu[i-1]);
+                    getViewModel().setType(transactionsTypeMenu[i]);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                getViewModel().setTimePeriod(transactionsTypeMenu[0]);
+                getViewModel().setType(transactionsTypeMenu[0]);
             }
         });
 
@@ -88,6 +89,8 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
     }
 
     private void onTransactionSelected(Transaction transaction) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(getResourceProvider().getString(R.string.date_format_transactions));
+        transaction.setDateString(transaction.getDate().format(formatter));
         TransactionDetailsActivity.launch(getContext(), transaction);
     }
 

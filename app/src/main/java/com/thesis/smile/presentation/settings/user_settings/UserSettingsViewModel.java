@@ -179,14 +179,6 @@ public class UserSettingsViewModel extends BaseViewModel {
         this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.isVisible());
         this.user = user;
 
-
-    }
-
-
-    public String getRegisterRequest() {
-        Gson gson = new Gson();
-        String json = gson.toJson(user);
-        return json;
     }
 
     public void editProfilePicture(){

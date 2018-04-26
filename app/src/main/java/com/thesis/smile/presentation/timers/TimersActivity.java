@@ -1,11 +1,8 @@
-package com.thesis.smile.presentation.main.transactions.timers;
+package com.thesis.smile.presentation.timers;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TimePicker;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityTimersBinding;

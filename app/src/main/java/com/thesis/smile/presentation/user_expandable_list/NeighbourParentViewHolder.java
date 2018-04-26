@@ -1,13 +1,11 @@
-package com.thesis.smile.presentation.main.transactions.expandable_list;
+package com.thesis.smile.presentation.user_expandable_list;
 
-import android.content.res.Resources;
 import android.view.View;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.thesis.smile.R;
-import com.thesis.smile.SmileApp;
 import com.thesis.smile.domain.models.NeighbourHeader;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;

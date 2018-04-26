@@ -1,5 +1,6 @@
 package com.thesis.smile.data.remote.endpoints;
 
+import com.thesis.smile.data.remote.models.EnergyParamsRemote;
 import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.data.remote.models.response.UserResponse;
 import com.thesis.smile.domain.models.EnergyParams;
@@ -24,7 +25,7 @@ public interface UserApi {
     Single<Response<UserResponse>> updateUserWithToken(@Path("token") String userId, @Body UserRemote user);
 
     @PUT("users/{token}/energyParams")
-    Single<Response<UserResponse>> updateEnergyParams(@Path("token") String userId, @Body EnergyParams user);
+    Single<Response<UserResponse>> updateEnergyParams(@Path("token") String userId, @Body UserRemote user);
 
     @Multipart
     @PUT("users/{token}/image")

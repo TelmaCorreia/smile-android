@@ -9,21 +9,21 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 public class Transaction implements Parcelable{
 
-    private String name;
-    private String clientName;
-    private String supplierName;
+    private String from;
+    private String to;
     private String url;
     private String type;
     private LocalDateTime date;
-    private String dateString;
     private double priceKWH;
     private int quantity;
     private double total;
+    private String dateString;
 
     public Transaction(){}
 
-    public Transaction(String name, String url, String type, LocalDateTime date, double priceKWH, int quantity, double total) {
-        this.name = name;
+    public Transaction(String from, String to, String url, String type, LocalDateTime date, double priceKWH, int quantity, double total) {
+        this.from = from;
+        this.to = to;
         this.url = url;
         this.type = type;
         this.date = date;
@@ -35,15 +35,14 @@ public class Transaction implements Parcelable{
     }
 
     protected Transaction(Parcel in) {
-        name = in.readString();
-        clientName = in.readString();
-        supplierName = in.readString();
+        from = in.readString();
+        to = in.readString();
         url = in.readString();
         type = in.readString();
-        dateString = in.readString();
         priceKWH = in.readDouble();
         quantity = in.readInt();
         total = in.readDouble();
+        dateString = in.readString();
     }
 
     public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
@@ -57,14 +56,6 @@ public class Transaction implements Parcelable{
             return new Transaction[size];
         }
     };
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getUrl() {
         return url;
@@ -115,20 +106,20 @@ public class Transaction implements Parcelable{
     }
 
 
-    public String getClientName() {
-        return clientName;
+    public String getFrom() {
+        return from;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public String getSupplierName() {
-        return supplierName;
+    public String getTo() {
+        return to;
     }
 
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public void setTo(String to) {
+        this.to = to;
     }
 
     public String getDateString() {
@@ -146,14 +137,13 @@ public class Transaction implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeString(clientName);
-        parcel.writeString(supplierName);
+        parcel.writeString(from);
+        parcel.writeString(to);
         parcel.writeString(url);
         parcel.writeString(type);
-        parcel.writeString(dateString);
         parcel.writeDouble(priceKWH);
         parcel.writeInt(quantity);
         parcel.writeDouble(total);
+        parcel.writeString(dateString);
     }
 }

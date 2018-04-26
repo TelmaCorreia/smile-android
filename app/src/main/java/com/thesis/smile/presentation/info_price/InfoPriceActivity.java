@@ -1,11 +1,10 @@
-package com.thesis.smile.presentation.main.transactions.info_price;
+package com.thesis.smile.presentation.info_price;
 
 import android.content.Context;
 import android.content.Intent;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityInfoPriceBinding;
-import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoViewModel;
 import com.thesis.smile.presentation.base.BaseActivity;
 
 public class InfoPriceActivity extends BaseActivity<ActivityInfoPriceBinding, InfoPriceViewModel> {

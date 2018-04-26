@@ -8,7 +8,9 @@ import org.threeten.bp.LocalDateTime;
 public class TransactionRemote {
 
     @Expose
-    private String name;
+    private String from;
+    @Expose
+    private String to;
     @Expose
     private String url;
     @Expose
@@ -24,8 +26,9 @@ public class TransactionRemote {
 
     public TransactionRemote(){}
 
-    public TransactionRemote(String name, String url, String type, LocalDateTime date, double priceKWH, int quantity, double total) {
-        this.name = name;
+    public TransactionRemote(String from, String to, String url, String type, LocalDateTime date, double priceKWH, int quantity, double total) {
+        this.from = from;
+        this.to = to;
         this.url = url;
         this.type = type;
         this.date = date;
@@ -34,13 +37,6 @@ public class TransactionRemote {
         this.total = total;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getUrl() {
         return url;
@@ -88,5 +84,21 @@ public class TransactionRemote {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
     }
 }

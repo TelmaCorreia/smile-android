@@ -103,7 +103,7 @@
                 android:id="@+id/ranking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_transaction" />
+                android:src="@drawable/ic_ranking" />
 
             <TextView
                 android:id="@+id/rankingLabel"

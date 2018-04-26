@@ -18,7 +18,10 @@ public class TransactionItemViewModel extends BaseViewModelInstance{
 
     @Bindable
     public String getName() {
-        return transaction.getName();
+        if (getType().equals("compra")){
+            return transaction.getFrom();
+        }
+        return transaction.getTo();
     }
     @Bindable
     public String getUrl() {
@@ -46,6 +49,6 @@ public class TransactionItemViewModel extends BaseViewModelInstance{
 
     @Bindable
     public String getTotal() {
-        return String.valueOf(transaction.getTotal()) + " €";
+        return String.format("%.2f", transaction.getTotal()) + " €";
     }
 }

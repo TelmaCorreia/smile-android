@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.thesis.smile.presentation.main.transactions.transaction_details.TransactionDetailsViewModel" />
+            type="com.thesis.smile.presentation.transaction_details.TransactionDetailsViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -79,10 +79,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="28dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="56dp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llDate"
-            app:layout_constraintBottom_toTopOf="@id/llTotal">
+            app:layout_constraintTop_toTopOf="@id/llConsumer"
+            app:layout_constraintBottom_toBottomOf="@id/llConsumer">
 
             <TextView
                 style="@style/Text2"
@@ -149,13 +150,13 @@
 
         <LinearLayout
             android:id="@+id/llPriceKWh"
-            style="@style/Common"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:paddingLeft="16dp"
             android:orientation="vertical"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llTotal">
+            app:layout_constraintStart_toStartOf="@id/llSupplier"
+            app:layout_constraintTop_toTopOf="@id/llQuantity"
+            app:layout_constraintBottom_toBottomOf="@id/llQuantity">
 
             <TextView
                 style="@style/Text2"

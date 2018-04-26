@@ -1,6 +1,6 @@
 package com.thesis.smile.di.modules.activities;
 
-import com.thesis.smile.presentation.main.transactions.info_price.InfoPriceActivity;
+import com.thesis.smile.presentation.info_price.InfoPriceActivity;
 
 import dagger.Module;
 

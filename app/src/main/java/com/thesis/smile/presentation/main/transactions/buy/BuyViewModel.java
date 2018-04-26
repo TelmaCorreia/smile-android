@@ -39,8 +39,14 @@ public class BuyViewModel extends BaseViewModel {
         return option2;
     }
 
-    public void onCheckedChanged(boolean checked) {
-        this.buy=checked;
+    @Bindable
+    public boolean isBuy() {
+        return buy;
+    }
+
+    public void setBuy(boolean buy) {
+        this.buy = buy;
+        notifyPropertyChanged(BR.buy);
     }
 
     public void onPriceChanged(RadioGroup radioGroup, int id){

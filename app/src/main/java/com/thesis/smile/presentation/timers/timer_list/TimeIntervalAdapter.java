@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.main.transactions.timer_list;
+package com.thesis.smile.presentation.timers.timer_list;
 
 import android.databinding.ObservableList;
 import android.databinding.ViewDataBinding;

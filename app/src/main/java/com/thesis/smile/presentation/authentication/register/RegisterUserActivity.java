@@ -12,9 +12,13 @@ import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityRegisterUserBinding;
 import com.thesis.smile.presentation.authentication.register.energy.RegisterEnergyActivity;
+import com.thesis.smile.presentation.authentication.register.energy.RegisterEquipmentActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
+import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.presentation.utils.photos.CameraHelper;
 import com.thesis.smile.presentation.utils.photos.UserImageHelper;
+import com.thesis.smile.presentation.utils.views.CustomDialog;
 import com.thesis.smile.utils.AndroidIntentHelper;
 import com.yalantis.ucrop.UCrop;
 
@@ -25,6 +29,7 @@ import javax.inject.Inject;
 public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBinding, RegisterUserViewModel> {
 
     private final static int REQUEST_USER_PROFILE_PICTURE = 1;
+    private CustomDialog dialogShareData;
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, RegisterUserActivity.class);
@@ -71,16 +76,19 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
     protected void registerObservables() {
         super.registerObservables();
 
-        getViewModel().observeNext()
+/*        getViewModel().observeNext()
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(event -> {
-                    RegisterEnergyActivity.launch(this, getViewModel().getRegisterRequest());
-                });
+                .subscribe(event ->
+                    RegisterEnergyActivity.launch(this, getViewModel().getRegisterRequest()));*/
 
         getViewModel()
                 .observeEditProfilePicture()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> editPicture());
+
+        getViewModel().observeShareDialog()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::shareDataDialogEvent);
 
     }
 
@@ -182,6 +190,29 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
 
        // getViewModel().setProfilePicture(imageHelper.getProfilePictureFile());
         getViewModel().setImgForeground(null);
+    }
+
+    private void shareDataDialogEvent(DialogEvent event){
+        if(dialogShareData == null){
+            dialogShareData = new CustomDialog(RegisterUserActivity.this);
+            dialogShareData.setTitle(R.string.share_data_tilte);
+            dialogShareData.setMessage(R.string.share_data_description);
+            dialogShareData.setSecondMessage(R.string.share_data_changes);
+            dialogShareData.setOkButtonText(R.string.button_allow);
+            dialogShareData.setCloseButtonText(R.string.button_not_allow);
+            dialogShareData.setDismissible(true);
+            dialogShareData.setOnOkClickListener(() -> {getViewModel().setShare(true);  dialogShareData.dismiss(); next();});
+            dialogShareData.setOnCloseClickListener(() ->{getViewModel().setShare(false); dialogShareData.dismiss(); next();});
+        }
+        if(event instanceof OpenDialogEvent){
+            dialogShareData.show();
+        }else{
+            dialogShareData.dismiss();
+        }
+    }
+
+    public void next(){
+        RegisterEnergyActivity.launch(this, getViewModel().getRegisterRequest());
     }
 
 }

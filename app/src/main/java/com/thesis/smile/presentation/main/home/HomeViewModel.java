@@ -38,7 +38,7 @@ public class HomeViewModel extends BaseViewModel {
     @Bindable
     public String getProduction() {
         if(currentEnergy != null){
-            return String.valueOf(currentEnergy.getProduction());
+            return String.format("%.2f", currentEnergy.getProduction());
         }
         return null;
     }
@@ -46,7 +46,7 @@ public class HomeViewModel extends BaseViewModel {
     @Bindable
     public String getConsumption() {
         if(currentEnergy != null){
-            return String.valueOf(currentEnergy.getConsumption());
+            return String.format("%.2f", currentEnergy.getConsumption());
         }
         return null;
     }
@@ -54,7 +54,7 @@ public class HomeViewModel extends BaseViewModel {
     @Bindable
     public String getBatteryLevel() {
         if(currentEnergy != null){
-            return String.valueOf(currentEnergy.getBatteryLevel());
+            return String.format("%.2f", currentEnergy.getBatteryLevel());
         }
         return null;
     }

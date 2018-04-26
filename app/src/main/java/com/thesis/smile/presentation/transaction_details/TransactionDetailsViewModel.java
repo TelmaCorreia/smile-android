@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.main.transactions.transaction_details;
+package com.thesis.smile.presentation.transaction_details;
 
 import android.databinding.Bindable;
 
@@ -8,8 +8,6 @@ import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
-
-import org.threeten.bp.format.DateTimeFormatter;
 
 import javax.inject.Inject;
 
@@ -34,7 +32,7 @@ public class TransactionDetailsViewModel extends BaseToolbarViewModel {
     @Bindable
     public String getClient() {
         if (transaction!=null){
-            return transaction.getName(); //fixme
+            return transaction.getFrom();
         }
         return "";
     }
@@ -42,7 +40,7 @@ public class TransactionDetailsViewModel extends BaseToolbarViewModel {
     @Bindable
     public String getSupplier() {
         if (transaction!=null){
-            return transaction.getName(); //fixme
+            return transaction.getTo();
         }
         return "";
     }

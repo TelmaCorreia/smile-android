@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.main.transactions.timers;
+package com.thesis.smile.presentation.timers;
 
 import android.databinding.Bindable;
 

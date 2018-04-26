@@ -3,8 +3,6 @@ package com.thesis.smile.presentation.authentication.register.energy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
@@ -25,7 +23,7 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
     private static final String REQUEST = "REQUEST";
 
     private RegisterRequest request;
-    private CustomDialog dialogShareData;
+    private CustomDialog dialogAutomaticConfig;
     public static void launch(Context context, String registerRequest) {
         Intent intent = new Intent(context, RegisterEquipmentActivity.class);
         intent.putExtra(REQUEST, registerRequest);
@@ -100,7 +98,7 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
                    getViewModel().register(request, getUserType());
                 });*/
 
-        getViewModel().observeShareDialog()
+        getViewModel().observeAutomaticConfigDialog()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::shareDataDialogEvent);
 
@@ -122,20 +120,21 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
     }
 
     private void shareDataDialogEvent(DialogEvent event){
-        if(dialogShareData == null){
-            dialogShareData = new CustomDialog(RegisterEquipmentActivity.this);
-            dialogShareData.setTitle(R.string.share_data_tilte);
-            dialogShareData.setMessage(R.string.share_data_description);
-            dialogShareData.setOkButtonText(R.string.button_allow);
-            dialogShareData.setCloseButtonText(R.string.button_not_allow);
-            dialogShareData.setDismissible(true);
-            dialogShareData.setOnOkClickListener(() -> {getViewModel().setShare(true); getViewModel().setUserType(getUserType());  getViewModel().setRequest(request); dialogShareData.dismiss();});
-            dialogShareData.setOnCloseClickListener(() ->{getViewModel().setShare(false); getViewModel().setRequest(request); dialogShareData.dismiss();});
+        if(dialogAutomaticConfig == null){
+            dialogAutomaticConfig = new CustomDialog(RegisterEquipmentActivity.this);
+            dialogAutomaticConfig.setTitle(R.string.automatic_config_tilte);
+            dialogAutomaticConfig.setMessage(R.string.automatic_config_description);
+            dialogAutomaticConfig.setSecondMessage(R.string.automatic_config_changes);
+            dialogAutomaticConfig.setOkButtonText(R.string.button_manual);
+            dialogAutomaticConfig.setCloseButtonText(R.string.button_automatic);
+            dialogAutomaticConfig.setDismissible(true);
+            dialogAutomaticConfig.setOnOkClickListener(() -> {getViewModel().setManual(true); getViewModel().setUserType(getUserType());  getViewModel().setRequest(request); dialogAutomaticConfig.dismiss();});
+            dialogAutomaticConfig.setOnCloseClickListener(() ->{getViewModel().setManual(false); getViewModel().setRequest(request); dialogAutomaticConfig.dismiss();});
         }
         if(event instanceof OpenDialogEvent){
-            dialogShareData.show();
+            dialogAutomaticConfig.show();
         }else{
-            dialogShareData.dismiss();
+            dialogAutomaticConfig.dismiss();
         }
     }
 }

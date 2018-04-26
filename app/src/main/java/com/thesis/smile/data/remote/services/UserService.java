@@ -5,7 +5,9 @@ import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.services.base.ApiService;
+import com.thesis.smile.domain.mapper.EnergyParamsMapper;
 import com.thesis.smile.domain.mapper.UserMapper;
+import com.thesis.smile.domain.models.EnergyParams;
 import com.thesis.smile.domain.models.User;
 
 import java.io.File;
@@ -38,6 +40,11 @@ public class UserService extends ApiService{
 
     public Single<UserRemote> updateUserWithToken(String token, User user){
         return api.updateUserWithToken(token, UserMapper.INSTANCE.domainToRemote(user))
+                .compose(networkMapTransform())
+                .map(BaseResponse::getData);
+    }
+    public Single<UserRemote> updateEnergyParamsWithToken(String token, User user){
+        return api.updateEnergyParams(token, UserMapper.INSTANCE.domainToRemote(user))
                 .compose(networkMapTransform())
                 .map(BaseResponse::getData);
     }

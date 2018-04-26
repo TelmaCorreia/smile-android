@@ -13,7 +13,9 @@ import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
+import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
@@ -35,7 +37,9 @@ public class RegisterUserViewModel extends BaseViewModel {
     private File profilePictureFile;
     private Drawable imgForeground;
     private RegisterRequest user = new RegisterRequest();
+    private boolean share;
 
+    private PublishRelay<DialogEvent> shareDialogObservable = PublishRelay.create();
     private PublishRelay<Event> nextObservable = PublishRelay.create();
     private PublishRelay<Event> editProfilePictureObservable = PublishRelay.create();
 
@@ -152,8 +156,10 @@ public class RegisterUserViewModel extends BaseViewModel {
             user.setPassword(password);
             user.setFirstName(firstName);
             user.setLastName(lastName);
+            user.setVisible(share);
             if (profilePictureFile!=null) {user.setPicture(profilePictureFile);}
-            nextObservable.accept(new Event());
+            shareDialogObservable.accept(new OpenDialogEvent());
+            //nextObservable.accept(new Event());
         }
 
     }
@@ -195,5 +201,18 @@ public class RegisterUserViewModel extends BaseViewModel {
 
     public void setProfilePictureFile(File profilePictureFile) {
         this.profilePictureFile = profilePictureFile;
+    }
+
+    Observable<DialogEvent> observeShareDialog(){
+        return shareDialogObservable;
+    }
+
+
+    public boolean isShare() {
+        return share;
+    }
+
+    public void setShare(boolean share) {
+        this.share = share;
     }
 }

@@ -17,6 +17,7 @@ import com.thesis.smile.databinding.ActivityMainBinding;
 import com.thesis.smile.presentation.main.menu_events.OpenMenuEvent;
 import com.thesis.smile.presentation.main.ranking.RankingFragment;
 import com.thesis.smile.presentation.main.transactions.TransactionsFragment;
+import com.thesis.smile.presentation.privacy_policy.PrivacyPolicyActivity;
 import com.thesis.smile.presentation.settings.SettingsActivity;
 import com.thesis.smile.presentation.utils.KeyboardUtils;
 
@@ -156,7 +157,10 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
         switch (item){
             case R.id.action_settings:
                 SettingsActivity.launch(this);
-                break; //TODO
+                break;
+            case R.id.action_privacy:
+                PrivacyPolicyActivity.launch(this);
+                break;
             case R.id.action_logout: {
                 getViewModel().logout();
                 break;

@@ -12,10 +12,10 @@ import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.NeighbourHeader;
 import com.thesis.smile.domain.models.TimeInterval;
 import com.thesis.smile.presentation.base.BaseFragment;
-import com.thesis.smile.presentation.main.transactions.expandable_list.NeighbourAdapter;
-import com.thesis.smile.presentation.main.transactions.info_price.InfoPriceActivity;
-import com.thesis.smile.presentation.main.transactions.timer_list.TimeIntervalAdapter;
-import com.thesis.smile.presentation.main.transactions.timers.TimersActivity;
+import com.thesis.smile.presentation.user_expandable_list.NeighbourAdapter;
+import com.thesis.smile.presentation.info_price.InfoPriceActivity;
+import com.thesis.smile.presentation.timers.timer_list.TimeIntervalAdapter;
+import com.thesis.smile.presentation.timers.TimersActivity;
 import com.thesis.smile.presentation.utils.views.CustomItemDecoration;
 
 import java.util.ArrayList;

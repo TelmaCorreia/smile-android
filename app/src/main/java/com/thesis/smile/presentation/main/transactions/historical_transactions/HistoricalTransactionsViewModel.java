@@ -43,64 +43,71 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
 
     @Bindable
-    public String getSales(){
+    public String getSales() {
         return "0.32 €";
     }
 
 
     @Bindable
-    public String getPurchases(){
+    public String getPurchases() {
         return "0.34 €";
     }
 
     @Bindable
-    public String getInitialDate(){
+    public String getInitialDate() {
         return this.initialDate;
     }
 
-    public void setInitialDate(String date){
+    public void setInitialDate(String date) {
         this.initialDate = date;
         notifyPropertyChanged(BR.initialDate);
     }
 
     @Bindable
-    public String getFinalDate(){
+    public String getFinalDate() {
         return this.finalDate;
     }
 
-    public void setFinalDate(String date){
+    public void setFinalDate(String date) {
         this.finalDate = date;
         notifyPropertyChanged(BR.finalDate);
     }
 
 
     @Bindable
-    public int getSetPeriodVisible(){
-        return  (timePeriod !=  null && timePeriod.equals(getResourceProvider().getString(R.string.transactions_specific_period))) ? View.VISIBLE : View.GONE;
+    public int getSetPeriodVisible() {
+        return (timePeriod != null && timePeriod.equals(getResourceProvider().getString(R.string.transactions_specific_period))) ? View.VISIBLE : View.GONE;
     }
 
-    public void onInitialDateClick(){
+    public void onInitialDateClick() {
         openInitalDateCalendarObservable.accept(new DialogEvent());
     }
 
-    public void onFinalDateClick(){
+    public void onFinalDateClick() {
         openFinalDateCalendarObservable.accept(new DialogEvent());
     }
 
 
-    public void getTransactions(String type){
+    public void getTransactions(String type) {
         Disposable disposable;
-        if (type.equals(getResourceProvider().getString(R.string.details_bought_energy))){
+        if (type.equals(getResourceProvider().getString(R.string.details_bought_energy))) {
             disposable = energyManager.getCurrentBoughtTransactions()
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
-        } else {
+        } else if (type.equals(getResourceProvider().getString(R.string.details_sold_energy))){
             disposable = energyManager.getCurrentSoldTransactions()
+                    .compose(schedulersTransformSingleIo())
+                    .subscribe(this::onTransactionReceived, this::onError);
+        } else{
+            //FIXME
+           disposable = energyManager.getCurrentBoughtTransactions()
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         }
 
         addDisposable(disposable);
+
+
 
     }
 
@@ -112,6 +119,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
                 t.setType(getResourceProvider().getString(R.string.transactions_sell));
             }
         }
+       // this.transactions.removeAll(this.transactions);
         this.transactions.addAll(transactions);
 
     }

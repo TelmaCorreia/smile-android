@@ -1,4 +1,4 @@
-package com.thesis.smile.presentation.main.transactions.expandable_list;
+package com.thesis.smile.presentation.user_expandable_list;
 
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;

@@ -18,7 +18,10 @@ public class TransactionItemViewModel extends BaseViewModelInstance {
 
     @Bindable
     public String getName() {
-        return transaction.getName();
+        if (getType().equals("compra")){
+            return transaction.getFrom();
+        }
+        return transaction.getTo();
     }
 
     @Bindable

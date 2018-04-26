@@ -1,11 +1,9 @@
-package com.thesis.smile.presentation.main.transactions.info_price;
+package com.thesis.smile.presentation.info_price;
 
 import android.databinding.Bindable;
 
 import com.jakewharton.rxrelay2.PublishRelay;
-import com.thesis.smile.BR;
 import com.thesis.smile.presentation.base.BaseViewModel;
-import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;

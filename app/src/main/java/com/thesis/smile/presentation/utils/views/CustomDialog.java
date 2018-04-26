@@ -57,8 +57,16 @@ public class CustomDialog extends Dialog {
         setMessage(getContext().getString(message));
     }
 
+    public void setSecondMessage(@StringRes int message){
+        setSecondMessage(getContext().getString(message));
+    }
+
     public void setMessage(String message){
         binding.message.setText(message);
+    }
+
+    public void setSecondMessage(String message){
+        binding.secondMessage.setText(message);
     }
 
     public void setOkButtonText(@StringRes int okButtonText){

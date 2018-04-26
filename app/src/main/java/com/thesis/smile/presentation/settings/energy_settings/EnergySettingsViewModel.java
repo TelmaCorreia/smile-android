@@ -1,17 +1,16 @@
 package com.thesis.smile.presentation.settings.energy_settings;
 
 import android.databinding.Bindable;
+import android.util.Log;
 
-import com.google.gson.Gson;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.R;
-import com.thesis.smile.data.remote.models.request.RegisterRequest;
-import com.thesis.smile.domain.managers.AccountManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.managers.UtilsManager;
-import com.thesis.smile.domain.mapper.EnergyParamsMapper;
 import com.thesis.smile.domain.models.Configs;
 import com.thesis.smile.domain.models.EnergyParams;
+import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.Event;
@@ -21,19 +20,16 @@ import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
-
 public class EnergySettingsViewModel extends BaseViewModel {
 
-    private AccountManager accountManager;
+    private UserManager userManager;
     private UtilsManager utilsManager;
 
-    private String category = "";
-    private String power = "";
-    private String tariff = "";
-    private String cycle = "";
-
-    private RegisterRequest user = new RegisterRequest();
+    private EnergyParams energyParams;
+    private EnergyParams previousEnergyParams;
+    private User user;
+    private boolean manual = false;
+    private boolean previousManual;
 
     private PublishRelay<Event> saveObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openGeneralInfoObservable = PublishRelay.create();
@@ -41,42 +37,51 @@ public class EnergySettingsViewModel extends BaseViewModel {
 
     @Inject
     public EnergySettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
-                                   UiEvents uiEvents, AccountManager accountManager, UtilsManager utilsManager) {
+                                   UiEvents uiEvents, UserManager userManager, UtilsManager utilsManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
-
-        this.accountManager = accountManager;
+        this.userManager = userManager;
         this.utilsManager = utilsManager;
+
+        getUserFromSP();
     }
 
     @Bindable
     public String getCategory() {
-        return category;
+        if(energyParams!=null){
+            return energyParams.getCategory();
+        }
+        return "";
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.energyParams.setCategory(category);
         notifyPropertyChanged(BR.category);
         notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable
     public String getPower() {
-        return power;
+        if(energyParams!=null){
+            return energyParams.getPower();
+        }
+        return "";
     }
 
     public void setPower(String power) {
-        this.power = power;
+        this.energyParams.setPower(power);
         notifyPropertyChanged(BR.power);
         notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable
     public String getTariff() {
-        return tariff;
-    }
+        if(energyParams!=null){
+            return energyParams.getTariff();
+        }
+        return "";    }
 
     public void setTariff(String tariff) {
-        this.tariff = tariff;
+        this.energyParams.setTariff(tariff);
         if (tariff.equals(getResourceProvider().getString(R.string.tariff_without_cycle))){
             setCycle(getResourceProvider().getString(R.string.no_cycle));
         }
@@ -87,42 +92,69 @@ public class EnergySettingsViewModel extends BaseViewModel {
 
     @Bindable
     public String getCycle() {
-        return cycle;
+        if(energyParams!=null){
+            return energyParams.getCycle();
+        }
+        return "";
     }
 
     public void setCycle(String cycle) {
-        this.cycle = cycle;
+        this.energyParams.setCycle(cycle);
         notifyPropertyChanged(BR.cycle);
         notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable
+    public boolean isManual() {
+        return manual;
+    }
+
+    public void setManual(boolean manual) {
+        this.manual = manual;
+        notifyPropertyChanged(BR.manual);
+    }
+
+    @Bindable
     public boolean isSaveEnabled() {
-        boolean condition = !(category.isEmpty() || power.isEmpty() || tariff.isEmpty());
-        if (!tariff.equals(getResourceProvider().getString(R.string.tariff_without_cycle))){
-            condition = condition && !cycle.isEmpty() && !cycle.equals(getResourceProvider().getString(R.string.no_cycle));
-        }else{
-            condition = condition && cycle.equals(getResourceProvider().getString(R.string.no_cycle));
+
+        if(energyParams!=null) {
+            return !(energyParams.getCategory().equals(previousEnergyParams.getCategory())
+                    && energyParams.getPower().equals(previousEnergyParams.getPower())
+                    && energyParams.getTariff().equals(previousEnergyParams.getTariff())
+                    && energyParams.getCycle().equals(previousEnergyParams.getCycle())
+                    && manual==previousManual);
         }
-        return condition;
+        return false;
     }
 
     @Bindable
     public boolean isCycleVisible() {
-        return !tariff.isEmpty() && !tariff.equals(getResourceProvider().getString(R.string.tariff_without_cycle));
+        return !energyParams.getTariff().isEmpty() && !energyParams.getTariff().equals(getResourceProvider().getString(R.string.tariff_without_cycle));
 
     }
 
     public void onSaveClick() {
-        Configs configs = getConfigs();
-        if (configs.getCategories().containsValue(category) && configs.getPower().containsValue(power)
-                && configs.getTariff().containsValue(tariff)
-                && (configs.getCycle().containsValue(cycle) || cycle.equals(getResourceProvider().getString(R.string.no_cycle)) )){
-            user.setEnergyParams(EnergyParamsMapper.INSTANCE.domainToRemote(new EnergyParams(category, power, tariff, cycle)));
-            saveObservable.accept(new Event());
+        user.setEnergyParams(energyParams);
+        user.setManual(manual);
+        if (isCycleVisible() && getCycle().equals(getResourceProvider().getString(R.string.no_cycle))){
+            getUiEvents().showToast(getResourceProvider().getString(R.string.no_cycle_alert));
+        }else{
+            userManager.updateEnergyParams(user)
+                    .compose(schedulersTransformSingleIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onUpdateComplete, this::onError);
         }
 
+    }
 
+    private void onUpdateComplete(User user) {
+        userManager.saveUser(user);
+        getUiEvents().showToast(getResourceProvider().getString(R.string.msg_update_sucess));
+        this.user = user;
+        this.previousEnergyParams = new EnergyParams(user.getEnergyParams().getCategory(), user.getEnergyParams().getPower(), user.getEnergyParams().getTariff(), user.getEnergyParams().getCycle());
+        this.energyParams = user.getEnergyParams();
+        this.manual = user.isManual();
+        this.previousManual = user.isManual();
     }
 
     @Bindable
@@ -135,35 +167,18 @@ public class EnergySettingsViewModel extends BaseViewModel {
 
     }
 
-    public void onGenerlaInfoClick() {
-        openGeneralInfoObservable.accept(new NavigationEvent());
-    }
-
-    public void onCycleInfoClick() {
-        openCycleInfoObservable.accept(new NavigationEvent());
-    }
-
-    Observable<Event> observeSave(){
-        return saveObservable;
-    }
-
-    Observable<NavigationEvent> observeOpenGeneralInfo(){
-        return openGeneralInfoObservable;
-    }
-
-    Observable<NavigationEvent> observeOpenCycleInfo(){
-        return openCycleInfoObservable;
-    }
-
-
     public Configs getConfigs() {
         return utilsManager.getConfigs();
     }
 
-    public String getRegisterRequest(RegisterRequest request) {
-        request.setEnergyParams(user.getEnergyParams());
-        Gson gson = new Gson();
-        String json = gson.toJson(request);
-        return json;
+
+    public void getUserFromSP() {
+        this.user = userManager.getCurrentUser();
+        this.energyParams = user.getEnergyParams();
+        this.manual = user.isManual();
+        this.previousManual = user.isManual();
+        this.previousEnergyParams = new EnergyParams(energyParams.getCategory(), energyParams.getPower(), energyParams.getTariff(), energyParams.getCycle());
+        notifyChange();
     }
+
 }

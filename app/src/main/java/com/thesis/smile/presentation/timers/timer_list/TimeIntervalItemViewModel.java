@@ -1,17 +1,13 @@
-package com.thesis.smile.presentation.main.transactions.timer_list;
+package com.thesis.smile.presentation.timers.timer_list;
 
 import android.databinding.Bindable;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.domain.models.TimeInterval;
-import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.base.BaseViewModelInstance;
 import com.thesis.smile.presentation.utils.actions.events.Event;
-import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 public class TimeIntervalItemViewModel extends BaseViewModelInstance{
 

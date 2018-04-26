@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.thesis.smile.presentation.main.transactions.timer_list.TimeIntervalItemViewModel"/>
+            type="com.thesis.smile.presentation.timers.timer_list.TimeIntervalItemViewModel"/>
     </data>
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"

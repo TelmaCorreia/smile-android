@@ -1,4 +1,5 @@
 package com.thesis.smile.presentation.settings.energy_settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,16 +33,13 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
         String[] categories = getViewModel().getConfigs().getCategories().values().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterCategories = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, categories);
         adapterCategories.setDropDownViewResource(R.layout.layout_spinner_dropdown);
-        binding.spCategory.setAdapter(
-                new NothingSelectedSpinnerAdapter(
-                        adapterCategories, R.layout.layout_spinner_item_nothing_selected_category,getContext()));
+        binding.spCategory.setAdapter(adapterCategories);
+        binding.spCategory.setSelection(adapterCategories.getPosition(getViewModel().getCategory()));
 
         binding.spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
-                    getViewModel().setCategory(categories[i-1]);
-                }
+                getViewModel().setCategory(categories[i]);
             }
 
             @Override
@@ -53,37 +51,28 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
         String[] powers = getViewModel().getConfigs().getPower().values().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterPowers = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, powers);
         adapterPowers.setDropDownViewResource(R.layout.layout_spinner_dropdown);
-        binding.spPower.setAdapter(
-                new NothingSelectedSpinnerAdapter(
-                        adapterPowers, R.layout.layout_spinner_item_nothing_selected_power,getContext()));
-
+        binding.spPower.setAdapter(adapterPowers);
+        binding.spPower.setSelection(adapterPowers.getPosition(getViewModel().getPower()));
         binding.spPower.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
-                    getViewModel().setPower(powers[i-1]);
-                }
+                    getViewModel().setPower(powers[i]);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
         String[] tariffs = getViewModel().getConfigs().getTariff().values().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterTariffs = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, tariffs);
         adapterTariffs.setDropDownViewResource(R.layout.layout_spinner_dropdown);
-        binding.spTariff.setAdapter(
-                new NothingSelectedSpinnerAdapter(
-                        adapterTariffs, R.layout.layout_spinner_item_nothing_selected_tariff,getContext()));
-
+        binding.spTariff.setAdapter(adapterTariffs);
+        binding.spTariff.setSelection(adapterTariffs.getPosition(getViewModel().getTariff()));
         binding.spTariff.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
-                    getViewModel().setTariff(tariffs[i-1]);
-                }
+                    getViewModel().setTariff(tariffs[i]);
             }
 
             @Override
@@ -95,6 +84,9 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
         String[] cycles = getViewModel().getConfigs().getCycle().values().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterCycles = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, cycles);
         adapterCycles.setDropDownViewResource(R.layout.layout_spinner_dropdown);
+        if (!getViewModel().getCycle().equals(getString(R.string.no_cycle))){
+            binding.spCycle.setSelection(adapterCycles.getPosition(getViewModel().getCycle()));
+        }
         binding.spCycle.setAdapter(
                 new NothingSelectedSpinnerAdapter(
                         adapterCycles, R.layout.layout_spinner_item_nothing_selected_cycle,getContext()));
@@ -104,6 +96,7 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i > 0) {
                     getViewModel().setCycle(cycles[i-1]);
+
                 }else {
                     getViewModel().setCycle(getResources().getString(R.string.no_cycle));
                 }

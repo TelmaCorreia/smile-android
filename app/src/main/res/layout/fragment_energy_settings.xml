@@ -10,164 +10,161 @@
             type="com.thesis.smile.presentation.settings.energy_settings.EnergySettingsViewModel"/>
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        tools:context=".presentation.settings.user_settings.UserSettingsFragment">
+        android:layout_width="match_parent"
+        android:fillViewport="true">
 
-        <android.support.v4.widget.NestedScrollView
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                style="@style/Text4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp"
+                android:text="@string/energy_contract_details" />
+
+            <LinearLayout
+                style="@style/Common"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/Text4"
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    android:text="@string/energy_contract_details" />
+                    android:layout_marginBottom="28dp"/>
 
-                <LinearLayout
-                    style="@style/Common"
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spPower"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="28dp"/>
 
-                    <android.support.v7.widget.AppCompatSpinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/spCategory"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="28dp"/>
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/spPower"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="28dp"/>
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/spTariff"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="28dp"/>
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/spCycle"
-                        android:visibility="@{viewModel.cycleVisible ? View.VISIBLE : View.GONE}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <TextView
-                    style="@style/Text4"
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spTariff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/equipment"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="24dp"/>
-                <LinearLayout
-                    style="@style/Common"
-                    android:id="@+id/llEquipment"
+                    android:layout_marginBottom="28dp"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spCycle"
+                    android:visibility="@{viewModel.cycleVisible ? View.VISIBLE : View.GONE}"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:enabled="@{viewModel.equipmentEnabled}">
-                    <android.support.v7.widget.AppCompatSpinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/spBattery"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="28dp"/>
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/spSolarPanel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="28dp" />
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        style="@style/Widget.AppCompat.Spinner.Underlined"
-                        android:id="@+id/spSmartMeter"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <TextView
-                    style="@style/Text4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/buy_and_sell_config"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="24dp"/>
-
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/label"
-                        style="@style/Text7"
-                        android:layout_width="290dp"
-                        android:layout_height="wrap_content"
-                        android:lines="2"
-                        android:layout_marginLeft="16dp"
-                        android:text="@string/toggle_manual_config"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/toogle"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <android.support.v7.widget.SwitchCompat
-                        android:theme="@style/Switch"
-                        android:id="@+id/toogle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toRightOf="@id/label"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                </android.support.constraint.ConstraintLayout>
-
-                <TextView
-                    style="@style/Text8"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_gravity="start"
-                    android:text="@string/learn_more"
-                    android:onClick="@{v -> viewModel.onLearnMoreClick()}"/>
-
-                <Button
-                    style="@style/Button"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="48dp"
-                    android:layout_marginBottom="48dp"
-                    android:enabled="@{viewModel.saveEnabled}"
-                    android:onClick="@{v -> viewModel.onSaveClick()}"
-                    android:text="@string/button_save"/>
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </LinearLayout>
+
+            <!-- In the future this could be necessary-->
+            <TextView
+                style="@style/Text4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/equipment"
+                android:visibility="gone"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="24dp"/>
+            <LinearLayout
+                style="@style/Common"
+                android:id="@+id/llEquipment"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:enabled="@{viewModel.equipmentEnabled}">
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spBattery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="28dp"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spSolarPanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="28dp" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spSmartMeter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/Text4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/buy_and_sell_config"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="24dp"/>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/label"
+                    style="@style/Text7"
+                    android:layout_width="290dp"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/toggle_manual_config"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/toogle"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:theme="@style/Switch"
+                    android:id="@+id/toogle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="@={viewModel.manual}"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/label"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                style="@style/Text8"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_gravity="start"
+                android:text="@string/learn_more"
+                android:onClick="@{v -> viewModel.onLearnMoreClick()}"/>
+
+            <Button
+                style="@style/Button"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="48dp"
+                android:enabled="@{viewModel.saveEnabled}"
+                android:onClick="@{v -> viewModel.onSaveClick()}"
+                android:text="@string/button_save"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

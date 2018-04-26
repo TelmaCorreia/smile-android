@@ -1,6 +1,6 @@
 package com.thesis.smile.di.modules.activities;
 
-import com.thesis.smile.presentation.main.transactions.timers.TimersActivity;
+import com.thesis.smile.presentation.timers.TimersActivity;
 
 import dagger.Module;
 

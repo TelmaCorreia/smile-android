@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.thesis.smile.presentation.main.transactions.info_price.InfoPriceViewModel" />
+            type="com.thesis.smile.presentation.info_price.InfoPriceViewModel" />
     </data>
 
     <LinearLayout
