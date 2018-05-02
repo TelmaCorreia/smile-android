@@ -4,12 +4,10 @@ import android.databinding.Bindable;
 import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
-import com.thesis.smile.domain.managers.EnergyManager;
+import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.models.CurrentEnergy;
 import com.thesis.smile.presentation.base.BaseViewModel;
-import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
-import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -24,13 +22,13 @@ public class HomeViewModel extends BaseViewModel {
     public PublishRelay<NavigationEvent> openHomeSoldDetails = PublishRelay.create();
 
     private CurrentEnergy currentEnergy;
-    private EnergyManager energyManager;
+    private TransactionsManager transactionsManager;
 
     @Inject
-    public HomeViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, EnergyManager energyManager) {
+    public HomeViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
-        this.energyManager = energyManager;
+        this.transactionsManager = transactionsManager;
 
         getCurrentEnergyFromServer();
     }
@@ -143,7 +141,7 @@ public class HomeViewModel extends BaseViewModel {
 
     public void getCurrentEnergyFromServer() {
 
-        energyManager.getCurrentEnergyData()
+        transactionsManager.getCurrentEnergyData()
                 .compose(schedulersTransformSingleIo())
                 .subscribe(this::onReceiveCurrentEnergy, this::onError);
 

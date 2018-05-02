@@ -2,12 +2,17 @@ package com.thesis.smile.presentation.main.transactions.historical_transactions;
 
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
+import android.util.Log;
 import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
+import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
-import com.thesis.smile.domain.managers.EnergyManager;
+import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
+import com.thesis.smile.data.remote.exceptions.http.GenericErrorException;
+import com.thesis.smile.domain.managers.TransactionsManager;
+import com.thesis.smile.domain.models.Totals;
 import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
@@ -28,29 +33,37 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     private final ExclusiveObservableList<Transaction> transactions;
     private PublishRelay<DialogEvent> openInitalDateCalendarObservable = PublishRelay.create();
     private PublishRelay<DialogEvent> openFinalDateCalendarObservable = PublishRelay.create();
-    private EnergyManager energyManager;
+    private TransactionsManager transactionsManager;
     private String type;
     private String timePeriod;
     private String initialDate;
     private String finalDate;
+    private Totals totals;
 
     @Inject
-    public HistoricalTransactionsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, EnergyManager energyManager) {
+    public HistoricalTransactionsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
-        this.energyManager = energyManager;
+        this.transactionsManager = transactionsManager;
         transactions = new ExclusiveObservableList<>();
+        getTotals();
     }
 
 
     @Bindable
     public String getSales() {
-        return "0.32 €";
+        if (totals!=null){
+            return String.format("%.2f", totals.getTotalSold()) + getResourceProvider().getString(R.string.coin);
+        }
+        return null;
     }
 
 
     @Bindable
     public String getPurchases() {
-        return "0.34 €";
+        if(totals!=null){
+            return String.format("%.2f", totals.getTotalBought()) + getResourceProvider().getString(R.string.coin);
+        }
+        return null;
     }
 
     @Bindable
@@ -91,16 +104,15 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     public void getTransactions(String type) {
         Disposable disposable;
         if (type.equals(getResourceProvider().getString(R.string.details_bought_energy))) {
-            disposable = energyManager.getCurrentBoughtTransactions()
+            disposable = transactionsManager.getBoughtTransactions(0, 20)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         } else if (type.equals(getResourceProvider().getString(R.string.details_sold_energy))){
-            disposable = energyManager.getCurrentSoldTransactions()
+            disposable = transactionsManager.getSoldTransactions(0, 20)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         } else{
-            //FIXME
-           disposable = energyManager.getCurrentBoughtTransactions()
+           disposable = transactionsManager.getAllTransactions(0,20)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         }
@@ -145,4 +157,18 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     Observable<DialogEvent> observeFinalDateCalendarDialog(){
         return openFinalDateCalendarObservable;
     }
+
+    public void getTotals() {
+        Disposable disposable = transactionsManager.getTotals()
+                .compose(schedulersTransformSingleIo())
+                .subscribe(this::onTotalsReceived, this::onError);
+        addDisposable(disposable);
+    }
+
+    private void onTotalsReceived(Totals totals) {
+        this.totals = totals;
+        notifyPropertyChanged(BR.purchases);
+        notifyPropertyChanged(BR.sales);
+    }
+    
 }

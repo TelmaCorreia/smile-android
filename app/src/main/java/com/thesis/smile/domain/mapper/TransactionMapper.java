@@ -1,10 +1,7 @@
 package com.thesis.smile.domain.mapper;
 
-import com.thesis.smile.data.remote.models.CurrentEnergyDataRemote;
 import com.thesis.smile.data.remote.models.TransactionRemote;
-import com.thesis.smile.data.remote.models.TransactionsRemote;
 import com.thesis.smile.domain.mapper.base.BaseMapper;
-import com.thesis.smile.domain.models.CurrentEnergy;
 import com.thesis.smile.domain.models.Transaction;
 
 import org.mapstruct.Mapper;

@@ -107,7 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="77dp"
                         android:layout_marginTop="16dp"
-                        android:onCheckedChanged="@{viewModel.onPriceChanged}"
+                        android:onCheckedChanged="@{viewModel::onPriceChanged}"
                         app:layout_constraintTop_toBottomOf="@+id/llHelp">
 
                         <RadioButton

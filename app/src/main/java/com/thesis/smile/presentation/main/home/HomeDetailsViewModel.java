@@ -2,9 +2,8 @@ package com.thesis.smile.presentation.main.home;
 
 import android.databinding.ObservableList;
 
-import com.thesis.smile.BR;
 import com.thesis.smile.R;
-import com.thesis.smile.domain.managers.EnergyManager;
+import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
 public class HomeDetailsViewModel extends BaseToolbarViewModel {
@@ -26,12 +24,12 @@ public class HomeDetailsViewModel extends BaseToolbarViewModel {
     List<Transaction> transactionList;
     private final ExclusiveObservableList<Transaction> transactions;
 
-    private EnergyManager energyManager;
+    private TransactionsManager transactionsManager;
     @Inject
     public HomeDetailsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
-                                UiEvents uiEvents, EnergyManager energyManager) {
+                                UiEvents uiEvents, TransactionsManager transactionsManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
-        this.energyManager = energyManager;
+        this.transactionsManager = transactionsManager;
         this.transactions= new ExclusiveObservableList<>();
 
     }
@@ -39,11 +37,11 @@ public class HomeDetailsViewModel extends BaseToolbarViewModel {
     public void getTransactions(String type){
         Disposable disposable;
        if (type.equals(getResourceProvider().getString(R.string.details_bought_energy))){
-           disposable = energyManager.getCurrentBoughtTransactions()
+           disposable = transactionsManager.getCurrentBoughtTransactions(0,20)
                    .compose(schedulersTransformSingleIo())
                    .subscribe(this::onTransactionReceived, this::onError);
        } else {
-           disposable = energyManager.getCurrentSoldTransactions()
+           disposable = transactionsManager.getCurrentSoldTransactions(0,20)
                    .compose(schedulersTransformSingleIo())
                    .subscribe(this::onTransactionReceived, this::onError);
        }
