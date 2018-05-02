@@ -7,6 +7,9 @@ import java.util.List;
 public class TimeIntervalRemote {
 
     @Expose
+    private String id;
+
+    @Expose
     private String from;
 
     @Expose
@@ -61,5 +64,13 @@ public class TimeIntervalRemote {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

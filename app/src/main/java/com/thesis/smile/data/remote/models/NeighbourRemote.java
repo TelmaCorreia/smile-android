@@ -7,10 +7,7 @@ public class NeighbourRemote {
     private String id;
 
     @Expose
-    private String firstName;
-
-    @Expose
-    private String lastName;
+    private String name;
 
     @Expose
     private String type;
@@ -37,20 +34,12 @@ public class NeighbourRemote {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String firstName) {
+        this.name = firstName;
     }
 
     public String getType() {

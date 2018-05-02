@@ -70,7 +70,7 @@ public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<Nei
 
     @Override
     public int getChildViewType(int position, ExpandableGroup group, int childIndex) {
-        if (((NeighbourHeader) group).getItems().get(childIndex).isSelectAll()) {
+        if (((NeighbourHeader) group).getItems().get(childIndex).isBlocked()) {
             return SELECT_ALL_VIEW_TYPE;
         } else {
             return NEIGHBOUR_VIEW_TYPE;

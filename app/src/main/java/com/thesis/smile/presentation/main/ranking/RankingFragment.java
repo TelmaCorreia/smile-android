@@ -37,14 +37,15 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding, Rankin
 
     @Override
     protected void initViews(FragmentRankingBinding binding) {
-        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        CustomItemDecoration dividerItemDecoration = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
+        //rawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
+       // CustomItemDecoration dividerItemDecoration = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
         LinearLayoutManager layoutManagerConsumer = new LinearLayoutManager(getContext());
         List<RankingHeader> rankingHeaders = getRanking();
         RankingAdapter adapter = new RankingAdapter(getContext(), rankingHeaders);
         binding.rankingList.setLayoutManager(layoutManagerConsumer);
         binding.rankingList.setAdapter(adapter);
-        binding.rankingList.addItemDecoration(dividerItemDecoration);
+
+       // binding.rankingList.addItemDecoration(dividerItemDecoration);
 
     }
 

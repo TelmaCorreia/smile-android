@@ -16,10 +16,10 @@ public class TimeInterval implements Parcelable{
 
     public TimeInterval(){ }
 
-    public TimeInterval(String from, String to, List<Integer> weekdays, List<String> weekDaysString) {
+    public TimeInterval(String from, String to, List<Integer> weekDays, List<String> weekDaysString) {
         this.from = from;
         this.to = to;
-        this.weekDays = weekdays;
+        this.weekDays = weekDays;
         this.weekDaysString = weekDaysString;
         this.activated = true;
     }
@@ -66,8 +66,8 @@ public class TimeInterval implements Parcelable{
         return weekDays;
     }
 
-    public void setWeekdays(List<Integer> weekdays) {
-        this.weekDays = weekdays;
+    public void setWeekdays(List<Integer> weekDays) {
+        this.weekDays = weekDays;
     }
 
     public List<String> getWeekDaysString() {

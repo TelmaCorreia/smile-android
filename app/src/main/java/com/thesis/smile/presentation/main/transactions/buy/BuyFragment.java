@@ -16,6 +16,7 @@ import com.thesis.smile.presentation.user_expandable_list.NeighbourAdapter;
 import com.thesis.smile.presentation.info_price.InfoPriceActivity;
 import com.thesis.smile.presentation.timers.timer_list.TimeIntervalAdapter;
 import com.thesis.smile.presentation.timers.TimersActivity;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.views.CustomItemDecoration;
 
 import java.util.ArrayList;
@@ -54,13 +55,6 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         binding.timersBuy.setAdapter(timeIntervalAdapter);
         binding.timersBuy.addItemDecoration(dividerItemDecoration);
 
-        List<NeighbourHeader> neighbourHeaders = getSuppliers();
-        LinearLayoutManager layoutManagerSup = new LinearLayoutManager(getContext());
-        NeighbourAdapter adapter = new NeighbourAdapter(getContext(), neighbourHeaders);
-        binding.suppliers.setLayoutManager(layoutManagerSup);
-        binding.suppliers.setAdapter(adapter);
-        binding.suppliers.addItemDecoration(dividerItemDecoration);
-
     }
 
     private void onRemoveTimeIntervalSelected(TimeInterval timeInterval) {
@@ -82,6 +76,32 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
                 .subscribe(event -> {
                     TimersActivity.launchForResult(getActivity(), REQUEST_TIMERS, TIMER);
                 });
+
+        getViewModel().observeNeighbours()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::initNeighbours);
+
+        getViewModel().observeBuySettings()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::updateViews);
+    }
+
+    private void updateViews(Event event) {
+        getBinding().rbEemPrice.setChecked(getViewModel().getBuySettings().isEemPrice());
+        getViewModel().setOption1(getViewModel().getBuySettings().isEemPrice());
+        getBinding().rbEemPlusPrice.setChecked(getViewModel().getBuySettings().isEemPlusPrice());
+        getViewModel().setOption2(getViewModel().getBuySettings().isEemPlusPrice());
+    }
+
+    private void initNeighbours(Event event) {
+        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
+        CustomItemDecoration dividerItemDecoration_ = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
+        List<NeighbourHeader> neighbourHeaders = getSuppliers();
+        LinearLayoutManager layoutManagerSup = new LinearLayoutManager(getContext());
+        NeighbourAdapter adapter = new NeighbourAdapter(getContext(), neighbourHeaders);
+        getBinding().suppliers.setLayoutManager(layoutManagerSup);
+        getBinding().suppliers.setAdapter(adapter);
+        getBinding().suppliers.addItemDecoration(dividerItemDecoration_);
     }
 
     private void onTimeIntervalSelected(TimeInterval timeInterval) {
@@ -91,15 +111,10 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
     public List<NeighbourHeader> getSuppliers() {
         List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
         List<Neighbour> neighbours = new ArrayList<>();
-        neighbours.add(new Neighbour("Selecionar todos", true, false));
-        neighbours.add(new Neighbour("Filipe Magalhães", "Fornecedor", "", true));
-        neighbours.add(new Neighbour("Marta Magalhães", "Fornecedor", "", true));
-        neighbours.add(new Neighbour("Filipe Melo", "Fornecedor", "", true));
-        neighbours.add(new Neighbour("Miguel Silva", "Fornecedor", "", false));
-
-        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.suppliers_title), getResources().getString(R.string.suppliers_description), neighbours);
+        neighbours.add(new Neighbour("0","Selecionar todos", getViewModel().isAllNeighboursSelected(), false));
+        neighbours.addAll(getViewModel().getNeighbours());
+        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);
-
         return neighbourHeaders;
     }
 
@@ -109,11 +124,11 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         if(requestCode == REQUEST_TIMERS && resultCode == Activity.RESULT_OK && data.getExtras() != null){
             if(data != null && data.getExtras() != null){
                 TimeInterval timeInterval = data.getExtras().getParcelable(TIMER);
-                getViewModel().addTimeInterval(timeInterval);
+                getViewModel().addTimeInterval(timeInterval, false);
             }
         }else if (requestCode == REQUEST_TIMERS_EDIT && resultCode == Activity.RESULT_OK && data.getExtras() != null){
             TimeInterval timeInterval = data.getExtras().getParcelable(TIMER);
-            getViewModel().addTimeInterval(timeInterval);
+            getViewModel().addTimeInterval(timeInterval, true);
         }
     }
 }

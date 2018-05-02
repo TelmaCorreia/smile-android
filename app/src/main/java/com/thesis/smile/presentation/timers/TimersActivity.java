@@ -12,8 +12,11 @@ import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.threeten.bp.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class TimersActivity extends BaseToolbarActivity<ActivityTimersBinding, TimersViewModel> implements com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener {
@@ -51,13 +54,16 @@ public class TimersActivity extends BaseToolbarActivity<ActivityTimersBinding, T
     @Override
     protected void initViews(ActivityTimersBinding binding) {
         initToolbar(binding.actionBar.toolbar, true,  getResources().getString(R.string.timers_title));
-        binding.weekdays.setSelectedDays(new ArrayList<>());
-        binding.weekdays.setOnWeekdaysChangeListener((view, i, list) -> {getViewModel().setSelectedDays(list); getViewModel().setSelectedDaysStrings(binding.weekdays.getSelectedDaysText());});
+        binding.weekDays.setSelectedDays(new ArrayList<>());
+        binding.weekDays.setOnWeekdaysChangeListener((view, i, list) -> {getViewModel().setSelectedDays(list); getViewModel().setSelectedDaysStrings(binding.weekDays.getSelectedDaysText());});
         if (timeInterval!= null){
+            getViewModel().setId(timeInterval.getId());
             getViewModel().setFrom(timeInterval.getFrom());
             getViewModel().setTo(timeInterval.getTo());
+            getViewModel().setSelectedDays(timeInterval.getWeekDays());
             getViewModel().setSelectedDaysStrings(timeInterval.getWeekDaysString());
-            getBinding().weekdays.setSelectedDays(timeInterval.getWeekdays());
+            getViewModel().setActivated(timeInterval.isActivated());
+            getBinding().weekDays.setSelectedDays(timeInterval.getWeekDays());
         }
     }
 
@@ -75,15 +81,46 @@ public class TimersActivity extends BaseToolbarActivity<ActivityTimersBinding, T
 
         getViewModel().observeTimerFromDialog()
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(event ->{from = true; timerDialogEvent(event);});
+                .subscribe(event ->{
+                    from = true;
+                    if (timeInterval!= null){
+                        timerDialogEvent(getHour(timeInterval.getFrom()), getMinute(timeInterval.getFrom()), event);
+                    }else{
+                        timerDialogEvent(0, 0, event);
+                    }
+
+                });
 
         getViewModel().observeTimerToDialog()
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(event ->{from = false; timerDialogEvent(event);});
+                .subscribe(event ->{
+                    from = false;
+                    if (timeInterval!= null){
+                        timerDialogEvent(getHour(timeInterval.getTo()), getMinute(timeInterval.getTo()), event);
+                    }else{
+                        timerDialogEvent(0, 0, event);
+                    }
+                });
 
         getViewModel().observeSave()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::saveTimeInterval);
+    }
+
+    private int getHour(String timeInterval) {
+        if (timeInterval!=null){
+            LocalTime time = LocalTime.parse(timeInterval);
+            return time.getHour();
+        }
+        return 0;
+    }
+
+    private int getMinute(String timeInterval) {
+        if (timeInterval!=null){
+            LocalTime time = LocalTime.parse(timeInterval);
+            return time.getMinute();
+        }
+        return 0;
     }
 
     private void saveTimeInterval(Event event) {
@@ -93,12 +130,12 @@ public class TimersActivity extends BaseToolbarActivity<ActivityTimersBinding, T
         finish();
     }
 
-    private void timerDialogEvent(DialogEvent event){
+    private void timerDialogEvent(int hour, int minute, DialogEvent event){
         Calendar now = Calendar.getInstance();
         TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(
                 TimersActivity.this,
-                now.get(Calendar.HOUR),
-                now.get(Calendar.MINUTE),
+                (hour!=0)?hour:now.get(Calendar.HOUR),
+                (minute!=0)?minute:now.get(Calendar.MINUTE),
                true
         );
         timePickerDialog.show(getFragmentManager(), "TimePicker");

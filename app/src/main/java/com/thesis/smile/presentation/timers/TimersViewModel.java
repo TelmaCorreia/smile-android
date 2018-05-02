@@ -21,11 +21,12 @@ import io.reactivex.Observable;
 
 public class TimersViewModel extends BaseToolbarViewModel {
 
+    private String id = "";
     private String from = "";
     private String to = "";
+    private boolean activated = false;
     private List<Integer> selectedDays = new ArrayList<>();
     private List<String> selectedDaysStrings = new ArrayList<>();
-
 
     TimeInterval timeInterval;
     private PublishRelay<DialogEvent> timerFromDialogObservable = PublishRelay.create();
@@ -92,11 +93,11 @@ public class TimersViewModel extends BaseToolbarViewModel {
     }
 
     public TimeInterval getTimeInterval() {
-        return timeInterval;
+        return this.timeInterval;
     }
 
     public void onSaveClick(){
-        timeInterval = new TimeInterval(from, to, selectedDays, selectedDaysStrings );
+        this.timeInterval = new TimeInterval(id,from, to, selectedDays, selectedDaysStrings, activated );
         saveObservable.accept(new Event());
     }
 
@@ -112,4 +113,19 @@ public class TimersViewModel extends BaseToolbarViewModel {
     }
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 }

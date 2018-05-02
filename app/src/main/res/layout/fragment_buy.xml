@@ -6,6 +6,7 @@
     xmlns:mask="http://schemas.android.com/apk/res-auto" >
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.thesis.smile.presentation.main.transactions.buy.BuyViewModel"/>
@@ -111,7 +112,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/llHelp">
 
                         <RadioButton
-                            android:id="@+id/rbConcretePrice"
+                            android:id="@+id/rbEemPrice"
                             style="@style/Text3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -120,7 +121,7 @@
                             android:text="@string/price_lower_EEM" />
 
                         <RadioButton
-                            android:id="@+id/rbPricePlus"
+                            android:id="@+id/rbEemPlusPrice"
                             style="@style/Text3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -161,6 +162,7 @@
                             android:inputType="phone"
                             android:typeface="monospace"
                             android:enabled="@{viewModel.plusPriceEditable}"
+                            android:text="@={viewModel.plusPriceValue}"
                             mask:allowed_chars="1234567890"
                             mask:mask="##.##"
                             android:hint="0000"
@@ -250,7 +252,31 @@
 
 
         </android.support.v4.widget.NestedScrollView>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:visibility="@{viewModel.saveVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="16dp"
+                android:layout_gravity="bottom|end"
+                android:backgroundTint="@color/colorAccent" />
+            <TextView
+                style="@style/Text13"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="2dp"
+                android:layout_margin="16dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@color/colorWhite"
+                android:onClick="@{v -> viewModel.onSaveClick()}"
+                android:elevation="16dp"
+                android:text="@string/button_save"/>
 
+        </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>
 

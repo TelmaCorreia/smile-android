@@ -43,4 +43,5 @@ public class RankingAdapter extends ExpandableRecyclerViewAdapter<RankingParentV
     public void onBindGroupViewHolder(RankingParentViewHolder holder, int flatPosition, ExpandableGroup group) {
         holder.setTitle(group);
     }
+
 }

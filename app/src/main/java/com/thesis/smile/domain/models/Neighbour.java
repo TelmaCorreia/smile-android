@@ -5,32 +5,37 @@ import android.os.Parcelable;
 
 public class Neighbour implements Parcelable {
 
+    private String id;
     private String name;
-    private String role;
-    private String picture;
+    private String type;
+    private String url;
     private boolean visible;
-    private boolean selectAll;
+    private boolean blocked;
 
-    public Neighbour(String name, String role, String picture, boolean visible) {
+    public Neighbour(){}
+    public Neighbour(String id, String name, String type, String url, boolean visible) {
+        this.id = id;
         this.name = name;
-        this.role = role;
-        this.picture = picture;
+        this.type = type;
+        this.url = url;
         this.visible = visible;
-        this.selectAll = false;
+        this.blocked = false;
     }
 
-    public Neighbour(String name, boolean selectAll, boolean visible){
+    public Neighbour(String id, String name, boolean blocked, boolean visible){
+        this.id = id;
         this.name = name;
-        this.selectAll = selectAll;
+        this.blocked = blocked;
         this.visible = visible;
     }
 
     protected Neighbour(Parcel in) {
+        id = in.readString();
         name = in.readString();
-        role = in.readString();
-        picture = in.readString();
+        type = in.readString();
+        url = in.readString();
         visible = in.readByte() != 0;
-        selectAll = in.readByte() != 0;
+        blocked = in.readByte() != 0;
     }
 
 
@@ -46,6 +51,14 @@ public class Neighbour implements Parcelable {
         }
     };
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -54,20 +67,20 @@ public class Neighbour implements Parcelable {
         this.name = name;
     }
 
-    public String getRole() {
-        return role;
+    public String getType() {
+        return type;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setUrl(String picture) {
+        this.url = picture;
     }
 
     public boolean isVisible() {
@@ -78,8 +91,12 @@ public class Neighbour implements Parcelable {
         this.visible = visible;
     }
 
-    public boolean isSelectAll() {
-        return selectAll;
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     @Override
@@ -89,10 +106,11 @@ public class Neighbour implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
         parcel.writeString(name);
-        parcel.writeString(role);
-        parcel.writeString(picture);
+        parcel.writeString(type);
+        parcel.writeString(url);
         parcel.writeByte((byte) (visible ? 1 : 0));
-        parcel.writeByte((byte) (selectAll ? 1 : 0));
+        parcel.writeByte((byte) (blocked ? 1 : 0));
     }
 }

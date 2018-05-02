@@ -11,6 +11,9 @@ import com.thesis.smile.data.remote.models.TimeIntervalsRemote;
 import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.services.base.ApiService;
+import com.thesis.smile.domain.mapper.BuySettingsMapper;
+import com.thesis.smile.domain.mapper.SellSettingsMapper;
+import com.thesis.smile.domain.mapper.TimeIntervalMapper;
 import com.thesis.smile.domain.models.BuySettings;
 import com.thesis.smile.domain.models.SellSettings;
 import com.thesis.smile.domain.models.TimeInterval;
@@ -41,7 +44,7 @@ public class TransactionsSettingsService extends ApiService {
     }
 
     public Single<BuySettingsRemote> updateBuySettings(String token, BuySettings buySettings){
-        return api.updateBuySettings(token, buySettings)
+        return api.updateBuySettings(token, BuySettingsMapper.INSTANCE.domainToRemote(buySettings))
                 .compose(networkMapTransform())
                 .map(BaseResponse::getData);
     }
@@ -54,7 +57,7 @@ public class TransactionsSettingsService extends ApiService {
     }
 
     public Single<SellSettingsRemote> updateSellSettings(String token, SellSettings sellSettings){
-        return api.updateSellSettings(token, sellSettings)
+        return api.updateSellSettings(token, SellSettingsMapper.INSTANCE.domainToRemote(sellSettings))
                 .compose(networkMapTransform())
                 .map(BaseResponse::getData);
     }
@@ -82,14 +85,26 @@ public class TransactionsSettingsService extends ApiService {
                 .map(TimeIntervalsRemote::getTimeIntervals);
     }
 
+    public Single<TimeIntervalRemote> postTimeIntervalSell(String token, TimeInterval timeInterval){
+        return api.postTimeIntervalSell(token, TimeIntervalMapper.INSTANCE.domainToRemote(timeInterval))
+                .compose(networkMapTransform())
+                .map(BaseResponse::getData);
+    }
+
+    public Single<TimeIntervalRemote> postTimeIntervalBuy(String token, TimeInterval timeInterval){
+        return api.postTimeIntervalBuy(token,  TimeIntervalMapper.INSTANCE.domainToRemote(timeInterval))
+                .compose(networkMapTransform())
+                .map(BaseResponse::getData);
+    }
+
     public Single<TimeIntervalRemote> updateTimeInterval(String token, TimeInterval timeInterval){
-        return api.updateTimeInterval(token, timeInterval)
+        return api.updateTimeInterval(token,  TimeIntervalMapper.INSTANCE.domainToRemote(timeInterval))
                 .compose(networkMapTransform())
                 .map(BaseResponse::getData);
     }
 
     public Completable deleteTimeInterval(String token, TimeInterval timeInterval){
-        return api.deleteTimeInterval(token, timeInterval)
+        return api.deleteTimeInterval(token,  TimeIntervalMapper.INSTANCE.domainToRemote(timeInterval))
                 .compose(networkMapTransform())
                 .toCompletable();
     }

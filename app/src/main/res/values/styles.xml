@@ -216,6 +216,13 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="Text13">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="TextNavigationBottomBar">
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:fontFamily">@font/roboto_regular</item>

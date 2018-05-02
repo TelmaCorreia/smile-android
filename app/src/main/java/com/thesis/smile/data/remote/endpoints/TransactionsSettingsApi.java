@@ -1,5 +1,8 @@
 package com.thesis.smile.data.remote.endpoints;
 
+import com.thesis.smile.data.remote.models.BuySettingsRemote;
+import com.thesis.smile.data.remote.models.SellSettingsRemote;
+import com.thesis.smile.data.remote.models.TimeIntervalRemote;
 import com.thesis.smile.data.remote.models.response.BuySettingsResponse;
 import com.thesis.smile.data.remote.models.response.CurrentEnergyDataResponse;
 import com.thesis.smile.data.remote.models.response.InfoPriceResponse;
@@ -18,6 +21,8 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -28,33 +33,39 @@ public interface TransactionsSettingsApi {
     Single<Response<BuySettingsResponse>> getBuySettings(@Path("token") String token);
 
     @PUT("transactions/settings/buy/{token}")
-    Single<Response<BuySettingsResponse>> updateBuySettings(@Path("token") String userId, @Body BuySettings buySettingsRemote);
+    Single<Response<BuySettingsResponse>> updateBuySettings(@Path("token") String userId, @Body BuySettingsRemote buySettingsRemote);
 
     @GET("transactions/settings/sell/{token}")
     Single<Response<SellSettingsResponse>> getSellSettings(@Path("token") String token);
 
     @PUT("transactions/settings/sell/{token}")
-    Single<Response<SellSettingsResponse>> updateSellSettings(@Path("token") String userId, @Body SellSettings sellSettingsRemote);
+    Single<Response<SellSettingsResponse>> updateSellSettings(@Path("token") String userId, @Body SellSettingsRemote sellSettingsRemote);
 
-    @GET("transactions/info_price/token}")
+    @GET("transactions/info_price/{token}")
     Single<Response<InfoPriceResponse>> getInfoPrice(@Path("token") String token);
 
-    @GET("transactions/time_interval/sell/token}")
+    @GET("transactions/time_interval/sell/{token}")
     Single<Response<TimeIntervalsResponse>> getTimeIntervalsSell(@Path("token") String token);
 
-    @GET("transactions/time_interval/buy/token}")
+    @GET("transactions/time_interval/buy/{token}")
     Single<Response<TimeIntervalsResponse>> getTimeIntervalsBuy(@Path("token") String token);
 
+    @POST("transactions/time_interval/sell/{token}")
+    Single<Response<TimeIntervalResponse>> postTimeIntervalSell(@Path("token") String userId, @Body TimeIntervalRemote timeIntervalRemote);
+
+    @POST("transactions/time_interval/buy/{token}")
+    Single<Response<TimeIntervalResponse>> postTimeIntervalBuy(@Path("token") String userId, @Body TimeIntervalRemote timeIntervalRemote);
+
     @PUT("transactions/time_interval/{token}")
-    Single<Response<TimeIntervalResponse>> updateTimeInterval(@Path("token") String userId, @Body TimeInterval timeIntervalRemote);
+    Single<Response<TimeIntervalResponse>> updateTimeInterval(@Path("token") String userId, @Body TimeIntervalRemote timeIntervalRemote);
 
-    @DELETE("transactions/time_interval/{token}")
-    Single<Response<BaseResponse>> deleteTimeInterval(@Path("token") String userId, @Body TimeInterval timeIntervalRemote);
+    @HTTP(method = "DELETE", path = "transactions/time_interval/{token}", hasBody = true)
+    Single<Response<BaseResponse>> deleteTimeInterval(@Path("token") String userId, @Body TimeIntervalRemote timeIntervalRemote);
 
-    @GET("transactions/neighbours/buy/token}")
+    @GET("transactions/neighbours/buy/{token}")
     Single<Response<NeighboursResponse>> getNeighboursBuy(@Path("token") String token, @Query("page") int page, @Query("size") int size);
 
-    @GET("transactions/neighbours/sell/token}")
+    @GET("transactions/neighbours/sell/{token}")
     Single<Response<NeighboursResponse>> getNeighboursSell(@Path("token") String token,  @Query("page") int page, @Query("size") int size);
 
 }

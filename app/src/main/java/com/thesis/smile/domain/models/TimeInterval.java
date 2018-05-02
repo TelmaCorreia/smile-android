@@ -8,6 +8,7 @@ import java.util.List;
 
 public class TimeInterval implements Parcelable{
 
+    private String id;
     private String from;
     private String to;
     private List<Integer> weekDays;
@@ -16,15 +17,17 @@ public class TimeInterval implements Parcelable{
 
     public TimeInterval(){ }
 
-    public TimeInterval(String from, String to, List<Integer> weekdays, List<String> weekDaysString) {
+    public TimeInterval(String id, String from, String to, List<Integer> weekDays, List<String> weekDaysString, boolean activated) {
+        this.id = id;
         this.from = from;
         this.to = to;
-        this.weekDays = weekdays;
+        this.weekDays = weekDays;
         this.weekDaysString = weekDaysString;
-        this.activated = true;
+        this.activated = activated;
     }
 
     protected TimeInterval(Parcel in) {
+        id = in.readString();
         from = in.readString();
         to = in.readString();
         weekDaysString = in.createStringArrayList();
@@ -46,6 +49,14 @@ public class TimeInterval implements Parcelable{
         }
     };
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getFrom() {
         return from;
     }
@@ -62,12 +73,12 @@ public class TimeInterval implements Parcelable{
         this.to = to;
     }
 
-    public List<Integer> getWeekdays() {
+    public List<Integer> getWeekDays() {
         return weekDays;
     }
 
-    public void setWeekdays(List<Integer> weekdays) {
-        this.weekDays = weekdays;
+    public void setWeekDays(List<Integer> weekDays) {
+        this.weekDays = weekDays;
     }
 
     public List<String> getWeekDaysString() {
@@ -86,6 +97,7 @@ public class TimeInterval implements Parcelable{
         this.activated = activated;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -93,11 +105,11 @@ public class TimeInterval implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
         parcel.writeString(from);
         parcel.writeString(to);
         parcel.writeStringList(weekDaysString);
         parcel.writeByte((byte) (activated ? 1 : 0));
         parcel.writeList(weekDays);
-
     }
 }

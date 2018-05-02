@@ -170,5 +170,5 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.purchases);
         notifyPropertyChanged(BR.sales);
     }
-    
+
 }

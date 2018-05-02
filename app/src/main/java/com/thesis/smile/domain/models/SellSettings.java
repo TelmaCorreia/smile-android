@@ -21,6 +21,17 @@ public class SellSettings {
     public SellSettings() {
     }
 
+    public SellSettings(String id, boolean on, boolean specificPrice, boolean plusPrice, double specificPriceValue, double plusPriceValue, double batteryLevel, boolean allNeighboursSelected) {
+        this.id = id;
+        this.on = on;
+        this.specificPrice = specificPrice;
+        this.plusPrice = plusPrice;
+        this.specificPriceValue = specificPriceValue;
+        this.plusPriceValue = plusPriceValue;
+        this.batteryLevel = batteryLevel;
+        this.allNeighboursSelected = allNeighboursSelected;
+    }
+
     public String getId() {
         return id;
     }

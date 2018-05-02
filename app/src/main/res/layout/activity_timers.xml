@@ -78,7 +78,7 @@
                 android:layout_marginBottom="8dp"/>
 
             <com.dpro.widgets.WeekdaysPicker
-                android:id="@+id/weekdays"
+                android:id="@+id/weekDays"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{v -> viewModel.onWeekDaysPickerClick()}"

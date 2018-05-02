@@ -19,6 +19,16 @@ public class BuySettings {
     public BuySettings() {
     }
 
+    public BuySettings(String id, boolean on, boolean eemPrice, boolean eemPlusPrice, double eemPriceValue, double eemPlusPriceValue, boolean allNeighboursSelected) {
+        this.id = id;
+        this.on = on;
+        this.eemPrice = eemPrice;
+        this.eemPlusPrice = eemPlusPrice;
+        this.eemPriceValue = eemPriceValue;
+        this.eemPlusPriceValue = eemPlusPriceValue;
+        this.allNeighboursSelected = allNeighboursSelected;
+    }
+
     public String getId() {
         return id;
     }
