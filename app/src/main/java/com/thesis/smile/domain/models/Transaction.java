@@ -15,13 +15,13 @@ public class Transaction implements Parcelable{
     private String type;
     private LocalDateTime date;
     private double priceKWH;
-    private int quantity;
+    private double quantity;
     private double total;
     private String dateString;
 
     public Transaction(){}
 
-    public Transaction(String from, String to, String url, String type, LocalDateTime date, double priceKWH, int quantity, double total) {
+    public Transaction(String from, String to, String url, String type, LocalDateTime date, double priceKWH, double quantity, double total) {
         this.from = from;
         this.to = to;
         this.url = url;
@@ -40,7 +40,7 @@ public class Transaction implements Parcelable{
         url = in.readString();
         type = in.readString();
         priceKWH = in.readDouble();
-        quantity = in.readInt();
+        quantity = in.readDouble();
         total = in.readDouble();
         dateString = in.readString();
     }
@@ -81,11 +81,11 @@ public class Transaction implements Parcelable{
         this.priceKWH = priceKWH;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
@@ -130,6 +130,7 @@ public class Transaction implements Parcelable{
         this.dateString = dateString;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -142,7 +143,7 @@ public class Transaction implements Parcelable{
         parcel.writeString(url);
         parcel.writeString(type);
         parcel.writeDouble(priceKWH);
-        parcel.writeInt(quantity);
+        parcel.writeDouble(quantity);
         parcel.writeDouble(total);
         parcel.writeString(dateString);
     }

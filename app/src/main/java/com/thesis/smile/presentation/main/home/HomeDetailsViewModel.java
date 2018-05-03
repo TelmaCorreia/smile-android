@@ -51,13 +51,6 @@ public class HomeDetailsViewModel extends BaseToolbarViewModel {
     }
 
     private void onTransactionReceived(List<Transaction> transactions) {
-        for (Transaction t : transactions){
-            if (type.equals(getResourceProvider().getString(R.string.details_bought_energy))){
-                t.setType(getResourceProvider().getString(R.string.seller));
-            }else{
-                t.setType(getResourceProvider().getString(R.string.buyer));
-            }
-        }
         this.transactions.addAll(transactions);
 
     }

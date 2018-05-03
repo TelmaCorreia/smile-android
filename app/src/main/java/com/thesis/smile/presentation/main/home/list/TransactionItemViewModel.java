@@ -22,6 +22,7 @@ public class TransactionItemViewModel extends BaseViewModelInstance{
             return transaction.getFrom();
         }
         return transaction.getTo();
+
     }
     @Bindable
     public String getUrl() {
@@ -29,7 +30,10 @@ public class TransactionItemViewModel extends BaseViewModelInstance{
     }
     @Bindable
     public String getType(){
-        return transaction.getType();
+        if(transaction.getType().equals("compra")){
+            return "Fornecedor";
+        }
+        return "Cliente";
     }
     @Bindable
     public String getDate() {

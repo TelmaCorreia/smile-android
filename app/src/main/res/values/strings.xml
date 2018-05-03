@@ -105,7 +105,7 @@
     <string name="energy_sold">Total de energia vendida</string>
     <string name="not_energy_sold">Ainda não vendeu energia hoje</string>
     <string name="not_energy_bought">Ainda não comprou energia hoje</string>
-    <string name="solar_consumption">do seu consumo veio de energia solar</string>
+    <string name="solar_consumption">do seu consumo, veio de energia solar</string>
 
     <!-- Home - details -->
     <string name="title_energy_bought">Energia Comprada</string>

@@ -20,13 +20,13 @@ public class TransactionRemote {
     @Expose
     private double priceKWH;
     @Expose
-    private int quantity;
+    private double quantity;
     @Expose
     private double total;
 
     public TransactionRemote(){}
 
-    public TransactionRemote(String from, String to, String url, String type, LocalDateTime date, double priceKWH, int quantity, double total) {
+    public TransactionRemote(String from, String to, String url, String type, LocalDateTime date, double priceKWH, double quantity, double total) {
         this.from = from;
         this.to = to;
         this.url = url;
@@ -62,11 +62,11 @@ public class TransactionRemote {
         this.priceKWH = priceKWH;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 

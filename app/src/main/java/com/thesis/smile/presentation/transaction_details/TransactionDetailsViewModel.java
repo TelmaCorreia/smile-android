@@ -32,7 +32,7 @@ public class TransactionDetailsViewModel extends BaseToolbarViewModel {
     @Bindable
     public String getClient() {
         if (transaction!=null){
-            return transaction.getFrom();
+            return transaction.getTo();
         }
         return "";
     }
@@ -40,7 +40,7 @@ public class TransactionDetailsViewModel extends BaseToolbarViewModel {
     @Bindable
     public String getSupplier() {
         if (transaction!=null){
-            return transaction.getTo();
+            return transaction.getFrom();
         }
         return "";
     }

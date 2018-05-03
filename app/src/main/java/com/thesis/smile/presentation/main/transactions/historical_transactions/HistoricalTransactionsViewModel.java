@@ -103,11 +103,11 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
     public void getTransactions(String type) {
         Disposable disposable;
-        if (type.equals(getResourceProvider().getString(R.string.details_bought_energy))) {
+        if (type.equals(getResourceProvider().getString(R.string.transactions_menu_buy))) {
             disposable = transactionsManager.getBoughtTransactions(0, 20)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
-        } else if (type.equals(getResourceProvider().getString(R.string.details_sold_energy))){
+        } else if (type.equals(getResourceProvider().getString(R.string.transactions_menu_sell))){
             disposable = transactionsManager.getSoldTransactions(0, 20)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
@@ -124,14 +124,6 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     }
 
     private void onTransactionReceived(List<Transaction> transactions) {
-        for (Transaction t : transactions){
-            if (type.equals(getResourceProvider().getString(R.string.details_bought_energy))){
-                t.setType(getResourceProvider().getString(R.string.transactions_buy));
-            }else{
-                t.setType(getResourceProvider().getString(R.string.transactions_sell));
-            }
-        }
-       // this.transactions.removeAll(this.transactions);
         this.transactions.addAll(transactions);
 
     }
