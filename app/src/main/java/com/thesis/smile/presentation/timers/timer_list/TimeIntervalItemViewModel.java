@@ -15,11 +15,13 @@ public class TimeIntervalItemViewModel extends BaseViewModelInstance{
     private PublishRelay<Event> removeObservavle = PublishRelay.create();
     private TimeIntervalAdapter.OnItemClickListener onItemClickListener;
     private TimeIntervalAdapter.OnRemoveClickListener onRemoveClickListener;
+    private TimeIntervalAdapter.OnStateChangeClickListener onStateChangeClickListener;
 
-    public TimeIntervalItemViewModel(TimeInterval timeInterval, TimeIntervalAdapter.OnItemClickListener onItemClickListener, TimeIntervalAdapter.OnRemoveClickListener onRemoveClickListener) {
+    public TimeIntervalItemViewModel(TimeInterval timeInterval, TimeIntervalAdapter.OnItemClickListener onItemClickListener, TimeIntervalAdapter.OnRemoveClickListener onRemoveClickListener, TimeIntervalAdapter.OnStateChangeClickListener onStateChangeClickListener) {
         this.timeInterval = timeInterval;
         this.onItemClickListener = onItemClickListener;
         this.onRemoveClickListener = onRemoveClickListener;
+        this.onStateChangeClickListener = onStateChangeClickListener;
     }
 
     @Bindable
@@ -67,6 +69,12 @@ public class TimeIntervalItemViewModel extends BaseViewModelInstance{
     public void onTimerClick() {
         if (onItemClickListener != null) {
             onItemClickListener.onItemClick(timeInterval);
+        }
+    }
+
+    public void onStateChangeClick() {
+        if (onStateChangeClickListener != null) {
+            onStateChangeClickListener.onStateClick(timeInterval);
         }
     }
 

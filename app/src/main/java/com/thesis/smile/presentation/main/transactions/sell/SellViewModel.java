@@ -1,14 +1,12 @@
 package com.thesis.smile.presentation.main.transactions.sell;
 
 import android.databinding.Bindable;
-import android.databinding.ObservableArrayMap;
 import android.databinding.ObservableList;
 import android.widget.RadioGroup;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.TransactionsSettingsManager;
-import com.thesis.smile.domain.models.BuySettings;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.SellSettings;
 import com.thesis.smile.domain.models.TimeInterval;
@@ -23,7 +21,6 @@ import com.thesis.smile.BR;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,13 +30,8 @@ import io.reactivex.disposables.Disposable;
 
 public class SellViewModel extends BaseViewModel {
 
-    private String batteryLevel;
-    private String etBatteryLevel;
-    private boolean option1 = false;
-    private boolean option2 = false;
     private final ExclusiveObservableList<TimeInterval> timeIntervals;
     private final List<Neighbour> neighbours;
-
     private SellSettings sellSettings;
     private SellSettings previousSettings;
 
@@ -48,6 +40,8 @@ public class SellViewModel extends BaseViewModel {
     private PublishRelay<NavigationEvent> openPriceInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openTimerObservable = PublishRelay.create();
     private PublishRelay<Event> neighboursChanged = PublishRelay.create();
+    private PublishRelay<Event> radioChanged = PublishRelay.create();
+    private PublishRelay<Event> sliderChanged = PublishRelay.create();
 
     @Inject
     public SellViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents,  TransactionsSettingsManager sellSettingsManager) {
@@ -59,6 +53,7 @@ public class SellViewModel extends BaseViewModel {
         getNeighboursFromServer();
         getSellSettingsFromServer();
     }
+
     @Bindable
     public boolean isSell() {
         if (sellSettings!=null){
@@ -76,15 +71,37 @@ public class SellViewModel extends BaseViewModel {
     }
 
     @Bindable
-    public boolean isConcretePriceEditable() {
-        return option1;
+    public boolean isPlusPriceEditable() {
+        if(sellSettings!=null){
+            return sellSettings.isPlusPrice();
+        }
+        return false;
     }
-
 
     @Bindable
-    public boolean isPlusPriceEditable() {
-        return option2;
+    public String getPlusPriceValue() {
+        if(sellSettings!=null){
+            return String.format("%.2f", sellSettings.getPlusPriceValue());
+        }
+        return null;
     }
+
+    @Bindable
+    public boolean isConcretePriceEditable() {
+        if(sellSettings!=null){
+            return sellSettings.isSpecificPrice();
+        }
+        return false;
+    }
+
+    @Bindable
+    public String getSpecificPriceValue() {
+        if(sellSettings!=null){
+            return String.format("%.2f", sellSettings.getSpecificPriceValue());
+        }
+        return null;
+    }
+
 
     public String getBatteryLevel() {
         if(sellSettings!=null){
@@ -101,25 +118,92 @@ public class SellViewModel extends BaseViewModel {
         }
     }
 
+    public boolean isAllNeighboursSelected() {
+        if(sellSettings!=null){
+            return sellSettings.isAllNeighboursSelected();
+        }
+        return false;
+    }
+
+    public void setAllNeighboursSelected(boolean value) {
+        if(sellSettings!=null){
+            sellSettings.setAllNeighboursSelected(value);
+            notifyPropertyChanged(BR.saveVisible);
+        }
+    }
+
+    @Bindable
+    public boolean isSaveVisible() {
+        if(sellSettings!=null) {
+            return !(sellSettings.isOn()== previousSettings.isOn()
+                    && sellSettings.isAllNeighboursSelected()==sellSettings.isAllNeighboursSelected()
+                    && sellSettings.isSpecificPrice()==previousSettings.isSpecificPrice()
+                    && sellSettings.isPlusPrice()==previousSettings.isPlusPrice()
+                    && sellSettings.getSpecificPriceValue()==previousSettings.getSpecificPriceValue()
+                    && sellSettings.getPlusPriceValue()==previousSettings.getPlusPriceValue()
+                    && sellSettings.getBatteryLevel()==previousSettings.getBatteryLevel());
+        }
+        return false;
+
+    }
+
+    public void onSpecificPriceClick(){
+        if(sellSettings!=null){
+            sellSettings.setSpecificPrice(!sellSettings.isSpecificPrice());
+            sellSettings.setPlusPrice(!sellSettings.isPlusPrice());
+            radioChanged.accept(new Event());
+            notifyPropertyChanged(BR.saveVisible);
+            notifyPropertyChanged(BR.plusPriceEditable);
+            notifyPropertyChanged(BR.concretePriceEditable);
+        }
+    }
+
+    public void onPlusPriceClick(){
+        if(sellSettings!=null){
+            sellSettings.setSpecificPrice(!sellSettings.isSpecificPrice());
+            sellSettings.setPlusPrice(!sellSettings.isPlusPrice());
+            radioChanged.accept(new Event());
+            notifyPropertyChanged(BR.saveVisible);
+            notifyPropertyChanged(BR.plusPriceEditable);
+            notifyPropertyChanged(BR.concretePriceEditable);
+        }
+    }
+
     public void onPriceInfoClick(){
         openPriceInfoObservable.accept(new NavigationEvent());
     }
 
-    public void onPriceChanged(RadioGroup radioGroup, int id){
-        option1 = !option1;
-        option2 = !option2;
-        if(sellSettings!=null){
-            sellSettings.setSpecificPrice(option1);
-            sellSettings.setPlusPrice(option2);
-        }
-        notifyPropertyChanged(BR.plusPriceEditable);
-        notifyPropertyChanged(BR.concretePriceEditable);
-        notifyPropertyChanged(BR.saveVisible);
-
-    }
-
     public void onAddTimerClick(){
         openTimerObservable.accept(new NavigationEvent());
+    }
+
+    public ObservableList<TimeInterval> getTimeIntervals() {
+        return timeIntervals;
+    }
+
+    public List<Neighbour> getNeighbours() {
+        return neighbours;
+    }
+
+    public SellSettings getSellSettings() {
+        return sellSettings;
+    }
+
+    /**
+     * TIME INTERVALS
+     * */
+
+    public void getTimeIntervalsFromServer(){
+        Disposable disposableTimeIntervals = sellSettingsManager.getTimeIntervalsSell()
+                .compose(schedulersTransformSingleIo())
+                .subscribe(this::onTimeIntervalsReceived, this::onError);
+
+        addDisposable(disposableTimeIntervals);
+    }
+
+    private void onTimeIntervalsReceived(List<TimeInterval> timeIntervals) {
+        this.timeIntervals.clear();
+        this.timeIntervals.addAll(timeIntervals);
     }
 
     public void addTimeInterval(TimeInterval timeInterval, boolean update){
@@ -138,25 +222,14 @@ public class SellViewModel extends BaseViewModel {
 
     }
 
-    private void onTimeIntervalUpdatedReceived(TimeInterval timeInterval) {
-        getTimeIntervalsFromServer();
-    }
-
     private void onTimeIntervalReceived(TimeInterval timeInterval) {
         if (timeIntervals!=null){
             timeIntervals.add(timeInterval);
         }
     }
 
-    private void onNeighboursReceived(List<Neighbour> neighbours) {
-        this.neighbours.addAll(neighbours);
-        neighboursChanged.accept(new Event());
-
-    }
-
-    private void onTimeIntervalsReceived(List<TimeInterval> timeIntervals) {
-        this.timeIntervals.clear();
-        this.timeIntervals.addAll(timeIntervals);
+    private void onTimeIntervalUpdatedReceived(TimeInterval timeInterval) {
+        getTimeIntervalsFromServer();
     }
 
     public void removeTimerInterval(TimeInterval timeInterval){
@@ -174,30 +247,10 @@ public class SellViewModel extends BaseViewModel {
         getTimeIntervalsFromServer();
     }
 
-    Observable<NavigationEvent> observeOpenPriceInfo(){
-        return openPriceInfoObservable;
-    }
 
-    Observable<NavigationEvent> observeOpenTimer(){
-        return openTimerObservable;
-    }
-
-    Observable<Event> observeNeighbours(){
-        return neighboursChanged;
-    }
-
-    public ObservableList<TimeInterval> getTimeIntervals() {
-        return timeIntervals;
-    }
-
-
-    public void getTimeIntervalsFromServer(){
-        Disposable disposableTimeIntervals = sellSettingsManager.getTimeIntervalsSell()
-                .compose(schedulersTransformSingleIo())
-                .subscribe(this::onTimeIntervalsReceived, this::onError);
-
-        addDisposable(disposableTimeIntervals);
-    }
+    /**
+     * NEIGHBOURS
+     * **/
 
     public void getNeighboursFromServer(){
         Disposable disposableNeighbours = sellSettingsManager.getNeighboursSell(0, 20)
@@ -206,10 +259,36 @@ public class SellViewModel extends BaseViewModel {
         addDisposable(disposableNeighbours);
     }
 
-    public List<Neighbour> getNeighbours() {
-        return neighbours;
+    private void onNeighboursReceived(List<Neighbour> neighbours) {
+        this.neighbours.addAll(neighbours);
+        neighboursChanged.accept(new Event());
+
     }
 
+
+    /**
+     * SETTINGS
+     * **/
+
+    public void getSellSettingsFromServer() {
+        sellSettingsManager.getSellSettings()
+                .doOnSubscribe(this::addDisposable)
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onSellSettingsReceived, this::onError);
+    }
+
+    private void onSellSettingsReceived(SellSettings sellSettings) {
+        this.sellSettings = sellSettings;
+        this.previousSettings = new SellSettings(sellSettings.getId(), sellSettings.isOn(), sellSettings.isSpecificPrice(), sellSettings.isPlusPrice(), sellSettings.getSpecificPriceValue(), sellSettings.getPlusPriceValue(), sellSettings.getBatteryLevel(), sellSettings.isAllNeighboursSelected());
+        radioChanged.accept(new Event());
+        sliderChanged.accept(new Event());
+        notifyChange();
+    }
+
+    /**
+     * SAVE
+     * **/
 
     public void onSaveClick() {
         //TODO: price verifications
@@ -228,34 +307,23 @@ public class SellViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.saveVisible);
     }
 
-    public void getSellSettingsFromServer() {
-        sellSettingsManager.getSellSettings()
-                .doOnSubscribe(this::addDisposable)
-                .compose(schedulersTransformSingleIo())
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(this::onSellSettingsReceived, this::onError);
+    Observable<NavigationEvent> observeOpenPriceInfo(){
+        return openPriceInfoObservable;
     }
 
-    private void onSellSettingsReceived(SellSettings sellSettings) {
-        this.sellSettings = sellSettings;
-        this.option1= sellSettings.isSpecificPrice();
-        this.option2=sellSettings.isPlusPrice();
-        this.previousSettings = new SellSettings(sellSettings.getId(), sellSettings.isOn(), sellSettings.isSpecificPrice(), sellSettings.isPlusPrice(), sellSettings.getSpecificPriceValue(), sellSettings.getPlusPriceValue(), sellSettings.getBatteryLevel(), sellSettings.isAllNeighboursSelected());
-        notifyChange();
+    Observable<NavigationEvent> observeOpenTimer(){
+        return openTimerObservable;
     }
 
-    @Bindable
-    public boolean isSaveVisible() {
-        if(sellSettings!=null) {
-            return !(sellSettings.isOn()== previousSettings.isOn()
-                    && sellSettings.isAllNeighboursSelected()==sellSettings.isAllNeighboursSelected()
-                    && sellSettings.isSpecificPrice()==previousSettings.isSpecificPrice()
-                    && sellSettings.isPlusPrice()==previousSettings.isPlusPrice()
-                    && sellSettings.getSpecificPriceValue()==previousSettings.getSpecificPriceValue()
-                    && sellSettings.getPlusPriceValue()==previousSettings.getPlusPriceValue()
-                    && sellSettings.getBatteryLevel()==previousSettings.getBatteryLevel());
-        }
-        return false;
+    Observable<Event> observeNeighbours(){
+        return neighboursChanged;
+    }
 
+    Observable<Event> observeRadio(){
+        return radioChanged;
+    }
+
+    Observable<Event> observeSlider(){
+        return sliderChanged;
     }
 }

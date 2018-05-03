@@ -108,7 +108,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="77dp"
                         android:layout_marginTop="16dp"
-                        android:onCheckedChanged="@{viewModel::onPriceChanged}"
                         app:layout_constraintTop_toBottomOf="@+id/llHelp">
 
                         <RadioButton
@@ -117,7 +116,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/colorBlack"
-                            android:checked="true"
+                            android:onClick="@{v -> viewModel.onSpecificPriceClick()}"
                             android:text="@string/concrete_price_" />
 
                         <RadioButton
@@ -127,6 +126,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             android:buttonTint="@color/colorBlack"
+                            android:onClick="@{v -> viewModel.onPlusPriceClick()}"
                             android:text="@string/price_plus" />
 
                     </RadioGroup>

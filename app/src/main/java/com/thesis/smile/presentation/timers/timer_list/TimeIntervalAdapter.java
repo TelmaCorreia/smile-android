@@ -21,15 +21,22 @@ public class TimeIntervalAdapter extends BindableAdapter<TimeInterval> {
         void onRemoveClick(TimeInterval timeInterval);
     }
 
+    public interface OnStateChangeClickListener {
+        void onStateClick(TimeInterval timeInterval);
+    }
+
     private OnItemClickListener onItemClickListener;
     private OnRemoveClickListener onRemoveClickListener;
+    private OnStateChangeClickListener onStateChangeClickListener;
 
 
-    public TimeIntervalAdapter(@Nullable ObservableList<TimeInterval> items,  OnItemClickListener onItemClickListener, OnRemoveClickListener onRemoveClickListener) {
+
+    public TimeIntervalAdapter(@Nullable ObservableList<TimeInterval> items,  OnItemClickListener onItemClickListener, OnRemoveClickListener onRemoveClickListener, OnStateChangeClickListener onStateChangeClickListener) {
         super(items);
 
         this.onItemClickListener = onItemClickListener;
         this.onRemoveClickListener = onRemoveClickListener;
+        this.onStateChangeClickListener = onStateChangeClickListener;
 
     }
 
@@ -51,7 +58,7 @@ public class TimeIntervalAdapter extends BindableAdapter<TimeInterval> {
         }
 
         public void setTimeInterval(TimeInterval timeInterval) {
-            binding.setViewModel(new TimeIntervalItemViewModel(timeInterval, onItemClickListener, onRemoveClickListener));
+            binding.setViewModel(new TimeIntervalItemViewModel(timeInterval, onItemClickListener, onRemoveClickListener, onStateChangeClickListener));
         }
     }
 }

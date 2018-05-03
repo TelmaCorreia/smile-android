@@ -25,8 +25,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
-
 public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewModel> {
 
     static final int REQUEST_TIMERS = 1;
@@ -54,7 +52,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
         CustomItemDecoration dividerItemDecoration = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        TimeIntervalAdapter timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(), this::onTimeIntervalSelected, this::onRemoveTimeIntervalSelected);
+        TimeIntervalAdapter timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(), this::onTimeIntervalSelected, this::onRemoveTimeIntervalSelected,  this::onTimeIntervalStateChanged);
         binding.timersSell.setLayoutManager(layoutManager);
         binding.timersSell.setAdapter(timeIntervalAdapter);
         binding.timersSell.addItemDecoration(dividerItemDecoration);
@@ -83,14 +81,6 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
 
     }
 
-    private void onRemoveTimeIntervalSelected(TimeInterval timeInterval) {
-        getViewModel().removeTimerInterval(timeInterval);
-    }
-
-    private void onTimeIntervalSelected(TimeInterval timeInterval) {
-        TimersActivity.launchForResult(getActivity(),REQUEST_TIMERS_EDIT, TIMER, timeInterval);
-    }
-
     @Override
     protected void registerObservables() {
         super.registerObservables();
@@ -110,6 +100,27 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         getViewModel().observeNeighbours()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::initNeighbours);
+
+        getViewModel().observeRadio()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::updateRadio);
+
+        getViewModel().observeRadio()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::updateSlider);
+    }
+
+    private void updateSlider(Event event) {
+        int value = (int) round(getViewModel().getSellSettings().getBatteryLevel()*100,0);
+        getBinding().sbBattery.setProgress(value);
+    }
+
+    private void updateRadio(Event event) {
+        if (getViewModel().getSellSettings().isSpecificPrice()){
+            getBinding().rbConcretePrice.setChecked(true);
+        }else {
+            getBinding().rbPricePlus.setChecked(true);
+        }
     }
 
     private void initNeighbours(Event event) {
@@ -124,14 +135,6 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         getBinding().consumers.addItemDecoration(dividerItemDecoration_);
     }
 
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
-
     public List<NeighbourHeader> getConsumers() {
         List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
         List<Neighbour> neighbours = new ArrayList<>();
@@ -140,6 +143,23 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);
         return neighbourHeaders;
+    }
+
+
+    /**
+     * TIMERS
+     * **/
+
+    private void onRemoveTimeIntervalSelected(TimeInterval timeInterval) {
+        getViewModel().removeTimerInterval(timeInterval);
+    }
+
+    private void onTimeIntervalSelected(TimeInterval timeInterval) {
+        TimersActivity.launchForResult(getActivity(),REQUEST_TIMERS_EDIT, TIMER, timeInterval);
+    }
+
+    private void onTimeIntervalStateChanged(TimeInterval timeInterval) {
+        getViewModel().addTimeInterval(timeInterval, true);
     }
 
     @Override
@@ -154,5 +174,13 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
             TimeInterval timeInterval = data.getExtras().getParcelable(TIMER);
             getViewModel().addTimeInterval(timeInterval, true);
         }
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

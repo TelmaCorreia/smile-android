@@ -2,7 +2,6 @@ package com.thesis.smile.presentation.main.transactions.buy;
 
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
-import android.widget.RadioGroup;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
@@ -11,7 +10,6 @@ import com.thesis.smile.domain.managers.TransactionsSettingsManager;
 import com.thesis.smile.domain.models.BuySettings;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.TimeInterval;
-import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.Event;
@@ -30,14 +28,12 @@ import io.reactivex.disposables.Disposable;
 
 public class BuyViewModel extends BaseViewModel {
 
-    private boolean option1 = false;
-    private boolean option2 = false;
     private final ExclusiveObservableList<TimeInterval> timeIntervals;
     private final List<Neighbour> neighbours;
-    private TransactionsSettingsManager buySettingsManager;
-
     private BuySettings buySettings;
     private BuySettings previousSettings;
+
+    private TransactionsSettingsManager buySettingsManager;
 
     private PublishRelay<NavigationEvent> openPriceInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openTimerObservable = PublishRelay.create();
@@ -54,12 +50,6 @@ public class BuyViewModel extends BaseViewModel {
         getTimeIntervalsFromServer();
         getNeighboursFromServer();
         getBuySettingsFromServer();
-
-    }
-
-    @Bindable
-    public boolean isPlusPriceEditable() {
-        return option2;
     }
 
     @Bindable
@@ -78,17 +68,12 @@ public class BuyViewModel extends BaseViewModel {
         }
     }
 
-    public boolean isAllNeighboursSelected() {
+    @Bindable
+    public boolean isPlusPriceEditable() {
         if(buySettings!=null){
-            return buySettings.isAllNeighboursSelected();
+            return buySettings.isEemPlusPrice();
         }
         return false;
-    }
-    public void setAllNeighboursSelected(boolean value) {
-        if(buySettings!=null){
-            buySettings.setAllNeighboursSelected(value);
-            notifyPropertyChanged(BR.saveVisible);
-        }
     }
 
     @Bindable
@@ -97,6 +82,28 @@ public class BuyViewModel extends BaseViewModel {
             return String.format("%.2f", buySettings.getEemPlusPriceValue());
         }
         return null;
+    }
+
+    public void setPlusPriceValue(String value) {
+        if(buySettings!=null) {
+            // this.buySettings.setEemPlusPriceValue(Double.parseDouble(value.replace(',', '.')));
+            //  notifyPropertyChanged(BR.plusPriceValue);
+        }
+        notifyPropertyChanged(BR.saveVisible);
+    }
+
+    public boolean isAllNeighboursSelected() {
+        if(buySettings!=null){
+            return buySettings.isAllNeighboursSelected();
+        }
+        return false;
+    }
+
+    public void setAllNeighboursSelected(boolean value) {
+        if(buySettings!=null){
+            buySettings.setAllNeighboursSelected(value);
+            notifyPropertyChanged(BR.saveVisible);
+        }
     }
 
     @Bindable
@@ -110,39 +117,63 @@ public class BuyViewModel extends BaseViewModel {
                     && buySettings.getEemPriceValue()==previousSettings.getEemPriceValue());
         }
         return false;
-
     }
 
-    public void setPlusPriceValue(String value) {
-        if(buySettings!=null) {
-           // this.buySettings.setEemPlusPriceValue(Double.parseDouble(value.replace(',', '.')));
-          //  notifyPropertyChanged(BR.plusPriceValue);
-        }
-        notifyPropertyChanged(BR.saveVisible);
-    }
-
-    public void setOption1(boolean val){
-        this.option1=val;
-    }
-
-    public void setOption2(boolean val){
-        this.option1=val;
-    }
-
-    public void onPriceChanged(RadioGroup radioGroup, int id){
-        option1 = !option1;
-        option2 = !option2;
+    public void onEemPriceClick(){
         if(buySettings!=null){
-            buySettings.setEemPrice(option1);
-            buySettings.setEemPlusPrice(option2);
+            buySettings.setEemPrice(!buySettings.isEemPrice());
+            buySettings.setEemPlusPrice(!buySettings.isEemPlusPrice());
+            settingsChanged.accept(new Event());
+            notifyPropertyChanged(BR.saveVisible);
+            notifyPropertyChanged(BR.plusPriceEditable);
         }
-        notifyPropertyChanged(BR.saveVisible);
-        notifyPropertyChanged(BR.plusPriceEditable);
+    }
 
+    public void onEemPlusPriceClick(){
+        if(buySettings!=null){
+            buySettings.setEemPrice(!buySettings.isEemPrice());
+            buySettings.setEemPlusPrice(!buySettings.isEemPlusPrice());
+            settingsChanged.accept(new Event());
+            notifyPropertyChanged(BR.saveVisible);
+            notifyPropertyChanged(BR.plusPriceEditable);
+        }
     }
 
     public void onPriceInfoClick(){
         openPriceInfoObservable.accept(new NavigationEvent());
+    }
+
+    public void onAddTimerClick(){
+        openTimerObservable.accept(new NavigationEvent());
+    }
+
+    public ObservableList<TimeInterval> getTimeIntervals() {
+        return this.timeIntervals;
+    }
+
+    public List<Neighbour> getNeighbours() {
+        return neighbours;
+    }
+
+    public BuySettings getBuySettings() {
+        return buySettings;
+    }
+
+    /**
+     * TIME INTERVALS
+     * */
+
+    public void getTimeIntervalsFromServer(){
+        Disposable disposableTimeIntervals = buySettingsManager.getTimeIntervalsBuy()
+                .compose(schedulersTransformSingleIo())
+                .subscribe(this::onTimeIntervalsReceived, this::onError);
+
+        addDisposable(disposableTimeIntervals);
+    }
+
+    private void onTimeIntervalsReceived(List<TimeInterval> timeIntervals) {
+        this.timeIntervals.clear();
+        this.timeIntervals.addAll(timeIntervals);
     }
 
     public void addTimeInterval(TimeInterval timeInterval, boolean update){
@@ -160,65 +191,15 @@ public class BuyViewModel extends BaseViewModel {
         addDisposable(disposable);
     }
 
-    private void onTimeIntervalUpdatedReceived(TimeInterval timeInterval) {
-        getTimeIntervalsFromServer();
-
-    }
-
     private void onTimeIntervalReceived(TimeInterval timeInterval) {
         if (timeIntervals!=null){
             timeIntervals.add(timeInterval);
         }
     }
 
-    public void onAddTimerClick(){
-        openTimerObservable.accept(new NavigationEvent());
-    }
+    private void onTimeIntervalUpdatedReceived(TimeInterval timeInterval) {
+        getTimeIntervalsFromServer();
 
-    Observable<NavigationEvent> observeOpenPriceInfo(){
-        return openPriceInfoObservable;
-    }
-
-    Observable<NavigationEvent> observeOpenTimer(){
-        return openTimerObservable;
-    }
-
-    Observable<Event> observeNeighbours(){
-        return neighboursChanged;
-    }
-
-    Observable<Event> observeBuySettings(){
-        return settingsChanged;
-    }
-
-    public ObservableList<TimeInterval> getTimeIntervals() {
-        return this.timeIntervals;
-    }
-
-    public void getTimeIntervalsFromServer(){
-        Disposable disposableTimeIntervals = buySettingsManager.getTimeIntervalsBuy()
-                    .compose(schedulersTransformSingleIo())
-                    .subscribe(this::onTimeIntervalsReceived, this::onError);
-
-        addDisposable(disposableTimeIntervals);
-    }
-
-    public void getNeighboursFromServer(){
-        Disposable disposableNeighbours = buySettingsManager.getNeighboursBuy(0, 20)
-                .compose(schedulersTransformSingleIo())
-                .subscribe(this::onNeighboursRecived, this::onError);
-
-        addDisposable(disposableNeighbours);
-    }
-
-    private void onNeighboursRecived(List<Neighbour> neighbours) {
-        this.neighbours.addAll(neighbours);
-        neighboursChanged.accept(new Event());
-    }
-
-    private void onTimeIntervalsReceived(List<TimeInterval> timeIntervals) {
-        this.timeIntervals.clear();
-        this.timeIntervals.addAll(timeIntervals);
     }
 
     public void removeTimerInterval(TimeInterval timeInterval) {
@@ -234,13 +215,27 @@ public class BuyViewModel extends BaseViewModel {
         getTimeIntervalsFromServer();
     }
 
-    public List<Neighbour> getNeighbours() {
-        return neighbours;
+    /**
+     * NEIGHBOURS
+     * **/
+
+    public void getNeighboursFromServer(){
+        Disposable disposableNeighbours = buySettingsManager.getNeighboursBuy(0, 20)
+                .compose(schedulersTransformSingleIo())
+                .subscribe(this::onNeighboursReceived, this::onError);
+
+        addDisposable(disposableNeighbours);
     }
 
-    public BuySettings getBuySettings() {
-        return buySettings;
+    private void onNeighboursReceived(List<Neighbour> neighbours) {
+        this.neighbours.addAll(neighbours);
+        neighboursChanged.accept(new Event());
     }
+
+
+    /**
+     * SETTINGS
+     * **/
 
     public void getBuySettingsFromServer() {
         buySettingsManager.getBuySettings()
@@ -257,6 +252,10 @@ public class BuyViewModel extends BaseViewModel {
         notifyChange();
     }
 
+    /**
+     * SAVE
+     * **/
+
     public void onSaveClick() {
         //TODO: price verifications
         buySettingsManager.updateBuySettings(buySettings)
@@ -272,5 +271,21 @@ public class BuyViewModel extends BaseViewModel {
         this.previousSettings = new BuySettings(buySettings.getId(), buySettings.isOn(), buySettings.isEemPrice(), buySettings.isEemPlusPrice(), buySettings.getEemPriceValue(), buySettings.getEemPlusPriceValue(), buySettings.isAllNeighboursSelected());
         this.buySettings = buySettings;
         notifyPropertyChanged(BR.saveVisible);
+    }
+
+    Observable<NavigationEvent> observeOpenPriceInfo(){
+        return openPriceInfoObservable;
+    }
+
+    Observable<NavigationEvent> observeOpenTimer(){
+        return openTimerObservable;
+    }
+
+    Observable<Event> observeNeighbours(){
+        return neighboursChanged;
+    }
+
+    Observable<Event> observeBuySettings(){
+        return settingsChanged;
     }
 }
