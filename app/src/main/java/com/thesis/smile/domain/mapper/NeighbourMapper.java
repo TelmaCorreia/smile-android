@@ -20,4 +20,7 @@ public interface NeighbourMapper extends BaseMapper<Neighbour, NeighbourRemote> 
 
     List<Neighbour> remoteToDomain(List<NeighbourRemote> remote);
 
+    List<NeighbourRemote> domainToRemote(List<Neighbour> remote);
+
+
 }

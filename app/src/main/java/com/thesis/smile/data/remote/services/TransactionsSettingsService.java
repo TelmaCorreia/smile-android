@@ -12,9 +12,11 @@ import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.services.base.ApiService;
 import com.thesis.smile.domain.mapper.BuySettingsMapper;
+import com.thesis.smile.domain.mapper.NeighbourMapper;
 import com.thesis.smile.domain.mapper.SellSettingsMapper;
 import com.thesis.smile.domain.mapper.TimeIntervalMapper;
 import com.thesis.smile.domain.models.BuySettings;
+import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.SellSettings;
 import com.thesis.smile.domain.models.TimeInterval;
 
@@ -123,6 +125,18 @@ public class TransactionsSettingsService extends ApiService {
                 .onErrorResumeNext(Single::error)
                 .map(BaseResponse::getData)
                 .map(NeighboursRemote::getNeighbours);
+    }
+
+    public Single<String> updateNeighboursSell(String token,  List<Neighbour> neighbours){
+        return api.updateNeighboursSell(token, new NeighboursRemote(NeighbourMapper.INSTANCE.domainToRemote(neighbours)))
+                .compose(networkMapTransform())
+                .map(BaseResponse::getCode);
+    }
+
+    public  Single<String> updateNeighboursBuy(String token, List<Neighbour> neighbours){
+        return api.updateNeighboursBuy(token, new NeighboursRemote(NeighbourMapper.INSTANCE.domainToRemote(neighbours)))
+                .compose(networkMapTransform())
+                .map(BaseResponse::getCode);
     }
 
 

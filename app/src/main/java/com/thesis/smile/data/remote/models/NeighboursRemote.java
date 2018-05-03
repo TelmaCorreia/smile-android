@@ -13,6 +13,10 @@ public class NeighboursRemote {
 
     public NeighboursRemote(){}
 
+    public NeighboursRemote(List<NeighbourRemote> neighbours){
+        this.neighbours = neighbours;
+    }
+
     public List<NeighbourRemote> getNeighbours() {
         return neighbours;
     }

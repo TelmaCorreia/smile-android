@@ -19,7 +19,10 @@ import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -30,9 +33,9 @@ public class BuyViewModel extends BaseViewModel {
 
     private final ExclusiveObservableList<TimeInterval> timeIntervals;
     private final List<Neighbour> neighbours;
+    private Map<String, Neighbour> neighboursToUpdate;
     private BuySettings buySettings;
     private BuySettings previousSettings;
-
     private TransactionsSettingsManager buySettingsManager;
 
     private PublishRelay<NavigationEvent> openPriceInfoObservable = PublishRelay.create();
@@ -47,6 +50,7 @@ public class BuyViewModel extends BaseViewModel {
         this.buySettingsManager = buySettingsManager;
         timeIntervals = new ExclusiveObservableList<>();
         neighbours = new ArrayList<>();
+        neighboursToUpdate = new HashMap<>();
         getTimeIntervalsFromServer();
         getNeighboursFromServer();
         getBuySettingsFromServer();
@@ -109,14 +113,18 @@ public class BuyViewModel extends BaseViewModel {
     @Bindable
     public boolean isSaveVisible() {
         if(buySettings!=null) {
-            return !(buySettings.isOn()== previousSettings.isOn()
-                    && buySettings.isAllNeighboursSelected()==buySettings.isAllNeighboursSelected()
-                    && buySettings.isEemPrice()==previousSettings.isEemPrice()
-                    && buySettings.isEemPlusPrice()==previousSettings.isEemPlusPrice()
-                    && buySettings.getEemPlusPriceValue()==previousSettings.getEemPlusPriceValue()
-                    && buySettings.getEemPriceValue()==previousSettings.getEemPriceValue());
+            return !(buySettingsChanged() && neighboursToUpdate.size()==0);
         }
         return false;
+    }
+
+    private boolean buySettingsChanged(){
+        return  buySettings.isOn()== previousSettings.isOn()
+                && buySettings.isAllNeighboursSelected()==buySettings.isAllNeighboursSelected()
+                && buySettings.isEemPrice()==previousSettings.isEemPrice()
+                && buySettings.isEemPlusPrice()==previousSettings.isEemPlusPrice()
+                && buySettings.getEemPlusPriceValue()==previousSettings.getEemPlusPriceValue()
+                && buySettings.getEemPriceValue()==previousSettings.getEemPriceValue();
     }
 
     public void onEemPriceClick(){
@@ -232,6 +240,15 @@ public class BuyViewModel extends BaseViewModel {
         neighboursChanged.accept(new Event());
     }
 
+    public void addNeighbourToUpdate(Neighbour neighbour) {
+        if (neighboursToUpdate.containsKey(neighbour.getId())){
+            neighboursToUpdate.remove(neighbour.getId());
+        }else{
+            neighboursToUpdate.put(neighbour.getId(), neighbour);
+        }
+        notifyPropertyChanged(BR.saveVisible);
+    }
+
 
     /**
      * SETTINGS
@@ -258,11 +275,24 @@ public class BuyViewModel extends BaseViewModel {
 
     public void onSaveClick() {
         //TODO: price verifications
-        buySettingsManager.updateBuySettings(buySettings)
-                .compose(schedulersTransformSingleIo())
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(this::onUpdateComplete, this::onError);
+        if(buySettingsChanged()) {
+            buySettingsManager.updateBuySettings(buySettings)
+                    .compose(schedulersTransformSingleIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onUpdateComplete, this::onError);
+        }
+        if(neighboursToUpdate.size()>0){
+            buySettingsManager.updateNeighboursBuy(new ArrayList<>(neighboursToUpdate.values()))
+                    .compose(schedulersTransformSingleIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onNeighboursUpdate, this::onError);
+        }
 
+    }
+
+    private void onNeighboursUpdate(String s) {
+        getUiEvents().showToast("OK");
+        neighboursToUpdate.clear();
     }
 
     private void onUpdateComplete(BuySettings buySettings) {

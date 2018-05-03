@@ -21,7 +21,9 @@ import com.thesis.smile.BR;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -34,6 +36,7 @@ public class SellViewModel extends BaseViewModel {
     private final List<Neighbour> neighbours;
     private SellSettings sellSettings;
     private SellSettings previousSettings;
+    private Map<String, Neighbour> neighboursToUpdate;
 
     private TransactionsSettingsManager sellSettingsManager;
 
@@ -49,6 +52,7 @@ public class SellViewModel extends BaseViewModel {
         this.sellSettingsManager = sellSettingsManager;
         timeIntervals = new ExclusiveObservableList<>();
         neighbours = new ArrayList<>();
+        neighboursToUpdate = new HashMap<>();
         getTimeIntervalsFromServer();
         getNeighboursFromServer();
         getSellSettingsFromServer();
@@ -135,16 +139,20 @@ public class SellViewModel extends BaseViewModel {
     @Bindable
     public boolean isSaveVisible() {
         if(sellSettings!=null) {
-            return !(sellSettings.isOn()== previousSettings.isOn()
-                    && sellSettings.isAllNeighboursSelected()==sellSettings.isAllNeighboursSelected()
-                    && sellSettings.isSpecificPrice()==previousSettings.isSpecificPrice()
-                    && sellSettings.isPlusPrice()==previousSettings.isPlusPrice()
-                    && sellSettings.getSpecificPriceValue()==previousSettings.getSpecificPriceValue()
-                    && sellSettings.getPlusPriceValue()==previousSettings.getPlusPriceValue()
-                    && sellSettings.getBatteryLevel()==previousSettings.getBatteryLevel());
+            return !(sellSettingsChanged() && neighboursToUpdate.size()==0);
         }
         return false;
 
+    }
+
+    private boolean sellSettingsChanged(){
+        return sellSettings.isOn()== previousSettings.isOn()
+                && sellSettings.isAllNeighboursSelected()==sellSettings.isAllNeighboursSelected()
+                && sellSettings.isSpecificPrice()==previousSettings.isSpecificPrice()
+                && sellSettings.isPlusPrice()==previousSettings.isPlusPrice()
+                && sellSettings.getSpecificPriceValue()==previousSettings.getSpecificPriceValue()
+                && sellSettings.getPlusPriceValue()==previousSettings.getPlusPriceValue()
+                && sellSettings.getBatteryLevel()==previousSettings.getBatteryLevel();
     }
 
     public void onSpecificPriceClick(){
@@ -265,6 +273,13 @@ public class SellViewModel extends BaseViewModel {
 
     }
 
+    public void addNeighbourToUpdate(Neighbour neighbour) {
+        if (neighboursToUpdate.containsKey(neighbour.getId())){
+            neighboursToUpdate.remove(neighbour.getId());
+        }else{
+            neighboursToUpdate.put(neighbour.getId(), neighbour);
+        }        notifyPropertyChanged(BR.saveVisible);
+    }
 
     /**
      * SETTINGS
@@ -292,11 +307,24 @@ public class SellViewModel extends BaseViewModel {
 
     public void onSaveClick() {
         //TODO: price verifications
-        sellSettingsManager.updateSellSettings(sellSettings)
-                .compose(schedulersTransformSingleIo())
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(this::onUpdateComplete, this::onError);
+        if(sellSettingsChanged()) {
+            sellSettingsManager.updateSellSettings(sellSettings)
+                    .compose(schedulersTransformSingleIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onUpdateComplete, this::onError);
+        }
+        if(neighboursToUpdate.size()>0){
+            sellSettingsManager.updateNeighboursSell(new ArrayList<>(neighboursToUpdate.values()))
+                    .compose(schedulersTransformSingleIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onNeighboursUpdate, this::onError);
+        }
 
+    }
+
+    private void onNeighboursUpdate(String s) {
+        getUiEvents().showToast("OK");
+        neighboursToUpdate.clear();
     }
 
     private void onUpdateComplete(SellSettings sellSettings) {
@@ -326,4 +354,5 @@ public class SellViewModel extends BaseViewModel {
     Observable<Event> observeSlider(){
         return sliderChanged;
     }
+
 }

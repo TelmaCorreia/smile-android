@@ -14,19 +14,27 @@ public class NeighbourChildViewHolder extends ChildViewHolder {
     public TextView name;
     public ImageView pic;
     public SwitchCompat switchCompat;
+    private NeighbourAdapter.OnSwitchClickListener onSwitchClickListener;
 
-    public NeighbourChildViewHolder(View itemView) {
+    public NeighbourChildViewHolder(View itemView, NeighbourAdapter.OnSwitchClickListener onSwitchClickListener) {
         super(itemView);
 
         name = (TextView) itemView.findViewById(R.id.name);
         pic = (ImageView) itemView.findViewById(R.id.ivUser);
         switchCompat = (SwitchCompat) itemView.findViewById(R.id.switchCompact);
+        this.onSwitchClickListener = onSwitchClickListener;
 
     }
 
     public void onBind(Neighbour neighbour) {
         name.setText(neighbour.getName());
-        switchCompat.setChecked(neighbour.isVisible());
+        switchCompat.setChecked(neighbour.isBlocked());
+        switchCompat.setOnClickListener(view -> {
+            if (onSwitchClickListener!=null){
+                onSwitchClickListener.onSwichClick(neighbour);
+
+            }
+        });
     }
 
     public void setName(TextView name) {

@@ -11,22 +11,24 @@ public class Neighbour implements Parcelable {
     private String url;
     private boolean visible;
     private boolean blocked;
+    private boolean isSelectAll;
 
     public Neighbour(){}
-    public Neighbour(String id, String name, String type, String url, boolean visible) {
+    public Neighbour(String id, String name, String type, String url, boolean visible, boolean blocked) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.url = url;
         this.visible = visible;
-        this.blocked = false;
+        this.blocked = blocked;
+        this.isSelectAll = false;
     }
 
-    public Neighbour(String id, String name, boolean blocked, boolean visible){
+    public Neighbour(String id, String name, boolean blocked, boolean isSelectAll){
         this.id = id;
         this.name = name;
         this.blocked = blocked;
-        this.visible = visible;
+        this.isSelectAll = isSelectAll;
     }
 
     protected Neighbour(Parcel in) {
@@ -112,5 +114,13 @@ public class Neighbour implements Parcelable {
         parcel.writeString(url);
         parcel.writeByte((byte) (visible ? 1 : 0));
         parcel.writeByte((byte) (blocked ? 1 : 0));
+    }
+
+    public boolean isSelectAll() {
+        return isSelectAll;
+    }
+
+    public void setSelectAll(boolean selectAll) {
+        isSelectAll = selectAll;
     }
 }

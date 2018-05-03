@@ -29,8 +29,6 @@ public class TimeIntervalAdapter extends BindableAdapter<TimeInterval> {
     private OnRemoveClickListener onRemoveClickListener;
     private OnStateChangeClickListener onStateChangeClickListener;
 
-
-
     public TimeIntervalAdapter(@Nullable ObservableList<TimeInterval> items,  OnItemClickListener onItemClickListener, OnRemoveClickListener onRemoveClickListener, OnStateChangeClickListener onStateChangeClickListener) {
         super(items);
 

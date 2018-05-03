@@ -95,16 +95,25 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         CustomItemDecoration dividerItemDecoration_ = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
         List<NeighbourHeader> neighbourHeaders = getSuppliers();
         LinearLayoutManager layoutManagerSup = new LinearLayoutManager(getContext());
-        NeighbourAdapter adapter = new NeighbourAdapter(getContext(), neighbourHeaders);
+        NeighbourAdapter adapter = new NeighbourAdapter(getContext(), neighbourHeaders, this::onSwitchListener);
         getBinding().suppliers.setLayoutManager(layoutManagerSup);
         getBinding().suppliers.setAdapter(adapter);
         getBinding().suppliers.addItemDecoration(dividerItemDecoration_);
     }
 
+    private void onSwitchListener(Neighbour neighbour) {
+        if (neighbour.isSelectAll()){
+            getViewModel().setAllNeighboursSelected(neighbour.isBlocked());
+        }else{
+            getViewModel().addNeighbourToUpdate(neighbour);
+        }
+
+    }
+
     public List<NeighbourHeader> getSuppliers() {
         List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
         List<Neighbour> neighbours = new ArrayList<>();
-        neighbours.add(new Neighbour("0","Selecionar todos", getViewModel().isAllNeighboursSelected(), false));
+        neighbours.add(new Neighbour("0","Selecionar todos", getViewModel().isAllNeighboursSelected(), true));
         neighbours.addAll(getViewModel().getNeighbours());
         NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);

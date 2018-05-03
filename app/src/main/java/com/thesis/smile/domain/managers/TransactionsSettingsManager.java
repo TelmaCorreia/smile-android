@@ -119,4 +119,14 @@ public class TransactionsSettingsManager {
         return transactionsSettingsService.getNeighboursSell(token, page, size)
                 .map(NeighbourMapper.INSTANCE::remoteToDomain);
     }
+
+    public Single<String> updateNeighboursSell(List<Neighbour> list){
+        String token = sharedPrefs.getUserToken();
+        return transactionsSettingsService.updateNeighboursSell(token, list);
+    }
+
+    public Single<String> updateNeighboursBuy(List<Neighbour> list){
+        String token = sharedPrefs.getUserToken();
+        return transactionsSettingsService.updateNeighboursBuy(token, list);
+    }
 }

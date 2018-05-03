@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.NeighbourHeader;
+import com.thesis.smile.domain.models.TimeInterval;
 import com.thoughtbot.expandablerecyclerview.MultiTypeExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
@@ -16,14 +17,20 @@ import java.util.List;
 
 public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<NeighbourParentViewHolder,ChildViewHolder> {
 
+    public interface OnSwitchClickListener {
+        void onSwichClick(Neighbour neighbour);
+    }
+
     private LayoutInflater inflater;
     public static final int SELECT_ALL_VIEW_TYPE = 3;
     public static final int NEIGHBOUR_VIEW_TYPE = 4;
     /** Use values > 2. That's because ExpandableListPosition.CHILD and ExpandableListPositon.GROUP are 1 and 2 respectively so they are already taken.**/
 
-    public NeighbourAdapter(Context context, List<? extends ExpandableGroup> groups) {
-        super(groups);
+    private OnSwitchClickListener onSwichClickListener;
 
+    public NeighbourAdapter(Context context, List<? extends ExpandableGroup> groups, OnSwitchClickListener onSwichClickListener) {
+        super(groups);
+        this.onSwichClickListener = onSwichClickListener;
         inflater = LayoutInflater.from(context);
     }
 
@@ -39,10 +46,10 @@ public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<Nei
         switch (viewType) {
             case SELECT_ALL_VIEW_TYPE:
                 View selectAll = inflater.inflate(R.layout.list_item_user, viewGroup, false);
-                return new SelectAllChildViewHolder(selectAll);
+                return new SelectAllChildViewHolder(selectAll, onSwichClickListener);
             case NEIGHBOUR_VIEW_TYPE:
                 View neighbour =  inflater.inflate(R.layout.list_item_user, viewGroup, false);
-                return new NeighbourChildViewHolder(neighbour);
+                return new NeighbourChildViewHolder(neighbour, onSwichClickListener);
             default:
                 throw new IllegalArgumentException("Invalid viewType");
         }
@@ -70,7 +77,7 @@ public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<Nei
 
     @Override
     public int getChildViewType(int position, ExpandableGroup group, int childIndex) {
-        if (((NeighbourHeader) group).getItems().get(childIndex).isBlocked()) {
+        if (((NeighbourHeader) group).getItems().get(childIndex).isSelectAll()) {
             return SELECT_ALL_VIEW_TYPE;
         } else {
             return NEIGHBOUR_VIEW_TYPE;

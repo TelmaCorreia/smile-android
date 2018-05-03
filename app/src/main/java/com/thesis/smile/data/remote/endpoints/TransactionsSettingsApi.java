@@ -1,6 +1,8 @@
 package com.thesis.smile.data.remote.endpoints;
 
 import com.thesis.smile.data.remote.models.BuySettingsRemote;
+import com.thesis.smile.data.remote.models.NeighbourRemote;
+import com.thesis.smile.data.remote.models.NeighboursRemote;
 import com.thesis.smile.data.remote.models.SellSettingsRemote;
 import com.thesis.smile.data.remote.models.TimeIntervalRemote;
 import com.thesis.smile.data.remote.models.response.BuySettingsResponse;
@@ -15,6 +17,8 @@ import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 import com.thesis.smile.domain.models.BuySettings;
 import com.thesis.smile.domain.models.SellSettings;
 import com.thesis.smile.domain.models.TimeInterval;
+
+import java.util.List;
 
 import io.reactivex.Single;
 import retrofit2.Response;
@@ -67,5 +71,11 @@ public interface TransactionsSettingsApi {
 
     @GET("transactions/neighbours/sell/{token}")
     Single<Response<NeighboursResponse>> getNeighboursSell(@Path("token") String token,  @Query("page") int page, @Query("size") int size);
+
+    @PUT("transactions/neighbours/sell/{token}")
+    Single<Response<BaseResponse>> updateNeighboursSell(@Path("token") String userId, @Body NeighboursRemote neighbours);
+
+    @PUT("transactions/neighbours/buy/{token}")
+    Single<Response<BaseResponse>> updateNeighboursBuy(@Path("token") String userId, @Body NeighboursRemote neighbours);
 
 }
