@@ -216,8 +216,10 @@
 
     <!-- Price info -->
     <string name="price_info_title">A sua tarifa de compra de energia</string>
-    <string name="price_info_subtitle_one">Horas fora de vazio</string>
-    <string name="price_info_subtitle_two">Horas de vazio</string>
+    <string name="price_info_subtitle_fora_vazio">Horas fora de vazio</string>
+    <string name="price_info_subtitle_cheia">Horas de cheia</string>
+    <string name="price_info_subtitle_ponta">Horas de ponta</string>
+    <string name="price_info_subtitle_vazio">Horas de vazio</string>
     <string name="price_info_description">Preço estipulado por kWh pela Empresa de Electrecidade da Madeira (EEM)</string>
     <string name="price_info_link">Para mais informações sobre as tarifas da EEM:</string>
 

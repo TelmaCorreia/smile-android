@@ -84,9 +84,6 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
         String[] cycles = getViewModel().getConfigs().getCycle().values().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterCycles = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, cycles);
         adapterCycles.setDropDownViewResource(R.layout.layout_spinner_dropdown);
-        if (!getViewModel().getCycle().equals(getString(R.string.no_cycle))){
-            binding.spCycle.setSelection(adapterCycles.getPosition(getViewModel().getCycle()));
-        }
         binding.spCycle.setAdapter(
                 new NothingSelectedSpinnerAdapter(
                         adapterCycles, R.layout.layout_spinner_item_nothing_selected_cycle,getContext()));
@@ -107,6 +104,10 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
 
             }
         });
+
+        if (!getViewModel().getCycle().equals(getString(R.string.no_cycle))){
+            binding.spCycle.setSelection(adapterCycles.getPosition(getViewModel().getCycle())+1);
+        }
 
     }
 
