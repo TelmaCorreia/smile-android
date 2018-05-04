@@ -14,6 +14,7 @@ import com.thesis.smile.presentation.transaction_details.TransactionDetailsActiv
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.Calendar;
@@ -49,7 +50,7 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
         binding.spPeriod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
+                if (i >= 0) {
                     getViewModel().setTimePeriod(timePeriodMenu[i]);
                 }
             }
@@ -79,8 +80,7 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
             }
         });
 
-
-        getViewModel().setType(getResources().getString(R.string.details_bought_energy)); //FIXME
+        getViewModel().setType(transactionsTypeMenu[0]);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         HistoricalTransactionAdapter historicalTransactionAdapter = new HistoricalTransactionAdapter(getViewModel().getTransactions(), this::onTransactionSelected);
         binding.historicalTransactions.setLayoutManager(layoutManager);
@@ -127,8 +127,10 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
         String date = dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
         if(initialDate){
             getViewModel().setInitialDate(date);
+            getViewModel().setFromDate(LocalDate.of(year, monthOfYear+1, dayOfMonth));
         } else {
             getViewModel().setFinalDate(date);
+            getViewModel().setToDate(LocalDate.of(year, monthOfYear+1, dayOfMonth));
         }
     }
 

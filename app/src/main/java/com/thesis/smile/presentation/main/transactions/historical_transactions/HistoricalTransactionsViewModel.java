@@ -2,15 +2,11 @@ package com.thesis.smile.presentation.main.transactions.historical_transactions;
 
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
-import android.util.Log;
 import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
-import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
-import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
-import com.thesis.smile.data.remote.exceptions.http.GenericErrorException;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.models.Totals;
 import com.thesis.smile.domain.models.Transaction;
@@ -20,6 +16,8 @@ import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.databinding.ExclusiveObservableList;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
+
+import org.threeten.bp.LocalDate;
 
 import java.util.List;
 
@@ -38,6 +36,8 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     private String timePeriod;
     private String initialDate;
     private String finalDate;
+    private LocalDate fromDate;
+    private LocalDate toDate;
     private Totals totals;
 
     @Inject
@@ -45,7 +45,14 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.transactionsManager = transactionsManager;
         transactions = new ExclusiveObservableList<>();
+        initDates();
         getTotals();
+    }
+
+    private void initDates() {
+        LocalDate now = LocalDate.now();
+        this.fromDate = now.minusDays(30);
+        this.toDate= now;
     }
 
 
@@ -89,7 +96,10 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
     @Bindable
     public int getSetPeriodVisible() {
-        return (timePeriod != null && timePeriod.equals(getResourceProvider().getString(R.string.transactions_specific_period))) ? View.VISIBLE : View.GONE;
+        if (timePeriod != null && timePeriod.equals(getResourceProvider().getString(R.string.transactions_specific_period))){
+            return View.VISIBLE;
+        }
+        return View.GONE;
     }
 
     public void onInitialDateClick() {
@@ -101,36 +111,14 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     }
 
 
-    public void getTransactions(String type) {
-        Disposable disposable;
-        if (type.equals(getResourceProvider().getString(R.string.transactions_menu_buy))) {
-            disposable = transactionsManager.getBoughtTransactions(0, 20)
-                    .compose(schedulersTransformSingleIo())
-                    .subscribe(this::onTransactionReceived, this::onError);
-        } else if (type.equals(getResourceProvider().getString(R.string.transactions_menu_sell))){
-            disposable = transactionsManager.getSoldTransactions(0, 20)
-                    .compose(schedulersTransformSingleIo())
-                    .subscribe(this::onTransactionReceived, this::onError);
-        } else{
-           disposable = transactionsManager.getAllTransactions(0,20)
-                    .compose(schedulersTransformSingleIo())
-                    .subscribe(this::onTransactionReceived, this::onError);
-        }
-
-        addDisposable(disposable);
-
-
-
-    }
-
-    private void onTransactionReceived(List<Transaction> transactions) {
-        this.transactions.addAll(transactions);
-
-    }
+  public String getType(){
+        return type;
+  }
 
     public void setType(String type){
         this.type = type;
         getTransactions(type);
+        notifyPropertyChanged(BR.setPeriodVisible);
     }
 
     public ObservableList<Transaction> getTransactions() {
@@ -140,15 +128,10 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     public void setTimePeriod(String timePeriod) {
         this.timePeriod = timePeriod;
         notifyPropertyChanged(BR.setPeriodVisible);
+        initDates();
+        getTransactions(getType());
     }
 
-    Observable<DialogEvent> observeInitialDateCalendarDialog(){
-        return openInitalDateCalendarObservable;
-    }
-
-    Observable<DialogEvent> observeFinalDateCalendarDialog(){
-        return openFinalDateCalendarObservable;
-    }
 
     public void getTotals() {
         Disposable disposable = transactionsManager.getTotals()
@@ -163,4 +146,66 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.sales);
     }
 
+    public void getTransactionsFiltered() {
+        if (fromDate!=null && toDate!=null && fromDate.isAfter(toDate)){
+            getUiEvents().showToast("O período seleccionado é inválido!");
+        }else{
+            getTransactions(getType());
+        }
+    }
+
+    Observable<DialogEvent> observeInitialDateCalendarDialog(){
+        return openInitalDateCalendarObservable;
+    }
+
+    Observable<DialogEvent> observeFinalDateCalendarDialog(){
+        return openFinalDateCalendarObservable;
+    }
+
+    public void getTransactions(String type) {
+        Disposable disposable;
+        if (type.equals(getResourceProvider().getString(R.string.transactions_menu_buy))) {
+            disposable = transactionsManager.getBuyTransactionsFiltered(0, 20, fromDate, toDate)
+                    .compose(schedulersTransformSingleIo())
+                    .subscribe(this::onTransactionReceived, this::onError);
+        } else if (type.equals(getResourceProvider().getString(R.string.transactions_menu_sell))){
+            disposable = transactionsManager.getSellTransactionsFiltered(0, 20, fromDate, toDate)
+                    .compose(schedulersTransformSingleIo())
+                    .subscribe(this::onTransactionReceived, this::onError);
+        } else{
+            disposable = transactionsManager.getAllTransactionsFiltered(0,20, fromDate, toDate)
+                    .compose(schedulersTransformSingleIo())
+                    .subscribe(this::onTransactionReceived, this::onError);
+        }
+
+        addDisposable(disposable);
+
+
+
+    }
+
+    private void onTransactionReceived(List<Transaction> transactions) {
+        this.transactions.clear();
+        this.transactions.addAll(transactions);
+
+    }
+
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
+        getTransactionsFiltered();
+    }
+
+    public LocalDate getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
+        getTransactionsFiltered();
+
+    }
 }
