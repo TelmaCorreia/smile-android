@@ -164,7 +164,7 @@
                             android:enabled="@{viewModel.plusPriceEditable}"
                             android:text="@={viewModel.plusPriceValue}"
                             mask:allowed_chars="1234567890"
-                            mask:mask="##.##"
+                            mask:mask="#.##"
                             android:hint="0000"
                             android:textColorHint="@color/colorTextGrey"
                             app:keep_hint="true" />

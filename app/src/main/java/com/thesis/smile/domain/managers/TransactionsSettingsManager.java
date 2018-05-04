@@ -102,6 +102,7 @@ public class TransactionsSettingsManager {
                 .map(TimeIntervalMapper.INSTANCE::remoteToDomain);
     }
 
+
     public Completable deleteTimeInterval(TimeInterval timeInterval){
         String token = sharedPrefs.getUserToken();
         return transactionsSettingsService.deleteTimeInterval(token, timeInterval);

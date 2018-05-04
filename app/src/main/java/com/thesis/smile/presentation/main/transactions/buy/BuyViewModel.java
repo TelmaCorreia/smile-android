@@ -18,6 +18,7 @@ import com.thesis.smile.presentation.utils.databinding.ExclusiveObservableList;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,18 +83,18 @@ public class BuyViewModel extends BaseViewModel {
 
     @Bindable
     public String getPlusPriceValue() {
-        if(buySettings!=null){
+        if(buySettings!=null && buySettings.getEemPlusPriceValue()>0 && buySettings.isEemPlusPrice()){
             return String.format("%.2f", buySettings.getEemPlusPriceValue());
         }
         return null;
     }
 
     public void setPlusPriceValue(String value) {
-        if(buySettings!=null) {
-            // this.buySettings.setEemPlusPriceValue(Double.parseDouble(value.replace(',', '.')));
-            //  notifyPropertyChanged(BR.plusPriceValue);
+        if(buySettings!=null && buySettings.getEemPlusPriceValue()>0 && buySettings.isEemPlusPrice() && !value.isEmpty()) {
+            buySettings.setEemPlusPriceValue(Double.parseDouble(value.replace(',', '.')));
+            notifyPropertyChanged(BR.saveVisible);
         }
-        notifyPropertyChanged(BR.saveVisible);
+
     }
 
     public boolean isAllNeighboursSelected() {

@@ -23,7 +23,6 @@ public class SelectAllChildViewHolder extends ChildViewHolder {
         pic = (ImageView) itemView.findViewById(R.id.ivUser);
         pic.setVisibility(View.INVISIBLE);
         switchCompat = (SwitchCompat) itemView.findViewById(R.id.switchCompact);
-
         this.onSwitchClickListener = onSwitchClickListener;
 
     }

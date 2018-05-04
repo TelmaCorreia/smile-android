@@ -2,7 +2,6 @@ package com.thesis.smile.presentation.main.transactions.sell;
 
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
-import android.widget.RadioGroup;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
@@ -14,6 +13,7 @@ import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
+import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.presentation.utils.databinding.ExclusiveObservableList;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -37,12 +37,16 @@ public class SellViewModel extends BaseViewModel {
     private SellSettings sellSettings;
     private SellSettings previousSettings;
     private Map<String, Neighbour> neighboursToUpdate;
+    private Map<String, TimeInterval> timersToUpdate;
+    private PublishRelay<OpenDialogEvent> alertDialog = PublishRelay.create();
 
     private TransactionsSettingsManager sellSettingsManager;
 
     private PublishRelay<NavigationEvent> openPriceInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openTimerObservable = PublishRelay.create();
     private PublishRelay<Event> neighboursChanged = PublishRelay.create();
+    private PublishRelay<Event> neighboursStateChanged = PublishRelay.create();
+    private PublishRelay<Event> timeIntervalsStateChanged = PublishRelay.create();
     private PublishRelay<Event> radioChanged = PublishRelay.create();
     private PublishRelay<Event> sliderChanged = PublishRelay.create();
 
@@ -53,6 +57,7 @@ public class SellViewModel extends BaseViewModel {
         timeIntervals = new ExclusiveObservableList<>();
         neighbours = new ArrayList<>();
         neighboursToUpdate = new HashMap<>();
+        timersToUpdate = new HashMap<>();
         getTimeIntervalsFromServer();
         getNeighboursFromServer();
         getSellSettingsFromServer();
@@ -68,6 +73,9 @@ public class SellViewModel extends BaseViewModel {
 
     public void setSell(boolean sell) {
         if(sellSettings!=null) {
+            if (sell && !sellSettings.isOn()){
+                alertDialog.accept(new OpenDialogEvent());
+            }
             this.sellSettings.setOn(sell);
             notifyPropertyChanged(BR.sell);
             notifyPropertyChanged(BR.saveVisible);
@@ -84,10 +92,17 @@ public class SellViewModel extends BaseViewModel {
 
     @Bindable
     public String getPlusPriceValue() {
-        if(sellSettings!=null){
+        if(sellSettings!=null && sellSettings.getPlusPriceValue()>0 && sellSettings.isPlusPrice()){
             return String.format("%.2f", sellSettings.getPlusPriceValue());
         }
         return null;
+    }
+
+    public void setPlusPriceValue(String plusPriceValue) {
+        if(sellSettings!=null && sellSettings.getPlusPriceValue()>0 && sellSettings.isPlusPrice() && !plusPriceValue.isEmpty()){
+            sellSettings.setPlusPriceValue(Double.parseDouble(plusPriceValue.replace(',', '.')));
+            notifyPropertyChanged(BR.saveVisible);
+        }
     }
 
     @Bindable
@@ -100,10 +115,17 @@ public class SellViewModel extends BaseViewModel {
 
     @Bindable
     public String getSpecificPriceValue() {
-        if(sellSettings!=null){
+        if(sellSettings!=null && sellSettings.getSpecificPriceValue()>0 && sellSettings.isSpecificPrice()){
             return String.format("%.2f", sellSettings.getSpecificPriceValue());
         }
         return null;
+    }
+
+    public void setSpecificPriceValue(String specificPriceValue) {
+        if(sellSettings!=null && !specificPriceValue.isEmpty()){
+            sellSettings.setSpecificPriceValue(Double.parseDouble(specificPriceValue.replace(',', '.')));
+            notifyPropertyChanged(BR.saveVisible);
+        }
     }
 
 
@@ -118,7 +140,6 @@ public class SellViewModel extends BaseViewModel {
         if(sellSettings!=null){
             sellSettings.setBatteryLevel(Double.parseDouble(batteryLevel.replace(',', '.')));
             notifyPropertyChanged(BR.saveVisible);
-            notifyPropertyChanged(BR.saveVisible);
         }
     }
 
@@ -132,6 +153,13 @@ public class SellViewModel extends BaseViewModel {
     public void setAllNeighboursSelected(boolean value) {
         if(sellSettings!=null){
             sellSettings.setAllNeighboursSelected(value);
+            for (Neighbour n: neighbours){
+                if(n.isBlocked()!=value){
+                    n.setBlocked(value);
+                    addNeighbourToUpdate(n);
+                }
+            }
+            neighboursStateChanged.accept(new Event());
             notifyPropertyChanged(BR.saveVisible);
         }
     }
@@ -139,20 +167,20 @@ public class SellViewModel extends BaseViewModel {
     @Bindable
     public boolean isSaveVisible() {
         if(sellSettings!=null) {
-            return !(sellSettingsChanged() && neighboursToUpdate.size()==0);
+            return sellSettingsChanged() || neighboursToUpdate.size()>0 || timersToUpdate.size()>0;
         }
         return false;
 
     }
 
     private boolean sellSettingsChanged(){
-        return sellSettings.isOn()== previousSettings.isOn()
-                && sellSettings.isAllNeighboursSelected()==sellSettings.isAllNeighboursSelected()
+        return !(sellSettings.isOn()== previousSettings.isOn()
+                && sellSettings.isAllNeighboursSelected()==previousSettings.isAllNeighboursSelected()
                 && sellSettings.isSpecificPrice()==previousSettings.isSpecificPrice()
                 && sellSettings.isPlusPrice()==previousSettings.isPlusPrice()
                 && sellSettings.getSpecificPriceValue()==previousSettings.getSpecificPriceValue()
                 && sellSettings.getPlusPriceValue()==previousSettings.getPlusPriceValue()
-                && sellSettings.getBatteryLevel()==previousSettings.getBatteryLevel();
+                && sellSettings.getBatteryLevel()==previousSettings.getBatteryLevel());
     }
 
     public void onSpecificPriceClick(){
@@ -237,7 +265,18 @@ public class SellViewModel extends BaseViewModel {
     }
 
     private void onTimeIntervalUpdatedReceived(TimeInterval timeInterval) {
-        getTimeIntervalsFromServer();
+       for (TimeInterval t: timeIntervals){
+           if(t.getId().equals(timeInterval.getId())){
+               t.setFrom(timeInterval.getFrom());
+               t.setActivated(timeInterval.isActivated());
+               t.setTo(timeInterval.getTo());
+               t.setWeekDays(timeInterval.getWeekDays());
+               t.setWeekDaysString(timeInterval.getWeekDaysString());
+           }
+       }
+       timersToUpdate.remove(timeInterval.getId());
+       notifyPropertyChanged(BR.saveVisible);
+       timeIntervalsStateChanged.accept(new Event());
     }
 
     public void removeTimerInterval(TimeInterval timeInterval){
@@ -255,6 +294,13 @@ public class SellViewModel extends BaseViewModel {
         getTimeIntervalsFromServer();
     }
 
+    public void addTimerIntervalToUpdate(TimeInterval timer) {
+        if (timersToUpdate.containsKey(timer.getId())){
+            timersToUpdate.remove(timer.getId());
+        }else{
+            timersToUpdate.put(timer.getId(), timer);
+        }   notifyPropertyChanged(BR.saveVisible);
+    }
 
     /**
      * NEIGHBOURS
@@ -268,7 +314,9 @@ public class SellViewModel extends BaseViewModel {
     }
 
     private void onNeighboursReceived(List<Neighbour> neighbours) {
+        this.neighbours.add(new Neighbour("0",getResourceProvider().getString(R.string.select_all), isAllNeighboursSelected(), true));
         this.neighbours.addAll(neighbours);
+
         neighboursChanged.accept(new Event());
 
     }
@@ -278,7 +326,8 @@ public class SellViewModel extends BaseViewModel {
             neighboursToUpdate.remove(neighbour.getId());
         }else{
             neighboursToUpdate.put(neighbour.getId(), neighbour);
-        }        notifyPropertyChanged(BR.saveVisible);
+        }
+        notifyPropertyChanged(BR.saveVisible);
     }
 
     /**
@@ -306,25 +355,45 @@ public class SellViewModel extends BaseViewModel {
      * **/
 
     public void onSaveClick() {
-        //TODO: price verifications
+        if(sellSettings.isSpecificPrice() && sellSettings.getSpecificPriceValue()==0){
+            getUiEvents().showToast(getResourceProvider().getString(R.string.alert_price));
+        }else{
+            alertDialog.accept(new OpenDialogEvent());
+        }
+    }
+    public void save(){
         if(sellSettingsChanged()) {
             sellSettingsManager.updateSellSettings(sellSettings)
-                    .compose(schedulersTransformSingleIo())
-                    .doOnSubscribe(this::addDisposable)
-                    .subscribe(this::onUpdateComplete, this::onError);
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onUpdateComplete, this::onError);
         }
         if(neighboursToUpdate.size()>0){
             sellSettingsManager.updateNeighboursSell(new ArrayList<>(neighboursToUpdate.values()))
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onNeighboursUpdate, this::onError);
+        }
+
+        if(timersToUpdate.size()>0){
+            for (TimeInterval t: timersToUpdate.values()){
+                sellSettingsManager.updateTimeInterval(t)
                     .compose(schedulersTransformSingleIo())
                     .doOnSubscribe(this::addDisposable)
-                    .subscribe(this::onNeighboursUpdate, this::onError);
+                    .subscribe(this::onTimeIntervalUpdate, this::onError);
+            }
         }
 
     }
 
+    private void onTimeIntervalUpdate(TimeInterval timeInterval) {
+        timersToUpdate.clear();
+        notifyPropertyChanged(BR.saveVisible);
+    }
+
     private void onNeighboursUpdate(String s) {
-        getUiEvents().showToast("OK");
         neighboursToUpdate.clear();
+        notifyPropertyChanged(BR.saveVisible);
     }
 
     private void onUpdateComplete(SellSettings sellSettings) {
@@ -332,6 +401,8 @@ public class SellViewModel extends BaseViewModel {
         getUiEvents().showToast(getResourceProvider().getString(R.string.msg_update_sucess));
         this.previousSettings = new SellSettings(sellSettings.getId(), sellSettings.isOn(), sellSettings.isSpecificPrice(), sellSettings.isPlusPrice(), sellSettings.getSpecificPriceValue(), sellSettings.getPlusPriceValue(), sellSettings.getBatteryLevel(), sellSettings.isAllNeighboursSelected());
         this.sellSettings = sellSettings;
+        notifyPropertyChanged(BR.plusPriceValue);
+        notifyPropertyChanged(BR.specificPriceValue);
         notifyPropertyChanged(BR.saveVisible);
     }
 
@@ -347,12 +418,24 @@ public class SellViewModel extends BaseViewModel {
         return neighboursChanged;
     }
 
+    Observable<Event> observeNeighboursState(){
+        return neighboursStateChanged;
+    }
+
+    Observable<Event> observeTimeIntervalState(){
+        return timeIntervalsStateChanged;
+    }
+
     Observable<Event> observeRadio(){
         return radioChanged;
     }
 
     Observable<Event> observeSlider(){
         return sliderChanged;
+    }
+
+    Observable<OpenDialogEvent> observeAlertDialog(){
+        return alertDialog;
     }
 
 }

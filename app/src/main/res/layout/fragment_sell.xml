@@ -156,8 +156,9 @@
                             android:typeface="monospace"
                             android:enabled="@{viewModel.concretePriceEditable}"
                             mask:allowed_chars="1234567890"
-                            mask:mask="##.##"
+                            mask:mask="#.##"
                             android:hint="0000"
+                            android:text="@={viewModel.specificPriceValue}"
                             android:textColorHint="@color/colorTextGrey"
                             app:keep_hint="true" />
                         <TextView
@@ -191,8 +192,9 @@
                             android:inputType="phone"
                             android:typeface="monospace"
                             android:enabled="@{viewModel.plusPriceEditable}"
+                            android:text="@={viewModel.plusPriceValue}"
                             mask:allowed_chars="1234567890"
-                            mask:mask="##.##"
+                            mask:mask="#.##"
                             android:hint="0000"
                             android:textColorHint="@color/colorTextGrey"
                             app:keep_hint="true" />

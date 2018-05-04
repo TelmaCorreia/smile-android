@@ -57,6 +57,8 @@ public class TimersActivity extends BaseToolbarActivity<ActivityTimersBinding, T
         binding.weekDays.setSelectedDays(new ArrayList<>());
         binding.weekDays.setOnWeekdaysChangeListener((view, i, list) -> {getViewModel().setSelectedDays(list); getViewModel().setSelectedDaysStrings(binding.weekDays.getSelectedDaysText());});
         if (timeInterval!= null){
+            getViewModel().setPreviousFrom(timeInterval.getFrom());
+            getViewModel().setPreviousTo(timeInterval.getTo());
             getViewModel().setId(timeInterval.getId());
             getViewModel().setFrom(timeInterval.getFrom());
             getViewModel().setTo(timeInterval.getTo());

@@ -29,7 +29,7 @@
     <string name="prompt_cycle">Ciclo</string>
     <string name="tariff_without_cycle">Simples</string>
     <string name="no_cycle">NA</string>
-    <string name="no_cycle_alert">Por favor, seleccione o ciclo</string>
+    <string name="no_cycle_alert">Por favor, selecione o ciclo</string>
 
     <!-- Register equipment -->
     <string name="title_user_topoloy">Que tipo de utilizador é você?</string>
@@ -72,7 +72,7 @@
 
     <!-- Dialog Automatic Config -->
     <string name="automatic_config_tilte">Gestão ds Transações</string>
-    <string name="automatic_config_description">É possível configurar os pârametros para gerir as suas transações (compra e venda de energia). Pode ainda deixar que o sistema faça isso por si seleccionando as definições automáticas</string>
+    <string name="automatic_config_description">É possível configurar os pârametros para gerir as suas transações (compra e venda de energia). Pode ainda deixar que o sistema faça isso por si selecionando as definições automáticas</string>
     <string name="automatic_config_changes">Pode alterar esta escolha a qualquer momento nas definições em \"Perfil de Energia\"</string>
     <string name="button_manual">Manual</string>
     <string name="button_automatic">Automático</string>
@@ -229,23 +229,14 @@
     <string name="ranking_previous_week_title">Ranking da semana anterior</string>
     <string name="ranking_general_week_title">Ranking</string>
 
+    <!-- Dialog Settings Alert -->
+    <string name="settings_alert_tilte">Tem a certeza?</string>
+    <string name="settings_alert_description">Com estes parâmetros: </string>
+    <string name="settings_alert_info">Pode alterar estes parâmetros a qualquer altura no menu de transações em \"Configurar Venda\" ou \"Configurar Compra\", respetivamente. </string>
+    <string name="button_back">voltar</string>
+    <string name="button_continue">Continuar</string>
+    <string name="alert_price">O preço selecionado deve ser superior a 0</string>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!--Others-->
+    <string name="select_all">Selecionar Todos</string>
 </resources>

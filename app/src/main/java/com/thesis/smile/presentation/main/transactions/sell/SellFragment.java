@@ -17,7 +17,10 @@ import com.thesis.smile.presentation.user_expandable_list.NeighbourAdapter;
 import com.thesis.smile.presentation.info_price.InfoPriceActivity;
 import com.thesis.smile.presentation.timers.timer_list.TimeIntervalAdapter;
 import com.thesis.smile.presentation.timers.TimersActivity;
+import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
+import com.thesis.smile.presentation.utils.views.CustomDialog;
 import com.thesis.smile.presentation.utils.views.CustomItemDecoration;
 
 import java.math.BigDecimal;
@@ -30,6 +33,10 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     static final int REQUEST_TIMERS = 1;
     static final int REQUEST_TIMERS_EDIT = 3;
     private static final String TIMER = "timer";
+
+    private CustomDialog dialogAlert;
+    private NeighbourAdapter neighbourAdapter;
+    private TimeIntervalAdapter timeIntervalAdapter;
 
     public static SellFragment newInstance() {
         SellFragment f = new SellFragment();
@@ -49,14 +56,10 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     @Override
     protected void initViews(FragmentSellBinding binding) {
 
-        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        CustomItemDecoration dividerItemDecoration = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        TimeIntervalAdapter timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(), this::onTimeIntervalSelected, this::onRemoveTimeIntervalSelected,  this::onTimeIntervalStateChanged);
+        timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(), this::onTimeIntervalSelected, this::onRemoveTimeIntervalSelected,  this::onTimeIntervalStateChanged);
         binding.timersSell.setLayoutManager(layoutManager);
         binding.timersSell.setAdapter(timeIntervalAdapter);
-        binding.timersSell.addItemDecoration(dividerItemDecoration);
-
         binding.sbBattery.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -101,13 +104,96 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::initNeighbours);
 
+        getViewModel().observeNeighboursState()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {neighbourAdapter.notifyDataSetChanged();});
+
+        getViewModel().observeTimeIntervalState()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {timeIntervalAdapter.notifyDataSetChanged();});
+
         getViewModel().observeRadio()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::updateRadio);
 
-        getViewModel().observeRadio()
+        getViewModel().observeSlider()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::updateSlider);
+
+        getViewModel().observeAlertDialog()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::createDialogs);
+    }
+
+    //This is very bad :(
+    private void createDialogs(OpenDialogEvent event) {
+        if(getViewModel().getSellSettings().isOn()){
+            double price = getViewModel().getSellSettings().isPlusPrice()?getViewModel().getSellSettings().getPlusPriceValue():getViewModel().getSellSettings().getSpecificPriceValue();
+            int alarmsSize = getViewModel().getTimeIntervals().size();
+            boolean allTimeIntervalsOff = areAllTimeIntervalsOff();
+            int neigboursSize = getViewModel().getNeighbours().size();
+            boolean allNeighboursOff = areAllNeighboursOff();
+            double batterySaved = getViewModel().getSellSettings().getBatteryLevel();
+
+            String description=getString(R.string.settings_alert_description) + "\n";
+
+            if (neigboursSize==0 || allNeighboursOff){
+                description += " - Não consegue vender energia a nenhum vizinho;\n";
+            }else{
+                description += " - Pode vender energia aos vizinhos especificados;\n";
+            }
+            if (alarmsSize==0 || allTimeIntervalsOff){
+                description += " - Pode vender energia a qualquer hora;\n";
+            }else{
+                description += " - Pode vender energia nos períodos especificados;\n";
+            }
+            if (batterySaved==0){
+                description += " - Pode vender TODA a energia que estiver armazenada na sua bateria;\n";
+            }else{
+                //FIXME: if battery capacity > 3 this is WRONG
+                description += " - Pode vender " + round(100-(batterySaved*100/3),1) + "% da sua bateria";
+            }
+
+            showDialog(description);
+            if(event instanceof OpenDialogEvent){
+                dialogAlert.show();
+            }else{
+                dialogAlert.dismiss();
+            }
+        }else{
+            getViewModel().save();
+        }
+
+    }
+
+    private boolean areAllNeighboursOff() {
+        if (getViewModel().isAllNeighboursSelected()){
+            return false;
+        }else{
+            for (Neighbour n: getViewModel().getNeighbours()){
+                if(!n.isBlocked()) return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean areAllTimeIntervalsOff() {
+        for (TimeInterval t: getViewModel().getTimeIntervals()){
+            if(t.isActivated()) return false;
+        }
+        return true;
+    }
+
+    private void showDialog(String description){
+        dialogAlert = new CustomDialog(getActivity());
+        dialogAlert.setTitle(R.string.settings_alert_tilte);
+        dialogAlert.setMessage(description);
+        dialogAlert.setSecondMessage(R.string.settings_alert_info);
+        dialogAlert.setOkButtonText(R.string.button_continue);
+        dialogAlert.setCloseButtonText(R.string.button_back);
+        dialogAlert.setDismissible(true);
+        dialogAlert.setOnOkClickListener(() -> {getViewModel().save(); dialogAlert.dismiss();});
+        dialogAlert.setOnCloseClickListener(() ->{dialogAlert.dismiss();});
     }
 
     private void updateSlider(Event event) {
@@ -129,16 +215,18 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         CustomItemDecoration dividerItemDecoration_ = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
         LinearLayoutManager layoutManagerConsumer = new LinearLayoutManager(getContext());
         List<NeighbourHeader> neighbourHeaders = getConsumers();
-        NeighbourAdapter adapter = new NeighbourAdapter(getContext(), neighbourHeaders, this::onSwitchListener);
+        neighbourAdapter = new NeighbourAdapter(getContext(), neighbourHeaders, this::onSwitchListener);
         getBinding().consumers.setLayoutManager(layoutManagerConsumer);
-        getBinding().consumers.setAdapter(adapter);
+        getBinding().consumers.setAdapter(neighbourAdapter);
         getBinding().consumers.addItemDecoration(dividerItemDecoration_);
     }
 
     private void onSwitchListener(Neighbour neighbour) {
         if (neighbour.isSelectAll()){
-            getViewModel().setAllNeighboursSelected(neighbour.isBlocked());
+            getViewModel().setAllNeighboursSelected(!getViewModel().isAllNeighboursSelected());
         }else{
+            boolean blocked = !neighbour.isBlocked();
+            neighbour.setBlocked(blocked);
             getViewModel().addNeighbourToUpdate(neighbour);
         }
 
@@ -147,7 +235,6 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     public List<NeighbourHeader> getConsumers() {
         List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
         List<Neighbour> neighbours = new ArrayList<>();
-        neighbours.add(new Neighbour("0","Selecionar todos", getViewModel().isAllNeighboursSelected(), true));
         neighbours.addAll(getViewModel().getNeighbours());
         NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);
@@ -168,7 +255,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     }
 
     private void onTimeIntervalStateChanged(TimeInterval timeInterval) {
-        getViewModel().addTimeInterval(timeInterval, true);
+        getViewModel().addTimerIntervalToUpdate(timeInterval);
     }
 
     @Override
