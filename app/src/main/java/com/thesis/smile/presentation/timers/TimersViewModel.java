@@ -89,7 +89,7 @@ public class TimersViewModel extends BaseToolbarViewModel {
 
     @Bindable
     public boolean isSaveEnabled() {
-       return !(from.isEmpty() || to.isEmpty() || selectedDays.isEmpty());
+       return !(from.isEmpty() || to.isEmpty() || selectedDays.isEmpty()) && !from.equals(to);
     }
 
     public TimeInterval getTimeInterval() {

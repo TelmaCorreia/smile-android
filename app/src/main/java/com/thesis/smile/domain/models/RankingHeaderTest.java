@@ -1,16 +1,18 @@
 package com.thesis.smile.domain.models;
 
-import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.util.List;
 
-public class RankingHeader extends ExpandableGroup<Ranking> {
+public class RankingHeaderTest {
 
     private String title;
     private List<Ranking> rankings;
 
-    public RankingHeader(String title, List<Ranking> rankings) {
-        super(title, rankings);
+    public RankingHeaderTest(){
+
+    }
+
+    public RankingHeaderTest(String title, List<Ranking> rankings) {
         this.title = title;
         this.rankings = rankings;
     }

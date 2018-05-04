@@ -1,20 +1,14 @@
 package com.thesis.smile.presentation.main.ranking;
 
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentRankingBinding;
-import com.thesis.smile.domain.models.NeighbourHeader;
 import com.thesis.smile.domain.models.Ranking;
 import com.thesis.smile.domain.models.RankingHeader;
 import com.thesis.smile.presentation.base.BaseFragment;
-import com.thesis.smile.presentation.base.toolbar.BaseToolbarFragment;
-import com.thesis.smile.presentation.main.home.HomeViewModel;
 import com.thesis.smile.presentation.main.ranking.expandable_list.RankingAdapter;
-import com.thesis.smile.presentation.user_expandable_list.NeighbourAdapter;
-import com.thesis.smile.presentation.utils.views.CustomItemDecoration;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,16 +31,30 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding, Rankin
 
     @Override
     protected void initViews(FragmentRankingBinding binding) {
-        //rawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-       // CustomItemDecoration dividerItemDecoration = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
+        initRankings(new Event());
+    }
+
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+
+        getViewModel().observeRankings()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::initRankings);
+
+    }
+
+    private void initRankings(Event event) {
+
         LinearLayoutManager layoutManagerConsumer = new LinearLayoutManager(getContext());
+        //TODO:discomment
+        //List<RankingHeader> rankingHeaders = getViewModel().getRanking();
         List<RankingHeader> rankingHeaders = getRanking();
         RankingAdapter adapter = new RankingAdapter(getContext(), rankingHeaders);
-        binding.rankingList.setLayoutManager(layoutManagerConsumer);
-        binding.rankingList.setAdapter(adapter);
-
-       // binding.rankingList.addItemDecoration(dividerItemDecoration);
-
+        adapter.toggleGroup(0);
+        getBinding().rankingList.setLayoutManager(layoutManagerConsumer);
+        getBinding().rankingList.setAdapter(adapter);
     }
 
     public List<RankingHeader> getRanking() {
@@ -62,9 +70,6 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding, Rankin
         rankings.add(new Ranking("Berlim", "8º", "37% de energia solar", ""));
         rankings.add(new Ranking("Moscou", "9º", "36% de energia solar", ""));
         rankings.add(new Ranking("Estocolmo", "10º", "30% de energia solar", ""));
-
-
-
         RankingHeader rankingHeader = new RankingHeader(getResources().getString(R.string.ranking_current_week_title), rankings);
         rankingHeaders.add(rankingHeader);
         RankingHeader rankingHeader1 = new RankingHeader(getResources().getString(R.string.ranking_previous_week_title), rankings);
