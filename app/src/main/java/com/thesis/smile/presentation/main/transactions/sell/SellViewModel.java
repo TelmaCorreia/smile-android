@@ -2,6 +2,7 @@ package com.thesis.smile.presentation.main.transactions.sell;
 
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
+import android.util.Log;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
@@ -59,7 +60,6 @@ public class SellViewModel extends BaseViewModel {
         neighboursToUpdate = new HashMap<>();
         timersToUpdate = new HashMap<>();
         getTimeIntervalsFromServer();
-        getNeighboursFromServer();
         getSellSettingsFromServer();
     }
 
@@ -154,7 +154,10 @@ public class SellViewModel extends BaseViewModel {
         if(sellSettings!=null){
             sellSettings.setAllNeighboursSelected(value);
             for (Neighbour n: neighbours){
-                if(n.isBlocked()!=value){
+                if (n.isSelectAll()){
+                    n.setBlocked(value);
+                }
+                if(n.isBlocked()!=value && !n.isSelectAll()){
                     n.setBlocked(value);
                     addNeighbourToUpdate(n);
                 }
@@ -345,6 +348,7 @@ public class SellViewModel extends BaseViewModel {
     private void onSellSettingsReceived(SellSettings sellSettings) {
         this.sellSettings = sellSettings;
         this.previousSettings = new SellSettings(sellSettings.getId(), sellSettings.isOn(), sellSettings.isSpecificPrice(), sellSettings.isPlusPrice(), sellSettings.getSpecificPriceValue(), sellSettings.getPlusPriceValue(), sellSettings.getBatteryLevel(), sellSettings.isAllNeighboursSelected());
+        getNeighboursFromServer();
         radioChanged.accept(new Event());
         sliderChanged.accept(new Event());
         notifyChange();
@@ -367,12 +371,8 @@ public class SellViewModel extends BaseViewModel {
                 .compose(schedulersTransformSingleIo())
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::onUpdateComplete, this::onError);
-        }
-        if(neighboursToUpdate.size()>0){
-            sellSettingsManager.updateNeighboursSell(new ArrayList<>(neighboursToUpdate.values()))
-                .compose(schedulersTransformSingleIo())
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(this::onNeighboursUpdate, this::onError);
+        }else if(neighboursToUpdate.size()>0){
+           updateNeighbours();
         }
 
         if(timersToUpdate.size()>0){
@@ -386,6 +386,16 @@ public class SellViewModel extends BaseViewModel {
 
     }
 
+    private void updateNeighbours() {
+        Log.i("Teste", "Neighbours to update: "+neighboursToUpdate.size());
+        Log.i("Teste", "Neighbours to update values: "+neighboursToUpdate.values().toString());
+
+        sellSettingsManager.updateNeighboursSell(new ArrayList<>(neighboursToUpdate.values()))
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onNeighboursUpdate, this::onError);
+    }
+
     private void onTimeIntervalUpdate(TimeInterval timeInterval) {
         timersToUpdate.clear();
         notifyPropertyChanged(BR.saveVisible);
@@ -393,6 +403,8 @@ public class SellViewModel extends BaseViewModel {
 
     private void onNeighboursUpdate(String s) {
         neighboursToUpdate.clear();
+        getUiEvents().showToast("neigbour updated");
+        Log.i("Teste", "Neighbours to update after update: "+neighboursToUpdate.size());
         notifyPropertyChanged(BR.saveVisible);
     }
 
@@ -404,6 +416,9 @@ public class SellViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.plusPriceValue);
         notifyPropertyChanged(BR.specificPriceValue);
         notifyPropertyChanged(BR.saveVisible);
+        if (neighboursToUpdate.size()>0){
+            updateNeighbours();
+        }
     }
 
     Observable<NavigationEvent> observeOpenPriceInfo(){

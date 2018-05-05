@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.widget.SeekBar;
 
 import com.thesis.smile.R;
@@ -106,7 +107,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
 
         getViewModel().observeNeighboursState()
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(event -> {neighbourAdapter.notifyDataSetChanged();});
+                .subscribe(event -> {if (neighbourAdapter!=null)neighbourAdapter.notifyDataSetChanged();});
 
         getViewModel().observeTimeIntervalState()
                 .doOnSubscribe(this::addDisposable)
@@ -224,10 +225,12 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     private void onSwitchListener(Neighbour neighbour) {
         if (neighbour.isSelectAll()){
             getViewModel().setAllNeighboursSelected(!getViewModel().isAllNeighboursSelected());
+            Log.i("Teste", "Select All  "+  getViewModel().isAllNeighboursSelected());
         }else{
             boolean blocked = !neighbour.isBlocked();
             neighbour.setBlocked(blocked);
             getViewModel().addNeighbourToUpdate(neighbour);
+            Log.i("Teste", "Update neighbour state:   "+  neighbour.getName() + ", " + neighbour.isBlocked());
         }
 
     }

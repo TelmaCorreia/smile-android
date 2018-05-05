@@ -178,7 +178,7 @@ public class UserSettingsViewModel extends BaseViewModel {
         getUiEvents().showToast(getResourceProvider().getString(R.string.msg_update_sucess));
         this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.isVisible());
         this.user = user;
-
+        notifyPropertyChanged(BR.saveEnabled);
     }
 
     public void editProfilePicture(){

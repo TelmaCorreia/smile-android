@@ -155,6 +155,7 @@ public class EnergySettingsViewModel extends BaseViewModel {
         this.energyParams = user.getEnergyParams();
         this.manual = user.isManual();
         this.previousManual = user.isManual();
+        notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable

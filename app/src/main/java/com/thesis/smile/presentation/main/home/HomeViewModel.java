@@ -68,7 +68,7 @@ public class HomeViewModel extends BaseViewModel {
     @Bindable
     public String getTotalBought() {
         if(currentEnergy != null){
-            return String.valueOf(currentEnergy.getTotalBought());
+            return String.format("%.2f", currentEnergy.getTotalBought());
         }
         return null;
     }
@@ -76,7 +76,7 @@ public class HomeViewModel extends BaseViewModel {
     @Bindable
     public String getTotalSold() {
         if(currentEnergy != null){
-            return String.valueOf(currentEnergy.getTotalSold());
+            return String.format("%.2f", currentEnergy.getTotalSold());
         }
         return null;
     }
@@ -84,7 +84,7 @@ public class HomeViewModel extends BaseViewModel {
     @Bindable
     public String getTotalSolarEnergy() {
         if(currentEnergy != null){
-            return String.valueOf(currentEnergy.getTotalSolarEnergy());
+            return String.format("%.2f", currentEnergy.getTotalSolarEnergy());
         }
         return null;
     }
