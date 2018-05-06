@@ -167,6 +167,20 @@ public class SellViewModel extends BaseViewModel {
         }
     }
 
+    public void setAllNeigboursToFalse(){
+        if(sellSettings!=null){
+            sellSettings.setAllNeighboursSelected(false);
+            for (Neighbour n: neighbours){
+                if (n.isSelectAll()){
+                    n.setBlocked(false);
+                    break;
+                }
+            }
+            neighboursStateChanged.accept(new Event());
+            notifyPropertyChanged(BR.saveVisible);
+        }
+    }
+
     @Bindable
     public boolean isSaveVisible() {
         if(sellSettings!=null) {
@@ -325,6 +339,9 @@ public class SellViewModel extends BaseViewModel {
     }
 
     public void addNeighbourToUpdate(Neighbour neighbour) {
+        if(!neighbour.isBlocked() && isAllNeighboursSelected()){
+            setAllNeigboursToFalse();
+        }
         if (neighboursToUpdate.containsKey(neighbour.getId())){
             neighboursToUpdate.remove(neighbour.getId());
         }else{

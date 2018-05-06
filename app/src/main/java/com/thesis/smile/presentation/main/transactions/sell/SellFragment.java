@@ -225,12 +225,10 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     private void onSwitchListener(Neighbour neighbour) {
         if (neighbour.isSelectAll()){
             getViewModel().setAllNeighboursSelected(!getViewModel().isAllNeighboursSelected());
-            Log.i("Teste", "Select All  "+  getViewModel().isAllNeighboursSelected());
         }else{
             boolean blocked = !neighbour.isBlocked();
             neighbour.setBlocked(blocked);
             getViewModel().addNeighbourToUpdate(neighbour);
-            Log.i("Teste", "Update neighbour state:   "+  neighbour.getName() + ", " + neighbour.isBlocked());
         }
 
     }

@@ -42,17 +42,11 @@ public class SplashViewModel extends BaseViewModel{
 
     public void showSplashAndContinue(){
 
-        Completable delayCompletable = Completable.complete()
-                .delay(SPLASH_DELAY, TimeUnit.MILLISECONDS);
-
         utilsManager.getConfigsFromServer()
                 .doOnSubscribe(this::addDisposable)
                 .compose(schedulersTransformSingleIo())
                 .subscribe(this::onConfigsReceived, this::onError);
 
-        Completable.concatArray(delayCompletable, userManager.isUserLoggedIn())
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(this::onIsUserLoggedIn, this::onSplashError);
     }
 
     private void onIsUserLoggedIn(){
@@ -70,6 +64,12 @@ public class SplashViewModel extends BaseViewModel{
 
     private void onConfigsReceived(Configs configsRemote) {
         utilsManager.saveConfigs(configsRemote);
+
+        Completable delayCompletable = Completable.complete()
+                .delay(SPLASH_DELAY, TimeUnit.MILLISECONDS);
+        Completable.concatArray(delayCompletable, userManager.isUserLoggedIn())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onIsUserLoggedIn, this::onSplashError);
     }
 
     Observable<NavigationEvent> observeOpenLogin() {
