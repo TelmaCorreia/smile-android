@@ -239,4 +239,6 @@
 
     <!--Others-->
     <string name="select_all">Selecionar Todos</string>
+    <string name="alert_only_numbers">Introduza apenas digitos numéricos</string>
+
 </resources>

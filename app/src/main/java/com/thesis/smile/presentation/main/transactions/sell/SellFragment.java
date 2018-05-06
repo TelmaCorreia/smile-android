@@ -69,7 +69,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
                 String sValue = String.format("%.2f", value);
 
                 binding.etBatteryLevel.setText(sValue);
-                getViewModel().setBatteryLevel(sValue);
+               // getViewModel().setBatteryLevel(sValue);
 
             }
 

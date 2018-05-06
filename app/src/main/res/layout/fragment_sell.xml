@@ -271,6 +271,7 @@
                             mask:allowed_chars="1234567890"
                             mask:mask="#.##"
                             android:hint="000"
+                            android:text="@={viewModel.batteryLevel}"
                             android:layout_marginBottom="0dp"
                             android:textColorHint="@color/colorTextGrey"
                             app:keep_hint="true" />

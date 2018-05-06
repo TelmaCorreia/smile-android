@@ -98,8 +98,13 @@ public class SellViewModel extends BaseViewModel {
 
     public void setPlusPriceValue(String plusPriceValue) {
         if(sellSettings!=null && sellSettings.getPlusPriceValue()>0 && sellSettings.isPlusPrice() && !plusPriceValue.isEmpty()){
-            sellSettings.setPlusPriceValue(Double.parseDouble(plusPriceValue.replace(',', '.')));
-            notifyPropertyChanged(BR.saveVisible);
+            try{
+                double value = Double.parseDouble(plusPriceValue.replace(',', '.'));
+                sellSettings.setPlusPriceValue(value);
+                notifyPropertyChanged(BR.saveVisible);
+            }catch (NumberFormatException e){
+                getUiEvents().showToast(getResourceProvider().getString(R.string.alert_only_numbers));
+            }
         }
     }
 
@@ -121,23 +126,34 @@ public class SellViewModel extends BaseViewModel {
 
     public void setSpecificPriceValue(String specificPriceValue) {
         if(sellSettings!=null && !specificPriceValue.isEmpty()){
-            sellSettings.setSpecificPriceValue(Double.parseDouble(specificPriceValue.replace(',', '.')));
-            notifyPropertyChanged(BR.saveVisible);
+            try{
+                double value = Double.parseDouble(specificPriceValue.replace(',', '.'));
+                sellSettings.setSpecificPriceValue(value);
+                notifyPropertyChanged(BR.saveVisible);
+            }catch (NumberFormatException e){
+                getUiEvents().showToast(getResourceProvider().getString(R.string.alert_only_numbers));
+            }
         }
     }
 
-
+    @Bindable
     public String getBatteryLevel() {
         if(sellSettings!=null){
-            return String.valueOf(sellSettings.getBatteryLevel());
+            return String.format("%.2f", sellSettings.getBatteryLevel());
         }
         return null;
     }
 
     public void setBatteryLevel(String batteryLevel) {
-        if(sellSettings!=null){
-            sellSettings.setBatteryLevel(Double.parseDouble(batteryLevel.replace(',', '.')));
-            notifyPropertyChanged(BR.saveVisible);
+        if(sellSettings!=null && batteryLevel.length()==4){
+            try{
+                double value = Double.parseDouble(batteryLevel.replace(',', '.'));
+                sellSettings.setBatteryLevel(value);
+                notifyPropertyChanged(BR.saveVisible);
+                sliderChanged.accept(new Event());
+            }catch (NumberFormatException e){
+                getUiEvents().showToast(getResourceProvider().getString(R.string.alert_only_numbers));
+            }
         }
     }
 

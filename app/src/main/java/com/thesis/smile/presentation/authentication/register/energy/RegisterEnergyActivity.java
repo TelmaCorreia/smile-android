@@ -15,6 +15,7 @@ import com.thesis.smile.databinding.ActivityRegisterEnergyBinding;
 import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoActivity;
 import com.thesis.smile.presentation.authentication.register.energy.info.GeneralInfoActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.utils.SortUtils;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
 
 public class RegisterEnergyActivity extends BaseActivity<ActivityRegisterEnergyBinding, RegisterEnergyViewModel> {
@@ -62,7 +63,7 @@ public class RegisterEnergyActivity extends BaseActivity<ActivityRegisterEnergyB
             }
         });
 
-        String[] powers = getViewModel().getConfigs().getPower().values().toArray(new String[0]);
+        String[] powers = SortUtils.sortMapByKey(getViewModel().getConfigs().getPower()).toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterPowers = new ArrayAdapter(this,R.layout.layout_spinner_item, powers);
         adapterPowers.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spPower.setAdapter(
@@ -83,7 +84,7 @@ public class RegisterEnergyActivity extends BaseActivity<ActivityRegisterEnergyB
             }
         });
 
-        String[] tariffs = getViewModel().getConfigs().getTariff().values().toArray(new String[0]);
+        String[] tariffs = SortUtils.sortMapByKey(getViewModel().getConfigs().getTariff()).toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterTariffs = new ArrayAdapter(this,R.layout.layout_spinner_item, tariffs);
         adapterTariffs.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spTariff.setAdapter(

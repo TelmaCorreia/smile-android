@@ -112,6 +112,7 @@ public class EnergySettingsViewModel extends BaseViewModel {
     public void setManual(boolean manual) {
         this.manual = manual;
         notifyPropertyChanged(BR.manual);
+        notifyPropertyChanged(BR.saveEnabled);
     }
 
     @Bindable
@@ -129,8 +130,10 @@ public class EnergySettingsViewModel extends BaseViewModel {
 
     @Bindable
     public boolean isCycleVisible() {
-        return !energyParams.getTariff().isEmpty() && !energyParams.getTariff().equals(getResourceProvider().getString(R.string.tariff_without_cycle));
-
+        if(energyParams!=null) {
+            return !energyParams.getTariff().isEmpty() && !energyParams.getTariff().equals(getResourceProvider().getString(R.string.tariff_without_cycle));
+        }
+        return false;
     }
 
     public void onSaveClick() {

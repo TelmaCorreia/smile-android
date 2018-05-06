@@ -95,10 +95,16 @@ public class BuyViewModel extends BaseViewModel {
         return null;
     }
 
-    public void setPlusPriceValue(String value) {
-        if(buySettings!=null && buySettings.getEemPlusPriceValue()>0 && buySettings.isEemPlusPrice() && !value.isEmpty()) {
-            buySettings.setEemPlusPriceValue(Double.parseDouble(value.replace(',', '.')));
-            notifyPropertyChanged(BR.saveVisible);
+    public void setPlusPriceValue(String plusPriceValue) {
+        if(buySettings!=null && buySettings.getEemPlusPriceValue()>0 && buySettings.isEemPlusPrice() && !plusPriceValue.isEmpty()) {
+            try{
+                double value = Double.parseDouble(plusPriceValue.replace(',', '.'));
+                buySettings.setEemPlusPriceValue(value);
+                notifyPropertyChanged(BR.saveVisible);
+            }catch (NumberFormatException e){
+                getUiEvents().showToast(getResourceProvider().getString(R.string.alert_only_numbers));
+            }
+
         }
 
     }

@@ -8,7 +8,14 @@ import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentEnergySettingsBinding;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.utils.KeyboardUtils;
+import com.thesis.smile.presentation.utils.SortUtils;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsBinding, EnergySettingsViewModel> {
 
@@ -48,7 +55,8 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
             }
         });
 
-        String[] powers = getViewModel().getConfigs().getPower().values().toArray(new String[0]);
+
+        String[] powers = SortUtils.sortMapByKey(getViewModel().getConfigs().getPower()).toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterPowers = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, powers);
         adapterPowers.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spPower.setAdapter(adapterPowers);
@@ -64,7 +72,7 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
             }
         });
 
-        String[] tariffs = getViewModel().getConfigs().getTariff().values().toArray(new String[0]);
+        String[] tariffs = SortUtils.sortMapByKey(getViewModel().getConfigs().getTariff()).toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterTariffs = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, tariffs);
         adapterTariffs.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spTariff.setAdapter(adapterTariffs);
@@ -110,6 +118,8 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
         }
 
     }
+
+
 
 
 }
