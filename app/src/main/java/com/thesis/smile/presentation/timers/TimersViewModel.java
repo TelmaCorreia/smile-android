@@ -26,6 +26,7 @@ public class TimersViewModel extends BaseToolbarViewModel {
     private String to = "";
     private String previousFrom;
     private String previousTo;
+    private List<Integer> previousSelectedDays = new ArrayList<>();
     private boolean activated = false;
     private List<Integer> selectedDays = new ArrayList<>();
     private List<String> selectedDaysStrings = new ArrayList<>();
@@ -91,7 +92,7 @@ public class TimersViewModel extends BaseToolbarViewModel {
 
     @Bindable
     public boolean isSaveEnabled() {
-        boolean previousCond = (previousFrom==null)? true: !(previousFrom.equals(from) && previousTo.equals(to));
+        boolean previousCond = (previousFrom==null)? true: !(previousFrom.equals(from) && previousTo.equals(to) && previousSelectedDays.equals(selectedDays));
        return !(from.isEmpty() || to.isEmpty() || selectedDays.isEmpty()) && !from.equals(to) && previousCond;
     }
 
@@ -138,5 +139,9 @@ public class TimersViewModel extends BaseToolbarViewModel {
 
     public void setPreviousTo(String previousTo) {
         this.previousTo = previousTo;
+    }
+
+    public void setPreviousSelectedDays(List<Integer> previousSelectedDays) {
+        this.previousSelectedDays = previousSelectedDays;
     }
 }

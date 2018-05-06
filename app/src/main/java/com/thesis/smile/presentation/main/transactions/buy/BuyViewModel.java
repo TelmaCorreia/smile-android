@@ -14,16 +14,15 @@ import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
+import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.presentation.utils.databinding.ExclusiveObservableList;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -39,10 +38,14 @@ public class BuyViewModel extends BaseViewModel {
     private BuySettings previousSettings;
     private TransactionsSettingsManager buySettingsManager;
 
+    private Map<String, TimeInterval> timersToUpdate;
+    private PublishRelay<OpenDialogEvent> alertDialog = PublishRelay.create();
     private PublishRelay<NavigationEvent> openPriceInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openTimerObservable = PublishRelay.create();
     private PublishRelay<Event> neighboursChanged = PublishRelay.create();
-    private PublishRelay<Event> settingsChanged = PublishRelay.create();
+    private PublishRelay<Event> neighboursStateChanged = PublishRelay.create();
+    private PublishRelay<Event> timeIntervalsStateChanged = PublishRelay.create();
+    private PublishRelay<Event> radioChanged = PublishRelay.create();
 
 
     @Inject
@@ -52,8 +55,8 @@ public class BuyViewModel extends BaseViewModel {
         timeIntervals = new ExclusiveObservableList<>();
         neighbours = new ArrayList<>();
         neighboursToUpdate = new HashMap<>();
+        timersToUpdate = new HashMap<>();
         getTimeIntervalsFromServer();
-        getNeighboursFromServer();
         getBuySettingsFromServer();
     }
 
@@ -67,6 +70,9 @@ public class BuyViewModel extends BaseViewModel {
 
     public void setBuy(boolean buy) {
         if(buySettings!=null) {
+            if (buy && !buySettings.isOn()){
+                alertDialog.accept(new OpenDialogEvent());
+            }
             this.buySettings.setOn(buy);
             notifyPropertyChanged(BR.buy);
             notifyPropertyChanged(BR.saveVisible);
@@ -107,6 +113,30 @@ public class BuyViewModel extends BaseViewModel {
     public void setAllNeighboursSelected(boolean value) {
         if(buySettings!=null){
             buySettings.setAllNeighboursSelected(value);
+            for (Neighbour n: neighbours){
+                if (n.isSelectAll()){
+                    n.setBlocked(value);
+                }
+                if(n.isBlocked()!=value && !n.isSelectAll()){
+                    n.setBlocked(value);
+                    addNeighbourToUpdate(n);
+                }
+            }
+            neighboursStateChanged.accept(new Event());
+            notifyPropertyChanged(BR.saveVisible);
+        }
+    }
+
+    public void setAllNeighboursToFalse(){
+        if(buySettings!=null){
+            buySettings.setAllNeighboursSelected(false);
+            for (Neighbour n: neighbours){
+                if (n.isSelectAll()){
+                    n.setBlocked(false);
+                    break;
+                }
+            }
+            neighboursStateChanged.accept(new Event());
             notifyPropertyChanged(BR.saveVisible);
         }
     }
@@ -114,25 +144,25 @@ public class BuyViewModel extends BaseViewModel {
     @Bindable
     public boolean isSaveVisible() {
         if(buySettings!=null) {
-            return !(buySettingsChanged() && neighboursToUpdate.size()==0);
+            return buySettingsChanged() || neighboursToUpdate.size()>0  || timersToUpdate.size()>0;
         }
         return false;
     }
 
     private boolean buySettingsChanged(){
-        return  buySettings.isOn()== previousSettings.isOn()
-                && buySettings.isAllNeighboursSelected()==buySettings.isAllNeighboursSelected()
+        return  !(buySettings.isOn()== previousSettings.isOn()
+                && buySettings.isAllNeighboursSelected()==previousSettings.isAllNeighboursSelected()
                 && buySettings.isEemPrice()==previousSettings.isEemPrice()
                 && buySettings.isEemPlusPrice()==previousSettings.isEemPlusPrice()
                 && buySettings.getEemPlusPriceValue()==previousSettings.getEemPlusPriceValue()
-                && buySettings.getEemPriceValue()==previousSettings.getEemPriceValue();
+                && buySettings.getEemPriceValue()==previousSettings.getEemPriceValue());
     }
 
     public void onEemPriceClick(){
         if(buySettings!=null){
             buySettings.setEemPrice(!buySettings.isEemPrice());
             buySettings.setEemPlusPrice(!buySettings.isEemPlusPrice());
-            settingsChanged.accept(new Event());
+            radioChanged.accept(new Event());
             notifyPropertyChanged(BR.saveVisible);
             notifyPropertyChanged(BR.plusPriceEditable);
         }
@@ -142,7 +172,7 @@ public class BuyViewModel extends BaseViewModel {
         if(buySettings!=null){
             buySettings.setEemPrice(!buySettings.isEemPrice());
             buySettings.setEemPlusPrice(!buySettings.isEemPlusPrice());
-            settingsChanged.accept(new Event());
+            radioChanged.accept(new Event());
             notifyPropertyChanged(BR.saveVisible);
             notifyPropertyChanged(BR.plusPriceEditable);
         }
@@ -207,8 +237,18 @@ public class BuyViewModel extends BaseViewModel {
     }
 
     private void onTimeIntervalUpdatedReceived(TimeInterval timeInterval) {
-        getTimeIntervalsFromServer();
-
+        for (TimeInterval t: timeIntervals){
+            if(t.getId().equals(timeInterval.getId())){
+                t.setFrom(timeInterval.getFrom());
+                t.setActivated(timeInterval.isActivated());
+                t.setTo(timeInterval.getTo());
+                t.setWeekDays(timeInterval.getWeekDays());
+                t.setWeekDaysString(timeInterval.getWeekDaysString());
+            }
+        }
+        timersToUpdate.remove(timeInterval.getId());
+        notifyPropertyChanged(BR.saveVisible);
+        timeIntervalsStateChanged.accept(new Event());
     }
 
     public void removeTimerInterval(TimeInterval timeInterval) {
@@ -224,6 +264,14 @@ public class BuyViewModel extends BaseViewModel {
         getTimeIntervalsFromServer();
     }
 
+    public void addTimerIntervalToUpdate(TimeInterval timer) {
+        if (timersToUpdate.containsKey(timer.getId())){
+            timersToUpdate.remove(timer.getId());
+        }else{
+            timersToUpdate.put(timer.getId(), timer);
+        }   notifyPropertyChanged(BR.saveVisible);
+    }
+
     /**
      * NEIGHBOURS
      * **/
@@ -232,16 +280,19 @@ public class BuyViewModel extends BaseViewModel {
         Disposable disposableNeighbours = buySettingsManager.getNeighboursBuy(0, 20)
                 .compose(schedulersTransformSingleIo())
                 .subscribe(this::onNeighboursReceived, this::onError);
-
         addDisposable(disposableNeighbours);
     }
 
     private void onNeighboursReceived(List<Neighbour> neighbours) {
+        this.neighbours.add(new Neighbour("0",getResourceProvider().getString(R.string.select_all), isAllNeighboursSelected(), true));
         this.neighbours.addAll(neighbours);
         neighboursChanged.accept(new Event());
     }
 
     public void addNeighbourToUpdate(Neighbour neighbour) {
+        if(!neighbour.isBlocked() && isAllNeighboursSelected()){
+            setAllNeighboursToFalse();
+        }
         if (neighboursToUpdate.containsKey(neighbour.getId())){
             neighboursToUpdate.remove(neighbour.getId());
         }else{
@@ -266,7 +317,8 @@ public class BuyViewModel extends BaseViewModel {
     private void onBuySettingsReceived(BuySettings buySettings) {
         this.buySettings = buySettings;
         this.previousSettings = new BuySettings(buySettings.getId(), buySettings.isOn(), buySettings.isEemPrice(), buySettings.isEemPlusPrice(), buySettings.getEemPriceValue(), buySettings.getEemPlusPriceValue(), buySettings.isAllNeighboursSelected());
-        settingsChanged.accept(new Event());
+        getNeighboursFromServer();
+        radioChanged.accept(new Event());
         notifyChange();
     }
 
@@ -275,25 +327,45 @@ public class BuyViewModel extends BaseViewModel {
      * **/
 
     public void onSaveClick() {
-        //TODO: price verifications
+        alertDialog.accept(new OpenDialogEvent());
+    }
+
+    public void save(){
         if(buySettingsChanged()) {
             buySettingsManager.updateBuySettings(buySettings)
                     .compose(schedulersTransformSingleIo())
                     .doOnSubscribe(this::addDisposable)
                     .subscribe(this::onUpdateComplete, this::onError);
+        }else if(neighboursToUpdate.size()>0){
+            updateNeighbours();
         }
-        if(neighboursToUpdate.size()>0){
-            buySettingsManager.updateNeighboursBuy(new ArrayList<>(neighboursToUpdate.values()))
-                    .compose(schedulersTransformSingleIo())
-                    .doOnSubscribe(this::addDisposable)
-                    .subscribe(this::onNeighboursUpdate, this::onError);
+
+        if(timersToUpdate.size()>0){
+            for (TimeInterval t: timersToUpdate.values()){
+                buySettingsManager.updateTimeInterval(t)
+                        .compose(schedulersTransformSingleIo())
+                        .doOnSubscribe(this::addDisposable)
+                        .subscribe(this::onTimeIntervalUpdate, this::onError);
+            }
         }
 
     }
 
+    private void updateNeighbours() {
+        buySettingsManager.updateNeighboursSell(new ArrayList<>(neighboursToUpdate.values()))
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onNeighboursUpdate, this::onError);
+    }
+
+    private void onTimeIntervalUpdate(TimeInterval timeInterval) {
+        timersToUpdate.clear();
+        notifyPropertyChanged(BR.saveVisible);
+    }
+
     private void onNeighboursUpdate(String s) {
-        getUiEvents().showToast("OK");
         neighboursToUpdate.clear();
+        notifyPropertyChanged(BR.saveVisible);
     }
 
     private void onUpdateComplete(BuySettings buySettings) {
@@ -301,7 +373,11 @@ public class BuyViewModel extends BaseViewModel {
         getUiEvents().showToast(getResourceProvider().getString(R.string.msg_update_sucess));
         this.previousSettings = new BuySettings(buySettings.getId(), buySettings.isOn(), buySettings.isEemPrice(), buySettings.isEemPlusPrice(), buySettings.getEemPriceValue(), buySettings.getEemPlusPriceValue(), buySettings.isAllNeighboursSelected());
         this.buySettings = buySettings;
+        notifyPropertyChanged(BR.plusPriceValue);
         notifyPropertyChanged(BR.saveVisible);
+        if (neighboursToUpdate.size()>0){
+            updateNeighbours();
+        }
     }
 
     Observable<NavigationEvent> observeOpenPriceInfo(){
@@ -316,7 +392,19 @@ public class BuyViewModel extends BaseViewModel {
         return neighboursChanged;
     }
 
-    Observable<Event> observeBuySettings(){
-        return settingsChanged;
+    Observable<Event> observeNeighboursState(){
+        return neighboursStateChanged;
+    }
+
+    Observable<Event> observeTimeIntervalState(){
+        return timeIntervalsStateChanged;
+    }
+
+    Observable<Event> observeRadio(){
+        return radioChanged;
+    }
+
+    Observable<OpenDialogEvent> observeAlertDialog(){
+        return alertDialog;
     }
 }

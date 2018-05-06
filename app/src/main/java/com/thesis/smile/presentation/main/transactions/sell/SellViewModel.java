@@ -2,7 +2,6 @@ package com.thesis.smile.presentation.main.transactions.sell;
 
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
-import android.util.Log;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
@@ -35,14 +34,13 @@ public class SellViewModel extends BaseViewModel {
 
     private final ExclusiveObservableList<TimeInterval> timeIntervals;
     private final List<Neighbour> neighbours;
+    private Map<String, Neighbour> neighboursToUpdate;
     private SellSettings sellSettings;
     private SellSettings previousSettings;
-    private Map<String, Neighbour> neighboursToUpdate;
-    private Map<String, TimeInterval> timersToUpdate;
-    private PublishRelay<OpenDialogEvent> alertDialog = PublishRelay.create();
-
     private TransactionsSettingsManager sellSettingsManager;
 
+    private Map<String, TimeInterval> timersToUpdate;
+    private PublishRelay<OpenDialogEvent> alertDialog = PublishRelay.create();
     private PublishRelay<NavigationEvent> openPriceInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openTimerObservable = PublishRelay.create();
     private PublishRelay<Event> neighboursChanged = PublishRelay.create();
@@ -167,7 +165,7 @@ public class SellViewModel extends BaseViewModel {
         }
     }
 
-    public void setAllNeigboursToFalse(){
+    public void setAllNeighboursToFalse(){
         if(sellSettings!=null){
             sellSettings.setAllNeighboursSelected(false);
             for (Neighbour n: neighbours){
@@ -297,14 +295,12 @@ public class SellViewModel extends BaseViewModel {
     }
 
     public void removeTimerInterval(TimeInterval timeInterval){
-
         Disposable disposable = sellSettingsManager.deleteTimeInterval(timeInterval)
                 .compose(loadingTransformCompletable())
                 .compose(schedulersTransformCompletableIo())
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::onTimeIntervalRemoved, this::onError);
         addDisposable(disposable);
-
     }
 
     private void onTimeIntervalRemoved() {
@@ -333,14 +329,12 @@ public class SellViewModel extends BaseViewModel {
     private void onNeighboursReceived(List<Neighbour> neighbours) {
         this.neighbours.add(new Neighbour("0",getResourceProvider().getString(R.string.select_all), isAllNeighboursSelected(), true));
         this.neighbours.addAll(neighbours);
-
         neighboursChanged.accept(new Event());
-
     }
 
     public void addNeighbourToUpdate(Neighbour neighbour) {
         if(!neighbour.isBlocked() && isAllNeighboursSelected()){
-            setAllNeigboursToFalse();
+            setAllNeighboursToFalse();
         }
         if (neighboursToUpdate.containsKey(neighbour.getId())){
             neighboursToUpdate.remove(neighbour.getId());
@@ -404,9 +398,6 @@ public class SellViewModel extends BaseViewModel {
     }
 
     private void updateNeighbours() {
-        Log.i("Teste", "Neighbours to update: "+neighboursToUpdate.size());
-        Log.i("Teste", "Neighbours to update values: "+neighboursToUpdate.values().toString());
-
         sellSettingsManager.updateNeighboursSell(new ArrayList<>(neighboursToUpdate.values()))
                 .compose(schedulersTransformSingleIo())
                 .doOnSubscribe(this::addDisposable)
@@ -420,8 +411,6 @@ public class SellViewModel extends BaseViewModel {
 
     private void onNeighboursUpdate(String s) {
         neighboursToUpdate.clear();
-        getUiEvents().showToast("neigbour updated");
-        Log.i("Teste", "Neighbours to update after update: "+neighboursToUpdate.size());
         notifyPropertyChanged(BR.saveVisible);
     }
 

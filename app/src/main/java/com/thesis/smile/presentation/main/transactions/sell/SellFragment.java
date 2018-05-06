@@ -61,6 +61,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(), this::onTimeIntervalSelected, this::onRemoveTimeIntervalSelected,  this::onTimeIntervalStateChanged);
         binding.timersSell.setLayoutManager(layoutManager);
         binding.timersSell.setAdapter(timeIntervalAdapter);
+
         binding.sbBattery.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -129,7 +130,6 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     //This is very bad :(
     private void createDialogs(OpenDialogEvent event) {
         if(getViewModel().getSellSettings().isOn()){
-            double price = getViewModel().getSellSettings().isPlusPrice()?getViewModel().getSellSettings().getPlusPriceValue():getViewModel().getSellSettings().getSpecificPriceValue();
             int alarmsSize = getViewModel().getTimeIntervals().size();
             boolean allTimeIntervalsOff = areAllTimeIntervalsOff();
             int neigboursSize = getViewModel().getNeighbours().size();
@@ -230,7 +230,6 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
             neighbour.setBlocked(blocked);
             getViewModel().addNeighbourToUpdate(neighbour);
         }
-
     }
 
     public List<NeighbourHeader> getConsumers() {

@@ -18,6 +18,8 @@ import com.thesis.smile.presentation.info_price.InfoPriceActivity;
 import com.thesis.smile.presentation.timers.timer_list.TimeIntervalAdapter;
 import com.thesis.smile.presentation.timers.TimersActivity;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
+import com.thesis.smile.presentation.utils.views.CustomDialog;
 import com.thesis.smile.presentation.utils.views.CustomItemDecoration;
 
 import java.util.ArrayList;
@@ -28,6 +30,10 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
     static final int REQUEST_TIMERS = 2;
     static final int REQUEST_TIMERS_EDIT = 4;
     private static final String TIMER = "timer";
+
+    private CustomDialog dialogAlert;
+    private NeighbourAdapter neighbourAdapter;
+    private TimeIntervalAdapter timeIntervalAdapter;
 
     public static BuyFragment newInstance() {
         BuyFragment f = new BuyFragment();
@@ -47,13 +53,10 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
     @Override
     protected void initViews(FragmentBuyBinding binding) {
 
-        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
-        CustomItemDecoration dividerItemDecoration = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        TimeIntervalAdapter timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(),this::onTimeIntervalSelected,this::onRemoveTimeIntervalSelected, this::onTimeIntervalStateChanged);
+        timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(),this::onTimeIntervalSelected,this::onRemoveTimeIntervalSelected, this::onTimeIntervalStateChanged);
         binding.timersBuy.setLayoutManager(layoutManager);
         binding.timersBuy.setAdapter(timeIntervalAdapter);
-        binding.timersBuy.addItemDecoration(dividerItemDecoration);
 
     }
 
@@ -77,12 +80,88 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::initNeighbours);
 
-        getViewModel().observeBuySettings()
+        getViewModel().observeNeighboursState()
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(this::updateViews);
+                .subscribe(event -> {if (neighbourAdapter!=null)neighbourAdapter.notifyDataSetChanged();});
+
+        getViewModel().observeTimeIntervalState()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {timeIntervalAdapter.notifyDataSetChanged();});
+
+        getViewModel().observeRadio()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::updateRadio);
+
+        getViewModel().observeAlertDialog()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::createDialogs);
+
     }
 
-    private void updateViews(Event event) {
+    //This is very bad :(
+    private void createDialogs(OpenDialogEvent event) {
+        if(getViewModel().getBuySettings().isOn()){
+            int alarmsSize = getViewModel().getTimeIntervals().size();
+            boolean allTimeIntervalsOff = areAllTimeIntervalsOff();
+            int neigboursSize = getViewModel().getNeighbours().size();
+            boolean allNeighboursOff = areAllNeighboursOff();
+
+            String description=getString(R.string.settings_alert_description) + "\n";
+
+            if (neigboursSize==0 || allNeighboursOff){
+                description += " - Não comprar energia a nenhum vizinho;\n";
+            }else{
+                description += " - Pode comprar energia aos vizinhos especificados;\n";
+            }
+            if (alarmsSize==0 || allTimeIntervalsOff){
+                description += " - Pode comprar energia a qualquer hora;\n";
+            }else{
+                description += " - Pode comprar energia nos períodos especificados;\n";
+            }
+
+            showDialog(description);
+            if(event instanceof OpenDialogEvent){
+                dialogAlert.show();
+            }else{
+                dialogAlert.dismiss();
+            }
+        }else{
+            getViewModel().save();
+        }
+
+    }
+
+    private boolean areAllNeighboursOff() {
+        if (getViewModel().isAllNeighboursSelected()){
+            return false;
+        }else{
+            for (Neighbour n: getViewModel().getNeighbours()){
+                if(!n.isBlocked()) return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean areAllTimeIntervalsOff() {
+        for (TimeInterval t: getViewModel().getTimeIntervals()){
+            if(t.isActivated()) return false;
+        }
+        return true;
+    }
+
+    private void showDialog(String description){
+        dialogAlert = new CustomDialog(getActivity());
+        dialogAlert.setTitle(R.string.settings_alert_tilte);
+        dialogAlert.setMessage(description);
+        dialogAlert.setSecondMessage(R.string.settings_alert_info);
+        dialogAlert.setOkButtonText(R.string.button_continue);
+        dialogAlert.setCloseButtonText(R.string.button_back);
+        dialogAlert.setDismissible(true);
+        dialogAlert.setOnOkClickListener(() -> {getViewModel().save(); dialogAlert.dismiss();});
+        dialogAlert.setOnCloseClickListener(() ->{dialogAlert.dismiss();});
+    }
+
+    private void updateRadio(Event event) {
         if (getViewModel().getBuySettings().isEemPrice()){
             getBinding().rbEemPrice.setChecked(true);
         }else {
@@ -95,32 +174,34 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         CustomItemDecoration dividerItemDecoration_ = new CustomItemDecoration(dividerDrawable); //FIXME item decoration
         List<NeighbourHeader> neighbourHeaders = getSuppliers();
         LinearLayoutManager layoutManagerSup = new LinearLayoutManager(getContext());
-        NeighbourAdapter adapter = new NeighbourAdapter(getContext(), neighbourHeaders, this::onSwitchListener);
+        neighbourAdapter = new NeighbourAdapter(getContext(), neighbourHeaders, this::onSwitchListener);
         getBinding().suppliers.setLayoutManager(layoutManagerSup);
-        getBinding().suppliers.setAdapter(adapter);
+        getBinding().suppliers.setAdapter(neighbourAdapter);
         getBinding().suppliers.addItemDecoration(dividerItemDecoration_);
     }
 
     private void onSwitchListener(Neighbour neighbour) {
         if (neighbour.isSelectAll()){
-            getViewModel().setAllNeighboursSelected(neighbour.isBlocked());
+            getViewModel().setAllNeighboursSelected(!getViewModel().isAllNeighboursSelected());
         }else{
+            boolean blocked = !neighbour.isBlocked();
+            neighbour.setBlocked(blocked);
             getViewModel().addNeighbourToUpdate(neighbour);
         }
-
     }
 
     public List<NeighbourHeader> getSuppliers() {
         List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
         List<Neighbour> neighbours = new ArrayList<>();
-        neighbours.add(new Neighbour("0","Selecionar todos", getViewModel().isAllNeighboursSelected(), true));
         neighbours.addAll(getViewModel().getNeighbours());
         NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);
         return neighbourHeaders;
     }
 
-
+    /**
+     * TIMERS
+     * **/
 
     private void onRemoveTimeIntervalSelected(TimeInterval timeInterval) {
         getViewModel().removeTimerInterval(timeInterval);
@@ -130,7 +211,7 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         TimersActivity.launchForResult(getActivity(),REQUEST_TIMERS_EDIT, TIMER, timeInterval);
     }
     private void onTimeIntervalStateChanged(TimeInterval timeInterval) {
-        getViewModel().addTimeInterval(timeInterval, true);
+        getViewModel().addTimerIntervalToUpdate(timeInterval);
     }
 
 

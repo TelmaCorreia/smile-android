@@ -59,6 +59,7 @@ public class TimersActivity extends BaseToolbarActivity<ActivityTimersBinding, T
         if (timeInterval!= null){
             getViewModel().setPreviousFrom(timeInterval.getFrom());
             getViewModel().setPreviousTo(timeInterval.getTo());
+            getViewModel().setPreviousSelectedDays(timeInterval.getWeekDays());
             getViewModel().setId(timeInterval.getId());
             getViewModel().setFrom(timeInterval.getFrom());
             getViewModel().setTo(timeInterval.getTo());
