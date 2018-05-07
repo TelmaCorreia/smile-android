@@ -358,7 +358,7 @@ public class BuyViewModel extends BaseViewModel {
     }
 
     private void updateNeighbours() {
-        buySettingsManager.updateNeighboursSell(new ArrayList<>(neighboursToUpdate.values()))
+        buySettingsManager.updateNeighboursBuy(new ArrayList<>(neighboursToUpdate.values()))
                 .compose(schedulersTransformSingleIo())
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::onNeighboursUpdate, this::onError);
