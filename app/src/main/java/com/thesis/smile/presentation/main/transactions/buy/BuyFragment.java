@@ -103,12 +103,12 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         if(getViewModel().getBuySettings().isOn()){
             int alarmsSize = getViewModel().getTimeIntervals().size();
             boolean allTimeIntervalsOff = areAllTimeIntervalsOff();
-            int neigboursSize = getViewModel().getNeighbours().size();
+            int neighboursSize = getViewModel().getNeighbours().size();
             boolean allNeighboursOff = areAllNeighboursOff();
 
             String description=getString(R.string.settings_alert_description) + "\n";
 
-            if (neigboursSize==0 || allNeighboursOff){
+            if (neighboursSize==0 || allNeighboursOff){
                 description += " - Não comprar energia a nenhum vizinho;\n";
             }else{
                 description += " - Pode comprar energia aos vizinhos especificados;\n";
@@ -163,9 +163,9 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
 
     private void updateRadio(Event event) {
         if (getViewModel().getBuySettings().isEemPrice()){
-            getBinding().rbEemPrice.setChecked(true);
+            if(!getBinding().rbEemPrice.isChecked()) getBinding().rbEemPrice.setChecked(true);
         }else {
-            getBinding().rbEemPlusPrice.setChecked(true);
+            if(!getBinding().rbEemPlusPrice.isChecked())getBinding().rbEemPlusPrice.setChecked(true);
         }
     }
 

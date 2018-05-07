@@ -379,6 +379,7 @@ public class BuyViewModel extends BaseViewModel {
         getUiEvents().showToast(getResourceProvider().getString(R.string.msg_update_sucess));
         this.previousSettings = new BuySettings(buySettings.getId(), buySettings.isOn(), buySettings.isEemPrice(), buySettings.isEemPlusPrice(), buySettings.getEemPriceValue(), buySettings.getEemPlusPriceValue(), buySettings.isAllNeighboursSelected());
         this.buySettings = buySettings;
+        radioChanged.accept(new Event());
         notifyPropertyChanged(BR.plusPriceValue);
         notifyPropertyChanged(BR.saveVisible);
         if (neighboursToUpdate.size()>0){

@@ -132,13 +132,13 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         if(getViewModel().getSellSettings().isOn()){
             int alarmsSize = getViewModel().getTimeIntervals().size();
             boolean allTimeIntervalsOff = areAllTimeIntervalsOff();
-            int neigboursSize = getViewModel().getNeighbours().size();
+            int neighboursSize = getViewModel().getNeighbours().size();
             boolean allNeighboursOff = areAllNeighboursOff();
             double batterySaved = getViewModel().getSellSettings().getBatteryLevel();
 
             String description=getString(R.string.settings_alert_description) + "\n";
 
-            if (neigboursSize==0 || allNeighboursOff){
+            if (neighboursSize==0 || allNeighboursOff){
                 description += " - Não consegue vender energia a nenhum vizinho;\n";
             }else{
                 description += " - Pode vender energia aos vizinhos especificados;\n";
@@ -205,8 +205,11 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
     private void updateRadio(Event event) {
         if (getViewModel().getSellSettings().isSpecificPrice()){
             getBinding().rbConcretePrice.setChecked(true);
+            getBinding().rbPricePlus.setChecked(false);
+
         }else {
             getBinding().rbPricePlus.setChecked(true);
+            getBinding().rbConcretePrice.setChecked(false);
         }
     }
 
