@@ -80,7 +80,7 @@
                     android:orientation="vertical"
                     android:enabled="@{viewModel.equipmentEnabled}">
                     <android.support.v7.widget.AppCompatSpinner
-                        style="@style/TextInputField"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:id="@+id/spBattery"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -93,7 +93,7 @@
                         layout="@layout/layout_help" />
 
                     <android.support.v7.widget.AppCompatSpinner
-                        style="@style/TextInputField"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:id="@+id/spSolarPanel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -107,7 +107,7 @@
                         layout="@layout/layout_help" />
 
                     <android.support.v7.widget.AppCompatSpinner
-                        style="@style/TextInputField"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:id="@+id/spSmartMeter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

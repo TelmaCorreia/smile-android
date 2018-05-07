@@ -41,7 +41,6 @@ public class TransactionsFragment extends BaseFragment<FragmentTransactionsBindi
         pagerAdapter = new TransactionsViewPagerAdapter(getChildFragmentManager(), getResourceProvider());
         binding.viewpager.setAdapter(pagerAdapter);
         binding.tabs.setupWithViewPager(binding.viewpager);
-
         binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -51,6 +50,7 @@ public class TransactionsFragment extends BaseFragment<FragmentTransactionsBindi
             @Override
             public void onPageSelected(int position) {
                 KeyboardUtils.hideKeyboard(TransactionsFragment.this);
+                //binding.viewpager.getAdapter().notifyDataSetChanged();
 
             }
 
@@ -59,6 +59,7 @@ public class TransactionsFragment extends BaseFragment<FragmentTransactionsBindi
 
             }
         });
+
 
     }
 

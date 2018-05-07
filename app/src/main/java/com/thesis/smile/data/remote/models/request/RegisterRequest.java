@@ -33,6 +33,10 @@ public class RegisterRequest{
     private boolean visible;
 
     @Expose
+    @SerializedName("manual")
+    private boolean manual;
+
+    @Expose
     @SerializedName("energyParams")
     private EnergyParamsRemote energyParams;
 
@@ -41,13 +45,14 @@ public class RegisterRequest{
     public RegisterRequest(){}
 
     public RegisterRequest(String firstName, String lastName, String email, String password,
-                           String type, boolean visible, EnergyParamsRemote energyParamsRemote) {
+                           String type, boolean visible, boolean manual,  EnergyParamsRemote energyParamsRemote) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.type = type;
         this.visible = visible;
+        this.manual = manual;
         this.energyParams = energyParamsRemote;
     }
 
@@ -113,5 +118,13 @@ public class RegisterRequest{
 
     public void setPicture(File picture) {
         this.picture = picture;
+    }
+
+    public boolean isManual() {
+        return manual;
+    }
+
+    public void setManual(boolean manual) {
+        this.manual = manual;
     }
 }

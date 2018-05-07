@@ -77,6 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:textIsSelectable="true"
+                android:onClick="@{v -> viewModel.onTelClick()}"
                 android:text="@string/cycle_contact2"/>
             <TextView
                 style="@style/Text2"
@@ -84,6 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:textIsSelectable="true"
                 android:text="@string/cycle_contact3"/>
             <TextView
                 style="@style/Text2"
@@ -91,6 +94,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:textIsSelectable="true"
+                android:onClick="@{v -> viewModel.onEmailClick()}"
                 android:text="@string/cycle_contact4"/>
             <TextView
                 style="@style/Text2"
@@ -98,13 +103,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:textIsSelectable="true"
                 android:text="@string/cycle_contact5"/>
             <TextView
                 style="@style/Text2"
+                android:id="@+id/tvForm"
                 android:layout_marginTop="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:onClick="@{v -> viewModel.onFormClick()}"
                 android:text="@string/cycle_contact6"/>
 
 

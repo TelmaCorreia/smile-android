@@ -58,7 +58,7 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
                         adapterSolarPanels, R.layout.layout_spinner_item_nothing_selected_solar_panel,this));
 
 
-        String[] smartMeters = new String []{"something"};
+        String[] smartMeters = new String []{"SMP1"};
         ArrayAdapter<CharSequence> adapterSmartMeters = new ArrayAdapter(this,R.layout.layout_spinner_item, smartMeters);
         adapterSmartMeters.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spSmartMeter.setAdapter(
@@ -79,18 +79,6 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
     @Override
     protected void registerObservables() {
         super.registerObservables();
-
-        getViewModel().observeOpenCycleInfo()
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(event -> {
-                    CycleInfoActivity.launch(this);
-                });
-
-        getViewModel().observeOpenGeneralInfo()
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(event -> {
-                    GeneralInfoActivity.launch(this);
-                });
 
       /*  getViewModel().observeRegister()
                 .doOnSubscribe(this::addDisposable)

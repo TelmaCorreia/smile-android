@@ -53,11 +53,16 @@
     <string name="cycle_info_par1">Para saber qual o seu ciclo contratado deve contactar a sua empresa de eletricidade (Empresa de Eletricidade da Madeira).
         Poderá fazê-lo através dos seguintes contactos:</string>
     <string name="cycle_contact1">Lojas da EEM, abertas das 8h30 às 12h30 e das 13h30 às 16h00</string>
-    <string name="cycle_contact2">Linha da EEM: 800 221 187 (chamada gratuita)</string>
-    <string name="cycle_contact3">Fax: 291 233 324</string>
-    <string name="cycle_contact4">Email: clientes@eem.pt</string>
-    <string name="cycle_contact5">Endereço: EEM - Empresa de Eletricidade da Madeira, S.A. Av. do Mar e das Comunidades Madeirenses, 32 9064-501 Funchal </string>
-    <string name="cycle_contact6">Formulário eletrónico, a resposta a este formulário é comunicada através do email indicado no mesmo</string>
+    <string name="cycle_contact2"><b>Linha da EEM: </b>800 221 187 (chamada gratuita)</string>
+    <string name="cycle_contact3"><b>Fax: </b>291 233 324</string>
+    <string name="cycle_contact4"><b>Email: </b><u>clientes@eem.pt</u></string>
+    <string name="eem_form_link">https://www.eem.pt/pt/processos/?processid=109&amp;back=1</string>
+    <string name="eem_email">clientes@eem.pt</string>
+    <string name="eem_phone_contact">tel:800221187</string>
+    <string name="eem_email_subject">Pedido de informação sobre a minha tarifa</string>
+    <string name="eem_email_body">Venho por este meio pedir informação sobre qual o ciclo correspondente ao meu contrato de eletricidade. \nO meu nº de conta é: (*INSIRA O SEU NUMERO DE CONTA QUE CONSTA NA SUA FATURA*)\n\n Melhores cumprimentos</string>
+    <string name="cycle_contact5"><b>Endereço: </b>EEM - Empresa de Eletricidade da Madeira, S.A. Av. do Mar e das Comunidades Madeirenses, 32 9064-501 Funchal </string>
+    <string name="cycle_contact6"><u>Formulário eletrónico</u>, a resposta a este formulário é comunicada através do email indicado no mesmo</string>
 
     <!-- usertype -->
     <string name="consumer">"CONSUMER"</string>
@@ -240,5 +245,6 @@
     <!--Others-->
     <string name="select_all">Selecionar Todos</string>
     <string name="alert_only_numbers">Introduza apenas digitos numéricos</string>
+    <string name="alert_equipment">Selecione a unica opção dísponivel</string>
 
 </resources>

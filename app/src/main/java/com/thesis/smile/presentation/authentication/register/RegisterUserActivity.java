@@ -15,6 +15,7 @@ import com.thesis.smile.presentation.authentication.register.energy.RegisterEner
 import com.thesis.smile.presentation.authentication.register.energy.RegisterEquipmentActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
+import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.presentation.utils.photos.CameraHelper;
 import com.thesis.smile.presentation.utils.photos.UserImageHelper;
@@ -76,10 +77,9 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
     protected void registerObservables() {
         super.registerObservables();
 
-/*        getViewModel().observeNext()
+        getViewModel().observeNext()
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(event ->
-                    RegisterEnergyActivity.launch(this, getViewModel().getRegisterRequest()));*/
+                .subscribe(this::next);
 
         getViewModel()
                 .observeEditProfilePicture()
@@ -201,8 +201,8 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
             dialogShareData.setOkButtonText(R.string.button_allow);
             dialogShareData.setCloseButtonText(R.string.button_not_allow);
             dialogShareData.setDismissible(true);
-            dialogShareData.setOnOkClickListener(() -> {getViewModel().setShare(true);  dialogShareData.dismiss(); next();});
-            dialogShareData.setOnCloseClickListener(() ->{getViewModel().setShare(false); dialogShareData.dismiss(); next();});
+            dialogShareData.setOnOkClickListener(() -> {getViewModel().setShare(true); getViewModel().setUser();  dialogShareData.dismiss(); });
+            dialogShareData.setOnCloseClickListener(() ->{getViewModel().setShare(false); getViewModel().setUser();dialogShareData.dismiss(); });
         }
         if(event instanceof OpenDialogEvent){
             dialogShareData.show();
@@ -211,7 +211,7 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
         }
     }
 
-    public void next(){
+    public void next(NavigationEvent event){
         RegisterEnergyActivity.launch(this, getViewModel().getRegisterRequest());
     }
 

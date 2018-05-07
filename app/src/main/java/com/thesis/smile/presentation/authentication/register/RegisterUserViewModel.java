@@ -15,6 +15,7 @@ import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -40,7 +41,7 @@ public class RegisterUserViewModel extends BaseViewModel {
     private boolean share;
 
     private PublishRelay<DialogEvent> shareDialogObservable = PublishRelay.create();
-    private PublishRelay<Event> nextObservable = PublishRelay.create();
+    private PublishRelay<NavigationEvent> nextObservable = PublishRelay.create();
     private PublishRelay<Event> editProfilePictureObservable = PublishRelay.create();
 
     @Inject
@@ -152,16 +153,19 @@ public class RegisterUserViewModel extends BaseViewModel {
         }else if (!isPasswordValid(password, confirmPassword)){
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_invalid_password));
         }else{
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setVisible(share);
-            if (profilePictureFile!=null) {user.setPicture(profilePictureFile);}
             shareDialogObservable.accept(new OpenDialogEvent());
-            //nextObservable.accept(new Event());
         }
 
+    }
+
+    public void setUser(){
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setVisible(share);
+        if (profilePictureFile!=null) {user.setPicture(profilePictureFile);}
+        nextObservable.accept(new NavigationEvent());
     }
 
     public String getRegisterRequest() {
@@ -175,7 +179,7 @@ public class RegisterUserViewModel extends BaseViewModel {
 
     }
 
-    Observable<Event> observeNext(){
+    Observable<NavigationEvent> observeNext(){
         return nextObservable;
     }
 
@@ -187,6 +191,7 @@ public class RegisterUserViewModel extends BaseViewModel {
         //TODO
         this.profilePictureFile = profilePictureFile;
         setProfileImage(profilePictureFile.getAbsolutePath());
+        notifyPropertyChanged(BR.profileImage);
         /*userManager.updateUserProfilePic(file)
                 .doOnSubscribe(d -> {
                     addDisposable(d);

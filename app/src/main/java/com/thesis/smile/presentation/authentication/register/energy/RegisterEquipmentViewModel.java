@@ -33,8 +33,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private String userType;
 
     private PublishRelay<Event> registerObservable = PublishRelay.create();
-    private PublishRelay<NavigationEvent> openGeneralInfoObservable = PublishRelay.create();
-    private PublishRelay<NavigationEvent> openCycleInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> startMainObservable = PublishRelay.create();
     private PublishRelay<DialogEvent> automaticConfigDialogObservable = PublishRelay.create();
 
@@ -67,12 +65,9 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     public void onGenerlaInfoClick() {
-        openGeneralInfoObservable.accept(new NavigationEvent());
+        getUiEvents().showToast(getResourceProvider().getString(R.string.alert_equipment));
     }
 
-    public void onCycleInfoClick() {
-        openCycleInfoObservable.accept(new NavigationEvent());
-    }
 
     public void setRequest(RegisterRequest request){
         this.request = request;
@@ -84,7 +79,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
             getUiEvents().showToast(getResourceProvider().getString(R.string.userTypeAlert));
         }else{
             request.setType(userType);
-            request.setVisible(manual);
+            request.setManual(manual);
             accountManager.register(request)
                     .compose(loadingTransformCompletable())
                     .compose(schedulersTransformCompletableIo())
@@ -124,14 +119,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     Observable<NavigationEvent> observeStartMain(){
         return startMainObservable;
-    }
-
-    Observable<NavigationEvent> observeOpenGeneralInfo(){
-        return openGeneralInfoObservable;
-    }
-
-    Observable<NavigationEvent> observeOpenCycleInfo(){
-        return openCycleInfoObservable;
     }
 
     Observable<DialogEvent> observeAutomaticConfigDialog(){
