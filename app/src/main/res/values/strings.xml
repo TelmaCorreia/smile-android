@@ -18,9 +18,10 @@
     <string name="prompt_first_name">Nome</string>
     <string name="prompt_last_name">Sobrenome</string>
     <string name="button_next">Próximo passo</string>
+    <string name="password_info">Utilize 8 ou mais caracteres numa mistura de letres (pelo menos uma maíuscula e uma minuscula), números e simbolos</string>
 
     <!-- Register energy details -->
-    <string name="title_energy_details">Detalhes do Contrato de energia eléctrica</string>
+    <string name="title_energy_details">Detalhes do Contrato de energia elétrica</string>
     <string name="sentence_energy_details_info">A informação aqui recolhida é apenas visivel para si</string>
     <string name="sentence_energy_details_help">Onde obter esta informação?</string>
     <string name="prompt_category">Tensão de distribuição</string>
@@ -153,7 +154,7 @@
     <string name="button_recover">Recuperar Password</string>
 
     <!--utils-->
-    <string name="profile_picture">Profile picture</string>
+    <string name="profile_picture">ProfilePicture</string>
     <string name="details_sold_energy">SOLD</string>
     <string name="details_bought_energy">BOUGHT</string>
     <string name="date_format_transactions">dd/MM/yy HH:mm</string>

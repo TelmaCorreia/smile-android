@@ -6,7 +6,7 @@
         <item name="android:textColorHint">@color/colorTextGrey</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:backgroundTint">@color/colorDividerGrey</item>
+       <!-- <item name="android:backgroundTint">@color/colorDividerGrey</item>-->
 
     </style>
 

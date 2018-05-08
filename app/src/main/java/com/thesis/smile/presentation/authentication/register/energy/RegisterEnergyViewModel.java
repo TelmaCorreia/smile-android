@@ -40,6 +40,7 @@ public class RegisterEnergyViewModel extends BaseViewModel {
     private PublishRelay<NavigationEvent> openGeneralInfoObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> openCycleInfoObservable = PublishRelay.create();
 
+
     @Inject
     public RegisterEnergyViewModel(ResourceProvider resourceProvider,
                                    SchedulerProvider schedulerProvider, UiEvents uiEvents,
@@ -124,8 +125,6 @@ public class RegisterEnergyViewModel extends BaseViewModel {
             user.setEnergyParams(EnergyParamsMapper.INSTANCE.domainToRemote(new EnergyParams(category, power, tariff, cycle)));
             nextObservable.accept(new Event());
         }
-
-
     }
 
     public void onGenerlaInfoClick() {

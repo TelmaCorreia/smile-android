@@ -14,6 +14,7 @@ import com.thesis.smile.presentation.authentication.register.energy.info.General
 import com.thesis.smile.presentation.base.BaseActivity;
 import com.thesis.smile.presentation.main.MainActivity;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
 import com.thesis.smile.presentation.utils.views.CustomDialog;
@@ -86,6 +87,10 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
                    getViewModel().register(request, getUserType());
                 });*/
 
+        getViewModel().observeRadio()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::updateRadio);
+
         getViewModel().observeAutomaticConfigDialog()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::shareDataDialogEvent);
@@ -97,6 +102,15 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
                     finish();
                 });
 
+    }
+
+    private void updateRadio(Event event) {
+
+        if(getBinding().rbConsumer.isChecked()) {
+            getViewModel().setUserType(getString(R.string.consumer));
+        }else{
+            getViewModel().setUserType(getString(R.string.prosumer));
+        }
     }
 
     public String getUserType(){

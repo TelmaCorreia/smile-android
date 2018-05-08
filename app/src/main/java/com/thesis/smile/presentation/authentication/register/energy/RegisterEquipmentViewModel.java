@@ -3,6 +3,7 @@ package com.thesis.smile.presentation.authentication.register.energy;
 import android.databinding.Bindable;
 
 import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.BR;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
@@ -35,6 +36,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private PublishRelay<Event> registerObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> startMainObservable = PublishRelay.create();
     private PublishRelay<DialogEvent> automaticConfigDialogObservable = PublishRelay.create();
+    private PublishRelay<Event> radioChanged = PublishRelay.create();
 
     @Inject
     public RegisterEquipmentViewModel(ResourceProvider resourceProvider,
@@ -59,6 +61,13 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         return false; //could be useful int the future
     }
 
+    @Bindable
+    public boolean isEquipmentVisible() {
+        if(userType.equals(getResourceProvider().getString(R.string.consumer))) {
+            return false;
+        }
+        return true;
+    }
     public void onRegisterClick() {
         automaticConfigDialogObservable.accept(new OpenDialogEvent());
         registerObservable.accept(new Event());
@@ -68,6 +77,13 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         getUiEvents().showToast(getResourceProvider().getString(R.string.alert_equipment));
     }
 
+    public void onConsumerClick(){
+        radioChanged.accept(new Event());
+    }
+
+    public void onProsumerClick(){
+        radioChanged.accept(new Event());
+    }
 
     public void setRequest(RegisterRequest request){
         this.request = request;
@@ -125,6 +141,9 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         return automaticConfigDialogObservable;
     }
 
+    Observable<Event> observeRadio(){
+        return radioChanged;
+    }
 
     public boolean isManual() {
         return manual;
@@ -136,5 +155,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     public void setUserType(String userType) {
         this.userType = userType;
+        notifyPropertyChanged(BR.equipmentVisible);
     }
 }

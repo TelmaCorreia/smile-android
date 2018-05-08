@@ -97,7 +97,7 @@ public class SellViewModel extends BaseViewModel {
     }
 
     public void setPlusPriceValue(String plusPriceValue) {
-        if(sellSettings!=null && sellSettings.getPlusPriceValue()>0 && sellSettings.isPlusPrice() && !plusPriceValue.isEmpty()){
+        if(sellSettings!=null && sellSettings.isPlusPrice() && !plusPriceValue.isEmpty()){
             try{
                 double value = Double.parseDouble(plusPriceValue.replace(',', '.'));
                 sellSettings.setPlusPriceValue(value);

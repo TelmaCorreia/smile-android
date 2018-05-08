@@ -393,7 +393,7 @@
                 android:layout_height="56dp"
                 android:layout_margin="16dp"
                 android:layout_gravity="bottom|end"
-                android:backgroundTint="@color/colorAccent" />
+                app:backgroundTint="@color/colorAccent" />
             <TextView
                 style="@style/Text13"
                 android:layout_width="56dp"

@@ -122,6 +122,13 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <TextView
+                    style="@style/TextHelp"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password_info" />
+
                 <Button
                     style="@style/Button"
                     android:layout_width="match_parent"

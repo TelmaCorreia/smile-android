@@ -47,6 +47,7 @@
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:buttonTint="@color/colorBlack"
+                        android:onClick="@{v -> viewModel.onConsumerClick()}"
                         android:text="@string/option_consumer"/>
 
                     <RadioButton
@@ -55,30 +56,32 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorBlack"
+                        android:onClick="@{v -> viewModel.onProsumerClick()}"
                         android:text="@string/option_prosumer"/>
 
                 </RadioGroup>
-                <TextView
-                    style="@style/TextTitles"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
-                    android:text="@string/title_equipment" />
-
-                <TextView
-                    style="@style/TextSubtitles"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="56dp"
-                    android:text="@string/sentence_energy_details_info" />
-
 
                 <LinearLayout
                     android:id="@+id/llEquipment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:enabled="@{viewModel.equipmentEnabled}">
+                    android:enabled="@{viewModel.equipmentEnabled}"
+                    android:visibility="@{viewModel.equipmentVisible ? View.VISIBLE : View.INVISIBLE}">
+
+                    <TextView
+                        style="@style/TextTitles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:text="@string/title_equipment" />
+
+                    <TextView
+                        style="@style/TextSubtitles"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="56dp"
+                        android:text="@string/sentence_energy_details_info" />
                     <android.support.v7.widget.AppCompatSpinner
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:id="@+id/spBattery"
