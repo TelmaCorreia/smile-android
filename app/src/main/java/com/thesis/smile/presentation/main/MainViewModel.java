@@ -69,4 +69,5 @@ public class MainViewModel extends BaseToolbarViewModel {
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(() -> onLogoutObservable.accept(new NavigationEvent()));
     }
+
 }

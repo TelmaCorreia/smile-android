@@ -152,7 +152,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
                 description += " - Pode vender TODA a energia que estiver armazenada na sua bateria;\n";
             }else{
                 //FIXME: if battery capacity > 3 this is WRONG
-                description += " - Pode vender " + round(100-(batterySaved*100/3),1) + "% da sua bateria";
+                description += " - Pode vender " + String.valueOf(3-batterySaved) + "kWH da sua bateria";
             }
 
             showDialog(description);

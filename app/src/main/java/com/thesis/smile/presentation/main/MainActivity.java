@@ -2,12 +2,16 @@ package com.thesis.smile.presentation.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 
+import com.google.gson.Gson;
 import com.thesis.smile.R;
+import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
+import com.thesis.smile.presentation.authentication.register.energy.RegisterEquipmentActivity;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
 import com.thesis.smile.presentation.base.toolbar.ToolbarActionType;
 import com.thesis.smile.presentation.main.historical.HistoricalFragment;
@@ -15,6 +19,7 @@ import com.thesis.smile.presentation.main.home.HomeFragment;
 import com.thesis.smile.presentation.main.menu_events.MenuType;
 import com.thesis.smile.databinding.ActivityMainBinding;
 import com.thesis.smile.presentation.main.menu_events.OpenMenuEvent;
+import com.thesis.smile.presentation.main.menu_events.OpenTransactionsEvent;
 import com.thesis.smile.presentation.main.ranking.RankingFragment;
 import com.thesis.smile.presentation.main.transactions.TransactionsFragment;
 import com.thesis.smile.presentation.privacy_policy.PrivacyPolicyActivity;
@@ -27,18 +32,36 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
     private MenuType currentMenuType;
 
     private static final String TAG_MENU_FRAGMENT = "menu";
+    private static final String TAG_FRAGMENT_TRANSACTIONS = "open_transactions";
+
 
     private HomeFragment homeFragment;
     private HistoricalFragment historicalFragment;
     private TransactionsFragment transactionsFragment;
     private RankingFragment rankingFragment;
 
+    private boolean transactions;
+
     public static void launch(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(TAG_FRAGMENT_TRANSACTIONS, false);
         context.startActivity(intent);
     }
 
+    public static void launchTransactions(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(TAG_FRAGMENT_TRANSACTIONS, true);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void initArguments(Bundle args) {
+        super.initArguments(args);
+        this.transactions = args.getBoolean(TAG_FRAGMENT_TRANSACTIONS);
+
+    }
     @Override
     protected int layoutResId() {
         return R.layout.activity_main;
@@ -86,6 +109,7 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
         }
 
         unselectAllMenus();
+        if (transactions){menuType= MenuType.TRANSACTIONS; transactions=false;}
 
         Fragment fragment;
         switch (menuType) {
@@ -175,6 +199,7 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
         transactionsFragment.onActivityResult(requestCode, resultCode, data);
 
     }
+
 
 
 }

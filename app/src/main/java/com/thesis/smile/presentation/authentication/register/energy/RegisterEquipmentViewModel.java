@@ -35,6 +35,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     private PublishRelay<Event> registerObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> startMainObservable = PublishRelay.create();
+    private PublishRelay<NavigationEvent> startTransactionsObservable = PublishRelay.create();
     private PublishRelay<DialogEvent> automaticConfigDialogObservable = PublishRelay.create();
     private PublishRelay<Event> radioChanged = PublishRelay.create();
 
@@ -113,7 +114,9 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
                     .doOnSubscribe(this::addDisposable)
                     .subscribe(this::onPicComplete, this::onError);
         }
-        else{
+        else if (request.isManual()){
+            startTransactionsObservable.accept(new NavigationEvent());
+        }else{
             startMainObservable.accept(new NavigationEvent());
         }
     }
@@ -137,6 +140,9 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         return startMainObservable;
     }
 
+    Observable<NavigationEvent> observeStartTransactions(){
+        return startTransactionsObservable;
+    }
     Observable<DialogEvent> observeAutomaticConfigDialog(){
         return automaticConfigDialogObservable;
     }

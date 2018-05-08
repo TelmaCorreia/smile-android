@@ -228,8 +228,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:autoLink="web"
-                android:text="@{viewModel.link}"
+                android:text="@string/tariff_link"
+                android:onClick="@{v -> viewModel.onLinkClick()}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

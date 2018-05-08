@@ -3,7 +3,9 @@ package com.thesis.smile.presentation.authentication.register.energy.info;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityCycleInfoBinding;
@@ -29,6 +31,21 @@ public class CycleInfoActivity extends BaseActivity<ActivityCycleInfoBinding, Cy
 
     @Override
     protected void initViews(ActivityCycleInfoBinding binding) {
+        String phone_number= getString(R.string.cycle_contact2);
+        String eem_email= getString(R.string.cycle_contact4);
+        String form= getString(R.string.cycle_contact6);
+
+        SpannableString ss=  new SpannableString(phone_number);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), phone_number.indexOf(getString(R.string.eem_phone_number)), phone_number.indexOf(getString(R.string.eem_phone_number))+getString(R.string.eem_phone_number).length(), 0);
+        binding.tvPhone.setText(ss);
+
+        ss=  new SpannableString(eem_email);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), eem_email.indexOf(getString(R.string.eem_email)), eem_email.indexOf(getString(R.string.eem_email))+getString(R.string.eem_email).length(), 0);
+        binding.tvEmail.setText(ss);
+
+        ss=  new SpannableString(form);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), form.indexOf(getString(R.string.form)), form.indexOf(getString(R.string.form))+getString(R.string.form).length(), 0);
+        binding.tvForm.setText(ss);
         binding.tvForm.setMovementMethod(LinkMovementMethod.getInstance());
     }
 

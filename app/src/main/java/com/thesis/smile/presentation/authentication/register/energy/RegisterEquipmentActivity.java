@@ -102,6 +102,12 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
                     finish();
                 });
 
+        getViewModel().observeStartTransactions()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    MainActivity.launchTransactions(this);
+                    finish();
+                });
     }
 
     private void updateRadio(Event event) {

@@ -2,7 +2,7 @@
     <string name="app_name">smile</string>
 
     <!-- Toolbar menu -->
-    <string name="logout">logout</string>
+    <string name="logout">Logout</string>
     <string name="settings">Definições</string>
     <string name="privacy">Política de privacidade</string>
 
@@ -18,11 +18,11 @@
     <string name="prompt_first_name">Nome</string>
     <string name="prompt_last_name">Sobrenome</string>
     <string name="button_next">Próximo passo</string>
-    <string name="password_info">Utilize 8 ou mais caracteres numa mistura de letres (pelo menos uma maíuscula e uma minuscula), números e simbolos</string>
+    <string name="password_info">Utilize 8 ou mais caracteres numa mistura de letras (pelo menos uma maíuscula e uma minúscula), números e símbolos</string>
 
     <!-- Register energy details -->
     <string name="title_energy_details">Detalhes do Contrato de energia elétrica</string>
-    <string name="sentence_energy_details_info">A informação aqui recolhida é apenas visivel para si</string>
+    <string name="sentence_energy_details_info">A informação aqui recolhida é apenas visível para si.</string>
     <string name="sentence_energy_details_help">Onde obter esta informação?</string>
     <string name="prompt_category">Tensão de distribuição</string>
     <string name="prompt_power">Potência Contratada</string>
@@ -37,7 +37,7 @@
     <string name="option_consumer">Consumidor</string>
     <string name="option_prosumer">Produtor/Consumidor</string>
     <string name="title_equipment">Equipamento</string>
-    <string name="subtitle_equipment">A informação aqui recolhida é apenas visivel para si</string>
+    <string name="subtitle_equipment">A informação aqui recolhida é apenas visível para si.</string>
     <string name="prompt_battery_capacity">Capacidade da Bateria</string>
     <string name="prompt_solar_panels">Paineis solares</string>
     <string name="prompt_smart_meters">Medidores inteligentes</string>
@@ -55,6 +55,7 @@
         Poderá fazê-lo através dos seguintes contactos:</string>
     <string name="cycle_contact1">Lojas da EEM, abertas das 8h30 às 12h30 e das 13h30 às 16h00</string>
     <string name="cycle_contact2"><b>Linha da EEM: </b>800 221 187 (chamada gratuita)</string>
+    <string name="eem_phone_number">800 221 187</string>
     <string name="cycle_contact3"><b>Fax: </b>291 233 324</string>
     <string name="cycle_contact4"><b>Email: </b><u>clientes@eem.pt</u></string>
     <string name="eem_form_link">https://www.eem.pt/pt/processos/?processid=109&amp;back=1</string>
@@ -63,7 +64,8 @@
     <string name="eem_email_subject">Pedido de informação sobre a minha tarifa</string>
     <string name="eem_email_body">Venho por este meio pedir informação sobre qual o ciclo correspondente ao meu contrato de eletricidade. \nO meu nº de conta é: (*INSIRA O SEU NUMERO DE CONTA QUE CONSTA NA SUA FATURA*)\n\n Melhores cumprimentos</string>
     <string name="cycle_contact5"><b>Endereço: </b>EEM - Empresa de Eletricidade da Madeira, S.A. Av. do Mar e das Comunidades Madeirenses, 32 9064-501 Funchal </string>
-    <string name="cycle_contact6"><u>Formulário eletrónico</u>, a resposta a este formulário é comunicada através do email indicado no mesmo</string>
+    <string name="cycle_contact6"><u>Formulário eletrónico</u>, a resposta a este formulário é comunicada através do email indicado no mesmo.</string>
+    <string name="form"><u>Formulário eletrónico</u></string>
 
     <!-- usertype -->
     <string name="consumer">"CONSUMER"</string>
@@ -71,15 +73,15 @@
 
     <!-- Dialog Share data permissions -->
     <string name="share_data_tilte">A aplicação precisa da sua permissão para partilhar alguns dados com a comunidade</string>
-    <string name="share_data_description">Se pretende comparar a sua utilização de energias renováveis com os seus vizinhos precisamos da sua permissão para partilhar os dados de consumo de energias renováveis.</string>
-    <string name="share_data_changes">Pode alterar esta escolha a qualquer momento nas definições em \"Definições da Conta\"</string>
+    <string name="share_data_description">Se pretende comparar a sua utilização de energias renováveis com os a dos seus vizinhos, precisamos da sua permissão para partilhar os dados de consumo de energias renováveis.</string>
+    <string name="share_data_changes">Pode alterar esta escolha a qualquer momento nas definições em \"Definições da Conta\".</string>
     <string name="button_allow">Permitir</string>
     <string name="button_not_allow">Não Permitir</string>
 
     <!-- Dialog Automatic Config -->
-    <string name="automatic_config_tilte">Gestão ds Transações</string>
-    <string name="automatic_config_description">É possível configurar os pârametros para gerir as suas transações (compra e venda de energia). Pode ainda deixar que o sistema faça isso por si selecionando as definições automáticas</string>
-    <string name="automatic_config_changes">Pode alterar esta escolha a qualquer momento nas definições em \"Perfil de Energia\"</string>
+    <string name="automatic_config_tilte">Gestão das Transações</string>
+    <string name="automatic_config_description">É possível configurar os pârametros para gerir as suas transações (compra e venda de energia). Pode ainda deixar que o sistema faça isso por si selecionando as definições automáticas.</string>
+    <string name="automatic_config_changes">Pode alterar esta escolha a qualquer momento nas definições em \"Perfil de Energia\".</string>
     <string name="button_manual">Manual</string>
     <string name="button_automatic">Automático</string>
 
@@ -152,6 +154,7 @@
     <!-- Recover Password -->
     <string name="title_recover_password">Introduza o seu email e a nova password</string>
     <string name="button_recover">Recuperar Password</string>
+    <string name="button_change_password">Alterar Password</string>
 
     <!--utils-->
     <string name="profile_picture">ProfilePicture</string>
@@ -175,15 +178,15 @@
     <string name="price_plus">Valor que eu pago por kWh</string>
     <string name="battery_title">Bateria</string>
     <string name="battery_description">Selecione a quantidade de energia que pretende armazenar para auto-consumo</string>
-    <string name="timers_sell_title">Configuração dos periodos de venda</string>
-    <string name="timers_sell_description">Selecione o(s) intervalo(s) de tempo para vender enrergia</string>
+    <string name="timers_sell_title">Configuração dos períodos de venda</string>
+    <string name="timers_sell_description">Selecione o(s) intervalo(s) de tempo para vender energia</string>
     <string name="consumers_title">Consumidores</string>
     <string name="consumers_description">Selecione os vizinhos a quem quer vender energia</string>
     <string name="separator"> / </string>
     <string name="battery_capacity">3.0</string>
 
     <!-- Transactions: Buy -->
-    <string name="buy_enegery">Vender energia aos meus vizinhos</string>
+    <string name="buy_enegery">Comprar energia aos meus vizinhos</string>
     <string name="price_lower_EEM">Mais barato do que pago à EEM</string>
     <string name="price_EEM_plus">Valor que pago à EEM</string>
     <string name="price_EEM_plus_explanation">Selecione esta opção se está disposto a pagar mais do que o valor que paga à EEM</string>
@@ -228,6 +231,7 @@
     <string name="price_info_subtitle_vazio">Horas de vazio</string>
     <string name="price_info_description">Preço estipulado por kWh pela Empresa de Electrecidade da Madeira (EEM)</string>
     <string name="price_info_link">Para mais informações sobre as tarifas da EEM:</string>
+    <string name="tariff_link"><u>https://www.eem.pt/media/324637/monofolha_tarif_btn_ts_2018.pdf</u></string>
 
     <!-- Ranking -->
     <string name="ranking_title_top">Top 20: veja quem consumiu mais energia solar!</string>

@@ -2,10 +2,12 @@ package com.thesis.smile.presentation.info_price;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityInfoPriceBinding;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 
 public class InfoPriceActivity extends BaseActivity<ActivityInfoPriceBinding, InfoPriceViewModel> {
 
@@ -37,5 +39,14 @@ public class InfoPriceActivity extends BaseActivity<ActivityInfoPriceBinding, In
                 .subscribe(event -> {
                     finish();
                 });
+
+        getViewModel().observeLink()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::openLink);
+    }
+
+    private void openLink(Event event) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.tariff_link)));
+        startActivity(browserIntent);
     }
 }

@@ -27,7 +27,7 @@ public class TimersViewModel extends BaseToolbarViewModel {
     private String previousFrom;
     private String previousTo;
     private List<Integer> previousSelectedDays = new ArrayList<>();
-    private boolean activated = false;
+    private boolean activated = true;
     private List<Integer> selectedDays = new ArrayList<>();
     private List<String> selectedDaysStrings = new ArrayList<>();
 

@@ -9,6 +9,7 @@ import com.thesis.smile.domain.managers.TransactionsSettingsManager;
 import com.thesis.smile.domain.models.InfoPrice;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -24,6 +25,7 @@ public class InfoPriceViewModel extends BaseViewModel {
 
     private List<Integer> selectedDays = new ArrayList<>();
     private PublishRelay<NavigationEvent> closeObservable = PublishRelay.create();
+    private PublishRelay<Event> linkObservable = PublishRelay.create();
     private InfoPrice infoPrice;
     
     private TransactionsSettingsManager transactionsSettingsManager;
@@ -113,17 +115,20 @@ public class InfoPriceViewModel extends BaseViewModel {
         return false;
     }
 
-    @Bindable
-    public String getLink() {
-        return "https://www.eem.pt/media/324637/monofolha_tarif_btn_ts_2018.pdf"; 
-    }
 
     public void onCloseClick(){
         closeObservable.accept(new NavigationEvent());
     }
 
+    public void onLinkClick(){
+        linkObservable.accept(new NavigationEvent());
+    }
     Observable<NavigationEvent> observeClose(){
         return closeObservable;
+    }
+
+    Observable<Event> observeLink(){
+        return linkObservable;
     }
 
     public void getInfoPriceFromServer() {
