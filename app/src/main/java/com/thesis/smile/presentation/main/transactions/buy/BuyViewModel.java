@@ -70,12 +70,14 @@ public class BuyViewModel extends BaseViewModel {
 
     public void setBuy(boolean buy) {
         if(buySettings!=null) {
-            if (buy && !buySettings.isOn()){
+            this.buySettings.setOn(buy);
+            if (buy && buySettings.isOn() && !previousSettings.isOn()){
                 alertDialog.accept(new OpenDialogEvent());
             }
-            this.buySettings.setOn(buy);
             notifyPropertyChanged(BR.buy);
-            notifyPropertyChanged(BR.saveVisible);
+            if (!buy) {
+                notifyPropertyChanged(BR.saveVisible);
+            }
         }
     }
 
@@ -96,7 +98,8 @@ public class BuyViewModel extends BaseViewModel {
     }
 
     public void setPlusPriceValue(String plusPriceValue) {
-        if(buySettings!=null && buySettings.getEemPlusPriceValue()>0 && buySettings.isEemPlusPrice() && !plusPriceValue.isEmpty()) {
+
+            if(buySettings!=null && buySettings.isEemPlusPrice() && !plusPriceValue.isEmpty()) {
             try{
                 double value = Double.parseDouble(plusPriceValue.replace(',', '.'));
                 buySettings.setEemPlusPriceValue(value);
@@ -182,6 +185,10 @@ public class BuyViewModel extends BaseViewModel {
             notifyPropertyChanged(BR.saveVisible);
             notifyPropertyChanged(BR.plusPriceEditable);
         }
+    }
+
+    public Map<String, Neighbour> getNeighboursToUpdate() {
+        return neighboursToUpdate;
     }
 
     public void onPriceInfoClick(){
@@ -318,7 +325,7 @@ public class BuyViewModel extends BaseViewModel {
                 .compose(schedulersTransformSingleIo())
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::onBuySettingsReceived, this::onError);
-        }
+    }
 
     private void onBuySettingsReceived(BuySettings buySettings) {
         this.buySettings = buySettings;

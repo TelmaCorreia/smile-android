@@ -33,7 +33,7 @@
     <string name="no_cycle_alert">Por favor, selecione o ciclo</string>
 
     <!-- Register equipment -->
-    <string name="title_user_topoloy">Que tipo de utilizador é você?</string>
+    <string name="title_user_topoloy">Que tipo de utilizador é você?</string>5
     <string name="option_consumer">Consumidor</string>
     <string name="option_prosumer">Produtor/Consumidor</string>
     <string name="title_equipment">Equipamento</string>
@@ -67,6 +67,17 @@
     <string name="cycle_contact6"><u>Formulário eletrónico</u>, a resposta a este formulário é comunicada através do email indicado no mesmo.</string>
     <string name="form"><u>Formulário eletrónico</u></string>
 
+
+    <!-- Automatic Settings Info -->
+    <string name="automatic_settings_info_title">Configurações automáticas da compra e venda de energia:</string>
+    <string name="automatic_settings_par_intro">Ao selecionar as definições automáticas para configuração de compra e/ou venda de energia, o sistema vai configurar as suas definições. Especificando: </string>
+    <string name="automatic_settings_par_buy">O sistema vai comprar energia aos seus vizinhos a qualquer momento sempre que o preço por kwH for mais barato do que o que paga atualmente à empresa de eletricidade. </string>
+    <string name="automatic_settings_par_sell">O sistema vai vender a energia que produz e não está a consumir no momento (e a que está guardada na bateria) a um preço 10% superior ao valor que paga atualmente à empresa de eletricidade</string>
+
+    <string name="automatic_settings_subtitle_buy">Configurações automáticas para compra</string>
+    <string name="automatic_settings_subtitle_sell">Configurações automáticas para venda</string>
+
+
     <!-- usertype -->
     <string name="consumer">"CONSUMER"</string>
     <string name="prosumer">"PROSUMER"</string>
@@ -80,7 +91,8 @@
 
     <!-- Dialog Automatic Config -->
     <string name="automatic_config_tilte">Gestão das Transações</string>
-    <string name="automatic_config_description">É possível configurar os pârametros para gerir as suas transações (compra e venda de energia). Pode ainda deixar que o sistema faça isso por si selecionando as definições automáticas.</string>
+    <string name="automatic_config_description">É possível configurar os pârametros para gerir as suas transações (compra e venda de energia). Pode ainda deixar que o sistema faça isso por si selecionando as <u>definições automáticas</u>.</string>
+    <string name="automatic_settings">definições automáticas</string>
     <string name="automatic_config_changes">Pode alterar esta escolha a qualquer momento nas definições em \"Perfil de Energia\".</string>
     <string name="button_manual">Manual</string>
     <string name="button_automatic">Automático</string>
@@ -138,6 +150,7 @@
     <string name="energy_contract_details">Detalhes do contrato de energia elétrica</string>
     <string name="equipment">Equipamento</string>
     <string name="buy_and_sell_config">Configurações de compra e venda</string>
+    <string name="user_type">Tipo de utilizador</string>
 
 
     <!-- Units -->

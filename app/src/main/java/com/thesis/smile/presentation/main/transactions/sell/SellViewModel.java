@@ -49,6 +49,7 @@ public class SellViewModel extends BaseViewModel {
     private PublishRelay<Event> radioChanged = PublishRelay.create();
     private PublishRelay<Event> sliderChanged = PublishRelay.create();
 
+
     @Inject
     public SellViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents,  TransactionsSettingsManager sellSettingsManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
@@ -71,12 +72,16 @@ public class SellViewModel extends BaseViewModel {
 
     public void setSell(boolean sell) {
         if(sellSettings!=null) {
-            if (sell && !sellSettings.isOn()){
+            this.sellSettings.setOn(sell);
+
+            if (sell && sellSettings.isOn() && !previousSettings.isOn()){
                 alertDialog.accept(new OpenDialogEvent());
             }
-            this.sellSettings.setOn(sell);
+
             notifyPropertyChanged(BR.sell);
+            if (!sell) {
             notifyPropertyChanged(BR.saveVisible);
+            }
         }
     }
 

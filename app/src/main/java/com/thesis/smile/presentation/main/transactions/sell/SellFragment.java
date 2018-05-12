@@ -172,7 +172,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
             return false;
         }else{
             for (Neighbour n: getViewModel().getNeighbours()){
-                if(!n.isBlocked()) return false;
+                if(n.isBlocked()) return false;
             }
         }
         return true;
@@ -194,7 +194,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         dialogAlert.setCloseButtonText(R.string.button_back);
         dialogAlert.setDismissible(true);
         dialogAlert.setOnOkClickListener(() -> {getViewModel().save(); dialogAlert.dismiss();});
-        dialogAlert.setOnCloseClickListener(() ->{dialogAlert.dismiss();});
+        dialogAlert.setOnCloseClickListener(() ->{ getViewModel().setSell(false); dialogAlert.dismiss();});
     }
 
     private void updateSlider(Event event) {

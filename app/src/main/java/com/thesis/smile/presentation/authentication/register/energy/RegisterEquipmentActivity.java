@@ -3,14 +3,15 @@ package com.thesis.smile.presentation.authentication.register.energy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.databinding.ActivityRegisterEquipmentBinding;
-import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoActivity;
-import com.thesis.smile.presentation.authentication.register.energy.info.GeneralInfoActivity;
+import com.thesis.smile.presentation.authentication.register.energy.info.AutomaticSettingsInfoActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
 import com.thesis.smile.presentation.main.MainActivity;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
@@ -65,7 +66,6 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
         binding.spSmartMeter.setAdapter(
                 new NothingSelectedSpinnerAdapter(
                         adapterSmartMeters, R.layout.layout_spinner_item_nothing_selected_smart_meters,this));
-
     }
 
     @Override
@@ -131,11 +131,18 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
         if(dialogAutomaticConfig == null){
             dialogAutomaticConfig = new CustomDialog(RegisterEquipmentActivity.this);
             dialogAutomaticConfig.setTitle(R.string.automatic_config_tilte);
-            dialogAutomaticConfig.setMessage(R.string.automatic_config_description);
+
+           /* String automatic_config = getString(R.string.automatic_config_description);
+            SpannableString ss=  new SpannableString(automatic_config);
+            ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), automatic_config.indexOf(getString(R.string.automatic_config)), automatic_config.indexOf(getString(R.string.automatic_config))+getString(R.string.automatic_config).length(), 0);
+            */
+            dialogAutomaticConfig.setMessage(getString(R.string.automatic_config_description));
             dialogAutomaticConfig.setSecondMessage(R.string.automatic_config_changes);
+            dialogAutomaticConfig.setSpanMessage(R.string.automatic_config_description, R.string.automatic_settings, R.color.colorUnderline);
             dialogAutomaticConfig.setOkButtonText(R.string.button_manual);
             dialogAutomaticConfig.setCloseButtonText(R.string.button_automatic);
             dialogAutomaticConfig.setDismissible(true);
+            dialogAutomaticConfig.setOnLinkClickListener(() -> { AutomaticSettingsInfoActivity.launch(this);});
             dialogAutomaticConfig.setOnOkClickListener(() -> {getViewModel().setManual(true); getViewModel().setUserType(getUserType());  getViewModel().setRequest(request); dialogAutomaticConfig.dismiss();});
             dialogAutomaticConfig.setOnCloseClickListener(() ->{getViewModel().setManual(false); getViewModel().setRequest(request); dialogAutomaticConfig.dismiss();});
         }

@@ -136,7 +136,7 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
             return false;
         }else{
             for (Neighbour n: getViewModel().getNeighbours()){
-                if(!n.isBlocked()) return false;
+                if(n.isBlocked()) return false;
             }
         }
         return true;
@@ -158,7 +158,7 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         dialogAlert.setCloseButtonText(R.string.button_back);
         dialogAlert.setDismissible(true);
         dialogAlert.setOnOkClickListener(() -> {getViewModel().save(); dialogAlert.dismiss();});
-        dialogAlert.setOnCloseClickListener(() ->{dialogAlert.dismiss();});
+        dialogAlert.setOnCloseClickListener(() ->{getViewModel().setBuy(false);dialogAlert.dismiss();});
     }
 
     private void updateRadio(Event event) {

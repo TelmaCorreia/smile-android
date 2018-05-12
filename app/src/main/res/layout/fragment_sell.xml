@@ -401,7 +401,7 @@
                 android:padding="2dp"
                 android:layout_margin="16dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:onClick="@{v -> viewModel.onSaveClick()}"
                 android:elevation="16dp"
                 android:text="@string/button_save"/>

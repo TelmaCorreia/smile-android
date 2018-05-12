@@ -3,16 +3,25 @@ package com.thesis.smile.presentation.utils.views;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 
+import com.thesis.smile.R;
 import com.thesis.smile.databinding.DialogCustomBinding;
 
 
 public class CustomDialog extends Dialog {
+
+    public interface OnLinkClickListener {
+        void onLink();
+    }
 
     public interface OnCloseClickListener{
         void onClose();
@@ -21,6 +30,7 @@ public class CustomDialog extends Dialog {
     public interface OnOkClickListener {
         void onOK();
     }
+
 
     private DialogCustomBinding binding;
     private boolean isDismissible;
@@ -61,6 +71,12 @@ public class CustomDialog extends Dialog {
         setSecondMessage(getContext().getString(message));
     }
 
+    public void setSpanMessage(@StringRes int message, @StringRes int span, @ColorRes int color){
+        String automatic_config = getContext().getString(message);
+        SpannableString ss=  new SpannableString(automatic_config);
+        ss.setSpan(new ForegroundColorSpan(getContext().getResources().getColor(color)), automatic_config.indexOf(getContext().getString(span)), automatic_config.indexOf(getContext().getString(span))+getContext().getString(span).length(), 0);
+        binding.message.setText(message);
+    }
     public void setMessage(String message){
         binding.message.setText(message);
     }
@@ -90,20 +106,12 @@ public class CustomDialog extends Dialog {
         binding.okButton.setOnClickListener(view -> listener.onOK());
     }
 
+    public void setOnLinkClickListener(OnLinkClickListener listener){
+        binding.message.setOnClickListener(view -> listener.onLink());
+    }
+
     public void setOnCloseClickListener(OnCloseClickListener listener){
         binding.close.setOnClickListener(view -> listener.onClose());
-
-       /* closeListener = listener;
-        binding.root.setOnClickListener(view -> {
-            if(isDismissible) {
-                listener.onClose();
-            }
-        });
-        binding.close.setOnClickListener(view -> {
-            if(isDismissible) {
-                listener.onClose();
-            }
-        });*/
     }
 
     public void setDismissible(boolean isDismissible){

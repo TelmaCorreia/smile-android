@@ -24,7 +24,7 @@ public class BuySettingsRemote {
     private double eemPriceValue;
 
     @Expose
-    @SerializedName("eem_plus_price_value")
+    @SerializedName("emm_plus_price_value")
     private double eemPlusPriceValue;
 
     @Expose

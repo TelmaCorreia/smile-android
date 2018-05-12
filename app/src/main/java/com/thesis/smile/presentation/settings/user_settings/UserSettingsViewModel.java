@@ -36,6 +36,9 @@ public class UserSettingsViewModel extends BaseViewModel {
     private User previousUser;
     private PublishRelay<NavigationEvent> changePasswordObservable = PublishRelay.create();
     private PublishRelay<Event> editProfilePictureObservable = PublishRelay.create();
+    private PublishRelay<Event> radioChanged = PublishRelay.create();
+    private PublishRelay<Event> changeRadio = PublishRelay.create();
+
 
     @Inject
     public UserSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager) {
@@ -120,6 +123,18 @@ public class UserSettingsViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.saveEnabled);
     }
 
+    public String getUserType(){
+        if (user!=null){
+            return user.getType();
+        }
+        return "";
+    }
+    public void setUserType(String userType) {
+        if (user != null){
+            user.setType(userType);
+            notifyPropertiesChanged(BR.saveEnabled);
+        }    }
+
     @Bindable
     public boolean isVisible() {
         if (user != null){
@@ -142,6 +157,7 @@ public class UserSettingsViewModel extends BaseViewModel {
             return !(user.getFirstName().equals(previousUser.getFirstName())
                     && user.getLastName().equals(previousUser.getLastName())
                     && user.getEmail().equals(previousUser.getEmail())
+                    && user.getType().equals(previousUser.getType())
                     && user.isVisible()==previousUser.isVisible());
         }
         return false;
@@ -155,6 +171,14 @@ public class UserSettingsViewModel extends BaseViewModel {
 
         changePasswordObservable.accept(new NavigationEvent());
 
+    }
+
+    public void onConsumerClick(){
+        radioChanged.accept(new Event());
+    }
+
+    public void onProsumerClick(){
+        radioChanged.accept(new Event());
     }
     public void onSaveClick() {
 
@@ -176,7 +200,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     private void onUpdateComplete(User user) {
         userManager.saveUser(user);
         getUiEvents().showToast(getResourceProvider().getString(R.string.msg_update_sucess));
-        this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.isVisible());
+        this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getType(), user.isVisible());
         this.user = user;
         notifyPropertyChanged(BR.saveEnabled);
     }
@@ -189,10 +213,18 @@ public class UserSettingsViewModel extends BaseViewModel {
         return changePasswordObservable;
     }
 
-
     Observable<Event> observeEditProfilePicture(){
         return editProfilePictureObservable;
     }
+
+    Observable<Event> observeRadio(){
+        return radioChanged;
+    }
+
+    Observable<Event> observeChangeRadio(){
+        return changeRadio;
+    }
+
 
     public void setProfilePicture(File profilePictureFile) {
         //TODO
@@ -216,7 +248,10 @@ public class UserSettingsViewModel extends BaseViewModel {
 
     public void getUserFromSP() {
         this.user = userManager.getCurrentUser();
-        this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.isVisible());
+        changeRadio.accept(new Event());
+        this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getType(),  user.isVisible());
         notifyChange();
     }
+
+
 }

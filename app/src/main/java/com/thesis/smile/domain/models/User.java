@@ -26,10 +26,11 @@ public class User {
 
     public User(){}
 
-    public User(String firstName, String lastName, String email, boolean visible) {
+    public User(String firstName, String lastName, String email, String type, boolean visible) {
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;
+        this.type = type;
         this.visible=visible;
     }
 

@@ -88,6 +88,40 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <TextView
+                style="@style/Text7"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_type"
+                android:layout_gravity="left" />
+
+                <RadioGroup
+                    android:id="@+id/user_topology"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        style="@style/Text3"
+                        android:id="@+id/rbConsumer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorBlack"
+                        android:onClick="@{v -> viewModel.onConsumerClick()}"
+                        android:text="@string/option_consumer"/>
+
+                    <RadioButton
+                        style="@style/Text3"
+                        android:id="@+id/rbProsumer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorBlack"
+                        android:onClick="@{v -> viewModel.onProsumerClick()}"
+                        android:text="@string/option_prosumer"/>
+
+                </RadioGroup>
+
                 <android.support.constraint.ConstraintLayout
                     android:layout_marginTop="40dp"
                     android:layout_width="match_parent"
