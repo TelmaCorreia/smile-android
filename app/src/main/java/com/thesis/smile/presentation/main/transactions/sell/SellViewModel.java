@@ -95,7 +95,7 @@ public class SellViewModel extends BaseViewModel {
 
     @Bindable
     public String getPlusPriceValue() {
-        if(sellSettings!=null && sellSettings.getPlusPriceValue()>0 && sellSettings.isPlusPrice()){
+        if(sellSettings!=null){
             return String.format("%.2f", sellSettings.getPlusPriceValue());
         }
         return null;
@@ -123,7 +123,7 @@ public class SellViewModel extends BaseViewModel {
 
     @Bindable
     public String getSpecificPriceValue() {
-        if(sellSettings!=null && sellSettings.getSpecificPriceValue()>0 && sellSettings.isSpecificPrice()){
+        if(sellSettings!=null && sellSettings.isSpecificPrice()){
             return String.format("%.2f", sellSettings.getSpecificPriceValue());
         }
         return null;

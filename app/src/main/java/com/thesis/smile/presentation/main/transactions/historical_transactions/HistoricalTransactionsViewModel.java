@@ -95,11 +95,19 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
 
     @Bindable
-    public int getSetPeriodVisible() {
+    public int getPeriodVisible() {
         if (timePeriod != null && timePeriod.equals(getResourceProvider().getString(R.string.transactions_specific_period))){
             return View.VISIBLE;
         }
         return View.GONE;
+    }
+
+    @Bindable
+    public int getEmptyViewVisible() {
+        if (transactions.size()==0 ){
+            return View.VISIBLE;
+        }
+        return View.INVISIBLE;
     }
 
     public void onInitialDateClick() {
@@ -118,7 +126,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     public void setType(String type){
         this.type = type;
         getTransactions(type);
-        notifyPropertyChanged(BR.setPeriodVisible);
+        notifyPropertyChanged(BR.periodVisible);
     }
 
     public ObservableList<Transaction> getTransactions() {
@@ -127,7 +135,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
     public void setTimePeriod(String timePeriod) {
         this.timePeriod = timePeriod;
-        notifyPropertyChanged(BR.setPeriodVisible);
+        notifyPropertyChanged(BR.periodVisible);
         initDates();
         getTransactions(getType());
     }
@@ -187,6 +195,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     private void onTransactionReceived(List<Transaction> transactions) {
         this.transactions.clear();
         this.transactions.addAll(transactions);
+        notifyPropertyChanged(BR.emptyViewVisible);
 
     }
 

@@ -121,7 +121,7 @@
             <LinearLayout
                 style="@style/Common"
                 android:id="@+id/llSetPeriod"
-                android:visibility="@{viewModel.setPeriodVisible}"
+                android:visibility="@{viewModel.periodVisible}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -215,13 +215,28 @@
                 </LinearLayout>
 
             </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                style="@style/Common"
-                android:id="@+id/historicalTransactions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/llSetPeriod"/>
+                    <android.support.v7.widget.RecyclerView
+                    style="@style/Common"
+                    android:id="@+id/historicalTransactions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/llSetPeriod"/>
+
+                    <TextView
+                        style="@style/Text12"
+                        android:visibility="@{viewModel.emptyViewVisible}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="56dp"
+                        android:textAlignment="center"
+                        android:text="@string/empty_transactions"/>
+
+                </FrameLayout>
+
 
             </LinearLayout>
 
