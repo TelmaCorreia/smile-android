@@ -1,5 +1,6 @@
 package com.thesis.smile.presentation.base;
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -9,12 +10,15 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 
 import com.thesis.smile.BR;
+import com.thesis.smile.presentation.utils.KeyboardUtils;
 import com.thesis.smile.presentation.utils.transitions.FragmentTransitionManager;
 import com.thesis.smile.utils.ResourceProvider;
 
@@ -147,6 +151,27 @@ public abstract class BaseFragment<ViewBinding extends ViewDataBinding, ViewMode
 
     public final BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();
+    }
+
+    public void setupUI(View view, Activity activity) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    KeyboardUtils.hideKeyboard(activity);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView, activity);
+            }
+        }
     }
 
 }

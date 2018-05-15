@@ -61,6 +61,7 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
 
     @Override
     protected void initViews(ActivityRegisterUserBinding binding) {
+        setupUI(binding.parent, this);
         rxPermissions = new RxPermissions(this);
 
         if (BuildConfig.DEBUG){

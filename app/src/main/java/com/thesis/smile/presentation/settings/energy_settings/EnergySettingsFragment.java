@@ -36,7 +36,6 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
 
     @Override
     protected void initViews(FragmentEnergySettingsBinding binding) {
-
         String[] categories = getViewModel().getConfigs().getCategories().values().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterCategories = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, categories);
         adapterCategories.setDropDownViewResource(R.layout.layout_spinner_dropdown);

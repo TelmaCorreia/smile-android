@@ -56,7 +56,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
 
     @Override
     protected void initViews(FragmentSellBinding binding) {
-
+        setupUI(binding.parent, this.getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(), this::onTimeIntervalSelected, this::onRemoveTimeIntervalSelected,  this::onTimeIntervalStateChanged);
         binding.timersSell.setLayoutManager(layoutManager);
@@ -241,6 +241,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
         neighbours.addAll(getViewModel().getNeighbours());
         NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);
+        neighbourHeaders.add(new NeighbourHeader("", "", new ArrayList<>()));
         return neighbourHeaders;
     }
 

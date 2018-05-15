@@ -29,6 +29,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     protected void initViews(ActivityLoginBinding binding) {
+        setupUI(binding.parent, this);
 
     }
     @Override
@@ -51,13 +52,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         getViewModel().observeStartLogin()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> {
-                    hideKeyboard();
+                    KeyboardUtils.hideKeyboard(this);
                     MainActivity.launch(this);
                 });
-    }
-
-    private void hideKeyboard(){
-        KeyboardUtils.hideKeyboard(this);
     }
 
 }

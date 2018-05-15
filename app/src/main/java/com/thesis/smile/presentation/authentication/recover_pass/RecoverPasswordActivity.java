@@ -26,6 +26,6 @@ public class RecoverPasswordActivity extends BaseActivity<ActivityRecoverPasswor
 
     @Override
     protected void initViews(ActivityRecoverPasswordBinding binding) {
-
+        setupUI(binding.parent, this);
     }
 }

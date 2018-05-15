@@ -74,6 +74,6 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding, Rankin
         rankingHeaders.add(rankingHeader);
         RankingHeader rankingHeader1 = new RankingHeader(getResources().getString(R.string.ranking_previous_week_title), rankings);
         rankingHeaders.add(rankingHeader1);
-
+        rankingHeaders.add(new RankingHeader("", new ArrayList<>()));
         return rankingHeaders;    }
 }

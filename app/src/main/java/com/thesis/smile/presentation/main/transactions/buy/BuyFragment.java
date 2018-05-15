@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.RadioGroup;
 
 import com.thesis.smile.R;
@@ -21,6 +24,9 @@ import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.presentation.utils.views.CustomDialog;
 import com.thesis.smile.presentation.utils.views.CustomItemDecoration;
+import com.thoughtbot.expandablerecyclerview.listeners.GroupExpandCollapseListener;
+import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener;
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +58,7 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
 
     @Override
     protected void initViews(FragmentBuyBinding binding) {
-
+        setupUI(binding.parent, this.getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         timeIntervalAdapter = new TimeIntervalAdapter(getViewModel().getTimeIntervals(),this::onTimeIntervalSelected,this::onRemoveTimeIntervalSelected, this::onTimeIntervalStateChanged);
         binding.timersBuy.setLayoutManager(layoutManager);
@@ -178,7 +184,11 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         getBinding().suppliers.setLayoutManager(layoutManagerSup);
         getBinding().suppliers.setAdapter(neighbourAdapter);
         getBinding().suppliers.addItemDecoration(dividerItemDecoration_);
+
     }
+
+
+
 
     private void onSwitchListener(Neighbour neighbour) {
         if (neighbour.isSelectAll()){
@@ -196,6 +206,7 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         neighbours.addAll(getViewModel().getNeighbours());
         NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);
+        neighbourHeaders.add(new NeighbourHeader("", "", new ArrayList<>()));
         return neighbourHeaders;
     }
 

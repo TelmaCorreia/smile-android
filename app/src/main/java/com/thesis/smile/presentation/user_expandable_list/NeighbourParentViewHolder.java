@@ -27,15 +27,6 @@ public class NeighbourParentViewHolder extends GroupViewHolder {
 
     }
 
-    public void setTitle(ExpandableGroup group) {
-        this.title.setText(group.getTitle());
-        if (title.equals(group.getTitle())){
-            this.subtitle.setText(((NeighbourHeader) group).getSubtitle()); //FIXME
-        }else{
-            this.subtitle.setText(((NeighbourHeader) group).getSubtitle()); //FIXME
-        }
-    }
-
     @Override
     public void expand() {
         animateExpand();
@@ -52,6 +43,7 @@ public class NeighbourParentViewHolder extends GroupViewHolder {
         rotate.setDuration(300);
         rotate.setFillAfter(true);
         arrow.setAnimation(rotate);
+
     }
 
     private void animateCollapse() {
@@ -62,4 +54,13 @@ public class NeighbourParentViewHolder extends GroupViewHolder {
         arrow.setAnimation(rotate);
     }
 
+    public void onBind(ExpandableGroup group) {
+        this.title.setText(group.getTitle());
+        this.subtitle.setText(((NeighbourHeader) group).getSubtitle());
+        if (group.getTitle().isEmpty()){
+            arrow.setVisibility(View.INVISIBLE);
+            title.setVisibility(View.GONE);
+        }
+
+    }
 }

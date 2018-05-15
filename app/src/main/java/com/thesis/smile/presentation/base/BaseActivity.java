@@ -1,12 +1,18 @@
 package com.thesis.smile.presentation.base;
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.thesis.smile.BR;
+import com.thesis.smile.presentation.utils.KeyboardUtils;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.UiMessages;
 import com.thesis.smile.presentation.utils.transitions.ActivityTransition;
@@ -155,5 +161,26 @@ public abstract class BaseActivity<ViewBinding extends ViewDataBinding, ViewMode
 
     public FragmentTransitionManager getFragmentTransitionManager() {
         return fragmentTransitionManager;
+    }
+
+    public void setupUI(View view, Activity activity) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    KeyboardUtils.hideKeyboard(activity);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView, activity);
+            }
+        }
     }
 }

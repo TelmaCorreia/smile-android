@@ -28,6 +28,7 @@ public class ChangePasswordActivity extends BaseToolbarActivity<ActivityChangePa
 
     @Override
     protected void initViews(ActivityChangePasswordBinding binding) {
+        setupUI(binding.parent, this);
         initToolbar(binding.actionBar.toolbar, true,  getResources().getString(R.string.recover_pass_title));
     }
 }

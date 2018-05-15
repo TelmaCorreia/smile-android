@@ -30,6 +30,8 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
 
     @Override
     protected void initViews(FragmentUserSettingsBinding binding) {
+        setupUI(binding.parent, this.getActivity());
+
         initRadioButton();
     }
 

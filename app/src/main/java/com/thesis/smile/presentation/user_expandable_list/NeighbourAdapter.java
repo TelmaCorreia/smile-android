@@ -10,6 +10,7 @@ import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.NeighbourHeader;
 import com.thesis.smile.domain.models.TimeInterval;
 import com.thoughtbot.expandablerecyclerview.MultiTypeExpandableRecyclerViewAdapter;
+import com.thoughtbot.expandablerecyclerview.listeners.OnGroupClickListener;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 
@@ -17,9 +18,11 @@ import java.util.List;
 
 public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<NeighbourParentViewHolder,ChildViewHolder> {
 
+
     public interface OnSwitchClickListener {
         void onSwichClick(Neighbour neighbour);
     }
+
 
     private LayoutInflater inflater;
     public static final int SELECT_ALL_VIEW_TYPE = 3;
@@ -27,6 +30,7 @@ public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<Nei
     /** Use values > 2. That's because ExpandableListPosition.CHILD and ExpandableListPositon.GROUP are 1 and 2 respectively so they are already taken.**/
 
     private OnSwitchClickListener onSwichClickListener;
+
 
     public NeighbourAdapter(Context context, List<? extends ExpandableGroup> groups, OnSwitchClickListener onSwichClickListener) {
         super(groups);
@@ -36,8 +40,8 @@ public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<Nei
 
     @Override
     public NeighbourParentViewHolder onCreateGroupViewHolder(ViewGroup viewGroup, int viewType) {
-        View selectAll = inflater.inflate(R.layout.list_item_group, viewGroup, false);
-        return new NeighbourParentViewHolder(selectAll);
+        View view = inflater.inflate(R.layout.list_item_group, viewGroup, false);
+        return new NeighbourParentViewHolder(view);
     }
 
     @Override
@@ -72,7 +76,7 @@ public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<Nei
 
     @Override
     public void onBindGroupViewHolder(NeighbourParentViewHolder holder, int flatPosition, ExpandableGroup group) {
-        holder.setTitle(group);
+        holder.onBind(group);
     }
 
     @Override

@@ -22,11 +22,6 @@ public class RankingParentViewHolder extends GroupViewHolder {
         title = (TextView) itemView.findViewById(R.id.header);
         arrow = (ImageView) itemView.findViewById(R.id.bt_expand);
     }
-
-    public void setTitle(ExpandableGroup group) {
-        this.title.setText(group.getTitle());
-    }
-
     @Override
     public void expand() {
         animateExpand();
@@ -51,5 +46,12 @@ public class RankingParentViewHolder extends GroupViewHolder {
         rotate.setDuration(300);
         rotate.setFillAfter(true);
         arrow.setAnimation(rotate);
+    }
+
+    public void onBind(ExpandableGroup group) {
+        this.title.setText(group.getTitle());
+        if(group.getTitle().isEmpty()){
+            arrow.setVisibility(View.INVISIBLE);
+        }
     }
 }
