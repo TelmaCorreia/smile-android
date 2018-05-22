@@ -6,4 +6,6 @@ public class Constants {
     public static final int READ_TIMEOUT = 40;
     public static final int WRITE_TIMEOUT = 40;
 
+    public static final String AUTH_PREFIX = "Bearer ";
+
 }

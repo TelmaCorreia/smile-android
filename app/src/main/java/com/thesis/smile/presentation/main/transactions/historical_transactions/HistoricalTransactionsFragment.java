@@ -63,13 +63,13 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
 
         String[] transactionsTypeMenu = {getResources().getString(R.string.transactions_menu_all), getResources().getString(R.string.transactions_menu_buy), getResources().getString(R.string.transactions_menu_sell)};
         ArrayAdapter<CharSequence> adapterTypeMenu = new ArrayAdapter(getContext(),R.layout.layout_spinner_item, transactionsTypeMenu);
-        adapterTimePeriod.setDropDownViewResource(R.layout.layout_spinner_dropdown);
+        adapterTypeMenu.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spType.setAdapter(adapterTypeMenu);
 
         binding.spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
+                if (i >= 0) {
                     getViewModel().setType(transactionsTypeMenu[i]);
                 }
             }
