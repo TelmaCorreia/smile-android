@@ -35,6 +35,13 @@ public class SharedPrefs extends BasePreferences {
         return getStringPreference(Keys.USER_TOKEN);
     }
 
+    public String getUserAuthorizationHeader(){
+        return getStringPreference(Keys.USER_AUTH_HEADER);
+    }
+
+    public void saveUserAuthorizationHeader(String authHeader){
+        saveStringPreference(Keys.USER_AUTH_HEADER, authHeader);
+    }
     public void saveUserToken(String userToken){
         saveStringPreference(Keys.USER_TOKEN, userToken);
     }
@@ -66,11 +73,12 @@ public class SharedPrefs extends BasePreferences {
     }
 
     public void deleteUserData() {
-        deletePreferences(Keys.USER_TOKEN, Keys.USER_DATA);
+        deletePreferences(Keys.USER_TOKEN, Keys.USER_DATA, Keys.USER_AUTH_HEADER);
     }
 
     private class Keys {
         static final String USER_TOKEN = "userToken";
+        static final String USER_AUTH_HEADER = "userAuthHeader";
         static final String USER_DATA = "userData";
         static final String CONFIGS = "configs";
     }

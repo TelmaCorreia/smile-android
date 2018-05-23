@@ -25,7 +25,7 @@ public class HeaderAuthenticationInterceptor implements Interceptor{
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        String userToken = sharedPrefs.getUserToken();
+        String userToken = sharedPrefs.getUserAuthorizationHeader();
 
         Request.Builder builder = request.newBuilder();
         builder.addHeader("x-app-version", String.valueOf(BuildConfig.VERSION_BUILD));

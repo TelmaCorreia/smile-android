@@ -18,6 +18,7 @@ import com.thesis.smile.presentation.user_expandable_list.NeighbourAdapter;
 import com.thesis.smile.presentation.info_price.InfoPriceActivity;
 import com.thesis.smile.presentation.timers.timer_list.TimeIntervalAdapter;
 import com.thesis.smile.presentation.timers.TimersActivity;
+import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
@@ -152,7 +153,7 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
                 description += " - Pode vender TODA a energia que estiver armazenada na sua bateria;\n";
             }else{
                 //FIXME: if battery capacity > 3 this is WRONG
-                description += " - Pode vender " + String.valueOf(3-batterySaved) + "kWH da sua bateria";
+                description += " - Pode vender " + String.format("%.2f",3-batterySaved) + "kWH da sua bateria";
             }
 
             showDialog(description);
