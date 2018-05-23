@@ -1,5 +1,6 @@
 package com.thesis.smile.presentation.main.transactions.historical_transactions;
 
+import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
@@ -85,6 +86,11 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
         HistoricalTransactionAdapter historicalTransactionAdapter = new HistoricalTransactionAdapter(getViewModel().getTransactions(), this::onTransactionSelected);
         binding.historicalTransactions.setLayoutManager(layoutManager);
         binding.historicalTransactions.setAdapter(historicalTransactionAdapter);
+
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(binding.clFilter);
+        constraintSet.constrainPercentWidth(R.id.spPeriod, getViewModel().getUserTypeProsumer()==View.GONE?1.0f:0.5f);
+        constraintSet.applyTo(binding.clFilter);
 
     }
 

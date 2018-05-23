@@ -7,8 +7,14 @@ import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityRecoverPasswordBinding;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
+import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
+import com.thesis.smile.presentation.utils.views.CustomDialog;
+import com.thesis.smile.presentation.utils.views.CustomInputDialog;
 
 public class RecoverPasswordActivity extends BaseActivity<ActivityRecoverPasswordBinding, RecoverPasswordViewModel> {
+
+    private CustomInputDialog pinDialog;
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, RecoverPasswordActivity.class);
@@ -27,5 +33,24 @@ public class RecoverPasswordActivity extends BaseActivity<ActivityRecoverPasswor
     @Override
     protected void initViews(ActivityRecoverPasswordBinding binding) {
         setupUI(binding.parent, this);
+    }
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+        getViewModel().observePinDialog()
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::showDialog);
+    }
+
+    private void showDialog(DialogEvent dialogEvent) {
+        pinDialog = new CustomInputDialog(this);
+        pinDialog.setTitle(R.string.dialog_pin_title);
+        pinDialog.setMessage(R.string.dialog_pin_description);
+        pinDialog.setOkButtonText(R.string.button_ok);
+        pinDialog.setCloseButtonText(R.string.button_cancel);
+        pinDialog.setDismissible(true);
+        pinDialog.setOnOkClickListener(() -> {getViewModel().recoverPasswordStep2(); pinDialog.dismiss();});
+        pinDialog.setOnCloseClickListener(() ->{pinDialog.dismiss();});
     }
 }

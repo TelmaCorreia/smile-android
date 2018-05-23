@@ -51,4 +51,16 @@ public class AccountManager {
         sharedPrefs.saveUserToken(loginRemote.getToken());
         return Completable.fromAction(() -> sharedPrefs.saveUserData(UserMapper.INSTANCE.remoteToDomain(loginRemote.getUserRemote())));
     }
+
+    public Completable recoverPasswordStep1(String email, String password) {
+        return loginService.recoverPasswordStep1(email, password);
+    }
+
+    public Completable recoverPasswordStep2(String email, String pin) {
+        return loginService.recoverPasswordStep2(email, pin);
+    }
+
+    public Completable changePassword(String token, String oldPassword, String newPassword) {
+        return loginService.changePassword(token, oldPassword, newPassword);
+    }
 }

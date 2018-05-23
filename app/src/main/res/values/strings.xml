@@ -89,6 +89,13 @@
     <string name="button_allow">Permitir</string>
     <string name="button_not_allow">Não Permitir</string>
 
+    <!-- Dialog insert pin -->
+    <string name="dialog_pin_title">Insira o PIN:</string>
+    <string name="dialog_pin_description">Por favor insira o PIN que recebeu no endereço de email que usou para se registar. Caso não tenha recebido o email verifique que o mesmo está correto. Em caso de dúvidas contacte: telma.correia@m-iti.org.</string>
+    <string name="prompt_pin">Insira o PIN</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancelar</string>
+
     <!-- Dialog Automatic Config -->
     <string name="automatic_config_tilte">Gestão das Transações</string>
     <string name="automatic_config_description">É possível configurar os pârametros para gerir as suas transações (compra e venda de energia). Pode ainda deixar que o sistema faça isso por si selecionando as <u>definições automáticas</u>.</string>

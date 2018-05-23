@@ -1,6 +1,7 @@
 package com.thesis.smile.presentation.main.transactions.historical_transactions;
 
 import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
 import android.databinding.ObservableList;
 import android.view.View;
 
@@ -8,6 +9,7 @@ import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.TransactionsManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.Totals;
 import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.BaseViewModel;
@@ -32,6 +34,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     private PublishRelay<DialogEvent> openInitalDateCalendarObservable = PublishRelay.create();
     private PublishRelay<DialogEvent> openFinalDateCalendarObservable = PublishRelay.create();
     private TransactionsManager transactionsManager;
+    private UserManager userManager;
     private String type;
     private String timePeriod;
     private String initialDate;
@@ -41,9 +44,10 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     private Totals totals;
 
     @Inject
-    public HistoricalTransactionsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager) {
+    public HistoricalTransactionsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.transactionsManager = transactionsManager;
+        this.userManager = userManager;
         transactions = new ExclusiveObservableList<>();
         initDates();
         getTotals();
@@ -109,6 +113,19 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         }
         return View.INVISIBLE;
     }
+
+    @Bindable
+    public int getUserTypeProsumer(){
+        return userManager.getCurrentUser().getType().equals(getResourceProvider().getString(R.string.consumer))? View.GONE : View.VISIBLE;
+
+    }
+
+   /* @Bindable
+    public float getPercentage(){
+        return getUserTypeProsumer()==View.GONE?1.0f:0.5f;
+    }
+*/
+
 
     public void onInitialDateClick() {
         openInitalDateCalendarObservable.accept(new DialogEvent());
