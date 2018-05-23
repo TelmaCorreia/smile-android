@@ -6,4 +6,13 @@ public class Constants {
     public static final int READ_TIMEOUT = 40;
     public static final int WRITE_TIMEOUT = 40;
 
+    public static final String NEW_ADDRESS_TAG = "NEW9ADDRESS9999999999999999";
+    public static final String PREFERENCE_NODE_PROTOCOL = "preference_node_protocol";
+    public static final String PREFERENCE_NODE_IP = "preference_node_ip";
+    public static final String PREFERENCE_NODE_PORT = "preference_node_port";
+
+    //Preferences defaults
+    public static final String PREFERENCE_NODE_DEFAULT_PROTOCOL = "http";
+    public static final String PREFERENCE_NODE_DEFAULT_IP = "176.58.98.99";
+    public static final String PREFERENCE_NODE_DEFAULT_PORT = "14265";
 }

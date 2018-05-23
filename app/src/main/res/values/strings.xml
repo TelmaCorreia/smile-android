@@ -79,8 +79,8 @@
 
 
     <!-- usertype -->
-    <string name="consumer">"CONSUMER"</string>
-    <string name="prosumer">"PROSUMER"</string>
+    <string name="consumer">CONSUMER</string>
+    <string name="prosumer">PROSUMER</string>
 
     <!-- Dialog Share data permissions -->
     <string name="share_data_tilte">A aplicação precisa da sua permissão para partilhar alguns dados com a comunidade</string>
@@ -176,8 +176,8 @@
     <string name="date_format_transactions">dd/MM/yy HH:mm</string>
 
     <!-- Transactions -->
-    <string name="tab_buy">Configurar venda</string>
-    <string name="tab_sell">Configurar compra</string>
+    <string name="tab_buy">Configurar compra</string>
+    <string name="tab_sell">Configurar venda</string>
     <string name="tab_historical_transactions">Histórico das Transações</string>
     <string name="mandatory_field">Campo obrigatório</string>
     <string name="optional_fields">Campos opcionais</string>

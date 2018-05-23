@@ -41,6 +41,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.getUserTypeProsumer}"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="8dp"
                         android:paddingLeft="16dp"
@@ -65,6 +66,7 @@
                     <TextView
                         style="@style/Text6"
                         android:paddingLeft="16dp"
+                        android:visibility="@{viewModel.getUserTypeProsumer}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/current_production_description" />
@@ -101,6 +103,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.getUserTypeProsumer}"
                         android:layout_marginTop="16dp"
                         android:paddingLeft="16dp"
                         android:orientation="horizontal">
@@ -122,6 +125,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.getUserTypeProsumer}"
                         android:layout_marginBottom="8dp"
                         android:paddingLeft="16dp"
                         android:orientation="horizontal">
@@ -142,6 +146,7 @@
 
                     <TextView
                         style="@style/Text6"
+                        android:visibility="@{viewModel.getUserTypeProsumer}"
                         android:paddingLeft="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -221,6 +226,7 @@
 
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/energy_sold_details"
+                    android:visibility="@{viewModel.getUserTypeProsumer}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

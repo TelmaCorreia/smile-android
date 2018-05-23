@@ -18,17 +18,20 @@ public class TransactionsViewPagerAdapter extends FragmentPagerAdapter {
     private BuyFragment buyFragment;
     private SellFragment sellFragment;
     private HistoricalTransactionsFragment historicalTransactionsFragment;
+    private boolean isProsumer;
 
-    public TransactionsViewPagerAdapter(FragmentManager fm, ResourceProvider resourceProvider) {
+    public TransactionsViewPagerAdapter(FragmentManager fm, ResourceProvider resourceProvider, boolean isProsumer) {
         super(fm);
         this.resourceProvider = resourceProvider;
         this.buyFragment = BuyFragment.newInstance();
         this.sellFragment = SellFragment.newInstance();
         this.historicalTransactionsFragment = HistoricalTransactionsFragment.newInstance();
+        this.isProsumer = isProsumer;
     }
 
     @Override
     public Fragment getItem(int position) {
+        if (!isProsumer) return getItemConsumer(position);
         switch (position){
             case 0:
                 return sellFragment;
@@ -41,22 +44,47 @@ public class TransactionsViewPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+    public Fragment getItemConsumer(int position) {
+        switch (position){
+            case 0:
+                return buyFragment;
+            case 1:
+                return historicalTransactionsFragment;
+            default:
+                throw new IllegalArgumentException("Invalid position.");
+        }
+    }
+
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
+        if (!isProsumer) return getPageTitleConsumer(position);
         switch (position){
             case 0:
-                return resourceProvider.getString(R.string.tab_buy);
-            case 1:
                 return resourceProvider.getString(R.string.tab_sell);
+            case 1:
+                return resourceProvider.getString(R.string.tab_buy);
             case 2:
                 return resourceProvider.getString(R.string.tab_historical_transactions);
             default:
                 throw new IllegalArgumentException("Invalid position.");
         }
     }
+
+    public CharSequence getPageTitleConsumer(int position) {
+        switch (position){
+            case 0:
+                return resourceProvider.getString(R.string.tab_buy);
+            case 1:
+                return resourceProvider.getString(R.string.tab_historical_transactions);
+            default:
+                throw new IllegalArgumentException("Invalid position.");
+        }
+    }
+
     @Override
     public int getCount() {
+        if (!isProsumer) return 2;
         return 3;
     }
 

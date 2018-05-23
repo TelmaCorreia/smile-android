@@ -12,12 +12,13 @@ import dagger.android.support.DaggerApplication;
 import io.fabric.sdk.android.Fabric;
 
 public class SmileApp extends DaggerApplication {
+    public static char[] seed = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-
+        seed=null;
         AndroidThreeTen.init(this);
     }
 

@@ -4,8 +4,11 @@ import android.databinding.Bindable;
 import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.TransactionsManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.CurrentEnergy;
+import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
@@ -23,12 +26,14 @@ public class HomeViewModel extends BaseViewModel {
 
     private CurrentEnergy currentEnergy;
     private TransactionsManager transactionsManager;
+    private UserManager userManager;
 
     @Inject
-    public HomeViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager) {
+    public HomeViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
         this.transactionsManager = transactionsManager;
+        this.userManager = userManager;
 
         getCurrentEnergyFromServer();
     }
@@ -114,8 +119,14 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     @Bindable
+    public int getUserTypeProsumer(){
+        return userManager.getCurrentUser().getType().equals(getResourceProvider().getString(R.string.consumer))? View.GONE : View.VISIBLE;
+
+    }
+
+    @Bindable
     public int getEnergySoldInvisible(){
-        if(getEnergySoldVisible()== View.GONE){
+        if(getEnergySoldVisible()== View.GONE && getUserTypeProsumer()!=View.GONE){
             return View.VISIBLE;
         }
         return View.GONE;

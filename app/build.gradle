@@ -154,6 +154,8 @@ dependencies {
 
     //iota
     implementation 'com.github.iotaledger:iota~lib~java:0.9.10'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+
 
 
 }
