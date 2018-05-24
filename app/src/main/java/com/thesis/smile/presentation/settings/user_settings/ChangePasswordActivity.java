@@ -7,6 +7,7 @@ import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityChangePasswordBinding;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
+import com.thesis.smile.presentation.settings.SettingsActivity;
 import com.thesis.smile.presentation.settings.SettingsViewModel;
 
 public class ChangePasswordActivity extends BaseToolbarActivity<ActivityChangePasswordBinding, ChangePasswordViewModel> {
@@ -31,4 +32,15 @@ public class ChangePasswordActivity extends BaseToolbarActivity<ActivityChangePa
         setupUI(binding.parent, this);
         initToolbar(binding.actionBar.toolbar, true,  getResources().getString(R.string.recover_pass_title));
     }
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+        getViewModel().observeBackToSettings()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    SettingsActivity.launch(this);
+                });
+    }
+
 }

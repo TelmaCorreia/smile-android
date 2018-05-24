@@ -60,7 +60,8 @@ public class AccountManager {
         return loginService.recoverPasswordStep2(email, pin);
     }
 
-    public Completable changePassword(String token, String oldPassword, String newPassword) {
+    public Completable changePassword(String oldPassword, String newPassword) {
+        String token = sharedPrefs.getUserToken();
         return loginService.changePassword(token, oldPassword, newPassword);
     }
 }

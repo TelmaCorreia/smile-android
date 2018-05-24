@@ -1,12 +1,12 @@
 package com.thesis.smile.presentation.main.transactions.historical_transactions;
 
 import android.databinding.Bindable;
-import android.databinding.BindingAdapter;
 import android.databinding.ObservableList;
 import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
+import com.thesis.smile.Constants;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.managers.UserManager;
@@ -42,6 +42,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     private LocalDate fromDate;
     private LocalDate toDate;
     private Totals totals;
+    private int page=0;
 
     @Inject
     public HistoricalTransactionsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager, UserManager userManager) {
@@ -190,23 +191,41 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     public void getTransactions(String type) {
         Disposable disposable;
         if (type.equals(getResourceProvider().getString(R.string.transactions_menu_buy))) {
-            disposable = transactionsManager.getBuyTransactionsFiltered(0, 20, fromDate, toDate)
+            disposable = transactionsManager.getBuyTransactionsFiltered(page, 20, fromDate, toDate)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         } else if (type.equals(getResourceProvider().getString(R.string.transactions_menu_sell))){
-            disposable = transactionsManager.getSellTransactionsFiltered(0, 20, fromDate, toDate)
+            disposable = transactionsManager.getSellTransactionsFiltered(page, 20, fromDate, toDate)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         } else{
-            disposable = transactionsManager.getAllTransactionsFiltered(0,20, fromDate, toDate)
+            disposable = transactionsManager.getAllTransactionsFiltered(page,20, fromDate, toDate)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         }
 
         addDisposable(disposable);
 
+    }
 
 
+    public Observable<List<Transaction>> getAllTransactions() {
+        return getTransactionsObservable();
+    }
+    private Observable<List<Transaction>> getTransactionsObservable() {
+        return transactionsManager.getAllTransactions(page, Constants.PAGE_SIZE, fromDate, toDate)
+                .filter(userList -> !isLastPage(userList))
+                .flatMap(this::getNextPageTransactionsObservable);
+    }
+    private Observable<List<Transaction>> getNextPageTransactionsObservable(final List<Transaction> transactions) {
+        Observable<List<Transaction>> transactionsPageObservable = Observable.just(transactions);
+        this.page+=page+Constants.PAGE_SIZE;
+        Observable<List<Transaction>> nextTransactionsPageObservable = getTransactionsObservable();
+        return Observable.merge(nextTransactionsPageObservable, transactionsPageObservable);
+    }
+
+    private boolean isLastPage(List<Transaction> transactions1) {
+        return transactions1.isEmpty();
     }
 
     private void onTransactionReceived(List<Transaction> transactions) {

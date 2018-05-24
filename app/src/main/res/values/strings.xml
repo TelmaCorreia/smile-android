@@ -91,7 +91,7 @@
 
     <!-- Dialog insert pin -->
     <string name="dialog_pin_title">Insira o PIN:</string>
-    <string name="dialog_pin_description">Por favor insira o PIN que recebeu no endereço de email que usou para se registar. Caso não tenha recebido o email verifique que o mesmo está correto. Em caso de dúvidas contacte: telma.correia@m-iti.org.</string>
+    <string name="dialog_pin_description">Por favor insira o PIN que recebeu no endereço de email que usou para se registar. Caso não tenha recebido o email verifique que o mesmo está correto. Em caso de dúvidas contacte: smile.miti2018@gmail.com.</string>
     <string name="prompt_pin">Insira o PIN</string>
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancelar</string>
@@ -149,6 +149,7 @@
     <string name="tab_user_settings">Definições da Conta</string>
     <string name="tab_energy_settings">Perfil da Energia</string>
     <string name="change_password">Mudar password</string>
+    <string name="prompt_old_password">Password anterior</string>
     <string name="toggle_share_data">Partilhar dados com a comunidade</string>
     <string name="toggle_manual_config">Configurar manualmente a compra e/ou a venda de energia</string>
     <string name="button_save">Guardar</string>
@@ -175,6 +176,7 @@
     <string name="title_recover_password">Introduza o seu email e a nova password</string>
     <string name="button_recover">Recuperar Password</string>
     <string name="button_change_password">Alterar Password</string>
+    <string name="recover_password_completed">Password actualizada com sucesso.</string>
 
     <!--utils-->
     <string name="profile_picture">ProfilePicture</string>

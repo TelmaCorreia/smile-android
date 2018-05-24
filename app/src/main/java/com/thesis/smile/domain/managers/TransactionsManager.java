@@ -16,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @Singleton
@@ -30,9 +31,9 @@ public class TransactionsManager {
         this.sharedPrefs = sharedPrefs;
     }
 
-    public Single<CurrentEnergy> getCurrentEnergyData(){
+    public Single<CurrentEnergy> getHomeData(){
         String token = sharedPrefs.getUserToken();
-        return transactionsService.getCurrentEnergyData(token)
+        return transactionsService.getHomeData(token)
                 .map(CurrentEnergyMapper.INSTANCE::remoteToDomain);
     }
 
@@ -60,16 +61,18 @@ public class TransactionsManager {
                 .map(TransactionMapper.INSTANCE::remoteToDomain);
     }
 
-    public Single<List<Transaction>> getAllTransactions(int page, int size){
+    public Observable<List<Transaction>> getAllTransactions(int page, int size, LocalDate initialDate, LocalDate finalDate){
         String token = sharedPrefs.getUserToken();
-        return transactionsService.getAllTransactions(token, page, size)
-                .map(TransactionMapper.INSTANCE::remoteToDomain);
+        return transactionsService.getAllTransactionsFiltered(token, page, size, initialDate, finalDate)
+                .map(TransactionMapper.INSTANCE::remoteToDomain).toObservable();
+
     }
     public Single<List<Transaction>> getAllTransactionsFiltered(int page, int size, LocalDate initialDate, LocalDate finalDate){
         String token = sharedPrefs.getUserToken();
         return transactionsService.getAllTransactionsFiltered(token, page, size, initialDate, finalDate)
                 .map(TransactionMapper.INSTANCE::remoteToDomain);
     }
+
     public Single<List<Transaction>> getSellTransactionsFiltered(int page, int size, LocalDate initialDate, LocalDate finalDate){
         String token = sharedPrefs.getUserToken();
         return transactionsService.getSellTransactionsFiltered(token, page, size, initialDate, finalDate)

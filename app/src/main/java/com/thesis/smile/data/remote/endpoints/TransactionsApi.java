@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 public interface TransactionsApi {
 
     @GET("transactions/current/{token}")
-    Single<Response<CurrentEnergyDataResponse>> getCurrentEnergyData(@Path("token") String token);
+    Single<Response<CurrentEnergyDataResponse>> getHomeData(@Path("token") String token);
 
     @GET("transactions/bought/{token}")
     Single<Response<TransactionsResponse>> getBoughtTransactions(@Path("token") String token, @Query("page") int page, @Query("size") int size);

@@ -20,6 +20,7 @@ public class RecoverPasswordStep1Request {
     public RecoverPasswordStep1Request(){}
 
     public RecoverPasswordStep1Request(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 

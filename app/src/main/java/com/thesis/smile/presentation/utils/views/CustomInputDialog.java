@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.thesis.smile.databinding.DialogCustomBinding;
+import com.thesis.smile.databinding.DialogInputCustomBinding;
 
 
 public class CustomInputDialog extends Dialog {
@@ -27,14 +28,14 @@ public class CustomInputDialog extends Dialog {
     }
 
 
-    private DialogCustomBinding binding;
+    private DialogInputCustomBinding binding;
     private boolean isDismissible;
     private OnCloseClickListener closeListener;
 
     public CustomInputDialog(@NonNull Activity activity){
         super(activity);
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        //binding = DialogInputCustomBinding(inflater, null, true);
+        binding = DialogInputCustomBinding.inflate(inflater, null, true);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class CustomInputDialog extends Dialog {
     }
 
     public String getInput(){
-       return "";// return binding.;
+       return binding.input.getText().toString();// return binding.;
     }
 
     public void setOkButtonText(String okButtonText){

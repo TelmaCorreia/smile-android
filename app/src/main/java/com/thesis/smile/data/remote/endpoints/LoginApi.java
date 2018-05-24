@@ -35,7 +35,7 @@ public interface LoginApi {
     @POST("auth/recoverPasswordFinal")
     Single<Response<BaseResponse>> recoverPassStep2(@Body RecoverPasswordStep2Request recoverPasswordStep1Request);
 
-    @POST("auth/{token}/changePassword")
+    @POST("auth/changePassword/{token}")
     Single<Response<BaseResponse>> changePassword(@Path("token") String token, @Body ChangePasswordRequest changePasswordRequest);
 
 }

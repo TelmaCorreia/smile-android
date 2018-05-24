@@ -1,15 +1,14 @@
 package com.thesis.smile.presentation.authentication.recover_pass;
 
-import android.app.Dialog;
 import android.databinding.Bindable;
 
 import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
-import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -28,6 +27,8 @@ public class RecoverPasswordViewModel extends BaseViewModel {
     private String password = "";
     private String confirmPassword = "";
     private PublishRelay<DialogEvent> pinDialog = PublishRelay.create();
+    private PublishRelay<NavigationEvent> backToLogin = PublishRelay.create();
+
 
 
     @Inject
@@ -83,19 +84,40 @@ public class RecoverPasswordViewModel extends BaseViewModel {
                 .compose(loadingTransformCompletable())
                 .compose(schedulersTransformCompletableIo())
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(this::onRecoverPasswordCompleted, this::onError);
+                .subscribe(this::onRecoverPasswordStep1Completed, this::onError);
         addDisposable(disposable);
 
     }
 
-    private void onRecoverPasswordCompleted() {
-
+    private void onRecoverPasswordStep1Completed() {
+        pinDialog.accept(new DialogEvent());
     }
 
     Observable<DialogEvent> observePinDialog(){
         return pinDialog;
     }
 
-    public void recoverPasswordStep2() {
+    Observable<NavigationEvent> observeBackToLogin(){
+        return backToLogin;
+    }
+
+
+    public void recoverPasswordStep2(String input) {
+        if (!input.isEmpty()){
+            Disposable disposable = accountManager.recoverPasswordStep2(email, input)
+                    .compose(loadingTransformCompletable())
+                    .compose(schedulersTransformCompletableIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onRecoverPasswordStep2Completed, this::onError);
+            addDisposable(disposable);
+        }else{
+            pinDialog.accept(new DialogEvent());
+        }
+
+    }
+
+    private void onRecoverPasswordStep2Completed() {
+        getUiEvents().showToast(getResourceProvider().getString(R.string.recover_password_completed));
+        backToLogin.accept(new NavigationEvent());
     }
 }

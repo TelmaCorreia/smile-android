@@ -8,12 +8,13 @@ import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.CurrentEnergy;
-import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -152,14 +153,18 @@ public class HomeViewModel extends BaseViewModel {
 
     public void getCurrentEnergyFromServer() {
 
-        transactionsManager.getCurrentEnergyData()
+        transactionsManager.getHomeData()
                 .compose(schedulersTransformSingleIo())
-                .subscribe(this::onReceiveCurrentEnergy, this::onError);
+                .repeatWhen(completed -> completed.delay(1, TimeUnit.MINUTES))
+                .subscribe(this::onReceiveHomeData, this::onError);
 
     }
 
-    private void onReceiveCurrentEnergy(CurrentEnergy currentEnergy) {
+    private void onReceiveHomeData(CurrentEnergy currentEnergy) {
         this.currentEnergy = currentEnergy;
         notifyChange();
     }
+
+
+
 }

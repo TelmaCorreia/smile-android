@@ -28,13 +28,12 @@ public class TransactionsService extends ApiService{
         this.api = retrofit.create(TransactionsApi.class);
     }
 
-    public Single<CurrentEnergyDataRemote> getCurrentEnergyData(String token){
-        return api.getCurrentEnergyData(token)
+    public Single<CurrentEnergyDataRemote> getHomeData(String token){
+        return api.getHomeData(token)
                 .compose(networkMapTransform())
                 .onErrorResumeNext(Single::error)
                 .map(BaseResponse::getData);
     }
-
 
     public Single<List<TransactionRemote>> getBoughtTransactions(String token, int page, int size){
         return api.getBoughtTransactions(token, page,size)
