@@ -64,7 +64,7 @@ public class NetworkModule {
     @Provides
     @Singleton
     OkHttpClient provideHttpClient(OkHttpClient.Builder builder) {
-        return UnsafeOkHttpClient.getUnsafeOkHttpClient(builder);
+        return OkHttpClientTrustCertificate.getOkHttpClient(builder);
     }
 
     @Provides
