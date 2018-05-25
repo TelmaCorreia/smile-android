@@ -61,7 +61,7 @@ android {
         prod {
             manifestPlaceholders = [app_name: "Smile"]
 
-            buildConfigField "String", "BASE_API_URL", '"http://tellma.m-iti.org:8080"'
+            buildConfigField "String", "BASE_API_URL", '"https://tellma.m-iti.org:8443"'
             buildConfigField "String", "BASE_API_VERSION", '""'
 
             resValue "string", "facebook_app_id", ""
@@ -70,7 +70,7 @@ android {
             applicationIdSuffix '.qa'
             manifestPlaceholders = [app_name: "Smile qa"]
 
-            buildConfigField "String", "BASE_API_URL", '"http://tellma.m-iti.org:8080"'
+            buildConfigField "String", "BASE_API_URL", '"https://tellma.m-iti.org:8443"'
             buildConfigField "String", "BASE_API_VERSION", '""'
 
             resValue "string", "facebook_app_id", ""
@@ -80,7 +80,7 @@ android {
             applicationIdSuffix '.dev'
             manifestPlaceholders = [app_name: "Smile dev"]
 
-            buildConfigField "String", "BASE_API_URL", '"http://tellma.m-iti.org:8080"'
+            buildConfigField "String", "BASE_API_URL", '"https://tellma.m-iti.org:8443"'
             buildConfigField "String", "BASE_API_VERSION", '""'
 
             resValue "string", "facebook_app_id", ""
