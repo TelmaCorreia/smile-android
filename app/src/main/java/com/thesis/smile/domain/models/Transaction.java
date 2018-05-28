@@ -9,6 +9,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 public class Transaction implements Parcelable{
 
+    private String id;
     private String from;
     private String to;
     private String url;
@@ -21,7 +22,8 @@ public class Transaction implements Parcelable{
 
     public Transaction(){}
 
-    public Transaction(String from, String to, String url, String type, LocalDateTime date, double priceKWH, double quantity, double total) {
+    public Transaction(String id, String from, String to, String url, String type, LocalDateTime date, double priceKWH, double quantity, double total) {
+        this.id = id;
         this.from = from;
         this.to = to;
         this.url = url;
@@ -35,6 +37,7 @@ public class Transaction implements Parcelable{
     }
 
     protected Transaction(Parcel in) {
+        id = in.readString();
         from = in.readString();
         to = in.readString();
         url = in.readString();
@@ -131,6 +134,14 @@ public class Transaction implements Parcelable{
     }
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -138,6 +149,7 @@ public class Transaction implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
         parcel.writeString(from);
         parcel.writeString(to);
         parcel.writeString(url);

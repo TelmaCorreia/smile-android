@@ -4,6 +4,8 @@ import android.databinding.Bindable;
 import android.databinding.ObservableList;
 import android.view.View;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.Constants;
@@ -23,8 +25,10 @@ import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import org.threeten.bp.LocalDate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -55,6 +59,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         this.transactionsManager = transactionsManager;
         this.userManager = userManager;
         transactions = new ExclusiveObservableList<>();
+        transactionMap = new HashMap<>();
         initDates();
         getTotals();
     }
@@ -148,6 +153,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     public void setType(String type){
         this.type = type;
         this.transactions.clear();
+        this.transactionMap.clear();
         getTransactions(type);
         notifyPropertyChanged(BR.periodVisible);
     }
@@ -161,6 +167,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.periodVisible);
         initDates();
         this.transactions.clear();
+        this.transactionMap.clear();
         getTransactions(getType());
     }
 
@@ -181,7 +188,8 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         if (fromDate!=null && toDate!=null && fromDate.isAfter(toDate)){
             getUiEvents().showToast("O período seleccionado é inválido!");
         }else{
-            this.getTransactions().clear();
+            this.transactions.clear();
+            this.transactionMap.clear();
             getTransactions(getType());
         }
     }
@@ -214,30 +222,10 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         addDisposable(disposable);
     }
 
-
-
-   /* public Observable<List<Transaction>> getAllTransactions() {
-        return getTransactionsObservable();
-    }
-    private Observable<List<Transaction>> getTransactionsObservable() {
-        return transactionsManager.getAllTransactions(page, Constants.PAGE_SIZE, fromDate, toDate)
-                .filter(userList -> !isLastPage(userList))
-                .flatMap(this::getNextPageTransactionsObservable);
-    }
-    private Observable<List<Transaction>> getNextPageTransactionsObservable(final List<Transaction> transactions) {
-        Observable<List<Transaction>> transactionsPageObservable = Observable.just(transactions);
-        this.page+=page+Constants.PAGE_SIZE;
-        Observable<List<Transaction>> nextTransactionsPageObservable = getTransactionsObservable();
-        return Observable.merge(nextTransactionsPageObservable, transactionsPageObservable);
-    }
-
-    private boolean isLastPage(List<Transaction> transactions1) {
-        return transactions1.isEmpty();
-    }*/
-
     private void onTransactionReceived(List<Transaction> transactions) {
-       // this.transactions.clear();
-        this.transactions.addAll(transactions);
+        int size = transactionMap.size();
+        this.transactionMap = Maps.uniqueIndex(transactions, t -> t.getId());
+        if (transactions.size()!= size){ this.transactions.addAll(transactions);}
         setLoading(false);
         this.lastPage= transactions.isEmpty();
         notifyPropertyChanged(BR.emptyViewVisible);
