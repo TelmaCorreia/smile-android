@@ -2,10 +2,13 @@ package com.thesis.smile.presentation.main.transactions.historical_transactions;
 
 import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.thesis.smile.Constants;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentHistoricalTransactionsBinding;
 import com.thesis.smile.domain.models.Transaction;
@@ -13,17 +16,20 @@ import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.main.transactions.historical_transactions.list.HistoricalTransactionAdapter;
 import com.thesis.smile.presentation.transaction_details.TransactionDetailsActivity;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistoricalTransactionsBinding, HistoricalTransactionsViewModel> implements com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener{
 
     private String type;
     private boolean initialDate = true;
+    private RecyclerView.OnScrollListener historicalTransactionsScrollListener = null;
 
     public static HistoricalTransactionsFragment newInstance() {
         HistoricalTransactionsFragment f = new HistoricalTransactionsFragment();
@@ -86,11 +92,36 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
         HistoricalTransactionAdapter historicalTransactionAdapter = new HistoricalTransactionAdapter(getViewModel().getTransactions(), this::onTransactionSelected);
         binding.historicalTransactions.setLayoutManager(layoutManager);
         binding.historicalTransactions.setAdapter(historicalTransactionAdapter);
-
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(binding.clFilter);
         constraintSet.constrainPercentWidth(R.id.spPeriod, getViewModel().getUserTypeProsumer()==View.GONE?1.0f:0.5f);
         constraintSet.applyTo(binding.clFilter);
+
+        historicalTransactionsScrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                if (!getViewModel().isLoading() && !getViewModel().isLastPage()) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= Constants.PAGE_SIZE) {
+                        getViewModel().getTransactions(getViewModel().getType());
+                    }
+                }
+            }
+        };
+
+        binding.historicalTransactions.addOnScrollListener(historicalTransactionsScrollListener);
+
 
     }
 
@@ -111,9 +142,8 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
         getViewModel().observeFinalDateCalendarDialog()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event ->{initialDate = false; dateDialogEvent(event);});
+
     }
-
-
 
     private void dateDialogEvent(DialogEvent event){
         Calendar now = Calendar.getInstance();
@@ -139,5 +169,7 @@ public class HistoricalTransactionsFragment extends BaseFragment<FragmentHistori
             getViewModel().setToDate(LocalDate.of(year, monthOfYear+1, dayOfMonth));
         }
     }
+
+
 
 }

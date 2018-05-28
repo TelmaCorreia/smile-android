@@ -8,6 +8,7 @@ import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.Constants;
 import com.thesis.smile.R;
+import com.thesis.smile.data.iota.api.responses.ApiResponse;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.Totals;
@@ -15,6 +16,7 @@ import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.databinding.ExclusiveObservableList;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -22,15 +24,18 @@ import com.thesis.smile.utils.schedulers.SchedulerProvider;
 import org.threeten.bp.LocalDate;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import okhttp3.Response;
 
 public class HistoricalTransactionsViewModel extends BaseViewModel {
 
-    private final ExclusiveObservableList<Transaction> transactions;
+    private ObservableList<Transaction> transactions;
+    private Map<String, Transaction> transactionMap;
     private PublishRelay<DialogEvent> openInitalDateCalendarObservable = PublishRelay.create();
     private PublishRelay<DialogEvent> openFinalDateCalendarObservable = PublishRelay.create();
     private TransactionsManager transactionsManager;
@@ -42,8 +47,8 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     private LocalDate fromDate;
     private LocalDate toDate;
     private Totals totals;
-    private int page=0;
-
+    private boolean loading;
+    private boolean lastPage;
     @Inject
     public HistoricalTransactionsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
@@ -60,7 +65,6 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         this.toDate= now;
     }
 
-
     @Bindable
     public String getSales() {
         if (totals!=null){
@@ -68,7 +72,6 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         }
         return null;
     }
-
 
     @Bindable
     public String getPurchases() {
@@ -108,6 +111,11 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     }
 
     @Bindable
+    public int getProgressBarVisible() {
+        return isLoading()? View.VISIBLE:View.GONE;
+    }
+
+    @Bindable
     public int getEmptyViewVisible() {
         if (transactions.size()==0 ){
             return View.VISIBLE;
@@ -121,13 +129,6 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
     }
 
-   /* @Bindable
-    public float getPercentage(){
-        return getUserTypeProsumer()==View.GONE?1.0f:0.5f;
-    }
-*/
-
-
     public void onInitialDateClick() {
         openInitalDateCalendarObservable.accept(new DialogEvent());
     }
@@ -136,28 +137,32 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         openFinalDateCalendarObservable.accept(new DialogEvent());
     }
 
-
-  public String getType(){
+    public String getType(){
         return type;
   }
 
+    public int getPage(){
+        return this.transactions.size();
+    }
+
     public void setType(String type){
         this.type = type;
+        this.transactions.clear();
         getTransactions(type);
         notifyPropertyChanged(BR.periodVisible);
     }
 
     public ObservableList<Transaction> getTransactions() {
-        return transactions;
+        return this.transactions;
     }
 
     public void setTimePeriod(String timePeriod) {
         this.timePeriod = timePeriod;
         notifyPropertyChanged(BR.periodVisible);
         initDates();
+        this.transactions.clear();
         getTransactions(getType());
     }
-
 
     public void getTotals() {
         Disposable disposable = transactionsManager.getTotals()
@@ -176,6 +181,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         if (fromDate!=null && toDate!=null && fromDate.isAfter(toDate)){
             getUiEvents().showToast("O período seleccionado é inválido!");
         }else{
+            this.getTransactions().clear();
             getTransactions(getType());
         }
     }
@@ -190,26 +196,27 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
     public void getTransactions(String type) {
         Disposable disposable;
+        setLoading(true);
         if (type.equals(getResourceProvider().getString(R.string.transactions_menu_buy))) {
-            disposable = transactionsManager.getBuyTransactionsFiltered(page, 20, fromDate, toDate)
+            disposable = transactionsManager.getBuyTransactionsFiltered(getPage(), Constants.PAGE_SIZE, fromDate, toDate)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         } else if (type.equals(getResourceProvider().getString(R.string.transactions_menu_sell))){
-            disposable = transactionsManager.getSellTransactionsFiltered(page, 20, fromDate, toDate)
+            disposable = transactionsManager.getSellTransactionsFiltered(getPage(), Constants.PAGE_SIZE, fromDate, toDate)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         } else{
-            disposable = transactionsManager.getAllTransactionsFiltered(page,20, fromDate, toDate)
+            disposable = transactionsManager.getAllTransactionsFiltered(getPage(),Constants.PAGE_SIZE, fromDate, toDate)
                     .compose(schedulersTransformSingleIo())
                     .subscribe(this::onTransactionReceived, this::onError);
         }
 
         addDisposable(disposable);
-
     }
 
 
-    public Observable<List<Transaction>> getAllTransactions() {
+
+   /* public Observable<List<Transaction>> getAllTransactions() {
         return getTransactionsObservable();
     }
     private Observable<List<Transaction>> getTransactionsObservable() {
@@ -226,11 +233,13 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
     private boolean isLastPage(List<Transaction> transactions1) {
         return transactions1.isEmpty();
-    }
+    }*/
 
     private void onTransactionReceived(List<Transaction> transactions) {
-        this.transactions.clear();
+       // this.transactions.clear();
         this.transactions.addAll(transactions);
+        setLoading(false);
+        this.lastPage= transactions.isEmpty();
         notifyPropertyChanged(BR.emptyViewVisible);
 
     }
@@ -253,4 +262,18 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         getTransactionsFiltered();
 
     }
+
+    public boolean isLoading() {
+        return loading;
+    }
+
+    public void setLoading(boolean loading){
+        this.loading=loading;
+        notifyPropertyChanged(BR.progressBarVisible);
+    }
+
+    public boolean isLastPage() {
+        return lastPage;
+    }
+
 }

@@ -12,9 +12,13 @@ import java.util.Collection;
 
 public abstract class BindableAdapter<T> extends RecyclerView.Adapter<BindableViewHolder<T, ? extends ViewDataBinding>> {
 
+    private static final int ITEM = 0;
+    private static final int LOADING = 1;
     private final WeakReferenceOnListChangedCallback<T> onListChangedCallback;
 
     private ObservableList<T> items;
+    private boolean isLoadingAdded = false;
+
 
     public BindableAdapter(@Nullable ObservableList<T> items) {
         onListChangedCallback = new WeakReferenceOnListChangedCallback<>(this);
@@ -73,6 +77,11 @@ public abstract class BindableAdapter<T> extends RecyclerView.Adapter<BindableVi
 
     protected T getItem(int position) {
         return items.get(position);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (position == items.size() - 1 && isLoadingAdded) ? LOADING : ITEM;
     }
 
     private static class WeakReferenceOnListChangedCallback<T> extends ObservableList.OnListChangedCallback<ObservableList<T>> {
