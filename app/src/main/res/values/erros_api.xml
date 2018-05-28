@@ -2,5 +2,6 @@
 <resources>
 
     <string name="err_api_generic">Erro no servidor! Por favor, tente mais tarde.</string>
+    <string name="err_seed">Erro ao gerar a sua seed</string>
 
 </resources>

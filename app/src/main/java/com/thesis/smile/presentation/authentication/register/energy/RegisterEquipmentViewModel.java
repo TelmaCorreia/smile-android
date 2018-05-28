@@ -17,11 +17,16 @@ import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.utils.ResourceProvider;
+import com.thesis.smile.utils.iota.AESCrypt;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import jota.utils.IotaAPIUtils;
+import jota.utils.SeedRandomGenerator;
+
+import static jota.utils.IotaUnits.IOTA;
 
 public class RegisterEquipmentViewModel extends BaseViewModel {
 
@@ -29,6 +34,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private UserManager userManager;
     private UtilsManager utilsManager;
     private RegisterRequest request;
+    private String seed;
 
     private boolean manual;
     private String userType;
@@ -37,6 +43,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private PublishRelay<NavigationEvent> startMainObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> startTransactionsObservable = PublishRelay.create();
     private PublishRelay<DialogEvent> automaticConfigDialogObservable = PublishRelay.create();
+    private PublishRelay<DialogEvent> seedDialogObservable = PublishRelay.create();
     private PublishRelay<Event> radioChanged = PublishRelay.create();
 
     @Inject
@@ -71,6 +78,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
     public void onRegisterClick() {
         automaticConfigDialogObservable.accept(new OpenDialogEvent());
+        seedDialogObservable.accept(new OpenDialogEvent());
         registerObservable.accept(new Event());
     }
 
@@ -147,6 +155,10 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         return automaticConfigDialogObservable;
     }
 
+    Observable<DialogEvent> observeSeedDialog(){
+        return seedDialogObservable;
+    }
+
     Observable<Event> observeRadio(){
         return radioChanged;
     }
@@ -162,5 +174,31 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     public void setUserType(String userType) {
         this.userType = userType;
         notifyPropertyChanged(BR.equipmentVisible);
+    }
+
+    public String generateSeed(){
+        this.setSeed(SeedRandomGenerator.generateNewSeed());
+        return getSeed();
+    }
+    public void encryptSeed(String password) {
+        try {
+            AESCrypt aes = new AESCrypt(password);
+            userManager.saveSeed(aes.encrypt(seed));
+        } catch (Exception e) {
+            getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed));
+        }
+
+    }
+
+    public void setSeed(String seed) {
+        this.seed = seed;
+    }
+
+    public String getSeed() {
+        return seed;
+    }
+
+    public void alertInvalidPassword() {
+        getUiEvents().showToast("Password inválida. Introduza pelo menos 5 caracteres.");
     }
 }

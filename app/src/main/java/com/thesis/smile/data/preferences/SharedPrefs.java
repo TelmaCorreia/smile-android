@@ -66,6 +66,11 @@ public class SharedPrefs extends BasePreferences {
 
     }
 
+    public void saveSeed(String seed){
+        saveStringPreference(Keys.SEED, seed);
+
+    }
+
     public Configs getConfigs(){
         Gson gson = new Gson();
         String json = getStringPreference(Keys.CONFIGS);
@@ -81,5 +86,6 @@ public class SharedPrefs extends BasePreferences {
         static final String USER_AUTH_HEADER = "userAuthHeader";
         static final String USER_DATA = "userData";
         static final String CONFIGS = "configs";
+        static final String SEED = "seed";
     }
 }

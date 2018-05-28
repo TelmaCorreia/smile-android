@@ -3,8 +3,6 @@ package com.thesis.smile.presentation.authentication.register.energy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
@@ -19,6 +17,7 @@ import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
 import com.thesis.smile.presentation.utils.views.CustomDialog;
+import com.thesis.smile.presentation.utils.views.SeedPasswordDialog;
 
 public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEquipmentBinding, RegisterEquipmentViewModel> {
 
@@ -26,6 +25,7 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
 
     private RegisterRequest request;
     private CustomDialog dialogAutomaticConfig;
+    private SeedPasswordDialog dialoSeedConfig;
     public static void launch(Context context, String registerRequest) {
         Intent intent = new Intent(context, RegisterEquipmentActivity.class);
         intent.putExtra(REQUEST, registerRequest);
@@ -44,7 +44,7 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
 
     @Override
     protected void initViews(ActivityRegisterEquipmentBinding binding) {
-
+        setupUI(binding.parent, this);
         String[] batteries = new String []{"3000 W"};
         ArrayAdapter<CharSequence> adapterBatteries = new ArrayAdapter(this,R.layout.layout_spinner_item, batteries);
         adapterBatteries.setDropDownViewResource(R.layout.layout_spinner_dropdown);
@@ -94,6 +94,10 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
         getViewModel().observeAutomaticConfigDialog()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::shareDataDialogEvent);
+
+        getViewModel().observeSeedDialog()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::seedDialogEvent);
 
         getViewModel().observeStartMain()
                 .doOnSubscribe(this::addDisposable)
@@ -150,6 +154,30 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
             dialogAutomaticConfig.show();
         }else{
             dialogAutomaticConfig.dismiss();
+        }
+    }
+
+    private void seedDialogEvent(DialogEvent event){
+        if(dialoSeedConfig == null){
+            String seed = getViewModel().generateSeed();
+            dialoSeedConfig = new SeedPasswordDialog(RegisterEquipmentActivity.this);
+            dialoSeedConfig.setTitle(R.string.dialog_seed_title);
+            dialoSeedConfig.setMessage(getString(R.string.dialog_seed_info) + "\nChave:\n"+seed);
+            dialoSeedConfig.setOkButtonText(R.string.button_save);
+            dialoSeedConfig.setDismissible(false);
+            dialoSeedConfig.setOnOkClickListener(() -> {
+                if (!dialoSeedConfig.getInput().isEmpty() && !(dialoSeedConfig.getInput().length()<5)){
+                    getViewModel().encryptSeed(dialoSeedConfig.getInput()); dialoSeedConfig.dismiss();
+                }else{
+                    getViewModel().alertInvalidPassword();
+                }
+            });
+
+        }
+        if(event instanceof OpenDialogEvent){
+            dialoSeedConfig.show();
+        }else{
+            dialoSeedConfig.dismiss();
         }
     }
 }
