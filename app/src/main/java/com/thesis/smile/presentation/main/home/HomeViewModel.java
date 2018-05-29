@@ -5,6 +5,8 @@ import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
+import com.thesis.smile.data.remote.exceptions.api.NoContentException;
+import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.CurrentEnergy;
@@ -44,7 +46,7 @@ public class HomeViewModel extends BaseViewModel {
         if(currentEnergy != null){
             return String.format("%.2f", currentEnergy.getProduction());
         }
-        return null;
+        return getResourceProvider().getString(R.string.no_data_placeholder);
     }
 
     @Bindable
@@ -52,7 +54,7 @@ public class HomeViewModel extends BaseViewModel {
         if(currentEnergy != null){
             return String.format("%.2f", currentEnergy.getConsumption());
         }
-        return null;
+        return getResourceProvider().getString(R.string.no_data_placeholder);
     }
 
     @Bindable
@@ -60,7 +62,7 @@ public class HomeViewModel extends BaseViewModel {
         if(currentEnergy != null){
             return String.format("%.2f", currentEnergy.getBatteryLevel());
         }
-        return null;
+        return getResourceProvider().getString(R.string.no_data_placeholder1);
     }
 
     @Bindable
@@ -68,7 +70,7 @@ public class HomeViewModel extends BaseViewModel {
         if(currentEnergy != null){
             return String.valueOf(currentEnergy.getBatteryKWH());
         }
-        return null;
+        return getResourceProvider().getString(R.string.no_data_placeholder1);
     }
 
     @Bindable
@@ -92,7 +94,7 @@ public class HomeViewModel extends BaseViewModel {
         if(currentEnergy != null){
             return String.format("%.2f", currentEnergy.getTotalSolarEnergy());
         }
-        return null;
+        return getResourceProvider().getString(R.string.no_data_placeholder1);
     }
 
     @Bindable
@@ -165,6 +167,13 @@ public class HomeViewModel extends BaseViewModel {
         notifyChange();
     }
 
+    @Override
+    public void onError(Throwable e){
+        if(!(e instanceof NoContentException)) {
+            getUiEvents().showToast(getResourceProvider().getString(R.string.no_data_msg));
+        }
+
+    }
 
 
 }

@@ -35,6 +35,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private UtilsManager utilsManager;
     private RegisterRequest request;
     private String seed;
+    private String encryptedSeed;
 
     private boolean manual;
     private String userType;
@@ -105,6 +106,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         }else{
             request.setType(userType);
             request.setManual(manual);
+            request.setEncryptedSeed(encryptedSeed);
             accountManager.register(request)
                     .compose(loadingTransformCompletable())
                     .compose(schedulersTransformCompletableIo())
@@ -183,9 +185,10 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     public void encryptSeed(String password) {
         try {
             AESCrypt aes = new AESCrypt(password);
-            userManager.saveSeed(aes.encrypt(seed));
+            this.encryptedSeed = aes.encrypt(seed);
+            userManager.saveSeed(encryptedSeed);
         } catch (Exception e) {
-            getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed));
+            getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed_cypher));
         }
 
     }

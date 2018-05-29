@@ -4,9 +4,13 @@ import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentUserSettingsBinding;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.utils.KeyboardUtils;
+import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.views.CustomInputDialog;
 
 public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBinding, UserSettingsViewModel> {
+
+    private CustomInputDialog showSeedDialog;
 
     public static UserSettingsFragment newInstance() {
         UserSettingsFragment f = new UserSettingsFragment();
@@ -49,8 +53,26 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::updateRadio);
 
+        getViewModel().observeShowSeedDialog()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::showSeedDialog);
 
+    }
 
+    private void showSeedDialog(DialogEvent dialogEvent) {
+        showSeedDialog = new CustomInputDialog(this.getActivity());
+        showSeedDialog.setTitle(R.string.dialog_show_seed_title);
+        showSeedDialog.setMessage(R.string.dialog_show_seed_description);
+        showSeedDialog.setPrompt(R.string.prompt_pass);
+        showSeedDialog.setOkButtonText(R.string.button_ok);
+        showSeedDialog.setCloseButtonText(R.string.button_cancel);
+        showSeedDialog.setDismissible(true);
+        showSeedDialog.setOnOkClickListener(() -> {
+            getViewModel().decrypSeed(showSeedDialog.getInput());
+            showSeedDialog.dismiss();
+        });
+        showSeedDialog.setOnCloseClickListener(() ->{showSeedDialog.dismiss();});
+        showSeedDialog.show();
     }
 
     private void initRadioButton() {

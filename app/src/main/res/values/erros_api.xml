@@ -2,6 +2,7 @@
 <resources>
 
     <string name="err_api_generic">Erro no servidor! Por favor, tente mais tarde.</string>
-    <string name="err_seed">Erro ao gerar a sua seed</string>
+    <string name="err_seed_cypher">Erro ao cifrar a sua seed</string>
+    <string name="err_seed_decypher">Erro ao decifrar a sua seed</string>
 
 </resources>

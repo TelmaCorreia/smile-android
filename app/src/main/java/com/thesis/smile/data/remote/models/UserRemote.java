@@ -35,6 +35,9 @@ public class UserRemote{
     private String prod_smart_meter_id;
 
     @Expose
+    private String encryptedSeed;
+
+    @Expose
     private EnergyParamsRemote energyParams;
 
     public UserRemote(){}
@@ -125,5 +128,13 @@ public class UserRemote{
 
     public void setManual(boolean manual) {
         this.manual = manual;
+    }
+
+    public String getEncryptedSeed() {
+        return encryptedSeed;
+    }
+
+    public void setEncryptedSeed(String encryptedSeed) {
+        this.encryptedSeed = encryptedSeed;
     }
 }

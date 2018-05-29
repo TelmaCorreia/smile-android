@@ -51,6 +51,7 @@ public class RecoverPasswordActivity extends BaseActivity<ActivityRecoverPasswor
         pinDialog = new CustomInputDialog(this);
         pinDialog.setTitle(R.string.dialog_pin_title);
         pinDialog.setMessage(R.string.dialog_pin_description);
+        pinDialog.setPrompt(R.string.prompt_pin);
         pinDialog.setOkButtonText(R.string.button_ok);
         pinDialog.setCloseButtonText(R.string.button_cancel);
         pinDialog.setDismissible(true);

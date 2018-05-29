@@ -14,9 +14,11 @@ import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.Utils;
+import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
+import com.thesis.smile.utils.iota.AESCrypt;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import java.io.File;
@@ -30,6 +32,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     private String profileImage = "";
     private File profilePictureFile;
     private Drawable imgForeground;
+    private String seed = "";
 
     private UserManager userManager;
     private User user;
@@ -38,7 +41,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     private PublishRelay<Event> editProfilePictureObservable = PublishRelay.create();
     private PublishRelay<Event> radioChanged = PublishRelay.create();
     private PublishRelay<Event> changeRadio = PublishRelay.create();
-
+    private PublishRelay<DialogEvent> showSeedDialog = PublishRelay.create();
 
     @Inject
     public UserSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager) {
@@ -123,6 +126,16 @@ public class UserSettingsViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.saveEnabled);
     }
 
+    @Bindable
+    public String getSeed() {
+        return this.seed;
+    }
+
+    public void setSeed(String seed) {
+       this.seed=seed;
+       notifyPropertyChanged(BR.seed);
+    }
+
     public String getUserType(){
         if (user!=null){
             return user.getType();
@@ -196,6 +209,10 @@ public class UserSettingsViewModel extends BaseViewModel {
     public void onLearnMoreClick(){
 
     }
+    
+    public void onShowSeedClick(){
+        showSeedDialog.accept(new DialogEvent());
+    }
 
     private void onUpdateComplete(User user) {
         userManager.saveUser(user);
@@ -224,6 +241,12 @@ public class UserSettingsViewModel extends BaseViewModel {
     Observable<Event> observeChangeRadio(){
         return changeRadio;
     }
+    
+    Observable<DialogEvent> observeShowSeedDialog(){
+        return showSeedDialog;
+    }
+
+
 
 
     public void setProfilePicture(File profilePictureFile) {
@@ -254,4 +277,14 @@ public class UserSettingsViewModel extends BaseViewModel {
     }
 
 
+    public void decrypSeed(String input) {
+        String seed = "";
+        try {
+            AESCrypt aes = new AESCrypt(input);
+            seed = aes.decrypt(user.getEncryptedSeed());
+        } catch (Exception e) {
+            getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed_decypher));
+        }
+        setSeed(seed);
+    }
 }

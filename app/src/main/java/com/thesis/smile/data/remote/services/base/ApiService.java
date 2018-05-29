@@ -2,6 +2,7 @@ package com.thesis.smile.data.remote.services.base;
 
 import android.accounts.NetworkErrorException;
 
+import com.thesis.smile.data.remote.exceptions.api.NoContentException;
 import com.thesis.smile.data.remote.exceptions.http.GenericErrorException;
 import com.thesis.smile.data.remote.exceptions.http.InternetConnectionException;
 import com.thesis.smile.data.remote.exceptions.http.NotFoundException;
@@ -73,6 +74,9 @@ public class ApiService {
     private Throwable mapHttpThrowable(int errorCode, Response response){
         Throwable exception;
         switch (errorCode) {
+            case 204:
+                exception = new NoContentException();
+                break;
             case 401:
                 exception = new UnauthorizedException();
                 break;

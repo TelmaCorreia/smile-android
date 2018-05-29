@@ -22,6 +22,8 @@ public class User {
 
     private String prod_smart_meter_id;
 
+    private String encryptedSeed;
+
     private EnergyParams energyParams;
 
     public User(){}
@@ -120,5 +122,13 @@ public class User {
 
     public void setManual(boolean manual) {
         this.manual = manual;
+    }
+
+    public String getEncryptedSeed() {
+        return encryptedSeed;
+    }
+
+    public void setEncryptedSeed(String encryptedSeed) {
+        this.encryptedSeed = encryptedSeed;
     }
 }

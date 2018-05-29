@@ -8,8 +8,8 @@
 
     <!-- Login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="prompt_confirm_password">Confirme a Password</string>
+    <string name="prompt_password">palavra-passe</string>
+    <string name="prompt_confirm_password">Confirme a palavra-passe</string>
     <string name="button_login">Login</string>
     <string name="sentence_register">Ainda não tem conta? Registe-se agora</string>
     <string name="sentence_recover_password">Esqueceu-se da palavra-passe? <u>Recuperar</u></string>
@@ -99,7 +99,11 @@
     <!-- Dialog seed password -->
     <string name="dialog_seed_title">Insira uma password para proteger a sua conta:</string>
     <string name="dialog_seed_info">A aplicação está associada a uma conta com uma moeda virtual (IOTA). A sua chave para aceder à conta foi gerada e deve ser guardada por sim num local seguro. Para proteger a sua conta insira uma password.\n\nATENÇÃO sem esta password perde o acesso à sua conta, por favor certifique-se que não se esquece da mesma.</string>
-    <string name="prompt_pass">Insira a password</string>
+    <string name="prompt_pass">Insira a palavra-passe</string>
+
+    <!-- Dialog show seed -->
+    <string name="dialog_show_seed_title">Insira a palavra-passe:</string>
+    <string name="dialog_show_seed_description">Por favor insira a palavra-passe para podermos obter a sua chave</string>
 
     <!-- Dialog Automatic Config -->
     <string name="automatic_config_tilte">Gestão das Transações</string>
@@ -123,7 +127,7 @@
     <string name="transactions_title">Transações</string>
     <string name="ranking_title">Ranking</string>
     <string name="settings_title">Definições</string>
-    <string name="recover_pass_title">Recuperação da password</string>
+    <string name="recover_pass_title">Recuperação da palavra-passe</string>
 
 
     <!-- Home -->
@@ -153,8 +157,8 @@
     <!--Settings-->
     <string name="tab_user_settings">Definições da Conta</string>
     <string name="tab_energy_settings">Perfil da Energia</string>
-    <string name="change_password">Mudar password</string>
-    <string name="prompt_old_password">Password anterior</string>
+    <string name="change_password">Mudar palavra-passe</string>
+    <string name="prompt_old_password">palavra-passe anterior</string>
     <string name="toggle_share_data">Partilhar dados com a comunidade</string>
     <string name="toggle_manual_config">Configurar manualmente a compra e/ou a venda de energia</string>
     <string name="button_save">Guardar</string>
@@ -164,6 +168,7 @@
     <string name="equipment">Equipamento</string>
     <string name="buy_and_sell_config">Configurações de compra e venda</string>
     <string name="user_type">Tipo de utilizador</string>
+    <string name="show_seed">Ver a minha chave IOTA</string>
 
 
     <!-- Units -->
@@ -178,10 +183,10 @@
     <string name="camera_permission">A aplicação precisa de permissão para usar a câmera</string>
 
     <!-- Recover Password -->
-    <string name="title_recover_password">Introduza o seu email e a nova password</string>
-    <string name="button_recover">Recuperar Password</string>
-    <string name="button_change_password">Alterar Password</string>
-    <string name="recover_password_completed">Password actualizada com sucesso.</string>
+    <string name="title_recover_password">Introduza o seu email e a nova palavra-passe</string>
+    <string name="button_recover">Recuperar palavra-passe</string>
+    <string name="button_change_password">Alterar palavra-passe</string>
+    <string name="recover_password_completed">palavra-passe actualizada com sucesso.</string>
 
     <!--utils-->
     <string name="profile_picture">ProfilePicture</string>
@@ -279,6 +284,9 @@
     <string name="alert_only_numbers">Introduza apenas digitos numéricos</string>
     <string name="alert_equipment">Selecione a unica opção dísponivel</string>
     <string name="empty_transactions">Não há transações disponíveis para os filtros aplicados</string>
+    <string name="no_data_placeholder">--.--</string>
+    <string name="no_data_placeholder1">--</string>
+    <string name="no_data_msg">Não há dados dísponiveis</string>
 
 
 </resources>

@@ -135,11 +135,6 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
         if(dialogAutomaticConfig == null){
             dialogAutomaticConfig = new CustomDialog(RegisterEquipmentActivity.this);
             dialogAutomaticConfig.setTitle(R.string.automatic_config_tilte);
-
-           /* String automatic_config = getString(R.string.automatic_config_description);
-            SpannableString ss=  new SpannableString(automatic_config);
-            ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), automatic_config.indexOf(getString(R.string.automatic_config)), automatic_config.indexOf(getString(R.string.automatic_config))+getString(R.string.automatic_config).length(), 0);
-            */
             dialogAutomaticConfig.setMessage(getString(R.string.automatic_config_description));
             dialogAutomaticConfig.setSecondMessage(R.string.automatic_config_changes);
             dialogAutomaticConfig.setSpanMessage(R.string.automatic_config_description, R.string.automatic_settings, R.color.colorUnderline);

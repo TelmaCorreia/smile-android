@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 
+import com.thesis.smile.R;
 import com.thesis.smile.databinding.DialogCustomBinding;
 import com.thesis.smile.databinding.DialogInputCustomBinding;
 
@@ -63,6 +64,13 @@ public class CustomInputDialog extends Dialog {
         setMessage(getContext().getString(message));
     }
 
+    public void setPrompt(@StringRes int prompt){
+        setPrompt(getContext().getString(prompt));
+    }
+
+    private void setPrompt(String string) {
+        binding.input.setHint(string);
+    }
 
     public void setMessage(String message){
         binding.message.setText(message);

@@ -37,6 +37,10 @@ public class RegisterRequest{
     private boolean manual;
 
     @Expose
+    @SerializedName("encryptedSeed")
+    private String encryptedSeed;
+
+    @Expose
     @SerializedName("energyParams")
     private EnergyParamsRemote energyParams;
 
@@ -45,7 +49,7 @@ public class RegisterRequest{
     public RegisterRequest(){}
 
     public RegisterRequest(String firstName, String lastName, String email, String password,
-                           String type, boolean visible, boolean manual,  EnergyParamsRemote energyParamsRemote) {
+                           String type, boolean visible, boolean manual, String encryptedSeed, EnergyParamsRemote energyParamsRemote) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -53,6 +57,7 @@ public class RegisterRequest{
         this.type = type;
         this.visible = visible;
         this.manual = manual;
+        this.encryptedSeed = encryptedSeed;
         this.energyParams = energyParamsRemote;
     }
 
@@ -126,5 +131,13 @@ public class RegisterRequest{
 
     public void setManual(boolean manual) {
         this.manual = manual;
+    }
+
+    public String getEncryptedSeed() {
+        return encryptedSeed;
+    }
+
+    public void setEncryptedSeed(String encryptedSeed) {
+        this.encryptedSeed = encryptedSeed;
     }
 }
