@@ -66,9 +66,13 @@ public class UserManager {
         sharedPrefs.saveUserData(user);
     }
 
-    public void saveSeed(String seedEncrypted){
-        sharedPrefs.saveSeed(seedEncrypted);
+    public void saveSeed(String seed){
+        sharedPrefs.saveSeed(seed);
     }
 
+    public String getSeed(){
+
+        return sharedPrefs.getSeed();
+    }
 
 }

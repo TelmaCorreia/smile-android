@@ -71,6 +71,10 @@ public class SharedPrefs extends BasePreferences {
 
     }
 
+    public String getSeed(){
+      return getStringPreference(Keys.SEED);
+    }
+
     public Configs getConfigs(){
         Gson gson = new Gson();
         String json = getStringPreference(Keys.CONFIGS);

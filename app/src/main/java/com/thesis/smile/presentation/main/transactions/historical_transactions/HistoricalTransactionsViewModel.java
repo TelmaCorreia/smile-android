@@ -4,13 +4,11 @@ import android.databinding.Bindable;
 import android.databinding.ObservableList;
 import android.view.View;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.Constants;
 import com.thesis.smile.R;
-import com.thesis.smile.data.iota.api.responses.ApiResponse;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.Totals;
@@ -18,7 +16,6 @@ import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
-import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.databinding.ExclusiveObservableList;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -28,13 +25,11 @@ import org.threeten.bp.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import okhttp3.Response;
 
 public class HistoricalTransactionsViewModel extends BaseViewModel {
 

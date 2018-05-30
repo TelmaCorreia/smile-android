@@ -7,9 +7,13 @@ import com.thesis.smile.BR;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
+import com.thesis.smile.domain.managers.IotaManager;
 import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.managers.UtilsManager;
 import com.thesis.smile.domain.models.Configs;
+import com.thesis.smile.domain.models_iota.Address;
+import com.thesis.smile.iota.IotaTaskManager;
+import com.thesis.smile.iota.requests.GetNewAddressRequest;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
@@ -19,6 +23,8 @@ import com.thesis.smile.presentation.utils.actions.events.OpenDialogEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.iota.AESCrypt;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,6 +40,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private UserManager userManager;
     private UtilsManager utilsManager;
     private RegisterRequest request;
+    private IotaManager iotaManager;
     private String seed;
     private String encryptedSeed;
 
@@ -46,16 +53,18 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private PublishRelay<DialogEvent> automaticConfigDialogObservable = PublishRelay.create();
     private PublishRelay<DialogEvent> seedDialogObservable = PublishRelay.create();
     private PublishRelay<Event> radioChanged = PublishRelay.create();
+    private boolean loading = false;
 
     @Inject
     public RegisterEquipmentViewModel(ResourceProvider resourceProvider,
                                       SchedulerProvider schedulerProvider, UiEvents uiEvents,
-                                      AccountManager accountManager, UtilsManager utilsManager, UserManager userManager) {
+                                      AccountManager accountManager, UtilsManager utilsManager, UserManager userManager, IotaManager iotaManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
         this.accountManager = accountManager;
         this.utilsManager = utilsManager;
         this.userManager = userManager;
+        this.iotaManager = iotaManager;
         userType=getResourceProvider().getString(R.string.consumer);
     }
 
@@ -104,6 +113,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         if (userType.isEmpty()){
             getUiEvents().showToast(getResourceProvider().getString(R.string.userTypeAlert));
         }else{
+            setLoading(true);
             request.setType(userType);
             request.setManual(manual);
             request.setEncryptedSeed(encryptedSeed);
@@ -117,6 +127,8 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     private void onRegisterComplete() {
+        //Generate an address to receive money (only on)
+        generateNewAddress();
         if (request.getPicture()!=null){
             userManager.updateUserProfilePic(request.getPicture())
                     .compose(loadingTransformCompletable())
@@ -124,11 +136,11 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
                     .doOnSubscribe(this::addDisposable)
                     .subscribe(this::onPicComplete, this::onError);
         }
-        else if (request.isManual()){
-            startTransactionsObservable.accept(new NavigationEvent());
-        }else{
-            startMainObservable.accept(new NavigationEvent());
-        }
+
+    }
+
+    public void generateNewAddress() {
+        iotaManager.generateNewAddress();
     }
 
     private void onPicComplete() {
@@ -186,7 +198,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         try {
             AESCrypt aes = new AESCrypt(password);
             this.encryptedSeed = aes.encrypt(seed);
-            userManager.saveSeed(encryptedSeed);
+            userManager.saveSeed(seed); //save seed decypted only in the device
         } catch (Exception e) {
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed_cypher));
         }
@@ -203,5 +215,35 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     public void alertInvalidPassword() {
         getUiEvents().showToast("Password inválida. Introduza pelo menos 5 caracteres.");
+    }
+
+    public void attachNewAddress(String address) {
+        iotaManager.attachNewAddress(address);
+    }
+
+    public void getAccountData() {
+        iotaManager.getAccountData();
+    }
+
+    @Bindable
+    public boolean isLoadingVisible(){
+        return this.loading;
+    }
+
+    public void setLoading(boolean loading){
+        this.loading = loading;
+        notifyPropertyChanged(BR.loadingVisible);
+    }
+
+    public void saveAddress(String address) {
+        //TODO send to the server
+    }
+
+    public void next() {
+        if (request.isManual()){
+            startTransactionsObservable.accept(new NavigationEvent());
+        }else{
+            startMainObservable.accept(new NavigationEvent());
+        }
     }
 }

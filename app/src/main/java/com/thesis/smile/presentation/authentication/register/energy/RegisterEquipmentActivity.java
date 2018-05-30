@@ -3,12 +3,17 @@ package com.thesis.smile.presentation.authentication.register.energy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.databinding.ActivityRegisterEquipmentBinding;
+import com.thesis.smile.iota.responses.GetAccountDataResponse;
+import com.thesis.smile.iota.responses.GetNewAddressResponse;
+import com.thesis.smile.iota.responses.SendTransferResponse;
+import com.thesis.smile.iota.responses.error.NetworkError;
 import com.thesis.smile.presentation.authentication.register.energy.info.AutomaticSettingsInfoActivity;
 import com.thesis.smile.presentation.base.BaseActivity;
 import com.thesis.smile.presentation.main.MainActivity;
@@ -19,6 +24,11 @@ import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapte
 import com.thesis.smile.presentation.utils.views.CustomDialog;
 import com.thesis.smile.presentation.utils.views.SeedPasswordDialog;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Arrays;
+
 public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEquipmentBinding, RegisterEquipmentViewModel> {
 
     private static final String REQUEST = "REQUEST";
@@ -26,6 +36,9 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
     private RegisterRequest request;
     private CustomDialog dialogAutomaticConfig;
     private SeedPasswordDialog dialoSeedConfig;
+    private final String TAG = RegisterEquipmentActivity.class.getCanonicalName();
+    private int request_count=0;
+
     public static void launch(Context context, String registerRequest) {
         Intent intent = new Intent(context, RegisterEquipmentActivity.class);
         intent.putExtra(REQUEST, registerRequest);
@@ -173,6 +186,54 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
             dialoSeedConfig.show();
         }else{
             dialoSeedConfig.dismiss();
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(GetNewAddressResponse getNewAddressResponse) {
+        //attach new
+        getViewModel().saveAddress(getNewAddressResponse.getAddresses().get(0));
+        getViewModel().attachNewAddress(getNewAddressResponse.getAddresses().get(0));
+    }
+
+    @Subscribe
+    public void onEvent(SendTransferResponse str) {
+        if (Arrays.asList(str.getSuccessfully()).contains(true))
+            getViewModel().getAccountData();
+    }
+
+    @Subscribe
+    public void onEvent(GetAccountDataResponse gad) {
+        getViewModel().next();
+    }
+
+    @Subscribe
+    public void onEvent(NetworkError error) {
+        switch (error.getErrorType()) {
+            case ACCESS_ERROR:
+                Log.d(TAG, "Access error!");
+                break;
+            case REMOTE_NODE_ERROR:
+                Log.d(TAG, "Remote node error!");
+                if (request_count<3){
+                    request_count++;
+                    getViewModel().generateNewAddress();
+                }else{
+                    getViewModel().next();
+                }
+                break;
         }
     }
 }

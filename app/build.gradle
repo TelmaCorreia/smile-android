@@ -155,8 +155,11 @@ dependencies {
     //iota
     implementation 'com.github.iotaledger:iota~lib~java:0.9.10'
     implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'uk.uuid.slf4j:slf4j-android:1.7.25-1'
 
     api 'com.google.guava:guava:25.1-android'
+
 
 
 }

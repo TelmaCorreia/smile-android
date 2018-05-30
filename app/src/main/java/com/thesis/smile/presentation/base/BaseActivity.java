@@ -21,6 +21,8 @@ import com.thesis.smile.presentation.utils.transitions.FragmentTransitionManager
 import com.thesis.smile.presentation.utils.transitions.TransitionManager;
 import com.thesis.smile.utils.ResourceProvider;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;

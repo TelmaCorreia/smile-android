@@ -220,4 +220,6 @@ public class RegisterUserViewModel extends BaseViewModel {
     public void setShare(boolean share) {
         this.share = share;
     }
+
+
 }
