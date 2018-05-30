@@ -67,6 +67,7 @@ public class NetworkModule {
         return OkHttpClientTrustCertificate.getOkHttpClient(builder);
     }
 
+
     @Provides
     @Singleton
     Retrofit provideRetrofit(OkHttpClient client, @Named(BASE_URL) String baseUrl, Gson gson) {

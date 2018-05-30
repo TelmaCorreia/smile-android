@@ -192,7 +192,7 @@ public class RegisterUserViewModel extends BaseViewModel {
         this.profilePictureFile = profilePictureFile;
         setProfileImage(profilePictureFile.getAbsolutePath());
         notifyPropertyChanged(BR.profileImage);
-        /*userManager.updateUserProfilePic(file)
+       /* userManager.updateUserProfilePic(file)
                 .doOnSubscribe(d -> {
                     addDisposable(d);
                     endEdition();
