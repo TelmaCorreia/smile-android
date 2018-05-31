@@ -198,7 +198,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         try {
             AESCrypt aes = new AESCrypt(password);
             this.encryptedSeed = aes.encrypt(seed);
-            userManager.saveSeed(seed); //save seed decypted only in the device
+            userManager.saveSeed(seed); //save seed decrypted only in the device
         } catch (Exception e) {
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed_cypher));
         }
@@ -237,6 +237,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     public void saveAddress(String address) {
         //TODO send to the server
+        userManager.saveAddress(address);
     }
 
     public void next() {

@@ -1,7 +1,6 @@
 package com.thesis.smile.iota.handler;
 
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import com.thesis.smile.iota.responses.ApiResponse;
 import com.thesis.smile.iota.responses.SendTransferResponse;
 import com.thesis.smile.iota.responses.error.NetworkError;
 import com.thesis.smile.iota.responses.error.NetworkErrorType;
-import com.thesis.smile.utils.iota.Utils;
 
 import java.util.Arrays;
 
@@ -32,7 +30,6 @@ public class SendTransferRequestHandler extends IotaRequestHandler {
 
     @Override
     public ApiResponse handle(ApiRequest request) {
-        int notificationId = Utils.createNewID();
         ApiResponse response;
         // if we generate a new address the tag == address
         if (((SendTransferRequest) request).getValue().equals("0")
@@ -55,11 +52,6 @@ public class SendTransferRequestHandler extends IotaRequestHandler {
                     false));
         } catch (ArgumentException | IllegalAccessError e) {
             NetworkError error = new NetworkError();
-
-            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (mNotificationManager != null) {
-                mNotificationManager.cancel(notificationId);
-            }
 
             if (e instanceof ArgumentException) {
                 if (e.getMessage().contains("Sending to a used address.") || e.getMessage().contains("Private key reuse detect!") || e.getMessage().contains("Send to inputs!")) {

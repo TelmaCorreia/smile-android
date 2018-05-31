@@ -59,7 +59,7 @@ public class IotaManager {
     }
 
     public void getAccountData() {
-        GetAccountDataRequest getAccountDataRequest = new GetAccountDataRequest();
+        GetAccountDataRequest getAccountDataRequest = new GetAccountDataRequest(seed);
         iotaTaskManager.startNewRequestTask(getAccountDataRequest);
     }
 

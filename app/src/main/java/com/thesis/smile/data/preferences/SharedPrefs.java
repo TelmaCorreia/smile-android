@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.domain.models.Configs;
 import com.thesis.smile.domain.models.User;
+import com.thesis.smile.domain.models_iota.Address;
 
 import javax.inject.Inject;
 
@@ -75,6 +76,14 @@ public class SharedPrefs extends BasePreferences {
       return getStringPreference(Keys.SEED);
     }
 
+    public void saveAddress(String address){
+        saveStringPreference(Keys.ADDRESS, address);
+    }
+
+    public String getAddress(){
+        return getStringPreference(Keys.ADDRESS);
+    }
+
     public Configs getConfigs(){
         Gson gson = new Gson();
         String json = getStringPreference(Keys.CONFIGS);
@@ -91,5 +100,6 @@ public class SharedPrefs extends BasePreferences {
         static final String USER_DATA = "userData";
         static final String CONFIGS = "configs";
         static final String SEED = "seed";
+        static final String ADDRESS = "address";
     }
 }

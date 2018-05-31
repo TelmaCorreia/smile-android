@@ -9,7 +9,6 @@ import com.thesis.smile.iota.responses.ApiResponse;
 import com.thesis.smile.iota.responses.ReplayBundleResponse;
 import com.thesis.smile.iota.responses.error.NetworkError;
 import com.thesis.smile.iota.responses.error.NetworkErrorType;
-import com.thesis.smile.utils.iota.Utils;
 
 import java.util.Arrays;
 
@@ -29,7 +28,6 @@ public class ReplayBundleRequestHandler extends IotaRequestHandler {
     @Override
     public ApiResponse handle(ApiRequest request) {
         ApiResponse response;
-        int notificationId = Utils.createNewID();
 
         try {
             response = new ReplayBundleResponse(apiProxy.replayBundle(((ReplayBundleRequest) request).getHash(),

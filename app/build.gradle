@@ -158,6 +158,9 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.25'
     implementation 'uk.uuid.slf4j:slf4j-android:1.7.25-1'
 
+    //j8 stream backport
+    implementation 'com.annimon:stream:1.2.0'
+
     api 'com.google.guava:guava:25.1-android'
 
 

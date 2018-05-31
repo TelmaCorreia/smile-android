@@ -4,6 +4,8 @@ import android.databinding.Bindable;
 import android.databinding.ObservableList;
 import android.view.View;
 
+import com.annimon.stream.Stream;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
@@ -219,7 +221,8 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
 
     private void onTransactionReceived(List<Transaction> transactions) {
         int size = transactionMap.size();
-        this.transactionMap = Maps.uniqueIndex(transactions, t -> t.getId());
+        this.transactionMap = Maps.newHashMap(ImmutableMap.copyOf(Maps.uniqueIndex(transactions, t -> t.getId())));
+
         if (transactions.size()!= size){ this.transactions.addAll(transactions);}
         setLoading(false);
         this.lastPage= transactions.isEmpty();

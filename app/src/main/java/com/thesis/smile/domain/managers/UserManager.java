@@ -6,6 +6,7 @@ import com.thesis.smile.domain.exceptions.NoUserLoggedException;
 import com.thesis.smile.domain.mapper.UserMapper;
 import com.thesis.smile.domain.models.EnergyParams;
 import com.thesis.smile.domain.models.User;
+import com.thesis.smile.domain.models_iota.Address;
 
 
 import java.io.File;
@@ -73,6 +74,15 @@ public class UserManager {
     public String getSeed(){
 
         return sharedPrefs.getSeed();
+    }
+
+    public void saveAddress(String address){
+        sharedPrefs.saveAddress(address);
+    }
+
+    public String getAddress(){
+
+        return sharedPrefs.getAddress();
     }
 
 }

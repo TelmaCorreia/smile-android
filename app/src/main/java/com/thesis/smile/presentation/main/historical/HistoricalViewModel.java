@@ -26,6 +26,7 @@ import javax.inject.Inject;
 public class HistoricalViewModel extends BaseViewModel {
 
     List<Address> addresses;
+    private String address;
     private IotaManager iotaManager;
 
     @Inject
@@ -33,12 +34,21 @@ public class HistoricalViewModel extends BaseViewModel {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.iotaManager = iotaManager;
         this.addresses = new ArrayList<>();
+        this.address = userManager.getAddress();
         doRequestTest();
     }
 
     private void doRequestTest() {
-        iotaManager.generateNewAddress();
+        iotaManager.attachNewAddress(address);
     }
 
 
+
+    public void attachNewAddress(String s) {
+        iotaManager.attachNewAddress(s);
+    }
+
+    public void getAccountData() {
+        iotaManager.getAccountData();
+    }
 }

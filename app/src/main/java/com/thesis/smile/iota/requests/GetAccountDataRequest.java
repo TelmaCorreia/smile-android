@@ -16,7 +16,8 @@ public class GetAccountDataRequest extends ApiRequest {
     private long threshold = 0;
 
 
-    public GetAccountDataRequest() {
+    public GetAccountDataRequest(String seed) {
+        this.seed= seed;
     }
 
     public String getSeed() {

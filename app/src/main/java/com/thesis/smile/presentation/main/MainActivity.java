@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
+import com.thesis.smile.iota.responses.GetAccountDataResponse;
+import com.thesis.smile.iota.responses.GetNewAddressResponse;
+import com.thesis.smile.iota.responses.SendTransferResponse;
+import com.thesis.smile.iota.responses.error.NetworkError;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.authentication.register.energy.RegisterEquipmentActivity;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
@@ -25,6 +30,11 @@ import com.thesis.smile.presentation.main.transactions.TransactionsFragment;
 import com.thesis.smile.presentation.privacy_policy.PrivacyPolicyActivity;
 import com.thesis.smile.presentation.settings.SettingsActivity;
 import com.thesis.smile.presentation.utils.KeyboardUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Arrays;
 
 
 public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainViewModel> {
@@ -199,6 +209,7 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
         transactionsFragment.onActivityResult(requestCode, resultCode, data);
 
     }
+
 
 
 
