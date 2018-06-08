@@ -56,7 +56,7 @@ public class TransactionDetailsViewModel extends BaseToolbarViewModel {
     @Bindable
     public String getQuantity() {
         if (transaction!=null){
-            return String.valueOf(transaction.getQuantity()) + " " + getResourceProvider().getString(R.string.kWHour);
+            return String.format("%.2f",transaction.getQuantity()) + " " + getResourceProvider().getString(R.string.kWHour);
         }
         return "";
     }
@@ -64,7 +64,7 @@ public class TransactionDetailsViewModel extends BaseToolbarViewModel {
     @Bindable
     public String getPriceKWH() {
         if (transaction!=null){
-            return String.valueOf(transaction.getPriceKWH()) + " " + getResourceProvider().getString(R.string.coin);
+            return String.format("%.2f",transaction.getPriceKWH()) + " " + getResourceProvider().getString(R.string.coin);
         }
         return "";
     }
