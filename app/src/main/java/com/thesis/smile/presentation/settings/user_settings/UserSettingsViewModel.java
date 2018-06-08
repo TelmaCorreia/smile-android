@@ -3,6 +3,7 @@ package com.thesis.smile.presentation.settings.user_settings;
 import android.databinding.Bindable;
 import android.graphics.drawable.Drawable;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.jakewharton.rxrelay2.PublishRelay;
@@ -66,7 +67,9 @@ public class UserSettingsViewModel extends BaseViewModel {
     @Bindable
     public String getProfileImage() {
         if (user != null){
-            return user.getUrl();
+            //return user.getUrl();
+            return "http://tellma.m-iti.org:8080/users/USFmfypUzrM/image";
+           // return "https://www.google.pt/search?biw=1440&bih=720&tbm=isch&sa=1&ei=4HUNW9XaBaPJgAbTprKwDA&q=desenhos&oq=des&gs_l=img.1.0.0l10.3641.4413.0.5873.3.3.0.0.0.0.160.361.1j2.3.0....0...1c.1.64.img..0.3.358...35i39k1.0.FliPRxfO1hU#imgrc=omv5ScsP6V54cM:";
         }
         return null;
     }
@@ -247,19 +250,16 @@ public class UserSettingsViewModel extends BaseViewModel {
     }
 
 
-
-
     public void setProfilePicture(File profilePictureFile) {
         //TODO
         this.profilePictureFile = profilePictureFile;
         setProfileImage(profilePictureFile.getAbsolutePath());
-        /*userManager.updateUserProfilePic(file)
-                .doOnSubscribe(d -> {
-                    addDisposable(d);
-                    endEdition();
-                })
-                .subscribe(() -> {}, Timber::e);*/
+        userManager.updateUserProfilePic(profilePictureFile)
+                .doOnSubscribe(this::addDisposable)
+                .subscribe();
     }
+
+
 
     public File getProfilePictureFile() {
         return profilePictureFile;
