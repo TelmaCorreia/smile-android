@@ -18,7 +18,7 @@ public class TransactionItemViewModel extends BaseViewModelInstance{
 
     @Bindable
     public String getName() {
-        if (getType().equals("compra")){
+        if (transaction.getType().equals("compra")){
             return transaction.getFrom();
         }
         return transaction.getTo();
@@ -43,12 +43,12 @@ public class TransactionItemViewModel extends BaseViewModelInstance{
 
     @Bindable
     public String getPriceKWH() {
-        return String.valueOf(transaction.getPriceKWH()) + " €";
+        return String.format("%.2f",transaction.getPriceKWH()) + " €";
     }
 
     @Bindable
     public String getQuantity() {
-        return String.valueOf(transaction.getQuantity()) + "kWh";
+        return String.format("%.2f",transaction.getQuantity()) + "kWh";
     }
 
     @Bindable

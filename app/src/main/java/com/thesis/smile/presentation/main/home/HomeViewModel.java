@@ -68,7 +68,7 @@ public class HomeViewModel extends BaseViewModel {
     @Bindable
     public String getBatteryKWH() {
         if(currentEnergy != null){
-            return String.valueOf(currentEnergy.getBatteryKWH());
+            return String.format("%.2f", currentEnergy.getBatteryKWH());
         }
         return getResourceProvider().getString(R.string.no_data_placeholder1);
     }

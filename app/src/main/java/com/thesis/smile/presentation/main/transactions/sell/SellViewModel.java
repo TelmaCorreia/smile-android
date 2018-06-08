@@ -73,8 +73,9 @@ public class SellViewModel extends BaseViewModel {
     public void setSell(boolean sell) {
         if(sellSettings!=null) {
             this.sellSettings.setOn(sell);
-
-            if (sell && sellSettings.isOn() && !previousSettings.isOn()){
+            if (sellSettings.isSpecificPrice() && sellSettings.getSpecificPriceValue()==0){
+                getUiEvents().showToast(getResourceProvider().getString(R.string.alert_price));
+            }else if (sell && sellSettings.isOn() && !previousSettings.isOn()){
                 alertDialog.accept(new OpenDialogEvent());
             }
 
