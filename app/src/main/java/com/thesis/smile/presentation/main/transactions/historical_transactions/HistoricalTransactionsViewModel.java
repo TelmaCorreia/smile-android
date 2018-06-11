@@ -220,10 +220,12 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
     }
 
     private void onTransactionReceived(List<Transaction> transactions) {
+        for (Transaction t: transactions){
+            transactionMap.put(t.getId(), t);
+        }
         int size = transactionMap.size();
-        this.transactionMap = Maps.newHashMap(ImmutableMap.copyOf(Maps.uniqueIndex(transactions, t -> t.getId())));
 
-        if (transactions.size()!= size){ this.transactions.addAll(transactions);}
+        if (this.transactions.size()!= size){ this.transactions.addAll(transactions);}
         setLoading(false);
         this.lastPage= transactions.isEmpty();
         notifyPropertyChanged(BR.emptyViewVisible);

@@ -9,6 +9,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -164,8 +165,12 @@ dependencies {
     //j8 stream backport
     implementation 'com.annimon:stream:1.2.0'
 
+    //firebase
+    implementation 'com.google.firebase:firebase-core:16.0.0'
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+
     api 'com.google.guava:guava:25.1-android'
 
-
-
 }
+
+

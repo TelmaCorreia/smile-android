@@ -62,9 +62,11 @@ public class HomeDetailsViewModel extends BaseToolbarViewModel {
     }
 
     private void onTransactionReceived(List<Transaction> transactions) {
+        for (Transaction t: transactions){
+            transactionMap.put(t.getId(), t);
+        }
         int size = transactionMap.size();
-        this.transactionMap = Maps.uniqueIndex(transactions, t -> t.getId());
-        if (transactions.size()!= size){ this.transactions.addAll(transactions);}
+        if (this.transactions.size()!= size){ this.transactions.addAll(transactions);}
         this.lastPage= transactions.isEmpty();
         setLoading(false);
 
