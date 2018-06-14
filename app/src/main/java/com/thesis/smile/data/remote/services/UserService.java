@@ -43,6 +43,12 @@ public class UserService extends ApiService{
                 .compose(networkMapTransform())
                 .map(BaseResponse::getData);
     }
+
+    public Single<UserRemote> updateFirebaseToken(String token, String firebaseToken){
+        return api.updateFirebaseToken(token, firebaseToken)
+                .compose(networkMapTransform())
+                .map(BaseResponse::getData);
+    }
     public Single<UserRemote> updateEnergyParamsWithToken(String token, User user){
         return api.updateEnergyParams(token, UserMapper.INSTANCE.domainToRemote(user))
                 .compose(networkMapTransform())

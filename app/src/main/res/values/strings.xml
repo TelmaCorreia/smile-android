@@ -287,6 +287,10 @@
     <string name="no_data_placeholder">--.--</string>
     <string name="no_data_placeholder1">--</string>
     <string name="no_data_msg">Não há dados dísponiveis</string>
+    <string name="notification_title">title</string>
+    <string name="notification_text">message</string>
+    <string name="notifications_admin_channel_name">notification_smile_channel</string>
+    <string name="notifications_admin_channel_description">notification_smile_description</string>
 
 
 </resources>

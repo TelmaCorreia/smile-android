@@ -9,7 +9,6 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'com.google.gms.google-services'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -172,5 +171,7 @@ dependencies {
     api 'com.google.guava:guava:25.1-android'
 
 }
+
+apply plugin: 'com.google.gms.google-services'
 
 

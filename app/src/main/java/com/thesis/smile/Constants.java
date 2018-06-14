@@ -19,4 +19,5 @@ public class Constants {
     public static final String AUTH_PREFIX = "Bearer ";
 
 
+    public static final String FIREBASE_TOKEN = "firebaseToken";
 }

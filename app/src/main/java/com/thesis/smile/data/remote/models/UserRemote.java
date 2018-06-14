@@ -38,6 +38,9 @@ public class UserRemote{
     private String encryptedSeed;
 
     @Expose
+    private String firebaseToken;
+
+    @Expose
     private EnergyParamsRemote energyParams;
 
     public UserRemote(){}
@@ -136,5 +139,13 @@ public class UserRemote{
 
     public void setEncryptedSeed(String encryptedSeed) {
         this.encryptedSeed = encryptedSeed;
+    }
+
+    public String getFirebaseToken() {
+        return firebaseToken;
+    }
+
+    public void setFirebaseToken(String firebaseToken) {
+        this.firebaseToken = firebaseToken;
     }
 }

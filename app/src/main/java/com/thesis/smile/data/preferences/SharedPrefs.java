@@ -1,9 +1,12 @@
 package com.thesis.smile.data.preferences;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.thesis.smile.Constants;
 import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.domain.models.Configs;
 import com.thesis.smile.domain.models.User;
@@ -94,6 +97,15 @@ public class SharedPrefs extends BasePreferences {
         deletePreferences(Keys.USER_TOKEN, Keys.USER_DATA, Keys.USER_AUTH_HEADER);
     }
 
+    public String getFirebaseToken(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        return preferences.getString(Constants.FIREBASE_TOKEN, "");
+    }
+
+    public void saveFirebaseToken(String refreshedToken) {
+        saveStringPreference(Keys.FIREBASE_TOKEN, refreshedToken);
+    }
+
     private class Keys {
         static final String USER_TOKEN = "userToken";
         static final String USER_AUTH_HEADER = "userAuthHeader";
@@ -101,5 +113,6 @@ public class SharedPrefs extends BasePreferences {
         static final String CONFIGS = "configs";
         static final String SEED = "seed";
         static final String ADDRESS = "address";
+        static final String FIREBASE_TOKEN = "fireBaseToken";
     }
 }

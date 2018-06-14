@@ -1,10 +1,15 @@
-package com.thesis.smile;
+package com.thesis.smile.utils.notifications;
 
-import android.app.Service;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.thesis.smile.Constants;
+import com.thesis.smile.data.preferences.SharedPrefs;
+
+import javax.inject.Inject;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     public static String TAG = MyFirebaseInstanceIDService.class.getCanonicalName();
@@ -15,9 +20,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
-        //sendRegistrationToServer(refreshedToken);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        preferences.edit().putString(Constants.FIREBASE_TOKEN, refreshedToken).apply();
     }
+
 }

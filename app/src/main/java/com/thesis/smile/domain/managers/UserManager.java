@@ -1,5 +1,9 @@
 package com.thesis.smile.domain.managers;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.thesis.smile.Constants;
 import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.services.UserService;
 import com.thesis.smile.domain.exceptions.NoUserLoggedException;
@@ -45,6 +49,12 @@ public class UserManager {
         String token = sharedPrefs.getUserToken();
 
         return userService.updateUserWithToken(token, user).map(UserMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<User> updateFirebaseToken(){
+        String token = sharedPrefs.getUserToken();
+        String firebase = sharedPrefs.getFirebaseToken();
+        return userService.updateFirebaseToken(token, firebase).map(UserMapper.INSTANCE::remoteToDomain);
     }
 
     public Single<User> updateEnergyParams(User user){

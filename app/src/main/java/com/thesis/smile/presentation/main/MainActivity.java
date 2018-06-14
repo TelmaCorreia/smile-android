@@ -42,7 +42,7 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
     private MenuType currentMenuType;
 
     private static final String TAG_MENU_FRAGMENT = "menu";
-    private static final String TAG_FRAGMENT_TRANSACTIONS = "open_transactions";
+    public static final String TAG_FRAGMENT_TRANSACTIONS = "open_transactions";
 
 
     private HomeFragment homeFragment;

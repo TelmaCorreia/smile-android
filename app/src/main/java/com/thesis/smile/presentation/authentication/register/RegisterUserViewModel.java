@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.R;
+import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
@@ -39,15 +40,16 @@ public class RegisterUserViewModel extends BaseViewModel {
     private Drawable imgForeground;
     private RegisterRequest user = new RegisterRequest();
     private boolean share;
+    private SharedPrefs sharedPrefs;
 
     private PublishRelay<DialogEvent> shareDialogObservable = PublishRelay.create();
     private PublishRelay<NavigationEvent> nextObservable = PublishRelay.create();
     private PublishRelay<Event> editProfilePictureObservable = PublishRelay.create();
 
     @Inject
-    public RegisterUserViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
+    public RegisterUserViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, SharedPrefs sharedPrefs) {
         super(resourceProvider, schedulerProvider, uiEvents);
-
+        this.sharedPrefs = sharedPrefs;
         imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_add_a_photo, null);
 
     }
@@ -164,6 +166,7 @@ public class RegisterUserViewModel extends BaseViewModel {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setVisible(share);
+        user.setFirebaseToken(sharedPrefs.getFirebaseToken());
         if (profilePictureFile!=null) {user.setPicture(profilePictureFile);}
         nextObservable.accept(new NavigationEvent());
     }

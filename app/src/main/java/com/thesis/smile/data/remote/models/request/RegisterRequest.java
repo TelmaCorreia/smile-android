@@ -41,6 +41,10 @@ public class RegisterRequest{
     private String encryptedSeed;
 
     @Expose
+    @SerializedName("firebaseToken")
+    private String firebaseToken;
+
+    @Expose
     @SerializedName("energyParams")
     private EnergyParamsRemote energyParams;
 
@@ -49,7 +53,7 @@ public class RegisterRequest{
     public RegisterRequest(){}
 
     public RegisterRequest(String firstName, String lastName, String email, String password,
-                           String type, boolean visible, boolean manual, String encryptedSeed, EnergyParamsRemote energyParamsRemote) {
+                           String type, boolean visible, boolean manual, String encryptedSeed, String firebaseToken, EnergyParamsRemote energyParamsRemote) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -58,6 +62,7 @@ public class RegisterRequest{
         this.visible = visible;
         this.manual = manual;
         this.encryptedSeed = encryptedSeed;
+        this.firebaseToken = firebaseToken;
         this.energyParams = energyParamsRemote;
     }
 
@@ -139,5 +144,13 @@ public class RegisterRequest{
 
     public void setEncryptedSeed(String encryptedSeed) {
         this.encryptedSeed = encryptedSeed;
+    }
+
+    public String getFirebaseToken() {
+        return firebaseToken;
+    }
+
+    public void setFirebaseToken(String firebaseToken) {
+        this.firebaseToken = firebaseToken;
     }
 }

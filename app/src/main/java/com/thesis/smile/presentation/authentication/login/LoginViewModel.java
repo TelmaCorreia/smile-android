@@ -13,8 +13,10 @@ import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.InvalidCredentialsException;
 import com.thesis.smile.data.remote.exceptions.http.UnauthorizedException;
 import com.thesis.smile.domain.managers.AccountManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.managers.UtilsManager;
 import com.thesis.smile.domain.models.Configs;
+import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.SpanUtils;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
@@ -32,6 +34,7 @@ import io.reactivex.Observable;
 public class LoginViewModel extends BaseViewModel {
 
     private AccountManager accountManager;
+    private UserManager userManager;
     private UtilsManager utilsManager;
 
     private String email = "";
@@ -44,11 +47,12 @@ public class LoginViewModel extends BaseViewModel {
 
     @Inject
     public LoginViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
-                          UiEvents uiEvents, AccountManager accountManager, UtilsManager utilsManager) {
+                          UiEvents uiEvents, AccountManager accountManager, UtilsManager utilsManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
         this.accountManager = accountManager;
         this.utilsManager = utilsManager;
+        this.userManager = userManager;
 
     }
 
@@ -115,7 +119,6 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     public void onRecoverPasswordClick() {
-
             openRecoverPasswordObservable.accept(new NavigationEvent());
     }
 
@@ -148,8 +151,16 @@ public class LoginViewModel extends BaseViewModel {
 
     private void onLoginComplete(){
         startLoginObservable.accept(new Event());
+       /* userManager.updateFirebaseToken()
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onUpdateFirebaseTokenComplete, this::onError);*/
+
     }
 
+    private void onUpdateFirebaseTokenComplete(User user) {
+        startLoginObservable.accept(new Event());
+    }
 
 
     @Override
