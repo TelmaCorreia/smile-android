@@ -128,7 +128,8 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     private void onRegisterComplete() {
         //Generate an address to receive money (only on)
-        generateNewAddress();
+        //generateNewAddress();
+        next();
         if (request.getPicture()!=null){
             userManager.updateUserProfilePic(request.getPicture())
                     .compose(loadingTransformCompletable())
