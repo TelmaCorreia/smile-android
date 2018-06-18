@@ -18,7 +18,5 @@ public interface RankingMapper extends BaseMapper<Ranking, RankingRemote> {
 
     Ranking remoteToDomain(RankingRemote remote);
 
-    List<Ranking> remoteToDomain(List<RankingRemote> remote);
-
 
 }

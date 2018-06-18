@@ -31,7 +31,7 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding, Rankin
 
     @Override
     protected void initViews(FragmentRankingBinding binding) {
-        initRankings(new Event());
+        //initRankings(new Event());
     }
 
 
@@ -48,32 +48,10 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding, Rankin
     private void initRankings(Event event) {
 
         LinearLayoutManager layoutManagerConsumer = new LinearLayoutManager(getContext());
-        //TODO:discomment
-        //List<RankingHeader> rankingHeaders = getViewModel().getRanking();
-        List<RankingHeader> rankingHeaders = getRanking();
+        List<RankingHeader> rankingHeaders = getViewModel().getRanking();
         RankingAdapter adapter = new RankingAdapter(getContext(), rankingHeaders);
         adapter.toggleGroup(0);
         getBinding().rankingList.setLayoutManager(layoutManagerConsumer);
         getBinding().rankingList.setAdapter(adapter);
     }
-
-    public List<RankingHeader> getRanking() {
-        List<RankingHeader> rankingHeaders = new ArrayList<>();
-        List<Ranking> rankings = new ArrayList<>();
-        rankings.add(new Ranking("Professor", "1º", "90% de energia solar", ""));
-        rankings.add(new Ranking("Tókyo", "2º", "80% de energia solar", ""));
-        rankings.add(new Ranking("Rio", "3º", "79% de energia solar", ""));
-        rankings.add(new Ranking("Denver", "4º", "60% de energia solar", ""));
-        rankings.add(new Ranking("Nairóbi", "5º", "40% de energia solar", ""));
-        rankings.add(new Ranking("Oslo", "6º", "40% de energia solar", ""));
-        rankings.add(new Ranking("Helsinque", "7º", "39.5% de energia solar", ""));
-        rankings.add(new Ranking("Berlim", "8º", "37% de energia solar", ""));
-        rankings.add(new Ranking("Moscou", "9º", "36% de energia solar", ""));
-        rankings.add(new Ranking("Estocolmo", "10º", "30% de energia solar", ""));
-        RankingHeader rankingHeader = new RankingHeader(getResources().getString(R.string.ranking_current_week_title), rankings);
-        rankingHeaders.add(rankingHeader);
-        RankingHeader rankingHeader1 = new RankingHeader(getResources().getString(R.string.ranking_previous_week_title), rankings);
-        rankingHeaders.add(rankingHeader1);
-        rankingHeaders.add(new RankingHeader("", new ArrayList<>()));
-        return rankingHeaders;    }
 }

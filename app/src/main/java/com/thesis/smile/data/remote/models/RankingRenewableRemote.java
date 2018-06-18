@@ -1,6 +1,7 @@
 package com.thesis.smile.data.remote.models;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -8,30 +9,31 @@ import java.util.List;
 public class RankingRenewableRemote {
 
     @Expose
-    private String title;
+    private int quantity;
     @Expose
-    private List<RankingRemote> rankings;
+    @SerializedName("rankingList")
+    private List<RankingRemoteList> rankings;
 
     public RankingRenewableRemote(){}
 
-    public RankingRenewableRemote(String title, List<RankingRemote> rankings){
-        this.title = title;
+    public RankingRenewableRemote(int quantity, List<RankingRemoteList> rankings){
+        this.quantity = quantity;
         this.rankings = rankings;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<RankingRemote> getRankings() {
+    public List<RankingRemoteList> getRankings() {
         return rankings;
     }
 
-    public void setRankings(List<RankingRemote> rankings) {
+    public void setRankings(List<RankingRemoteList> rankings) {
         this.rankings = rankings;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

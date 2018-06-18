@@ -123,7 +123,10 @@ public class HomeViewModel extends BaseViewModel {
 
     @Bindable
     public int getUserTypeProsumer(){
-        return userManager.getCurrentUser().getType().equals(getResourceProvider().getString(R.string.consumer))? View.GONE : View.VISIBLE;
+        if(userManager.getCurrentUser()!=null && userManager.getCurrentUser().getType() !=null ){
+            return userManager.getCurrentUser().getType().equals(getResourceProvider().getString(R.string.consumer))? View.GONE : View.VISIBLE;
+        }
+        return View.VISIBLE;
 
     }
 

@@ -2,18 +2,10 @@ package com.thesis.smile.domain.managers;
 
 import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.services.RankingService;
-import com.thesis.smile.data.remote.services.TransactionsService;
-import com.thesis.smile.domain.mapper.CurrentEnergyMapper;
-import com.thesis.smile.domain.mapper.RankingHeaderMapper;
-import com.thesis.smile.domain.mapper.TotalsMapper;
-import com.thesis.smile.domain.mapper.TransactionMapper;
-import com.thesis.smile.domain.models.CurrentEnergy;
-import com.thesis.smile.domain.models.RankingHeader;
-import com.thesis.smile.domain.models.RankingHeaderTest;
-import com.thesis.smile.domain.models.Totals;
-import com.thesis.smile.domain.models.Transaction;
-
-import org.threeten.bp.LocalDate;
+import com.thesis.smile.domain.mapper.RankingListMapper;
+import com.thesis.smile.domain.mapper.RankingMapper;
+import com.thesis.smile.domain.models.Ranking;
+import com.thesis.smile.domain.models.RankingModelList;
 
 import java.util.List;
 
@@ -34,10 +26,10 @@ public class RankingsManager {
         this.sharedPrefs = sharedPrefs;
     }
 
-    public Single<List<RankingHeaderTest>> getRankingRenewablesUsage(){
+    public Single<List<RankingModelList>> getRankingRenewablesUsage(){
         String token = sharedPrefs.getUserToken();
         return rankingService.getRankingRenewablesUsage(token)
-                .map(RankingHeaderMapper.INSTANCE::remoteToDomain);
+                .map(RankingListMapper.INSTANCE::remoteToDomain);
     }
 
 }

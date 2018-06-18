@@ -3,21 +3,27 @@ package com.thesis.smile.domain.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.threeten.bp.LocalDate;
+
+
 public class Ranking implements Parcelable {
 
     private String name;
     private String position;
     private String description;
     private String picture;
+    private LocalDate date;
 
     public Ranking(){}
 
-    public Ranking(String name, String position, String description, String picture) {
+    public Ranking(String name, String position, String description, String picture, LocalDate date) {
         this.name = name;
         this.position = position;
         this.description = description;
         this.picture = picture;
+        this.date = date;
     }
+
 
     protected Ranking(Parcel in) {
         name = in.readString();
@@ -68,6 +74,14 @@ public class Ranking implements Parcelable {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override

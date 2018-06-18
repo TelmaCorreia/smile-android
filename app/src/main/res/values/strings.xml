@@ -266,7 +266,7 @@
     <string name="tariff_link"><u>https://www.eem.pt/media/324637/monofolha_tarif_btn_ts_2018.pdf</u></string>
 
     <!-- Ranking -->
-    <string name="ranking_title_top">Top 20: veja quem consumiu mais energia solar!</string>
+    <string name="ranking_title_top">Top 10: veja quem consumiu mais energia solar!</string>
     <string name="ranking_current_week_title">Ranking desta semana</string>
     <string name="ranking_previous_week_title">Ranking da semana anterior</string>
     <string name="ranking_general_week_title">Ranking</string>
