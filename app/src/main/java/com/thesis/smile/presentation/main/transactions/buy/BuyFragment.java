@@ -204,7 +204,7 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
         List<Neighbour> neighbours = new ArrayList<>();
         neighbours.addAll(getViewModel().getNeighbours());
-        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.consumers_title), getResources().getString(R.string.consumers_description), neighbours);
+        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.suppliers_title), getResources().getString(R.string.consumers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);
         neighbourHeaders.add(new NeighbourHeader("", "", new ArrayList<>()));
         return neighbourHeaders;
