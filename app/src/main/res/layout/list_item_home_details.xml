@@ -129,7 +129,7 @@
             style="@style/Text7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.position}"
+            android:text="@{viewModel.quantity}"
             tools:text="2 kWh" />
 
         <TextView
