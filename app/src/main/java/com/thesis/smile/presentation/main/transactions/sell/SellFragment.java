@@ -141,6 +141,8 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
 
             if (neighboursSize==0 || allNeighboursOff){
                 description += " - Não consegue vender energia a nenhum vizinho;\n";
+            }else if (getViewModel().isAllNeighboursSelected()){
+                description += " - Pode comprar energia ao todos os vizinhos;\n";
             }else{
                 description += " - Pode vender energia aos vizinhos especificados;\n";
             }

@@ -13,12 +13,15 @@ import com.thesis.smile.domain.models.EnergyParams;
 import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
+import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 public class EnergySettingsViewModel extends BaseViewModel {
 
@@ -31,9 +34,7 @@ public class EnergySettingsViewModel extends BaseViewModel {
     private boolean manual = false;
     private boolean previousManual;
 
-    private PublishRelay<Event> saveObservable = PublishRelay.create();
-    private PublishRelay<NavigationEvent> openGeneralInfoObservable = PublishRelay.create();
-    private PublishRelay<NavigationEvent> openCycleInfoObservable = PublishRelay.create();
+    private PublishRelay<NavigationEvent> openLearnMore = PublishRelay.create();
 
     @Inject
     public EnergySettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
@@ -166,9 +167,12 @@ public class EnergySettingsViewModel extends BaseViewModel {
         return false; //could be useful int the future
     }
 
+    Observable<NavigationEvent> openLearMoreObservable(){
+        return openLearnMore;
+    }
 
     public void onLearnMoreClick(){
-
+        openLearnMore.accept(new NavigationEvent());
     }
 
     public Configs getConfigs() {

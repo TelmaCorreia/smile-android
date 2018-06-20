@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentUserSettingsBinding;
+import com.thesis.smile.presentation.authentication.register.energy.info.AutomaticSettingsInfoActivity;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.utils.KeyboardUtils;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;

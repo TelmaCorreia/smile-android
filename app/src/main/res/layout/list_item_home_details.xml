@@ -129,14 +129,14 @@
             style="@style/Text7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.quantity}"
+            android:text="@{viewModel.position}"
             tools:text="2 kWh" />
 
         <TextView
             style="@style/Text6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/quantity" />
+            android:text="@string/position" />
     </LinearLayout>
 
 

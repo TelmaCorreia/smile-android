@@ -5,25 +5,25 @@ import java.util.List;
 
 public class RankingModel {
 
-    private int quantity;
+    private int position;
     private List<RankingModelList> rankings;
 
     public RankingModel(){
 
     }
 
-    public RankingModel(int quantity, List<RankingModelList> rankings) {
-        this.quantity = quantity;
+    public RankingModel(int position, List<RankingModelList> rankings) {
+        this.position = position;
         this.rankings = rankings;
     }
 
 
-    public int getQuantity() {
-        return quantity;
+    public int getPosition() {
+        return position;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public List<RankingModelList> getRankings() {

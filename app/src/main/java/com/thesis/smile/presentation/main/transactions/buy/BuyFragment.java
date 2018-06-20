@@ -116,7 +116,10 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
 
             if (neighboursSize==0 || allNeighboursOff){
                 description += " - Não comprar energia a nenhum vizinho;\n";
-            }else{
+            }else if (getViewModel().isAllNeighboursSelected()){
+                description += " - Pode comprar energia ao todos os vizinhos;\n";
+            }
+            else{
                 description += " - Pode comprar energia aos vizinhos especificados;\n";
             }
             if (alarmsSize==0 || allTimeIntervalsOff){
@@ -204,7 +207,7 @@ public class BuyFragment extends BaseFragment<FragmentBuyBinding, BuyViewModel> 
         List<NeighbourHeader> neighbourHeaders = new ArrayList<>();
         List<Neighbour> neighbours = new ArrayList<>();
         neighbours.addAll(getViewModel().getNeighbours());
-        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.suppliers_title), getResources().getString(R.string.consumers_description), neighbours);
+        NeighbourHeader neighbourHeader = new NeighbourHeader(getResources().getString(R.string.suppliers_title), getResources().getString(R.string.suppliers_description), neighbours);
         neighbourHeaders.add(neighbourHeader);
         neighbourHeaders.add(new NeighbourHeader("", "", new ArrayList<>()));
         return neighbourHeaders;

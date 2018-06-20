@@ -152,7 +152,7 @@
     <string name="price_kwH">Preço por kWh</string>
     <string name="total_bought">Total da Compra</string>
     <string name="total_sold">Total da Venda</string>
-    <string name="quantity">Quantidade</string>
+    <string name="position">Quantidade</string>
 
     <!--Settings-->
     <string name="tab_user_settings">Definições da Conta</string>

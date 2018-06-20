@@ -1,21 +1,15 @@
 package com.thesis.smile.presentation.settings.energy_settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentEnergySettingsBinding;
+import com.thesis.smile.presentation.authentication.register.energy.info.AutomaticSettingsInfoActivity;
 import com.thesis.smile.presentation.base.BaseFragment;
-import com.thesis.smile.presentation.utils.KeyboardUtils;
+import com.thesis.smile.presentation.settings.user_settings.ChangePasswordActivity;
 import com.thesis.smile.presentation.utils.SortUtils;
 import com.thesis.smile.presentation.utils.adapters.NothingSelectedSpinnerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsBinding, EnergySettingsViewModel> {
 
@@ -32,6 +26,17 @@ public class EnergySettingsFragment extends BaseFragment<FragmentEnergySettingsB
     @Override
     protected Class<EnergySettingsViewModel> viewModelClass() {
         return EnergySettingsViewModel.class;
+    }
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+
+        getViewModel().openLearMoreObservable()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    AutomaticSettingsInfoActivity.launch(getContext());
+                });
     }
 
     @Override

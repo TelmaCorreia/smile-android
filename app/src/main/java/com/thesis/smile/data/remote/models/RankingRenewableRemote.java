@@ -9,15 +9,15 @@ import java.util.List;
 public class RankingRenewableRemote {
 
     @Expose
-    private int quantity;
+    private int position;
     @Expose
     @SerializedName("rankingList")
     private List<RankingRemoteList> rankings;
 
     public RankingRenewableRemote(){}
 
-    public RankingRenewableRemote(int quantity, List<RankingRemoteList> rankings){
-        this.quantity = quantity;
+    public RankingRenewableRemote(int position, List<RankingRemoteList> rankings){
+        this.position = position;
         this.rankings = rankings;
     }
 
@@ -29,11 +29,11 @@ public class RankingRenewableRemote {
         this.rankings = rankings;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getPosition() {
+        return position;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

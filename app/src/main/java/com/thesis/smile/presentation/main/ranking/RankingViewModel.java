@@ -2,9 +2,7 @@ package com.thesis.smile.presentation.main.ranking;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.domain.managers.RankingsManager;
-import com.thesis.smile.domain.models.Ranking;
 import com.thesis.smile.domain.models.RankingHeader;
-import com.thesis.smile.domain.models.RankingModel;
 import com.thesis.smile.domain.models.RankingModelList;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
@@ -12,9 +10,7 @@ import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
-import org.threeten.bp.LocalDate;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
