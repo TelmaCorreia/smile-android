@@ -4,6 +4,7 @@ import android.databinding.Bindable;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
+import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
@@ -11,6 +12,7 @@ import com.thesis.smile.domain.managers.IotaManager;
 import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.managers.UtilsManager;
 import com.thesis.smile.domain.models.Configs;
+import com.thesis.smile.domain.models.User;
 import com.thesis.smile.domain.models_iota.Address;
 import com.thesis.smile.iota.IotaTaskManager;
 import com.thesis.smile.iota.requests.GetNewAddressRequest;
@@ -54,6 +56,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private PublishRelay<DialogEvent> seedDialogObservable = PublishRelay.create();
     private PublishRelay<Event> radioChanged = PublishRelay.create();
     private boolean loading = false;
+    private boolean registerEnabled = true;
 
     @Inject
     public RegisterEquipmentViewModel(ResourceProvider resourceProvider,
@@ -71,9 +74,13 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     @Bindable
     public boolean isRegisterEnabled() {
-        return true; //could be useful int the future
+        return registerEnabled;
     }
 
+    public void  setRegisterEnabled(boolean registerEnabled){
+        this.registerEnabled = registerEnabled;
+        notifyPropertyChanged(BR.registerEnabled);
+    }
     @Bindable
     public boolean isEquipmentEnabled() {
         return false; //could be useful int the future
@@ -127,9 +134,9 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     private void onRegisterComplete() {
-        //Generate an address to receive money (only on)
-        //generateNewAddress();
-        next();
+        //Generate an address to receive money (only one)
+        generateNewAddress();
+        //next();
         if (request.getPicture()!=null){
             userManager.updateUserProfilePic(request.getPicture())
                     .compose(loadingTransformCompletable())
@@ -141,6 +148,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     public void generateNewAddress() {
+        setRegisterEnabled(false);
         iotaManager.generateNewAddress();
     }
 
@@ -222,10 +230,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         iotaManager.attachNewAddress(address);
     }
 
-    public void getAccountData() {
-        iotaManager.getAccountData();
-    }
-
     @Bindable
     public boolean isLoadingVisible(){
         return this.loading;
@@ -237,8 +241,8 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     public void saveAddress(String address) {
-        //TODO send to the server
         userManager.saveAddress(address);
+
     }
 
     public void next() {
@@ -248,4 +252,21 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
             startMainObservable.accept(new NavigationEvent());
         }
     }
+
+    public void sendAddress(){
+        getUiEvents().showToast("Endereço gerado, verifique a sua conta dentro de 1h!");
+        next();
+    }
+
+    @Override
+    protected void onError(Throwable e){
+        super.onError(e);
+        getUiEvents().showToast("Erro ao enviar o endereço. Vá às definições da conta IOTA e envie um novo endereço!");
+        next();
+    }
+
+    private void onAddressUpdated(User user) {
+
+    }
+
 }

@@ -49,6 +49,13 @@ public class UserService extends ApiService{
                 .compose(networkMapTransform())
                 .map(BaseResponse::getData);
     }
+
+    public Single<UserRemote> updateIotaAddress(String token, String iotaAddress){
+        return api.updateIotaAddress(token, iotaAddress)
+                .compose(networkMapTransform())
+                .map(BaseResponse::getData);
+    }
+
     public Single<UserRemote> updateEnergyParamsWithToken(String token, User user){
         return api.updateEnergyParams(token, UserMapper.INSTANCE.domainToRemote(user))
                 .compose(networkMapTransform())

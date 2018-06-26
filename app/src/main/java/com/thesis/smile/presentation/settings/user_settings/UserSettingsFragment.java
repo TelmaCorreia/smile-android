@@ -86,31 +86,12 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::updateRadio);
 
-        getViewModel().observeShowSeedDialog()
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(this::showSeedDialog);
 
         getViewModel()
                 .observeEditProfilePicture()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> editPicture());
 
-    }
-
-    private void showSeedDialog(DialogEvent dialogEvent) {
-        showSeedDialog = new CustomInputDialog(this.getActivity());
-        showSeedDialog.setTitle(R.string.dialog_show_seed_title);
-        showSeedDialog.setMessage(R.string.dialog_show_seed_description);
-        showSeedDialog.setPrompt(R.string.prompt_pass);
-        showSeedDialog.setOkButtonText(R.string.button_ok);
-        showSeedDialog.setCloseButtonText(R.string.button_cancel);
-        showSeedDialog.setDismissible(true);
-        showSeedDialog.setOnOkClickListener(() -> {
-            getViewModel().decrypSeed(showSeedDialog.getInput());
-            showSeedDialog.dismiss();
-        });
-        showSeedDialog.setOnCloseClickListener(() ->{showSeedDialog.dismiss();});
-        showSeedDialog.show();
     }
 
     private void initRadioButton() {

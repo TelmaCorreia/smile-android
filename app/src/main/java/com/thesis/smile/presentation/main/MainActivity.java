@@ -19,6 +19,7 @@ import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.authentication.register.energy.RegisterEquipmentActivity;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
 import com.thesis.smile.presentation.base.toolbar.ToolbarActionType;
+import com.thesis.smile.presentation.iota_settings.IotaSettingsActivity;
 import com.thesis.smile.presentation.main.historical.HistoricalFragment;
 import com.thesis.smile.presentation.main.home.HomeFragment;
 import com.thesis.smile.presentation.main.menu_events.MenuType;
@@ -43,7 +44,7 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
 
     private static final String TAG_MENU_FRAGMENT = "menu";
     public static final String TAG_FRAGMENT_TRANSACTIONS = "open_transactions";
-
+    private String TAG = "IOTA";
 
     private HomeFragment homeFragment;
     private HistoricalFragment historicalFragment;
@@ -69,7 +70,7 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
     @Override
     protected void initArguments(Bundle args) {
         super.initArguments(args);
-        this.transactions = args.getBoolean(TAG_FRAGMENT_TRANSACTIONS);
+        this.transactions = (args!=null)?args.getBoolean(TAG_FRAGMENT_TRANSACTIONS):false;
 
     }
     @Override
@@ -195,6 +196,9 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
             case R.id.action_privacy:
                 PrivacyPolicyActivity.launch(this);
                 break;
+            case R.id.action_iota_settings:
+                IotaSettingsActivity.launch(this);
+                break;
             case R.id.action_logout: {
                 getViewModel().logout();
                 break;
@@ -209,8 +213,5 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
         transactionsFragment.onActivityResult(requestCode, resultCode, data);
 
     }
-
-
-
 
 }

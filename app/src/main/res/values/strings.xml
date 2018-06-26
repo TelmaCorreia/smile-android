@@ -5,6 +5,8 @@
     <string name="logout">Logout</string>
     <string name="settings">Definições</string>
     <string name="privacy">Política de privacidade</string>
+    <string name="iota_settings">Definições da conta IOTA</string>
+
 
     <!-- Login -->
     <string name="prompt_email">Email</string>
@@ -168,8 +170,21 @@
     <string name="equipment">Equipamento</string>
     <string name="buy_and_sell_config">Configurações de compra e venda</string>
     <string name="user_type">Tipo de utilizador</string>
-    <string name="show_seed">Ver a minha chave IOTA</string>
 
+    <!--Wallet-->
+    <string name="wallet_title">Valor Actual</string>
+    <string name="wallet_value_euro">10.5 €</string>
+    <string name="wallet_value_iota">10 iota</string>
+    <string name="wallet_get_free_iota">Obter IOTAs gratuitamente</string>
+    <string name="wallet_get_more_iota">Obter mais IOTAs</string>
+    <string name="wallet_my_seed">A MINHA CHAVE</string>
+    <string name="show_seed">Ver a minha chave IOTA</string>
+    <string name="hide_seed">Esconder a minha chave</string>
+    <string name="wallet_income">receitas</string>
+    <string name="wallet_outcome">despesas</string>
+    <string name="wallet_tab_day">Dia</string>
+    <string name="wallet_tab_month">Mês</string>
+    <string name="wallet_tab_week">Semana</string>
 
     <!-- Units -->
     <string name="watt">W</string>
@@ -291,6 +306,11 @@
     <string name="notification_text">message</string>
     <string name="notifications_admin_channel_name">notification_smile_channel</string>
     <string name="notifications_admin_channel_description">notification_smile_description</string>
+
+    <!--Notifications-->
+    <string name="notification_attaching_new_address_response_failed_title">Falhou a criação do endereço. Por favor, tente outra vez</string>
+    <string name="notification_attaching_new_address_response_succeeded_title">Endereço criado com sucesso!</string>
+    <string name="notification_attaching_new_address_request_title">A criar o endereço...</string>
 
 
 </resources>

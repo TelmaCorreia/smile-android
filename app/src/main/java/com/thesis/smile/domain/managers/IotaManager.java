@@ -11,6 +11,7 @@ import com.thesis.smile.iota.IotaTaskManager;
 import com.thesis.smile.iota.requests.GetAccountDataRequest;
 import com.thesis.smile.iota.requests.GetNewAddressRequest;
 import com.thesis.smile.iota.requests.NodeInfoRequest;
+import com.thesis.smile.iota.requests.ReplayBundleRequest;
 import com.thesis.smile.iota.requests.SendTransferRequest;
 import com.thesis.smile.iota.responses.GetAccountDataResponse;
 import com.thesis.smile.iota.responses.GetNewAddressResponse;
@@ -68,46 +69,16 @@ public class IotaManager {
         iotaTaskManager.startNewRequestTask(nir);
 
     }
-    /*@Subscribe
-    public void onEvent(GetAccountDataResponse gad) {
-        addresses = gad.getAddresses();
-    }
 
-    @Subscribe
-    public void onEvent(GetNewAddressResponse getNewAddressResponse) {
-        //attach new
-        attachNewAddress(getNewAddressResponse.getAddresses().get(0));
-    }
-
-    @Subscribe
-    public void onEvent(SendTransferResponse str) {
-        if (Arrays.asList(str.getSuccessfully()).contains(true))
-            getAccountData();
-    }
-
-    @Subscribe
-    public void onEvent(NodeInfoResponse nodeInfoResponse) {
-        if (nodeInfoResponse.getLatestMilestoneIndex() == (nodeInfoResponse.getLatestSolidSubtangleMilestoneIndex())) {
-            getAccountData();
-        } else {
-            Log.d(TAG, "NOT synced!");
-        }
+    public void sendTransfer(String address) {
+        SendTransferRequest sendTransferRequest = new SendTransferRequest(seed, address, "1", "", Constants.NEW_TRANSFER_TAG);
+        iotaTaskManager.startNewRequestTask(sendTransferRequest);
     }
 
 
-    @Subscribe
-    public void onEvent(NetworkError error) {
-        switch (error.getErrorType()) {
-            case ACCESS_ERROR:
-                Log.d(TAG, "Access errot!");
-                getNodeInfo();
-                break;
-            case REMOTE_NODE_ERROR:
-                Log.d(TAG, "Remote node errot!");
-                addresses.clear();
-                break;
-        }
-    }
-*/
+    public void reattachAddress(String hash) {
+        ReplayBundleRequest replayBundleRequest = new ReplayBundleRequest(hash);
+        iotaTaskManager.startNewRequestTask(replayBundleRequest);
 
+    }
 }

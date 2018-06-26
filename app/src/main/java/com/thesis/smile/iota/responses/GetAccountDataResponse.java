@@ -124,4 +124,5 @@ public class GetAccountDataResponse extends ApiResponse {
         this.balance = balance;
     }
 
+
 }

@@ -33,7 +33,6 @@ public class UserSettingsViewModel extends BaseViewModel {
     private String profileImage = "";
     private File profilePictureFile;
     private Drawable imgForeground;
-    private String seed = "";
 
     private UserManager userManager;
     private User user;
@@ -129,15 +128,7 @@ public class UserSettingsViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.saveEnabled);
     }
 
-    @Bindable
-    public String getSeed() {
-        return this.seed;
-    }
 
-    public void setSeed(String seed) {
-       this.seed=seed;
-       notifyPropertyChanged(BR.seed);
-    }
 
     public String getUserType(){
         if (user!=null){
@@ -212,10 +203,6 @@ public class UserSettingsViewModel extends BaseViewModel {
     public void onLearnMoreClick(){
 
     }
-    
-    public void onShowSeedClick(){
-        showSeedDialog.accept(new DialogEvent());
-    }
 
     private void onUpdateComplete(User user) {
         userManager.saveUser(user);
@@ -277,14 +264,5 @@ public class UserSettingsViewModel extends BaseViewModel {
     }
 
 
-    public void decrypSeed(String input) {
-        String seed = "";
-        try {
-            AESCrypt aes = new AESCrypt(input);
-            seed = aes.decrypt(user.getEncryptedSeed());
-        } catch (Exception e) {
-            getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed_decypher));
-        }
-        setSeed(seed);
-    }
+
 }

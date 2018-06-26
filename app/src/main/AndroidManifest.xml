@@ -109,6 +109,11 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".presentation.iota_settings.IotaSettingsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".presentation.authentication.register.energy.info.AutomaticSettingsInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />

@@ -27,6 +27,9 @@ public interface UserApi {
     @PUT("users/firebase/{token}/{firebaseToken}")
     Single<Response<UserResponse>> updateFirebaseToken(@Path("token") String userId, @Path("firebaseToken") String firebaseToken);
 
+    @PUT("users/iotaAddress/{token}/{address}")
+    Single<Response<UserResponse>> updateIotaAddress(@Path("token") String userId, @Path("address") String iotaAddress);
+
     @PUT("users/{token}/energyParams")
     Single<Response<UserResponse>> updateEnergyParams(@Path("token") String userId, @Body UserRemote user);
 

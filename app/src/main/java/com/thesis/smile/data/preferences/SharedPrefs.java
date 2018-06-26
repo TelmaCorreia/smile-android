@@ -6,11 +6,16 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thesis.smile.Constants;
 import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.domain.models.Configs;
 import com.thesis.smile.domain.models.User;
 import com.thesis.smile.domain.models_iota.Address;
+import com.thesis.smile.domain.models_iota.Transfer;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -94,7 +99,7 @@ public class SharedPrefs extends BasePreferences {
     }
 
     public void deleteUserData() {
-        deletePreferences(Keys.USER_TOKEN, Keys.USER_DATA, Keys.USER_AUTH_HEADER);
+        deletePreferences(Keys.USER_TOKEN, Keys.USER_DATA, Keys.USER_AUTH_HEADER, Keys.SEED, Keys.ADDRESS, Keys.TRANSFERS);
     }
 
     public String getFirebaseToken(){
@@ -106,6 +111,21 @@ public class SharedPrefs extends BasePreferences {
         saveStringPreference(Keys.FIREBASE_TOKEN, refreshedToken);
     }
 
+    public void saveTransfers(List<Transfer> transfers) {
+        Gson gson = new Gson();
+        String json = gson.toJson(transfers);
+        saveStringPreference(Keys.TRANSFERS, json);
+
+    }
+
+    public List<Transfer> getTransfers(){
+        Gson gson = new Gson();
+        String json = getStringPreference(Keys.TRANSFERS);
+        Type listType = new TypeToken<List<Transfer>>(){}.getType();
+
+        return gson.fromJson(json, listType);
+    }
+
     private class Keys {
         static final String USER_TOKEN = "userToken";
         static final String USER_AUTH_HEADER = "userAuthHeader";
@@ -113,6 +133,7 @@ public class SharedPrefs extends BasePreferences {
         static final String CONFIGS = "configs";
         static final String SEED = "seed";
         static final String ADDRESS = "address";
+        static final String TRANSFERS = "transfers";
         static final String FIREBASE_TOKEN = "fireBaseToken";
     }
 }

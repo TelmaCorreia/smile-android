@@ -6,6 +6,7 @@ import com.thesis.smile.di.modules.activities.CycleInfoActivityModule;
 import com.thesis.smile.di.modules.activities.GeneralInfoActivityModule;
 import com.thesis.smile.di.modules.activities.HomeDetailsActivityModule;
 import com.thesis.smile.di.modules.activities.InfoPriceActivityModule;
+import com.thesis.smile.di.modules.activities.IotaSettingsActivityModule;
 import com.thesis.smile.di.modules.activities.LoginActivityModule;
 import com.thesis.smile.di.modules.activities.MainActivityModule;
 import com.thesis.smile.di.modules.activities.PrivacyPolicyActivityModule;
@@ -26,6 +27,7 @@ import com.thesis.smile.presentation.authentication.register.energy.RegisterEqui
 import com.thesis.smile.presentation.authentication.register.energy.info.AutomaticSettingsInfoActivity;
 import com.thesis.smile.presentation.authentication.register.energy.info.CycleInfoActivity;
 import com.thesis.smile.presentation.authentication.register.energy.info.GeneralInfoActivity;
+import com.thesis.smile.presentation.iota_settings.IotaSettingsActivity;
 import com.thesis.smile.presentation.main.MainActivity;
 import com.thesis.smile.presentation.main.home.HomeDetailsActivity;
 import com.thesis.smile.presentation.info_price.InfoPriceActivity;
@@ -109,4 +111,9 @@ public abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = AutomaticSettingsInfoActivityModule.class)
     abstract AutomaticSettingsInfoActivity automaticSettingsInfoActivity();
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = IotaSettingsActivityModule.class)
+    abstract IotaSettingsActivity iotaSettingsActivity();
+
 }

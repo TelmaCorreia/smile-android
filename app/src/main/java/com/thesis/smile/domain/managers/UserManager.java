@@ -11,9 +11,11 @@ import com.thesis.smile.domain.mapper.UserMapper;
 import com.thesis.smile.domain.models.EnergyParams;
 import com.thesis.smile.domain.models.User;
 import com.thesis.smile.domain.models_iota.Address;
+import com.thesis.smile.domain.models_iota.Transfer;
 
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -57,6 +59,12 @@ public class UserManager {
         return userService.updateFirebaseToken(token, firebase).map(UserMapper.INSTANCE::remoteToDomain);
     }
 
+    public Single<User> updateIotaAddress(){
+        String token = sharedPrefs.getUserToken();
+        String address = sharedPrefs.getAddress();
+        return userService.updateIotaAddress(token, address).map(UserMapper.INSTANCE::remoteToDomain);
+    }
+
     public Single<User> updateEnergyParams(User user){
         String token = sharedPrefs.getUserToken();
 
@@ -82,7 +90,6 @@ public class UserManager {
     }
 
     public String getSeed(){
-
         return sharedPrefs.getSeed();
     }
 
@@ -91,8 +98,14 @@ public class UserManager {
     }
 
     public String getAddress(){
-
         return sharedPrefs.getAddress();
     }
 
+    public void saveTransfers(List<Transfer> transfers) {
+        sharedPrefs.saveTransfers(transfers);
+    }
+
+    public List<Transfer> getTransfers() {
+        return sharedPrefs.getTransfers();
+    }
 }

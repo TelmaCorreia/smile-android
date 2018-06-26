@@ -9,6 +9,7 @@ public class Constants {
     public static final int PAGE_SIZE = 10;
 
     public static final String NEW_ADDRESS_TAG = "NEW9ADDRESS9999999999999999";
+    public static final String NEW_TRANSFER_TAG = "ANDROID9WALLET9TRANSFER9999";
     public static final String PREFERENCE_NODE_PROTOCOL = "preference_node_protocol";
     public static final String PREFERENCE_NODE_IP = "preference_node_ip";
     public static final String PREFERENCE_NODE_PORT = "preference_node_port";
@@ -20,4 +21,5 @@ public class Constants {
 
 
     public static final String FIREBASE_TOKEN = "firebaseToken";
+    public static final String ACTION_MAIN = "ACTION_MAIN";
 }

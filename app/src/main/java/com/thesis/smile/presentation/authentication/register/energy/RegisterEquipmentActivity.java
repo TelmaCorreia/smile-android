@@ -211,13 +211,10 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
     @Subscribe
     public void onEvent(SendTransferResponse str) {
         if (Arrays.asList(str.getSuccessfully()).contains(true))
-            getViewModel().getAccountData();
+            getViewModel().sendAddress();
     }
 
-    @Subscribe
-    public void onEvent(GetAccountDataResponse gad) {
-        getViewModel().next();
-    }
+
 
     @Subscribe
     public void onEvent(NetworkError error) {
