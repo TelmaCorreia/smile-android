@@ -12,11 +12,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|center_horizontal"
@@ -43,7 +45,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:lines="2"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:text="@string/wallet_income"/>
@@ -69,7 +70,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:lines="2"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:text="@string/wallet_outcome"/>

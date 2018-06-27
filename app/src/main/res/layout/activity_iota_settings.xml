@@ -27,6 +27,7 @@
 
         <LinearLayout
             style="@style/Common"
+            android:id="@+id/llWallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -84,7 +85,7 @@
                     android:layout_gravity="start"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:visibility="@{viewModel.seedVisible}"
+                    android:visibility="@{viewModel.hideSeedVisible}"
                     tools:visibility="gone"
                     android:text="@string/wallet_my_seed"
                     android:textIsSelectable="true" />
@@ -98,7 +99,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:visibility="@{viewModel.seedVisible}"
+                    android:visibility="@{viewModel.hideSeedVisible}"
                     tools:visibility="gone"
                     android:text="@={viewModel.seed}"
                     android:textIsSelectable="true"
@@ -142,27 +143,34 @@
                     android:text="@string/hide_seed" />
 
             </LinearLayout>
-
-            <android.support.design.widget.TabLayout
-                style="@style/Tabs"
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabMode="fixed"
-                android:layout_marginTop="8dp"
-                app:backgroundTint="@android:color/transparent"
-                app:tabBackground="@color/colorNavigationBar" />
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabs"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
         </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            style="@style/TabsLight"
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:tabMode="fixed"
+            android:layout_marginTop="8dp"
+            app:backgroundTint="@android:color/transparent"
+            app:tabBackground="@color/colorWhite"
+            app:tabTextColor="@color/colorTextGrey"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llWallet" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabs"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

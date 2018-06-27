@@ -34,12 +34,12 @@ public class DayIotaViewModel extends BaseViewModel {
        /* if (totals!=null){
             return String.format("%.2f", totals.getTotalSold()) + getResourceProvider().getString(R.string.coin);
         }*/
-        return null;
+        return "0,40 €";
     }
 
     @Bindable
     public String getOutcome() {
-        return null;
+        return "1.52 €";
     }
 
 

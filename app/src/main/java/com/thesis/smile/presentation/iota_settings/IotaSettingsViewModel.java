@@ -116,7 +116,8 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
     public void onHideSeedClick(){
-        showSeedDialog.accept(new DialogEvent());
+        this.seedVisible = false;
+        notifyPropertiesChanged(BR.seedVisible, BR.hideSeedVisible);
     }
 
 
