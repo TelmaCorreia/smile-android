@@ -18,6 +18,8 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorYellow">#ffeb3b</color>
     <color name="colorTextGrey">#757575</color>
+    <color name="colorGrey1">#656565</color>
+    <color name="colorGrey2">#666666</color>
     <color name="colorDividerGrey">#c6c8ca</color>
     <color name="colorBackgroundGrey">#e0e0e0</color>
     <color name="colorUnderline">#009688</color>
@@ -31,6 +33,18 @@
 
     <!-- Switch -->
     <color name="colorSwitchTrack">#a7a7a7</color>
+
+    <!-- Chart colors -->
+    <color name="outline_blue">#0033ff</color>
+    <color name="outline_pink">#cc007a</color>
+    <color name="outline_yellow">#ff9900</color>
+    <color name="dark_blue">#000089</color>
+    <color name="dark_pink">#9c1eb8</color>
+    <color name="dark_yellow">#ff5000</color>
+    <color name="light_blue">#00ccff</color>
+    <color name="light_pink">#dfb1e6</color>
+    <color name="light_yellow">#ffaa4c</color>
+
 
 
 

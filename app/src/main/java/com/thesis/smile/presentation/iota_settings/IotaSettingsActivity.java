@@ -5,16 +5,12 @@ import android.content.Intent;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityIotaSettingsBinding;
-import com.thesis.smile.databinding.ActivityPrivacyPolicyBinding;
-import com.thesis.smile.iota.requests.ReplayBundleRequest;
 import com.thesis.smile.iota.responses.GetAccountDataResponse;
 import com.thesis.smile.iota.responses.GetNewAddressResponse;
 import com.thesis.smile.iota.responses.ReplayBundleResponse;
 import com.thesis.smile.iota.responses.SendTransferResponse;
 import com.thesis.smile.iota.responses.error.NetworkError;
-import com.thesis.smile.presentation.base.BaseActivity;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarActivity;
-import com.thesis.smile.presentation.privacy_policy.PrivacyPolicyViewModel;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.views.CustomInputDialog;
 
@@ -26,8 +22,7 @@ import java.util.Arrays;
 public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettingsBinding, IotaSettingsViewModel> {
 
     private CustomInputDialog showSeedDialog;
-    IotaSettingsViewPagerAdapter pagerAdapter;
-
+    TemporalIotaViewPagerAdapter pagerAdapter;
 
     public static void launch(Context context) {
         Intent intent = new Intent(context, IotaSettingsActivity.class);
@@ -48,7 +43,7 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
     protected void initViews(ActivityIotaSettingsBinding binding) {
         initToolbar(binding.actionBar.toolbar, true,  getResources().getString(R.string.home_title));
 
-        pagerAdapter = new IotaSettingsViewPagerAdapter(getSupportFragmentManager(), getResourceProvider());
+        pagerAdapter = new TemporalIotaViewPagerAdapter(getSupportFragmentManager(), getResourceProvider());
         binding.viewpager.setAdapter(pagerAdapter);
         binding.tabs.setupWithViewPager(binding.viewpager);
     }

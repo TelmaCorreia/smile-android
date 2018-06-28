@@ -11,16 +11,10 @@ import javax.inject.Inject;
 
 public class HistoricalViewModel extends BaseViewModel {
 
-
-
     @Inject
     public HistoricalViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager, IotaManager iotaManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
 
     }
-
-
-
-
 
 }

@@ -11,14 +11,14 @@ import com.thesis.smile.presentation.iota_settings.pager_fragments.MonthIotaFrag
 import com.thesis.smile.presentation.iota_settings.pager_fragments.WeekIotaFragment;
 import com.thesis.smile.utils.ResourceProvider;
 
-public class IotaSettingsViewPagerAdapter extends FragmentPagerAdapter {
+public class TemporalIotaViewPagerAdapter extends FragmentPagerAdapter {
 
     private ResourceProvider resourceProvider;
     private DayIotaFragment dayIotaFragment;
     private WeekIotaFragment weekIotaFragment;
     private MonthIotaFragment monthIotaFragment;
 
-    public IotaSettingsViewPagerAdapter(FragmentManager fm, ResourceProvider resourceProvider) {
+    public TemporalIotaViewPagerAdapter(FragmentManager fm, ResourceProvider resourceProvider) {
         super(fm);
         this.resourceProvider = resourceProvider;
         this.dayIotaFragment = DayIotaFragment.newInstance();

@@ -255,6 +255,36 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="Text17">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Text18">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text19">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text20">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Text21">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="TextWithState">
         <item name="android:textColor">@color/text_color_selector</item>
         <item name="android:fontFamily">@font/roboto_regular</item>

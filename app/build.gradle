@@ -168,7 +168,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
 
+    //event bus
     api 'com.google.guava:guava:25.1-android'
+
+    //charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
 }
 

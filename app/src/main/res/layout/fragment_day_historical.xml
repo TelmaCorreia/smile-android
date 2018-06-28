@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.main.historical.temporal_fragments.DayHistoricalViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        style="@style/Common"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_nav_left"
+            android:tint="@color/colorGrey2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvDate"
+            app:layout_constraintRight_toLeftOf="@id/tvDate"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/Text6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="25 Junho - 1 Julho"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_nav_right"
+            android:tint="@color/colorGrey2"
+            app:layout_constraintLeft_toRightOf="@id/tvDate"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvDate"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/llLegend"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+
+        <LinearLayout
+            android:id="@+id/llLegend"
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/llTotals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/llTotals1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:padding="16dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/llTotals2">
+
+                    <ImageView
+                        android:id="@+id/ivLine1"
+                        android:layout_width="28dp"
+                        android:layout_height="2dp"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/ic_line"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvLegendTotal1"
+                        style="@style/Text17"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/legend_total_consumption"
+                        app:layout_constraintBottom_toTopOf="@id/tvValue1"
+                        app:layout_constraintStart_toEndOf="@id/ivLine1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteY="16dp" />
+
+                    <TextView
+                        android:id="@+id/tvValue1"
+                        style="@style/Text20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.totalEnergyConsumption}"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivLine1"
+                        app:layout_constraintTop_toBottomOf="@id/tvLegendTotal1"
+                        tools:text="4.3" />
+
+                    <TextView
+                        style="@style/Text21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kWHour"
+                        app:layout_constraintLeft_toRightOf="@id/tvValue1"
+                        app:layout_constraintStart_toEndOf="@id/tvValue1"
+                        app:layout_constraintTop_toBottomOf="@id/tvLegendTotal1" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/llTotals2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:padding="16dp"
+                    app:layout_constraintLeft_toRightOf="@id/llTotals1"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivLine2"
+                        android:layout_width="28dp"
+                        android:layout_height="2dp"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/ic_line"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvLegendTotal2"
+                        style="@style/Text17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/legend_total_production"
+                        app:layout_constraintStart_toEndOf="@id/ivLine2" />
+
+                    <TextView
+                        android:id="@+id/tvValue2"
+                        style="@style/Text20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.totalEnergyProduction}"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivLine2"
+                        app:layout_constraintTop_toBottomOf="@id/tvLegendTotal2"
+                        tools:text="4.3" />
+
+                    <TextView
+                        style="@style/Text21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/kWHour"
+                        app:layout_constraintLeft_toRightOf="@id/tvValue2"
+                        app:layout_constraintStart_toEndOf="@id/tvValue2"
+                        app:layout_constraintTop_toBottomOf="@id/tvLegendTotal2" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/llLegendA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/llLegendB"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/llLegendB"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle1a"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:src="@drawable/ic_circle_outline"
+                            android:tint="@color/outline_blue"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend1a"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_surplus"
+                            app:layout_constraintLeft_toRightOf="@id/ivCircle1a" />
+
+                        <TextView
+                            android:id="@+id/tvValue1a"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.totalEnergySurplus}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle1a"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend1a"
+                            tools:text="4.3" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue1a"
+                            app:layout_constraintStart_toEndOf="@id/tvValue1a"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend1a" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle2a"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_circle_outline"
+                            android:tint="@color/outline_pink"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend2a"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_surplus"
+                            app:layout_constraintLeft_toRightOf="@id/ivCircle2a" />
+
+                        <TextView
+                            android:id="@+id/tvValue2a"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:text="@{viewModel.totalAutoConsumption}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle2a"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend2a"
+                            tools:text="4.3" />
+
+                        <TextView
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue2a"
+                            app:layout_constraintStart_toEndOf="@id/tvValue2a"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend2a" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle3a"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_circle_outline"
+                            android:tint="@color/outline_yellow"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend3a"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_surplus"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle3a" />
+
+                        <TextView
+                            android:id="@+id/tvValue3a"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.totalEnergyBought}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle3a"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend3a"
+                            tools:text="4.3" />
+
+                        <TextView
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue3a"
+                            app:layout_constraintStart_toEndOf="@id/tvValue3a"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend3a" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLegendB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/llLegendC"
+                    app:layout_constraintLeft_toRightOf="@id/llLegendA"
+                    app:layout_constraintRight_toRightOf="@id/llLegendC"
+                    app:layout_constraintStart_toEndOf="@id/llLegendA"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle1b"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_circle"
+                            android:tint="@color/dark_blue"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend1b"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_surplus_sold_neighbours"
+                            app:layout_constraintLeft_toRightOf="@id/ivCircle1b" />
+
+                        <TextView
+                            android:id="@+id/tvValue1b"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.energySurplusSoldNeighbors}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle1b"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend1b"
+                            tools:text="4.3" />
+
+                        <TextView
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue1b"
+                            app:layout_constraintStart_toEndOf="@id/tvValue1b"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend1b" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle2b"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_circle"
+                            android:tint="@color/dark_pink"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend2b"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_auto_consumption_battery"
+                            app:layout_constraintLeft_toRightOf="@id/ivCircle2b" />
+
+                        <TextView
+                            android:id="@+id/tvValue2b"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:text="@{viewModel.autoConsumptionBattery}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle2b"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend2b"
+                            tools:text="4.3" />
+
+                        <TextView
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue2b"
+                            app:layout_constraintStart_toEndOf="@id/tvValue2b"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend2b" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle3b"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_circle"
+                            android:tint="@color/dark_yellow"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend3b"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_total_bought_neighbours"
+                            app:layout_constraintLeft_toRightOf="@id/ivCircle3b" />
+
+                        <TextView
+                            android:id="@+id/tvValue3b"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.energyBoughtNeighbors}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle3b"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend3b"
+                            tools:text="4.3" />
+
+                        <TextView
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue3b"
+                            app:layout_constraintStart_toEndOf="@id/tvValue3b"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend3b" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLegendC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/llLegendB"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/llLegendB"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle1c"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_circle"
+                            android:tint="@color/light_blue"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend1c"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_surplus_not_used"
+                            app:layout_constraintLeft_toRightOf="@id/ivCircle1c" />
+
+                        <TextView
+                            android:id="@+id/tvValue1c"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.energySurplusNotUsed}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle1c"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend1c"
+                            tools:text="4.3" />
+
+                        <TextView
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue1c"
+                            app:layout_constraintStart_toEndOf="@id/tvValue1c"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend1c" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle2c"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_circle"
+                            android:tint="@color/light_pink"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend2c"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_auto_consumption_panels"
+                            app:layout_constraintLeft_toRightOf="@id/ivCircle2c" />
+
+                        <TextView
+                            android:id="@+id/tvValue2c"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="4dp"
+                            android:text="@{viewModel.autoConsumptionPanels}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle2c"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend2c"
+                            tools:text="4.3" />
+
+                        <TextView
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue2c"
+                            app:layout_constraintStart_toEndOf="@id/tvValue2c"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend2c" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivCircle3c"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_circle"
+                            android:tint="@color/light_yellow"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLegend3c"
+                            style="@style/Text17"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lines="2"
+                            android:text="@string/legend_total_bought_eem"
+                            app:layout_constraintLeft_toRightOf="@id/ivCircle3c" />
+
+                        <TextView
+                            android:id="@+id/tvValue3c"
+                            style="@style/Text18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.energyBoughtEem}"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/ivCircle3c"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend3c"
+                            tools:text="4.3" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            style="@style/Text19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/kWHour"
+                            app:layout_constraintLeft_toRightOf="@id/tvValue3c"
+                            app:layout_constraintStart_toEndOf="@id/tvValue3c"
+                            app:layout_constraintTop_toBottomOf="@id/tvLegend3c" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </LinearLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

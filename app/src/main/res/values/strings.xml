@@ -7,7 +7,6 @@
     <string name="privacy">Política de privacidade</string>
     <string name="iota_settings">Definições da conta IOTA</string>
 
-
     <!-- Login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">palavra-passe</string>
@@ -69,7 +68,6 @@
     <string name="cycle_contact6"><u>Formulário eletrónico</u>, a resposta a este formulário é comunicada através do email indicado no mesmo.</string>
     <string name="form"><u>Formulário eletrónico</u></string>
 
-
     <!-- Automatic Settings Info -->
     <string name="automatic_settings_info_title">Configurações automáticas da compra e venda de energia:</string>
     <string name="automatic_settings_par_intro">Ao selecionar as definições automáticas para configuração de compra e/ou venda de energia, o sistema vai configurar as suas definições. Especificando: </string>
@@ -78,7 +76,6 @@
 
     <string name="automatic_settings_subtitle_buy">Configurações automáticas para compra</string>
     <string name="automatic_settings_subtitle_sell">Configurações automáticas para venda</string>
-
 
     <!-- usertype -->
     <string name="consumer">CONSUMER</string>
@@ -130,7 +127,6 @@
     <string name="ranking_title">Ranking</string>
     <string name="settings_title">Definições</string>
     <string name="recover_pass_title">Recuperação da palavra-passe</string>
-
 
     <!-- Home -->
     <string name="current_info_title">Atualmente</string>
@@ -209,6 +205,23 @@
     <string name="details_bought_energy">BOUGHT</string>
     <string name="date_format_transactions">dd/MM/yy HH:mm</string>
 
+    <!-- Historical -->
+    <string name="tab_days">Dias</string>
+    <string name="tab_months">Meses</string>
+    <string name="tab_weeks">Semanas</string>
+    <string name="legend_surplus">excesso de \nenergia</string>
+    <string name="legend_surplus_sold_neighbours">vendida aos \nvizinhos</string>
+    <string name="legend_surplus_not_used">energia não \nutilizada</string>
+    <string name="legend_auto_consumption">auto-consumo \ntotal</string>
+    <string name="legend_auto_consumption_battery">auto-consumo \nda bateria</string>
+    <string name="legend_auto_consumption_panels">auto consumo \ndos painéis</string>
+    <string name="legend_total">energia total \ncomprada</string>
+    <string name="legend_total_bought_neighbours">comprada aos \nvizinhos</string>
+    <string name="legend_total_bought_eem">comprada à \neem</string>
+    <string name="legend_total_consumption">Consumo Total</string>
+    <string name="legend_total_production">Produção Total</string>
+
+
     <!-- Transactions -->
     <string name="tab_buy">Configurar compra</string>
     <string name="tab_sell">Configurar venda</string>
@@ -256,7 +269,6 @@
     <string name="transactions_sell">venda</string>
     <string name="transactions_buy">compra</string>
     <string name="transactions_date_format">dd/mm/yyy</string>
-
 
     <!-- Transactions Timers -->
     <string name="timers_title">Períodos do dia</string>
