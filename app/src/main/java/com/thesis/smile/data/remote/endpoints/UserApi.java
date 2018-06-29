@@ -1,10 +1,7 @@
 package com.thesis.smile.data.remote.endpoints;
 
-import com.thesis.smile.data.remote.models.EnergyParamsRemote;
 import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.data.remote.models.response.UserResponse;
-import com.thesis.smile.domain.models.EnergyParams;
-import com.thesis.smile.domain.models.User;
 
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
