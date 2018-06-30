@@ -1,27 +1,31 @@
 package com.thesis.smile.presentation.main.historical.temporal_fragments;
 
-import android.graphics.Color;
-
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentDayHistoricalBinding;
-import com.thesis.smile.databinding.FragmentDayIotaBinding;
+import com.thesis.smile.domain.models.HistoricalDataPoint;
 import com.thesis.smile.presentation.base.BaseFragment;
-import com.thesis.smile.presentation.iota_settings.pager_fragments.DayIotaViewModel;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBinding, DayHistoricalViewModel> implements OnChartValueSelectedListener {
+public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBinding, DayHistoricalViewModel> {
+
+    private BarChart barChart;
+    private List<HistoricalDataPoint> list;
 
     public static DayHistoricalFragment newInstance() {
         DayHistoricalFragment f = new DayHistoricalFragment();
@@ -42,72 +46,138 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
     protected void registerObservables() {
         super.registerObservables();
 
+        getViewModel().observeHistoricalData()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::initData);
     }
+
 
     @Override
     protected void initViews(FragmentDayHistoricalBinding binding) {
-        binding.chart.setOnChartValueSelectedListener(this);
-        binding.chart.getDescription().setEnabled(false);
-        binding.chart.setDrawGridBackground(false);
-        binding.chart.setDrawBarShadow(false);
+        this.barChart = binding.chart;
 
-        XAxis xAxis = binding.chart.getXAxis();
+        barChart.setOnChartValueSelectedListener( new OnChartValueSelectedListener() {
+
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                if (list!=null){
+                    HistoricalDataPoint dp = (HistoricalDataPoint) e.getData();
+                    getViewModel().setCurrentDay(dp);
+                }
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+    }
+
+
+    private int[] getColorsBarAll() {
+
+        int[] colors = {getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
+                getResources().getColor(R.color.light_pink),getResources().getColor(R.color.dark_pink),
+                getResources().getColor(R.color.light_blue), getResources().getColor(R.color.dark_blue)};
+
+        return colors;
+    }
+
+    private int[] getColorsBar1() {
+
+        int[] colors = {getResources().getColor(R.color.outline_yellow),
+                        getResources().getColor(R.color.outline_pink),
+                        getResources().getColor(R.color.outline_blue)};
+
+        return colors;
+    }
+
+
+    private void initData(Event event) {
+        this.list = getViewModel().getCurrentData().getDataPoints();
+        barChart.getDescription().setEnabled(false);
+        barChart.setDrawGridBackground(false);
+        barChart.setDrawBarShadow(false);
+        barChart.getAxisLeft().setDrawGridLines(false);
+        barChart.getAxisRight().setDrawGridLines(false);
+        barChart.setDoubleTapToZoomEnabled(false);
+        barChart.setPinchZoom(false);
+        barChart.setHighlightFullBarEnabled(false);
+
+
+        /*XAxis xLabels = barChart.getXAxis();
+        xLabels.setPosition(XAxis.XAxisPosition.TOP);*/
+
+        ArrayList<BarEntry> barAll = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> bar1 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> bar2 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> bar3 = new ArrayList<BarEntry>();
+
+
+        int i = 0;
+        for (HistoricalDataPoint hdp : list) {
+            float surplus_sold = (float) hdp.getEnergySurplusNeighbours();
+            float surplus_not_used = (float) hdp.getEnergySurplusNotUsed();
+            float auto_consumption_from_battery = (float) hdp.getEnergyAutoConsumptionBattery();
+            float auto_consumption_from_panels = (float) hdp.getEnergyAutoConsumptionPanels();
+            float bought_neighbors = (float) hdp.getEnergyBoughtNeighbours();
+            float bought_eem = (float) hdp.getEnergyBoughtEem();
+            barAll.add(new BarEntry(
+                    i++,
+                    new float[]{ bought_eem,
+                                bought_neighbors,
+                                auto_consumption_from_panels,
+                                auto_consumption_from_battery,
+                                surplus_not_used,
+                                surplus_sold},
+                                getResources().getDrawable(R.drawable.ic_add),
+                                hdp));
+
+            bar1.add(new BarEntry(
+                    i++,
+                    new float[]{ bought_eem+bought_neighbors,
+                            auto_consumption_from_panels + auto_consumption_from_battery,
+                            surplus_not_used+surplus_sold},
+                            getResources().getDrawable(R.drawable.ic_add),
+                            hdp));
+
+
+
+        }
+
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
 
-        XAxis xLabels = binding.chart.getXAxis();
-        xLabels.setPosition(XAxis.XAxisPosition.TOP);
+        YAxis leftAxis = barChart.getAxisLeft();
+        leftAxis.setEnabled(false);
+        YAxis rightAxis = barChart.getAxisRight();
+        rightAxis.setEnabled(false);
 
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-
-        for (int i = 0; i < 6 + 1; i++) {
-            float surplus_sold = (float) 2.7;
-            float surplus_not_used = (float) 1.6;
-            float auto_consumption_from_battery = (float) 5.2;
-            float auto_consumption_from_panels = (float) 2.1;
-            float bought_neighbors = (float) 1.4;
-            float bought_eem = (float) 2.5;
-            yVals1.add(new BarEntry(
-                    i,
-                    new float[]{surplus_sold, surplus_not_used, auto_consumption_from_battery, auto_consumption_from_panels, bought_neighbors, bought_eem},
-                    getResources().getDrawable(R.drawable.ic_add)));
-        }
+        Legend legend = barChart.getLegend();
+        legend.setEnabled(false);
 
         BarDataSet set1;
-
-        set1 = new BarDataSet(yVals1, "");
+        set1 = new BarDataSet(barAll, "");
         set1.setDrawIcons(false);
-        set1.setColors(getColors());
+        set1.setColors(getColorsBarAll());
+        set1.setDrawValues(false);
+
+        BarDataSet set2;
+        set2 = new BarDataSet(bar1, "");
+        set2.setDrawIcons(false);
+        set2.setDrawValues(false);
+        set2.setColors(getColorsBar1());
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
         dataSets.add(set1);
+        dataSets.add(set2);
 
         BarData data = new BarData(dataSets);
 
-        binding.chart.setData(data);
-
-        binding.chart.setFitBars(true);
-        binding.chart.invalidate();
-
-    }
-
-
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
-
-    }
-
-    @Override
-    public void onNothingSelected() {
-
-    }
-
-    private int[] getColors() {
-
-        int[] colors = {getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
-                        getResources().getColor(R.color.light_pink),getResources().getColor(R.color.dark_pink),
-                        getResources().getColor(R.color.light_blue), getResources().getColor(R.color.dark_blue)};
-
-        return colors;
+        barChart.setData(data);
+        barChart.setFitBars(true);
+        barChart.invalidate();
     }
 }

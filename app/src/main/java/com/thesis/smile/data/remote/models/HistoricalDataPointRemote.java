@@ -29,7 +29,7 @@ public class HistoricalDataPointRemote {
     private double energyAutoConsumptionBattery;
 
     @Expose
-    private double getEnergyAutoConsumptionPanels;
+    private double energyAutoConsumptionPanels;
 
     @Expose
     private double energyBought;
@@ -42,7 +42,7 @@ public class HistoricalDataPointRemote {
 
     public HistoricalDataPointRemote(){}
 
-    public HistoricalDataPointRemote(String title, double totalConsumption, double totalProduction, double energySurplus, double energySurplusNeighbours, double energySurplusNotUsed, double energyAutoConsumptionTotal, double energyAutoConsumptionBattery, double getEnergyAutoConsumptionPanels, double energyBought, double energyBoughtNeighbours, double energyBoughtEem) {
+    public HistoricalDataPointRemote(String title, double totalConsumption, double totalProduction, double energySurplus, double energySurplusNeighbours, double energySurplusNotUsed, double energyAutoConsumptionTotal, double energyAutoConsumptionBattery, double energyAutoConsumptionPanels, double energyBought, double energyBoughtNeighbours, double energyBoughtEem) {
         this.title = title;
         this.totalConsumption = totalConsumption;
         this.totalProduction = totalProduction;
@@ -51,7 +51,7 @@ public class HistoricalDataPointRemote {
         this.energySurplusNotUsed = energySurplusNotUsed;
         this.energyAutoConsumptionTotal = energyAutoConsumptionTotal;
         this.energyAutoConsumptionBattery = energyAutoConsumptionBattery;
-        this.getEnergyAutoConsumptionPanels = getEnergyAutoConsumptionPanels;
+        this.energyAutoConsumptionPanels = energyAutoConsumptionPanels;
         this.energyBought = energyBought;
         this.energyBoughtNeighbours = energyBoughtNeighbours;
         this.energyBoughtEem = energyBoughtEem;
@@ -121,12 +121,12 @@ public class HistoricalDataPointRemote {
         this.energyAutoConsumptionBattery = energyAutoConsumptionBattery;
     }
 
-    public double getGetEnergyAutoConsumptionPanels() {
-        return getEnergyAutoConsumptionPanels;
+    public double getEnergyAutoConsumptionPanels() {
+        return energyAutoConsumptionPanels;
     }
 
-    public void setGetEnergyAutoConsumptionPanels(double getEnergyAutoConsumptionPanels) {
-        this.getEnergyAutoConsumptionPanels = getEnergyAutoConsumptionPanels;
+    public void setEnergyAutoConsumptionPanels(double energyAutoConsumptionPanels) {
+        this.energyAutoConsumptionPanels = energyAutoConsumptionPanels;
     }
 
     public double getEnergyBought() {
