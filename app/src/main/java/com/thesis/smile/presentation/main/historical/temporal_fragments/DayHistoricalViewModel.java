@@ -125,6 +125,13 @@ public class DayHistoricalViewModel extends BaseViewModel {
         return null;
     }
 
+    @Bindable
+    public String getTitle(){
+        if (currentData!=null){
+            return currentData.getTimeDescription();
+        }
+        return null;
+    }
     public void getHistoricalDataFromServer() {
         historicalManager.getDailyHistoricalData(LocalDate.now())
                 .doOnSubscribe(this::addDisposable)

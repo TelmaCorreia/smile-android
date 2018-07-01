@@ -113,8 +113,9 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         ArrayList<BarEntry> bar2 = new ArrayList<BarEntry>();
         ArrayList<BarEntry> bar3 = new ArrayList<BarEntry>();
 
-
+        final ArrayList<String> xAxes = new ArrayList<>();
         int i = 0;
+        int j = 0;
         for (HistoricalDataPoint hdp : list) {
             float surplus_sold = (float) hdp.getEnergySurplusNeighbours();
             float surplus_not_used = (float) hdp.getEnergySurplusNotUsed();
@@ -122,6 +123,7 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
             float auto_consumption_from_panels = (float) hdp.getEnergyAutoConsumptionPanels();
             float bought_neighbors = (float) hdp.getEnergyBoughtNeighbours();
             float bought_eem = (float) hdp.getEnergyBoughtEem();
+            xAxes.add(i, hdp.getTitle()); //Dynamic x-axis labels
             barAll.add(new BarEntry(
                     i++,
                     new float[]{ bought_eem,
@@ -132,7 +134,7 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
                                 surplus_sold},
                                 getResources().getDrawable(R.drawable.ic_add),
                                 hdp));
-
+            xAxes.add(i, hdp.getTitle()); //Dynamic x-axis labels
             bar1.add(new BarEntry(
                     i++,
                     new float[]{ bought_eem+bought_neighbors,
@@ -143,12 +145,18 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
 
 
 
+
         }
 
         XAxis xAxis = barChart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
+
+        xAxis.setValueFormatter((value, axis) -> {
+            int index = (int) value;
+            return xAxes.get(index);
+        });
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setEnabled(false);
@@ -162,13 +170,17 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         set1 = new BarDataSet(barAll, "");
         set1.setDrawIcons(false);
         set1.setColors(getColorsBarAll());
+        set1.setHighLightAlpha(0);
         set1.setDrawValues(false);
+
 
         BarDataSet set2;
         set2 = new BarDataSet(bar1, "");
         set2.setDrawIcons(false);
         set2.setDrawValues(false);
         set2.setColors(getColorsBar1());
+        set2.setHighLightAlpha(0);
+
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
         dataSets.add(set1);
