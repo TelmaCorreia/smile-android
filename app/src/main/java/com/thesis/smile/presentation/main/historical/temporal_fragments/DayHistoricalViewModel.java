@@ -1,6 +1,7 @@
 package com.thesis.smile.presentation.main.historical.temporal_fragments;
 
 import android.databinding.Bindable;
+import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.domain.managers.HistoricalManager;
@@ -26,8 +27,10 @@ public class DayHistoricalViewModel extends BaseViewModel {
     private List<HistoricalData> historicalDataList;
     private HistoricalData currentData;
     private HistoricalDataPoint currentDay;
+    private LocalDate currentDate = LocalDate.now();
 
     private PublishRelay<Event> dataReceived = PublishRelay.create();
+    private boolean isLoading = false;
 
     @Inject
     public DayHistoricalViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
@@ -132,8 +135,37 @@ public class DayHistoricalViewModel extends BaseViewModel {
         }
         return null;
     }
+
+    @Bindable
+    public boolean isProgress(){
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading){
+        this.isLoading = loading;
+    }
+
     public void getHistoricalDataFromServer() {
-        historicalManager.getDailyHistoricalData(LocalDate.now())
+        setLoading(true);
+        historicalManager.getDailyHistoricalData(currentDate)
+                .doOnSubscribe(this::addDisposable)
+                .compose(schedulersTransformSingleIo())
+                .subscribe(this::onHistoricalDataReceived, this::onError);
+    }
+
+    public void onPreviousClick(){
+        setLoading(true);
+        currentDate = currentDate.minusWeeks(1);
+        historicalManager.getDailyHistoricalData(currentDate)
+                .doOnSubscribe(this::addDisposable)
+                .compose(schedulersTransformSingleIo())
+                .subscribe(this::onHistoricalDataReceived, this::onError);
+    }
+
+    public void onNextClick(){
+        setLoading(true);
+        currentDate = currentDate.plusWeeks(1);
+        historicalManager.getDailyHistoricalData(currentDate)
                 .doOnSubscribe(this::addDisposable)
                 .compose(schedulersTransformSingleIo())
                 .subscribe(this::onHistoricalDataReceived, this::onError);
@@ -146,7 +178,14 @@ public class DayHistoricalViewModel extends BaseViewModel {
             this.currentDay=data.get(0).getDataPoints().get(0);
             notifyChange();
         }
+        this.setLoading(false);
         dataReceived.accept(new Event());
+    }
+
+    @Override
+    public void onError(Throwable e){
+        setLoading(false);
+        super.onError(e);
     }
 
     public Observable<Event> observeHistoricalData() {
