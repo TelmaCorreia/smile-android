@@ -172,8 +172,9 @@ dependencies {
     api 'com.google.guava:guava:25.1-android'
 
     //charts
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    //implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
+    implementation project(path: ':MPChartLibCustom')
 }
 
 apply plugin: 'com.google.gms.google-services'

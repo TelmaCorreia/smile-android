@@ -2,6 +2,7 @@ package com.thesis.smile.presentation.main.historical.temporal_fragments;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -113,7 +114,6 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
 
         final ArrayList<String> xAxes = new ArrayList<>();
         int i = 0;
-        int j = 0;
         for (HistoricalDataPoint hdp : list) {
             float surplus_sold = (float) hdp.getEnergySurplusNeighbours();
             float surplus_not_used = (float) hdp.getEnergySurplusNotUsed();
@@ -140,6 +140,7 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
                             surplus_not_used+surplus_sold},
                             getResources().getDrawable(R.drawable.ic_add),
                             hdp));
+            
 
 
 
@@ -150,7 +151,6 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
-
         xAxis.setValueFormatter((value, axis) -> {
             int index = (int) value;
             return xAxes.get(index);
@@ -178,13 +178,14 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         set2.setDrawValues(false);
         set2.setColors(getColorsBar1());
         set2.setHighLightAlpha(0);
-
+        set2.setBarWidth(0.40f);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
         dataSets.add(set1);
         dataSets.add(set2);
 
         BarData data = new BarData(dataSets);
+        data.groupBars(-.8f, 0.3f, 0f);
 
         barChart.setData(data);
         barChart.setFitBars(true);
