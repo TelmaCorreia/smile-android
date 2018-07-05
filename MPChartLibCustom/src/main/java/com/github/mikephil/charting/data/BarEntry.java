@@ -33,6 +33,8 @@ public class BarEntry extends Entry {
      */
     private float mPositiveSum;
 
+    private boolean firstBar = true;
+
     /**
      * Constructor for normal bars (not stacked).
      *
@@ -101,6 +103,13 @@ public class BarEntry extends Entry {
     public BarEntry(float x, float[] vals, Object data) {
         super(x, calcSum(vals), data);
 
+        this.mYVals = vals;
+        calcPosNegSum();
+        calcRanges();
+    }
+    public BarEntry(float x, float[] vals, Object data, boolean firstBar) {
+        super(x, calcSum(vals), data);
+        this.firstBar = firstBar;
         this.mYVals = vals;
         calcPosNegSum();
         calcRanges();
@@ -304,6 +313,15 @@ public class BarEntry extends Entry {
                 posRemain += value;
             }
         }
+    }
+
+
+    public boolean isFirstBar() {
+        return firstBar;
+    }
+
+    public void setFirstBar(boolean firstBar) {
+        this.firstBar = firstBar;
     }
 }
 

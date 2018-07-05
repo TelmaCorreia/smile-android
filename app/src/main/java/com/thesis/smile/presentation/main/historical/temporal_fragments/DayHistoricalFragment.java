@@ -62,6 +62,7 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
                 if (list!=null){
                     HistoricalDataPoint dp = (HistoricalDataPoint) e.getData();
                     getViewModel().setCurrentDay(dp);
+                    //TODO
                 }
             }
 
@@ -91,7 +92,6 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         return colors;
     }
 
-
     private void initData(Event event) {
         this.list = getViewModel().getCurrentData().getDataPoints();
         barChart.getDescription().setEnabled(false);
@@ -101,16 +101,10 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         barChart.getAxisRight().setDrawGridLines(false);
         barChart.setDoubleTapToZoomEnabled(false);
         barChart.setPinchZoom(false);
-        barChart.setHighlightFullBarEnabled(false);
-
-
-        /*XAxis xLabels = barChart.getXAxis();
-        xLabels.setPosition(XAxis.XAxisPosition.TOP);*/
+        barChart.setHighlightFullBarEnabled(true);
 
         ArrayList<BarEntry> barAll = new ArrayList<BarEntry>();
         ArrayList<BarEntry> bar1 = new ArrayList<BarEntry>();
-        ArrayList<BarEntry> bar2 = new ArrayList<BarEntry>();
-        ArrayList<BarEntry> bar3 = new ArrayList<BarEntry>();
 
         final ArrayList<String> xAxes = new ArrayList<>();
         int i = 0;
@@ -130,21 +124,14 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
                                 auto_consumption_from_battery,
                                 surplus_not_used,
                                 surplus_sold},
-                                getResources().getDrawable(R.drawable.ic_add),
-                                hdp));
+                                hdp, true));
             xAxes.add(i, hdp.getTitle()); //Dynamic x-axis labels
             bar1.add(new BarEntry(
                     i++,
                     new float[]{ bought_eem+bought_neighbors,
                             auto_consumption_from_panels + auto_consumption_from_battery,
                             surplus_not_used+surplus_sold},
-                            getResources().getDrawable(R.drawable.ic_add),
-                            hdp));
-            
-
-
-
-
+                            hdp, false));
         }
 
         XAxis xAxis = barChart.getXAxis();
@@ -168,27 +155,32 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         set1 = new BarDataSet(barAll, "");
         set1.setDrawIcons(false);
         set1.setColors(getColorsBarAll());
-        set1.setHighLightAlpha(0);
+        set1.setHighLightAlpha(20);
         set1.setDrawValues(false);
-
+        set1.setBarWidth(0.80f);
 
         BarDataSet set2;
         set2 = new BarDataSet(bar1, "");
         set2.setDrawIcons(false);
         set2.setDrawValues(false);
         set2.setColors(getColorsBar1());
-        set2.setHighLightAlpha(0);
+        set2.setBarBorderColor(getResources().getColor(R.color.colorBlack));
+        set2.setBarBorderWidth(1f);
+        set2.setHighLightAlpha(20);
         set2.setBarWidth(0.40f);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
         dataSets.add(set1);
         dataSets.add(set2);
 
+
         BarData data = new BarData(dataSets);
-        data.groupBars(-.8f, 0.3f, 0f);
+        data.groupBars(-1f, 0.8f, 0.1f);
 
         barChart.setData(data);
+        barChart.animateY(1000);
         barChart.setFitBars(true);
+        barChart.highlightValue(0f, 0);
         barChart.invalidate();
     }
 }

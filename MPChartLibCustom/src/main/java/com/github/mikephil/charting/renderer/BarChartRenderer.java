@@ -102,8 +102,6 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
         if (mChart.isDrawBarShadowEnabled()) {
             mShadowPaint.setColor(dataSet.getBarShadowColor());
 
-            BarData barData = mChart.getBarData();
-
             final float barWidth = dataSet.getBarWidth();
             final float barWidthHalf = barWidth / 2.0f;
             float x;
@@ -472,7 +470,6 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
             if (isStack) {
 
                 if(mChart.isHighlightFullBarEnabled()) {
-
                     y1 = e.getPositiveSum();
                     y2 = -e.getNegativeSum();
 
@@ -485,11 +482,12 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
                 }
 
             } else {
-                y1 = e.getY();
-                y2 = 0.f;
+                y1 = mChart.getYChartMax();
+                y2 = -1f;
             }
-
-            prepareBarHighlight(e.getX(), y1, y2, barData.getBarWidth() / 2f, trans);
+            float highlightBarWidth = barData.getGroupWidth(barData.getGroupSpace(), barData.getBarSpace());
+            float x = e.isFirstBar()? e.getX()+0.3f:e.getX()-0.4f;
+            prepareBarHighlight(x, y1, y2,  highlightBarWidth/ 2f, trans);
 
             setHighlightDrawPos(high, mBarRect);
 

@@ -16,6 +16,8 @@ public class BarData extends BarLineScatterCandleBubbleData<IBarDataSet> {
      * the width of the bars on the x-axis, in values (not pixels)
      */
     private float mBarWidth = 0.85f;
+    private float groupSpace = 0f;
+    private float barSpace = 0f;
 
     public BarData() {
         super();
@@ -59,13 +61,15 @@ public class BarData extends BarLineScatterCandleBubbleData<IBarDataSet> {
         if (setCount <= 1) {
             throw new RuntimeException("BarData needs to hold at least 2 BarDataSets to allow grouping.");
         }
+        this.groupSpace = groupSpace;
+        this.barSpace = barSpace;
 
         IBarDataSet max = getMaxEntryCountSet();
         int maxEntryCount = max.getEntryCount();
 
         float groupSpaceWidthHalf = groupSpace / 2f;
         float barSpaceHalf = barSpace / 2f;
-        float barWidthHalf = mBarWidth / 2f;
+
 
         float interval = getGroupWidth(groupSpace, barSpace);
 
@@ -75,7 +79,7 @@ public class BarData extends BarLineScatterCandleBubbleData<IBarDataSet> {
             fromX += groupSpaceWidthHalf;
 
             for (IBarDataSet set : mDataSets) {
-
+                float barWidthHalf = set.getBarWidth() / 2f;
                 fromX += barSpaceHalf;
                 fromX += barWidthHalf;
 
@@ -114,6 +118,27 @@ public class BarData extends BarLineScatterCandleBubbleData<IBarDataSet> {
      * @return
      */
     public float getGroupWidth(float groupSpace, float barSpace) {
-        return mDataSets.size() * (mBarWidth + barSpace) + groupSpace;
+        float value =0;
+        for (IBarDataSet ds: mDataSets){
+            value += ds.getBarBorderWidth() + barSpace;
+        }
+        return value + groupSpace;
+        //return mDataSets.size() * (mBarWidth + barSpace) + groupSpace;
+    }
+
+    public float getGroupSpace() {
+        return groupSpace;
+    }
+
+    public void setGroupSpace(float groupSpace) {
+        this.groupSpace = groupSpace;
+    }
+
+    public float getBarSpace() {
+        return barSpace;
+    }
+
+    public void setBarSpace(float barSpace) {
+        this.barSpace = barSpace;
     }
 }

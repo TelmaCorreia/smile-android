@@ -225,14 +225,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
-                            <ImageView
+                            <FrameLayout
                                 android:id="@+id/ivCircle1a"
-                                android:layout_width="8dp"
-                                android:layout_height="8dp"
-                                android:src="@drawable/ic_circle_outline"
-                                android:tint="@color/outline_blue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:src="@drawable/ic_circle_outline"
+                                    android:tint="@color/colorBlack" />
+                                <ImageView
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:src="@drawable/ic_circle"
+                                    android:tint="@color/outline_blue" />
+                            </FrameLayout>
 
                             <TextView
                                 android:id="@+id/tvLegend1a"
@@ -272,14 +282,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
-                            <ImageView
+                            <FrameLayout
                                 android:id="@+id/ivCircle2a"
-                                android:layout_width="8dp"
-                                android:layout_height="8dp"
-                                android:src="@drawable/ic_circle_outline"
-                                android:tint="@color/outline_pink"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:src="@drawable/ic_circle_outline"
+                                    android:tint="@color/colorBlack" />
+                                <ImageView
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:src="@drawable/ic_circle"
+                                    android:tint="@color/outline_pink" />
+                            </FrameLayout>
 
                             <TextView
                                 android:id="@+id/tvLegend2a"
@@ -288,7 +308,7 @@
                                 android:layout_height="wrap_content"
                                 android:lines="2"
                                 android:layout_marginLeft="8dp"
-                                android:text="@string/legend_surplus"
+                                android:text="@string/legend_auto_consumption"
                                 app:layout_constraintLeft_toRightOf="@id/ivCircle2a" />
 
                             <TextView
@@ -319,14 +339,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
-                            <ImageView
+                            <FrameLayout
                                 android:id="@+id/ivCircle3a"
-                                android:layout_width="8dp"
-                                android:layout_height="8dp"
-                                android:src="@drawable/ic_circle_outline"
-                                android:tint="@color/outline_yellow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:src="@drawable/ic_circle_outline"
+                                    android:tint="@color/colorBlack" />
+                                <ImageView
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:src="@drawable/ic_circle"
+                                    android:tint="@color/outline_yellow" />
+                            </FrameLayout>
 
                             <TextView
                                 android:id="@+id/tvLegend3a"
