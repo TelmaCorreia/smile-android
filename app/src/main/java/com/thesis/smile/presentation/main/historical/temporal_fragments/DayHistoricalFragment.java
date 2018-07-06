@@ -2,7 +2,6 @@ package com.thesis.smile.presentation.main.historical.temporal_fragments;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -59,10 +58,10 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
 
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-                if (list!=null){
+                if (list!=null) {
                     HistoricalDataPoint dp = (HistoricalDataPoint) e.getData();
                     getViewModel().setCurrentDay(dp);
-                    //TODO
+
                 }
             }
 
@@ -83,11 +82,26 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         return colors;
     }
 
-    private int[] getColorsBar1() {
+    private int[] getColorsBarSum() {
 
         int[] colors = {getResources().getColor(R.color.outline_yellow),
                         getResources().getColor(R.color.outline_pink),
                         getResources().getColor(R.color.outline_blue)};
+
+        return colors;
+    }
+
+    private int[] getColorsBarConsumption() {
+
+        int[] colors = {getResources().getColor(R.color.colorBlack)};
+
+        return colors;
+    }
+
+    private int[] getColorsBarProduction() {
+
+        int[] colors = {getResources().getColor(R.color.colorWhite),
+                getResources().getColor(R.color.colorGrey2)};
 
         return colors;
     }
@@ -104,7 +118,9 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         barChart.setHighlightFullBarEnabled(true);
 
         ArrayList<BarEntry> barAll = new ArrayList<BarEntry>();
-        ArrayList<BarEntry> bar1 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barSum = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barConsumption = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barProduction = new ArrayList<BarEntry>();
 
         final ArrayList<String> xAxes = new ArrayList<>();
         int i = 0;
@@ -115,7 +131,11 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
             float auto_consumption_from_panels = (float) hdp.getEnergyAutoConsumptionPanels();
             float bought_neighbors = (float) hdp.getEnergyBoughtNeighbours();
             float bought_eem = (float) hdp.getEnergyBoughtEem();
-            xAxes.add(i, hdp.getTitle()); //Dynamic x-axis labels
+            barConsumption.add(new BarEntry(
+                    i++,
+                    new float[]{ (float) hdp.getTotalConsumption() },
+                    hdp, false));
+
             barAll.add(new BarEntry(
                     i++,
                     new float[]{ bought_eem,
@@ -125,23 +145,25 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
                                 surplus_not_used,
                                 surplus_sold},
                                 hdp, true));
-            xAxes.add(i, hdp.getTitle()); //Dynamic x-axis labels
-            bar1.add(new BarEntry(
+            barSum.add(new BarEntry(
                     i++,
                     new float[]{ bought_eem+bought_neighbors,
                             auto_consumption_from_panels + auto_consumption_from_battery,
                             surplus_not_used+surplus_sold},
                             hdp, false));
+            barProduction.add(new BarEntry(
+                    i++,
+                    new float[]{ bought_eem+bought_neighbors, (float) hdp.getTotalProduction()},
+                    hdp, false));
+
         }
 
         XAxis xAxis = barChart.getXAxis();
-        xAxis.setGranularity(1f);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
-        xAxis.setValueFormatter((value, axis) -> {
-            int index = (int) value;
-            return xAxes.get(index);
-        });
+        xAxis.setDrawLabels(false);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(15.4f);
 
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.setEnabled(false);
@@ -151,36 +173,53 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         Legend legend = barChart.getLegend();
         legend.setEnabled(false);
 
-        BarDataSet set1;
-        set1 = new BarDataSet(barAll, "");
-        set1.setDrawIcons(false);
-        set1.setColors(getColorsBarAll());
-        set1.setHighLightAlpha(20);
-        set1.setDrawValues(false);
-        set1.setBarWidth(0.80f);
+        BarDataSet setAll;
+        setAll = new BarDataSet(barAll, "");
+        setAll.setDrawIcons(false);
+        setAll.setColors(getColorsBarAll());
+        setAll.setHighLightAlpha(20);
+        setAll.setDrawValues(false);
+        setAll.setBarWidth(0.80f);
 
-        BarDataSet set2;
-        set2 = new BarDataSet(bar1, "");
-        set2.setDrawIcons(false);
-        set2.setDrawValues(false);
-        set2.setColors(getColorsBar1());
-        set2.setBarBorderColor(getResources().getColor(R.color.colorBlack));
-        set2.setBarBorderWidth(1f);
-        set2.setHighLightAlpha(20);
-        set2.setBarWidth(0.40f);
+        BarDataSet setSum;
+        setSum = new BarDataSet(barSum, "");
+        setSum.setDrawIcons(false);
+        setSum.setDrawValues(false);
+        setSum.setColors(getColorsBarSum());
+        setSum.setBarBorderColor(getResources().getColor(R.color.colorBlack));
+        setSum.setBarBorderWidth(1f);
+        setSum.setHighLightAlpha(20);
+        setSum.setBarWidth(0.40f);
+
+        BarDataSet setConsumption;
+        setConsumption = new BarDataSet(barConsumption, "");
+        setConsumption.setDrawIcons(false);
+        setConsumption.setDrawValues(false);
+        setConsumption.setColors(getColorsBarConsumption());
+        setConsumption.setHighLightAlpha(0);
+        setConsumption.setBarWidth(0.10f);
+
+        BarDataSet setProduction;
+        setProduction = new BarDataSet(barProduction, "");
+        setProduction.setDrawIcons(false);
+        setProduction.setDrawValues(false);
+        setProduction.setColors(getColorsBarProduction());
+        setProduction.setHighLightAlpha(0);
+        setProduction.setBarWidth(0.10f);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-        dataSets.add(set1);
-        dataSets.add(set2);
-
+        dataSets.add(setConsumption);
+        dataSets.add(setAll);
+        dataSets.add(setSum);
+        dataSets.add(setProduction);
 
         BarData data = new BarData(dataSets);
-        data.groupBars(-1f, 0.8f, 0.1f);
+        data.groupBars(0f, 0.4f, 0.1f);
 
         barChart.setData(data);
         barChart.animateY(1000);
         barChart.setFitBars(true);
-        barChart.highlightValue(0f, 0);
+        barChart.highlightValue(0f, 1);
         barChart.invalidate();
     }
 }

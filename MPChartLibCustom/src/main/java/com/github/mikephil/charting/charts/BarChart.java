@@ -58,8 +58,8 @@ public class BarChart extends BarLineChartBase<BarData> implements BarDataProvid
 
         setHighlighter(new BarHighlighter(this));
 
-        getXAxis().setSpaceMin(0.5f);
-        getXAxis().setSpaceMax(0.5f);
+      //  getXAxis().setSpaceMin(0.5f);
+        //getXAxis().setSpaceMax(0.5f);
     }
 
     @Override

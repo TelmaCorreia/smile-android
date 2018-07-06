@@ -137,6 +137,62 @@ public class DayHistoricalViewModel extends BaseViewModel {
     }
 
     @Bindable
+    public String getLabel0(){
+        if (currentData!=null && currentData.getDataPoints()!=null){
+            return currentData.getDataPoints().get(0).getTitle();
+        }
+        return null;
+    }
+
+    @Bindable
+    public String getLabel1(){
+        if (currentData!=null && currentData.getDataPoints()!=null){
+            return currentData.getDataPoints().get(1).getTitle();
+        }
+        return null;
+    }
+
+    @Bindable
+    public String getLabel2(){
+        if (currentData!=null && currentData.getDataPoints()!=null){
+            return currentData.getDataPoints().get(2).getTitle();
+        }
+        return null;
+    }
+
+    @Bindable
+    public String getLabel3(){
+        if (currentData!=null && currentData.getDataPoints()!=null){
+            return currentData.getDataPoints().get(3).getTitle();
+        }
+        return null;
+    }
+
+    @Bindable
+    public String getLabel4(){
+        if (currentData!=null && currentData.getDataPoints()!=null){
+            return currentData.getDataPoints().get(4).getTitle();
+        }
+        return null;
+    }
+
+    @Bindable
+    public String getLabel5(){
+        if (currentData!=null && currentData.getDataPoints()!=null){
+            return currentData.getDataPoints().get(5).getTitle();
+        }
+        return null;
+    }
+
+    @Bindable
+    public String getLabel6(){
+        if (currentData!=null && currentData.getDataPoints()!=null){
+            return currentData.getDataPoints().get(6).getTitle();
+        }
+        return null;
+    }
+
+    @Bindable
     public boolean isProgress(){
         return isLoading;
     }

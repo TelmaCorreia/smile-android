@@ -120,7 +120,7 @@ public class BarData extends BarLineScatterCandleBubbleData<IBarDataSet> {
     public float getGroupWidth(float groupSpace, float barSpace) {
         float value =0;
         for (IBarDataSet ds: mDataSets){
-            value += ds.getBarBorderWidth() + barSpace;
+            value += ds.getBarWidth() + barSpace;
         }
         return value + groupSpace;
         //return mDataSets.size() * (mBarWidth + barSpace) + groupSpace;
