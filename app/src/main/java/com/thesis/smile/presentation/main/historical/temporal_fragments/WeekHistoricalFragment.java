@@ -1,11 +1,35 @@
 package com.thesis.smile.presentation.main.historical.temporal_fragments;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentMonthHistoricalBinding;
 import com.thesis.smile.databinding.FragmentWeekHistoricalBinding;
+import com.thesis.smile.domain.models.HistoricalDataPoint;
 import com.thesis.smile.presentation.base.BaseFragment;
+import com.thesis.smile.presentation.utils.actions.events.Event;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WeekHistoricalFragment extends BaseFragment<FragmentWeekHistoricalBinding, WeekHistoricalViewModel> {
+
+    private BarChart barChart;
+    private List<HistoricalDataPoint> list;
 
     public static WeekHistoricalFragment newInstance() {
         WeekHistoricalFragment f = new WeekHistoricalFragment();
@@ -26,14 +50,178 @@ public class WeekHistoricalFragment extends BaseFragment<FragmentWeekHistoricalB
     protected void registerObservables() {
         super.registerObservables();
 
+        getViewModel().observeHistoricalData()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::initData);
     }
 
     @Override
     protected void initViews(FragmentWeekHistoricalBinding binding) {
+        this.barChart = binding.chart;
 
+        barChart.setOnChartValueSelectedListener( new OnChartValueSelectedListener() {
+
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                if (list!=null) {
+                    HistoricalDataPoint dp = (HistoricalDataPoint) e.getData();
+                    getViewModel().setCurrentDay(dp);
+                }
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 
+    private void initData(Event event) {
+        this.list = getViewModel().getCurrentData().getDataPoints();
+        barChart.getDescription().setEnabled(false);
+        barChart.setDrawGridBackground(false);
+        barChart.setDrawBarShadow(false);
+        barChart.getAxisLeft().setDrawGridLines(false);
+        barChart.getAxisRight().setDrawGridLines(false);
+        barChart.setDoubleTapToZoomEnabled(false);
+        barChart.setPinchZoom(false);
+        barChart.setHighlightFullBarEnabled(true);
 
+        ArrayList<BarEntry> barAll = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barSum = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barConsumption = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barProduction = new ArrayList<BarEntry>();
 
+        int i = 0;
+        for (HistoricalDataPoint hdp : list) {
+            float surplus_sold = (float) hdp.getEnergySurplusNeighbours();
+            float surplus_not_used = (float) hdp.getEnergySurplusNotUsed();
+            float auto_consumption_from_battery = (float) hdp.getEnergyAutoConsumptionBattery();
+            float auto_consumption_from_panels = (float) hdp.getEnergyAutoConsumptionPanels();
+            float bought_neighbors = (float) hdp.getEnergyBoughtNeighbours();
+            float bought_eem = (float) hdp.getEnergyBoughtEem();
+            barConsumption.add(new BarEntry(
+                    i++,
+                    new float[]{ (float) hdp.getTotalConsumption() },
+                    hdp, false));
+
+            barAll.add(new BarEntry(
+                    i++,
+                    new float[]{ bought_eem,
+                            bought_neighbors,
+                            auto_consumption_from_panels,
+                            auto_consumption_from_battery,
+                            surplus_not_used,
+                            surplus_sold},
+                    hdp, true));
+            barSum.add(new BarEntry(
+                    i++,
+                    new float[]{ bought_eem+bought_neighbors,
+                            auto_consumption_from_panels + auto_consumption_from_battery,
+                            surplus_not_used+surplus_sold},
+                    hdp, false));
+            barProduction.add(new BarEntry(
+                    i++,
+                    new float[]{ bought_eem+bought_neighbors, (float) hdp.getTotalProduction()},
+                    hdp, false));
+
+        }
+
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawLabels(false);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(10.8f);
+
+        YAxis leftAxis = barChart.getAxisLeft();
+        leftAxis.setEnabled(false);
+        YAxis rightAxis = barChart.getAxisRight();
+        rightAxis.setEnabled(false);
+
+        Legend legend = barChart.getLegend();
+        legend.setEnabled(false);
+
+        BarDataSet setAll;
+        setAll = new BarDataSet(barAll, "");
+        setAll.setDrawIcons(false);
+        setAll.setColors(getColorsBarAll());
+        setAll.setHighLightAlpha(20);
+        setAll.setDrawValues(false);
+        setAll.setBarWidth(0.80f);
+
+        BarDataSet setSum;
+        setSum = new BarDataSet(barSum, "");
+        setSum.setDrawIcons(false);
+        setSum.setDrawValues(false);
+        setSum.setColors(getColorsBarSum());
+        setSum.setBarBorderColor(getResources().getColor(R.color.colorBlack));
+        setSum.setBarBorderWidth(1f);
+        setSum.setHighLightAlpha(20);
+        setSum.setBarWidth(0.40f);
+
+        BarDataSet setConsumption;
+        setConsumption = new BarDataSet(barConsumption, "");
+        setConsumption.setDrawIcons(false);
+        setConsumption.setDrawValues(false);
+        setConsumption.setColors(getColorsBarConsumption());
+        setConsumption.setHighLightAlpha(0);
+        setConsumption.setBarWidth(0.10f);
+
+        BarDataSet setProduction;
+        setProduction = new BarDataSet(barProduction, "");
+        setProduction.setDrawIcons(false);
+        setProduction.setDrawValues(false);
+        setProduction.setColors(getColorsBarProduction());
+        setProduction.setHighLightAlpha(0);
+        setProduction.setBarWidth(0.10f);
+
+        ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
+        dataSets.add(setConsumption);
+        dataSets.add(setAll);
+        dataSets.add(setSum);
+        dataSets.add(setProduction);
+
+        BarData data = new BarData(dataSets);
+        data.groupBars(0f, 0.8f, 0.1f);
+
+        barChart.setData(data);
+        barChart.setFitBars(true);
+        barChart.highlightValue(10f, 1);
+        barChart.invalidate();
+    }
+
+    private int[] getColorsBarAll() {
+
+        int[] colors = {getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
+                getResources().getColor(R.color.light_pink),getResources().getColor(R.color.dark_pink),
+                getResources().getColor(R.color.light_blue), getResources().getColor(R.color.dark_blue)};
+
+        return colors;
+    }
+
+    private int[] getColorsBarSum() {
+
+        int[] colors = {getResources().getColor(R.color.outline_yellow),
+                getResources().getColor(R.color.outline_pink),
+                getResources().getColor(R.color.outline_blue)};
+
+        return colors;
+    }
+
+    private int[] getColorsBarConsumption() {
+
+        int[] colors = {getResources().getColor(R.color.colorBlack)};
+
+        return colors;
+    }
+
+    private int[] getColorsBarProduction() {
+
+        int[] colors = {getResources().getColor(R.color.colorWhite),
+                getResources().getColor(R.color.colorGrey2)};
+
+        return colors;
+    }
 
 }

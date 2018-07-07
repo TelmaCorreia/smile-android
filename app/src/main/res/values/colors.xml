@@ -23,6 +23,7 @@
     <color name="colorDividerGrey">#c6c8ca</color>
     <color name="colorBackgroundGrey">#e0e0e0</color>
     <color name="colorUnderline">#009688</color>
+    <color name="colorRed">#FF0000</color>
 
     <!-- Button colors -->
     <color name="colorButtonBackground">#52c7b8</color>

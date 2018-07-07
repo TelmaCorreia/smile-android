@@ -1,5 +1,7 @@
 package com.thesis.smile.presentation.main.historical.temporal_fragments;
 
+import android.util.Log;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,6 +26,9 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
 
     private BarChart barChart;
     private List<HistoricalDataPoint> list;
+
+    private Boolean isStarted = false;
+    private Boolean isVisible = false;
 
     public static DayHistoricalFragment newInstance() {
         DayHistoricalFragment f = new DayHistoricalFragment();
@@ -61,7 +66,6 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
                 if (list!=null) {
                     HistoricalDataPoint dp = (HistoricalDataPoint) e.getData();
                     getViewModel().setCurrentDay(dp);
-
                 }
             }
 
@@ -70,40 +74,6 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
 
             }
         });
-    }
-
-
-    private int[] getColorsBarAll() {
-
-        int[] colors = {getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
-                getResources().getColor(R.color.light_pink),getResources().getColor(R.color.dark_pink),
-                getResources().getColor(R.color.light_blue), getResources().getColor(R.color.dark_blue)};
-
-        return colors;
-    }
-
-    private int[] getColorsBarSum() {
-
-        int[] colors = {getResources().getColor(R.color.outline_yellow),
-                        getResources().getColor(R.color.outline_pink),
-                        getResources().getColor(R.color.outline_blue)};
-
-        return colors;
-    }
-
-    private int[] getColorsBarConsumption() {
-
-        int[] colors = {getResources().getColor(R.color.colorBlack)};
-
-        return colors;
-    }
-
-    private int[] getColorsBarProduction() {
-
-        int[] colors = {getResources().getColor(R.color.colorWhite),
-                getResources().getColor(R.color.colorGrey2)};
-
-        return colors;
     }
 
     private void initData(Event event) {
@@ -122,7 +92,6 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         ArrayList<BarEntry> barConsumption = new ArrayList<BarEntry>();
         ArrayList<BarEntry> barProduction = new ArrayList<BarEntry>();
 
-        final ArrayList<String> xAxes = new ArrayList<>();
         int i = 0;
         for (HistoricalDataPoint hdp : list) {
             float surplus_sold = (float) hdp.getEnergySurplusNeighbours();
@@ -217,9 +186,65 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         data.groupBars(0f, 0.4f, 0.1f);
 
         barChart.setData(data);
-        barChart.animateY(1000);
         barChart.setFitBars(true);
-        barChart.highlightValue(0f, 1);
+        barChart.highlightValue(15f, 1);
         barChart.invalidate();
     }
+
+    private int[] getColorsBarAll() {
+
+        int[] colors = {getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
+                getResources().getColor(R.color.light_pink),getResources().getColor(R.color.dark_pink),
+                getResources().getColor(R.color.light_blue), getResources().getColor(R.color.dark_blue)};
+
+        return colors;
+    }
+
+    private int[] getColorsBarSum() {
+
+        int[] colors = {getResources().getColor(R.color.outline_yellow),
+                getResources().getColor(R.color.outline_pink),
+                getResources().getColor(R.color.outline_blue)};
+
+        return colors;
+    }
+
+    private int[] getColorsBarConsumption() {
+
+        int[] colors = {getResources().getColor(R.color.colorBlack)};
+
+        return colors;
+    }
+
+    private int[] getColorsBarProduction() {
+
+        int[] colors = {getResources().getColor(R.color.colorWhite),
+                getResources().getColor(R.color.colorGrey2)};
+
+        return colors;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+        if (isVisible && isStarted){
+            viewDidAppear();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isVisible = isVisibleToUser;
+        if (isStarted && isVisible) {
+            viewDidAppear();
+        }
+    }
+
+    public void viewDidAppear() {
+       getViewModel().getHistoricalDataFromServer();
+    }
+
+
 }

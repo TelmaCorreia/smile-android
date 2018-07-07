@@ -94,12 +94,11 @@
                     style="@style/Text2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:text="@{viewModel.label1}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/lb0"
+                    app:layout_constraintRight_toLeftOf="@id/lb2"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
                     tools:text="01/07" />
 
                 <TextView
@@ -194,6 +193,7 @@
                         android:layout_height="wrap_content"
                         android:weightSum="2"
                         android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center">
 
                         <android.support.constraint.ConstraintLayout
@@ -201,9 +201,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_marginRight="16dp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/llTotals2">
+                            android:layout_marginRight="16dp">
 
                             <ImageView
                                 android:id="@+id/ivLine1"
@@ -224,8 +222,7 @@
                                 android:text="@string/legend_total_consumption"
                                 app:layout_constraintBottom_toTopOf="@id/tvValue1"
                                 app:layout_constraintStart_toEndOf="@id/ivLine1"
-                                app:layout_constraintTop_toTopOf="parent"
-                                tools:layout_editor_absoluteY="16dp" />
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
                                 android:id="@+id/tvValue1"
@@ -254,11 +251,7 @@
                             android:id="@+id/llTotals2"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginTop="16dp"
-                            app:layout_constraintLeft_toRightOf="@id/llTotals1"
-                            app:layout_constraintRight_toRightOf="parent">
+                            android:layout_height="wrap_content">
 
                             <ImageView
                                 android:id="@+id/ivLine2"
@@ -548,6 +541,17 @@
                                     app:layout_constraintStart_toEndOf="@id/tvValue1b"
                                     app:layout_constraintTop_toBottomOf="@id/tvLegend1b" />
 
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/ic_more_details"
+                                    android:tint="@color/colorBlack"
+                                    android:visibility="@{viewModel.showEnergySoldDetails ? View.VISIBLE : View.INVISIBLE}"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/tvLegend1b"/>
+
+
                             </android.support.constraint.ConstraintLayout>
 
                             <android.support.constraint.ConstraintLayout
@@ -698,6 +702,16 @@
                                     app:layout_constraintLeft_toRightOf="@id/tvValue1c"
                                     app:layout_constraintStart_toEndOf="@id/tvValue1c"
                                     app:layout_constraintTop_toBottomOf="@id/tvLegend1c" />
+
+                                <ImageView
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/ic_warning"
+                                    android:tint="@color/colorRed"
+                                    android:visibility="@{viewModel.alertWastedEnergy ? View.VISIBLE : View.INVISIBLE}"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/tvLegend1c"/>
 
                             </android.support.constraint.ConstraintLayout>
 

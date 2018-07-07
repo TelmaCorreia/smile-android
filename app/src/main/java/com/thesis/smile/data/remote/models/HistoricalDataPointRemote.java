@@ -40,9 +40,13 @@ public class HistoricalDataPointRemote {
     @Expose
     private double energyBoughtEem;
 
+    @Expose
+    private double wastedEnergy;
+
+
     public HistoricalDataPointRemote(){}
 
-    public HistoricalDataPointRemote(String title, double totalConsumption, double totalProduction, double energySurplus, double energySurplusNeighbours, double energySurplusNotUsed, double energyAutoConsumptionTotal, double energyAutoConsumptionBattery, double energyAutoConsumptionPanels, double energyBought, double energyBoughtNeighbours, double energyBoughtEem) {
+    public HistoricalDataPointRemote(String title, double totalConsumption, double totalProduction, double energySurplus, double energySurplusNeighbours, double energySurplusNotUsed, double energyAutoConsumptionTotal, double energyAutoConsumptionBattery, double energyAutoConsumptionPanels, double energyBought, double energyBoughtNeighbours, double energyBoughtEem, double wastedEnergy) {
         this.title = title;
         this.totalConsumption = totalConsumption;
         this.totalProduction = totalProduction;
@@ -55,6 +59,7 @@ public class HistoricalDataPointRemote {
         this.energyBought = energyBought;
         this.energyBoughtNeighbours = energyBoughtNeighbours;
         this.energyBoughtEem = energyBoughtEem;
+        this.wastedEnergy = wastedEnergy;
     }
 
     public String getTitle() {
@@ -151,5 +156,13 @@ public class HistoricalDataPointRemote {
 
     public void setEnergyBoughtEem(double energyBoughtEem) {
         this.energyBoughtEem = energyBoughtEem;
+    }
+
+    public double getWastedEnergy() {
+        return wastedEnergy;
+    }
+
+    public void setWastedEnergy(double wastedEnergy) {
+        this.wastedEnergy = wastedEnergy;
     }
 }

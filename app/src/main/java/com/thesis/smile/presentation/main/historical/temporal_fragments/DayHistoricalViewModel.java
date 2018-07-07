@@ -197,6 +197,24 @@ public class DayHistoricalViewModel extends BaseViewModel {
         return isLoading;
     }
 
+    @Bindable
+    public  boolean isAlertWastedEnergy(){
+        if (currentDay!=null) {
+            return currentDay.getWastedEnergy()>0?true:false;
+        }
+        return false;
+    }
+
+    @Bindable
+    public  boolean getShowEnergySoldDetails(){
+        if (currentDay!=null) {
+            return currentDay.getEnergySurplusNeighbours()>0?true:false;
+        }
+        return false;
+    }
+
+
+
     public void setLoading(boolean loading){
         this.isLoading = loading;
     }
