@@ -127,7 +127,7 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         }
     }
 
-    public void onGenerlaInfoClick() {
+    public void onGeneralInfoClick() {
         openGeneralInfoObservable.accept(new NavigationEvent());
     }
 
@@ -158,4 +158,5 @@ public class RegisterEnergyViewModel extends BaseViewModel {
         String json = gson.toJson(request);
         return json;
     }
+
 }

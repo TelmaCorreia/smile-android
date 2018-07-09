@@ -1,7 +1,6 @@
 package com.thesis.smile.domain.models;
 
-import com.google.gson.annotations.Expose;
-
+import java.util.List;
 import java.util.Map;
 
 public class Configs {
@@ -9,25 +8,24 @@ public class Configs {
     
     private Map<Integer, String> categories;
 
-    
     private Map<Integer, String> power;
 
-    
     private Map<Integer, String> tariff;
 
-    
     private Map<Integer, String> cycle;
-
     
     private Map<Integer, String> userType;
 
+    private List<String> smartMeterIds;
+
     public Configs(){}
-    public Configs(Map<Integer, String> categories, Map<Integer, String> power, Map<Integer, String> tariff, Map<Integer, String> cycle, Map<Integer, String> userType) {
+    public Configs(Map<Integer, String> categories, Map<Integer, String> power, Map<Integer, String> tariff, Map<Integer, String> cycle, Map<Integer, String> userType, List<String> smartMeterIds) {
         this.categories = categories;
         this.power = power;
         this.tariff = tariff;
         this.cycle = cycle;
         this.userType = userType;
+        this.smartMeterIds = smartMeterIds;
     }
 
     public Map<Integer, String> getCategories() {
@@ -68,5 +66,13 @@ public class Configs {
 
     public void setUserType(Map<Integer, String> userType) {
         this.userType = userType;
+    }
+
+    public List<String> getSmartMeterIds() {
+        return smartMeterIds;
+    }
+
+    public void setSmartMeterIds(List<String> smartMeterIds) {
+        this.smartMeterIds = smartMeterIds;
     }
 }

@@ -5,6 +5,7 @@ import android.accounts.NetworkErrorException;
 import com.thesis.smile.data.remote.exceptions.api.NoContentException;
 import com.thesis.smile.data.remote.exceptions.http.GenericErrorException;
 import com.thesis.smile.data.remote.exceptions.http.InternetConnectionException;
+import com.thesis.smile.data.remote.exceptions.http.NotAcceptableException;
 import com.thesis.smile.data.remote.exceptions.http.NotFoundException;
 import com.thesis.smile.data.remote.exceptions.http.ServerException;
 import com.thesis.smile.data.remote.exceptions.http.UnauthorizedException;
@@ -60,6 +61,8 @@ public class ApiService {
             return new InternetConnectionException();
         } else if (throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException) {
             return new ConnectionTimeoutException();
+        }else if (throwable instanceof NotAcceptableException) {
+                return new NotAcceptableException();
         } else {
             return new GenericErrorException();
         }
@@ -85,6 +88,9 @@ public class ApiService {
                 break;
             case 404:
                 exception = new NotFoundException();
+                break;
+            case 406:
+                exception = new NotAcceptableException();
                 break;
             case 400:
             case 409:

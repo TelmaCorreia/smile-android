@@ -323,6 +323,7 @@
     <string name="notification_attaching_new_address_response_failed_title">Falhou a criação do endereço. Por favor, tente outra vez</string>
     <string name="notification_attaching_new_address_response_succeeded_title">Endereço criado com sucesso!</string>
     <string name="notification_attaching_new_address_request_title">A criar o endereço...</string>
+    <string name="userSmartMeterAlert">Selecione o id do seu smart meter</string>
 
 
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
@@ -73,12 +75,26 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
                         adapterSolarPanels, R.layout.layout_spinner_item_nothing_selected_solar_panel,this));
 
 
-        String[] smartMeters = new String []{"SMP1"};
+        String[] smartMeters = getViewModel().getConfigs().getSmartMeterIds().toArray(new String[0]);
         ArrayAdapter<CharSequence> adapterSmartMeters = new ArrayAdapter(this,R.layout.layout_spinner_item, smartMeters);
         adapterSmartMeters.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         binding.spSmartMeter.setAdapter(
                 new NothingSelectedSpinnerAdapter(
                         adapterSmartMeters, R.layout.layout_spinner_item_nothing_selected_smart_meters,this));
+        binding.spSmartMeter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i > 0) {
+                    getViewModel().setSmartMeterId(smartMeters[i-1]);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     @Override

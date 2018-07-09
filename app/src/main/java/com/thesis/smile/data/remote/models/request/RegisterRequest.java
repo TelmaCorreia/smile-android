@@ -1,7 +1,6 @@
 package com.thesis.smile.data.remote.models.request;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import com.thesis.smile.data.remote.models.EnergyParamsRemote;
 
 import java.io.File;
@@ -9,51 +8,44 @@ import java.io.File;
 public class RegisterRequest{
 
     @Expose
-    @SerializedName("email")
     private String email;
 
     @Expose
-    @SerializedName("password")
     private String password;
 
     @Expose
-    @SerializedName("firstName")
     private String firstName;
 
     @Expose
-    @SerializedName("lastName")
     private String lastName;
 
     @Expose
-    @SerializedName("type")
     private String type;
 
     @Expose
-    @SerializedName("visible")
     private boolean visible;
 
     @Expose
-    @SerializedName("manual")
     private boolean manual;
 
     @Expose
-    @SerializedName("encryptedSeed")
     private String encryptedSeed;
 
     @Expose
-    @SerializedName("firebaseToken")
     private String firebaseToken;
 
     @Expose
-    @SerializedName("energyParams")
     private EnergyParamsRemote energyParams;
+
+    @Expose
+    private String smartMeterId;
 
     private File picture;
 
     public RegisterRequest(){}
 
     public RegisterRequest(String firstName, String lastName, String email, String password,
-                           String type, boolean visible, boolean manual, String encryptedSeed, String firebaseToken, EnergyParamsRemote energyParamsRemote) {
+                           String type, boolean visible, boolean manual, String encryptedSeed, String firebaseToken, EnergyParamsRemote energyParamsRemote, String smartMeterId) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -64,6 +56,7 @@ public class RegisterRequest{
         this.encryptedSeed = encryptedSeed;
         this.firebaseToken = firebaseToken;
         this.energyParams = energyParamsRemote;
+        this.smartMeterId = smartMeterId;
     }
 
     public String getEmail() {
@@ -152,5 +145,13 @@ public class RegisterRequest{
 
     public void setFirebaseToken(String firebaseToken) {
         this.firebaseToken = firebaseToken;
+    }
+
+    public String getSmartMeterId() {
+        return smartMeterId;
+    }
+
+    public void setSmartMeterId(String smartMeterId) {
+        this.smartMeterId = smartMeterId;
     }
 }

@@ -6,6 +6,9 @@ import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.BuildConfig;
 import com.thesis.smile.R;
+import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
+import com.thesis.smile.data.remote.exceptions.http.GenericErrorException;
+import com.thesis.smile.data.remote.exceptions.http.NotAcceptableException;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
 import com.thesis.smile.domain.managers.AccountManager;
 import com.thesis.smile.domain.managers.IotaManager;
@@ -45,6 +48,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private IotaManager iotaManager;
     private String seed;
     private String encryptedSeed;
+    private String smartMeterId = "";
 
     private boolean manual;
     private String userType;
@@ -74,7 +78,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     @Bindable
     public boolean isRegisterEnabled() {
-        return registerEnabled;
+        return isEquipmentVisible()? !smartMeterId.isEmpty() &&registerEnabled:registerEnabled;
     }
 
     public void  setRegisterEnabled(boolean registerEnabled){
@@ -93,13 +97,24 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         }
         return true;
     }
+
+    @Bindable
+    public String getSmartMeterId() {
+        return smartMeterId;
+    }
+
+    public void setSmartMeterId(String power) {
+        this.smartMeterId = power;
+       // notifyPropertyChanged(BR.smartMeterId);
+        notifyPropertyChanged(BR.registerEnabled);
+    }
     public void onRegisterClick() {
         automaticConfigDialogObservable.accept(new OpenDialogEvent());
         seedDialogObservable.accept(new OpenDialogEvent());
         registerObservable.accept(new Event());
     }
 
-    public void onGenerlaInfoClick() {
+    public void onGeneralInfoClick() {
         getUiEvents().showToast(getResourceProvider().getString(R.string.alert_equipment));
     }
 
@@ -119,10 +134,13 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     public void register(RegisterRequest request) {
         if (userType.isEmpty()){
             getUiEvents().showToast(getResourceProvider().getString(R.string.userTypeAlert));
+        }else if (smartMeterId.isEmpty()){
+            getUiEvents().showToast(getResourceProvider().getString(R.string.userSmartMeterAlert));
         }else{
             setLoading(true);
             request.setType(userType);
             request.setManual(manual);
+            request.setSmartMeterId(smartMeterId);
             request.setEncryptedSeed(encryptedSeed);
             accountManager.register(request)
                     .compose(loadingTransformCompletable())
@@ -197,6 +215,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     public void setUserType(String userType) {
         this.userType = userType;
         notifyPropertyChanged(BR.equipmentVisible);
+        notifyPropertyChanged(BR.registerEnabled);
     }
 
     public String generateSeed(){
@@ -260,9 +279,14 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     @Override
     protected void onError(Throwable e){
-        super.onError(e);
-        getUiEvents().showToast("Erro ao enviar o endereço. Vá às definições da conta IOTA e envie um novo endereço!");
-        next();
+        if(e instanceof NotAcceptableException) {
+            getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_smart_meter_id));
+            setLoading(false);
+        }else{
+            super.onError(e);
+            getUiEvents().showToast("Erro ao enviar o endereço. Vá às definições da conta IOTA e envie um novo endereço!");
+            next();
+        }
     }
 
     private void onAddressUpdated(User user) {

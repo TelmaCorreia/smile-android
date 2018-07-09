@@ -4,5 +4,6 @@
     <string name="err_api_generic">Erro no servidor! Por favor, tente mais tarde.</string>
     <string name="err_seed_cypher">Erro ao cifrar a sua seed</string>
     <string name="err_seed_decypher">Erro ao decifrar a sua seed</string>
+    <string name="err_api_smart_meter_id">O ID do seu medidor é inválido.</string>
 
 </resources>
