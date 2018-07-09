@@ -21,6 +21,15 @@ import com.thesis.smile.presentation.utils.actions.events.Event;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.thesis.smile.Constants.ALPHA_ACTIVE;
+import static com.thesis.smile.Constants.ALPHA_INACTIVE;
+import static com.thesis.smile.Constants.BAR_SPACE;
+import static com.thesis.smile.Constants.BORDER_WIDTH;
+import static com.thesis.smile.Constants.MAIN_BAR_WIDTH;
+import static com.thesis.smile.Constants.MONTHLY_GROUP_SPACE;
+import static com.thesis.smile.Constants.SECONDARY_BAR_WIDTH;
+import static com.thesis.smile.Constants.TOTALS_BAR_WIDTH;
+
 public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistoricalBinding, MonthHistoricalViewModel> {
 
 
@@ -146,9 +155,9 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
         setAll = new BarDataSet(barAll, "");
         setAll.setDrawIcons(false);
         setAll.setColors(getColorsBarAll());
-        setAll.setHighLightAlpha(20);
+        setAll.setHighLightAlpha(ALPHA_ACTIVE);
         setAll.setDrawValues(false);
-        setAll.setBarWidth(0.80f);
+        setAll.setBarWidth(MAIN_BAR_WIDTH);
 
         BarDataSet setSum;
         setSum = new BarDataSet(barSum, "");
@@ -156,25 +165,25 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
         setSum.setDrawValues(false);
         setSum.setColors(getColorsBarSum());
         setSum.setBarBorderColor(getResources().getColor(R.color.colorBlack));
-        setSum.setBarBorderWidth(1f);
-        setSum.setHighLightAlpha(20);
-        setSum.setBarWidth(0.40f);
+        setSum.setBarBorderWidth(BORDER_WIDTH);
+        setSum.setHighLightAlpha(ALPHA_ACTIVE);
+        setSum.setBarWidth(SECONDARY_BAR_WIDTH);
 
         BarDataSet setConsumption;
         setConsumption = new BarDataSet(barConsumption, "");
         setConsumption.setDrawIcons(false);
         setConsumption.setDrawValues(false);
         setConsumption.setColors(getColorsBarConsumption());
-        setConsumption.setHighLightAlpha(0);
-        setConsumption.setBarWidth(0.10f);
+        setConsumption.setHighLightAlpha(ALPHA_INACTIVE);
+        setConsumption.setBarWidth(TOTALS_BAR_WIDTH);
 
         BarDataSet setProduction;
         setProduction = new BarDataSet(barProduction, "");
         setProduction.setDrawIcons(false);
         setProduction.setDrawValues(false);
         setProduction.setColors(getColorsBarProduction());
-        setProduction.setHighLightAlpha(0);
-        setProduction.setBarWidth(0.10f);
+        setProduction.setHighLightAlpha(ALPHA_INACTIVE);
+        setProduction.setBarWidth(TOTALS_BAR_WIDTH);
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
         dataSets.add(setConsumption);
@@ -183,7 +192,7 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
         dataSets.add(setProduction);
 
         BarData data = new BarData(dataSets);
-        data.groupBars(0f, 0.8f, 0.1f);
+        data.groupBars(0f, MONTHLY_GROUP_SPACE, BAR_SPACE);
 
         barChart.setData(data);
         barChart.setFitBars(true);

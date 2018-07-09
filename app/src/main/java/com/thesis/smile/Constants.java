@@ -22,4 +22,18 @@ public class Constants {
 
     public static final String FIREBASE_TOKEN = "firebaseToken";
     public static final String ACTION_MAIN = "ACTION_MAIN";
+
+    //Graphs
+    public static float MAIN_BAR_WIDTH = 0.8f;
+    public static float SECONDARY_BAR_WIDTH = 0.4f;
+    public static float TOTALS_BAR_WIDTH = 0.1f;
+    public static float DAILY_GROUP_SPACE = 0.4f;
+    public static float MONTHLY_GROUP_SPACE = 0.8f;
+    public static float WEEKLY_GROUP_SPACE = 0.8f;
+    public static float BAR_SPACE = 0.1f;
+    public static float BORDER_WIDTH = 0.1f;
+    public static int ALPHA_ACTIVE = 20;
+    public static int ALPHA_INACTIVE = 0;
+
+
 }
