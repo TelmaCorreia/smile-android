@@ -259,10 +259,10 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         String title = getViewModel().getCurrentDay().getTitle();
         float position = 0;
         for (HistoricalDataPoint dp: getViewModel().getCurrentData().getDataPoints()){
-            position+=1;
             if (dp.getTitle().equals(title)){
                 break;
             }
+            position+=1;
         }
         return position*groupWidth;
     }
