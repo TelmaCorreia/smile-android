@@ -31,10 +31,25 @@ public class HeaderAuthenticationInterceptor implements Interceptor{
         builder.addHeader("x-app-version", String.valueOf(BuildConfig.VERSION_BUILD));
         builder.addHeader("x-app-platform", "android");
 
-        if(userToken != null) {
+        if(userToken != null && !hasAuthorizationHeader(request)) {
             builder.addHeader("Authorization", userToken);
+            request = builder.build();
         }
 
-        return chain.proceed(builder.build());
+        Response response = chain.proceed(request);
+
+        if (hasAuthorizationHeader(response)) {
+            sharedPrefs.saveUserAuthorizationHeader(response.header("Authorization"));
+        }
+
+        return response;
+    }
+
+    private boolean hasAuthorizationHeader(Request request) {
+        return request.headers("Authorization") != null && request.headers("Authorization").size() == 1;
+    }
+
+    private boolean hasAuthorizationHeader(Response request) {
+        return request.headers("Authorization") != null && request.headers("Authorization").size() == 1;
     }
 }
