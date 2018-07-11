@@ -123,9 +123,17 @@ public class SellFragment extends BaseFragment<FragmentSellBinding, SellViewMode
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::updateSlider);
 
+        getViewModel().observeSwitch()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::turnOffSwitch);
+
         getViewModel().observeAlertDialog()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::createDialogs);
+    }
+
+    private void turnOffSwitch(Event event) {
+        getBinding().switchSell.setChecked(false);
     }
 
     //This is very bad :(

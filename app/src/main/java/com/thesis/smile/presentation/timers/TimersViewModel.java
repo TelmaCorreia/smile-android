@@ -4,6 +4,7 @@ import android.databinding.Bindable;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
+import com.thesis.smile.R;
 import com.thesis.smile.domain.models.TimeInterval;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
@@ -11,6 +12,9 @@ import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
+
+import org.threeten.bp.LocalTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,8 +105,14 @@ public class TimersViewModel extends BaseToolbarViewModel {
     }
 
     public void onSaveClick(){
-        this.timeInterval = new TimeInterval(id,from, to, selectedDays, selectedDaysStrings, activated );
-        saveObservable.accept(new Event());
+        LocalTime fromTime = LocalTime.parse(from, DateTimeFormatter.ofPattern(getResourceProvider().getString(R.string.time_format)));
+        LocalTime toTime = LocalTime.parse(to, DateTimeFormatter.ofPattern(getResourceProvider().getString(R.string.time_format)));
+        if (toTime.minusHours(1).isBefore(fromTime)){
+            getUiEvents().showToast(getResourceProvider().getString(R.string.timers_info));
+        }else {
+            this.timeInterval = new TimeInterval(id,from, to, selectedDays, selectedDaysStrings, activated );
+            saveObservable.accept(new Event());
+        }
     }
 
     Observable<DialogEvent> observeTimerFromDialog(){

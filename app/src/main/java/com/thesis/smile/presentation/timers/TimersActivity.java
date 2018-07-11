@@ -137,7 +137,7 @@ public class TimersActivity extends BaseToolbarActivity<ActivityTimersBinding, T
         Calendar now = Calendar.getInstance();
         TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(
                 TimersActivity.this,
-                (hour!=0)?hour:now.get(Calendar.HOUR),
+                (hour!=0)?hour:now.get(Calendar.HOUR_OF_DAY),
                 (minute!=0)?minute:now.get(Calendar.MINUTE),
                true
         );

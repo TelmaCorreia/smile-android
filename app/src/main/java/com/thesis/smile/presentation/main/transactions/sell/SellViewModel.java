@@ -48,7 +48,7 @@ public class SellViewModel extends BaseViewModel {
     private PublishRelay<Event> timeIntervalsStateChanged = PublishRelay.create();
     private PublishRelay<Event> radioChanged = PublishRelay.create();
     private PublishRelay<Event> sliderChanged = PublishRelay.create();
-
+    private PublishRelay<Event> switchChanged = PublishRelay.create();
 
     @Inject
     public SellViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents,  TransactionsSettingsManager sellSettingsManager) {
@@ -72,16 +72,19 @@ public class SellViewModel extends BaseViewModel {
 
     public void setSell(boolean sell) {
         if(sellSettings!=null) {
-            this.sellSettings.setOn(sell);
-            if (sellSettings.isSpecificPrice() && sellSettings.getSpecificPriceValue()==0){
+            if (sellSettings.isSpecificPrice() && sellSettings.getSpecificPriceValue() == 0) {
                 getUiEvents().showToast(getResourceProvider().getString(R.string.alert_price));
-            }else if (sell && sellSettings.isOn() && !previousSettings.isOn()){
-                alertDialog.accept(new OpenDialogEvent());
-            }
+                switchChanged.accept(new Event());
+            } else {
+                this.sellSettings.setOn(sell);
+                if (sell && sellSettings.isOn() && !previousSettings.isOn()) {
+                    alertDialog.accept(new OpenDialogEvent());
+                }
 
-            notifyPropertyChanged(BR.sell);
-            if (!sell) {
-            notifyPropertyChanged(BR.saveVisible);
+                notifyPropertyChanged(BR.sell);
+                if (!sell) {
+                    notifyPropertyChanged(BR.saveVisible);
+                }
             }
         }
     }
@@ -475,6 +478,9 @@ public class SellViewModel extends BaseViewModel {
 
     Observable<Event> observeSlider(){
         return sliderChanged;
+    }
+    Observable<Event> observeSwitch(){
+        return switchChanged;
     }
 
     Observable<OpenDialogEvent> observeAlertDialog(){

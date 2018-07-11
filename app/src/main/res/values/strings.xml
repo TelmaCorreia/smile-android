@@ -204,6 +204,8 @@
     <string name="details_sold_energy">SOLD</string>
     <string name="details_bought_energy">BOUGHT</string>
     <string name="date_format_transactions">dd/MM/yy HH:mm</string>
+    <string name="time_format">HH:mm</string>
+
 
     <!-- Historical -->
     <string name="tab_days">Dias</string>
@@ -275,6 +277,8 @@
     <string name="timers_from">Das </string>
     <string name="timers_to">Às </string>
     <string name="timers_week_days">Dias da semana</string>
+    <string name="timers_info">Os intervalos de venda não podem ser inferiores a 1 hora</string>
+
 
     <!-- Transaction Details -->
     <string name="transaction_details_title">Detalhes da transação</string>
