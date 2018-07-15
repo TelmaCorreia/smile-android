@@ -72,6 +72,7 @@ public class MainActivity extends BaseToolbarActivity<ActivityMainBinding, MainV
         super.initArguments(args);
         this.transactions = (args!=null)?args.getBoolean(TAG_FRAGMENT_TRANSACTIONS):false;
 
+
     }
     @Override
     protected int layoutResId() {

@@ -14,6 +14,13 @@ public class Constants {
     public static final String PREFERENCE_NODE_IP = "preference_node_ip";
     public static final String PREFERENCE_NODE_PORT = "preference_node_port";
 
+    //currency
+    public static final String IOTA_CURRENCY = "IOT";
+    public static final String BTC_CURRENCY = "BTC";
+    public static final String EUR_CURRENCY = "EUR";
+    public static final String PRICE_STORAGE_PREFIX = "exchange_rate_storage";
+
+
     public static final String PREFERENCE_NODE_DEFAULT_PROTOCOL = "http";
     public static final String PREFERENCE_NODE_DEFAULT_IP = "176.58.98.99";
     public static final String PREFERENCE_NODE_DEFAULT_PORT = "14265";

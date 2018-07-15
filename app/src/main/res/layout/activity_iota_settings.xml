@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.thesis.smile.presentation.iota_settings.IotaSettingsViewModel" />
@@ -50,22 +50,37 @@
                     android:layout_marginTop="28dp"
                     android:text="@string/wallet_title" />
 
-                <TextView
-                    style="@style/Text15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/wallet_value_euro" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/Text11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/wallet_value_iota" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            style="@style/Text15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="16dp"
+                            android:text="@={viewModel.balanceEuro}" />
 
+                        <TextView
+                            style="@style/Text11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:text="@={viewModel.balanceIota}" />
+                    </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/loading"
+                        android:visibility="@{viewModel.progress ? View.VISIBLE : View.INVISIBLE}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
 
                 <Button
                     style="@style/Button"

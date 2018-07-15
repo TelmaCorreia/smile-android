@@ -5,7 +5,7 @@
     <string name="logout">Logout</string>
     <string name="settings">Definições</string>
     <string name="privacy">Política de privacidade</string>
-    <string name="iota_settings">Definições da conta IOTA</string>
+    <string name="iota_settings">Ver o saldo</string>
 
     <!-- Login -->
     <string name="prompt_email">Email</string>
@@ -126,6 +126,7 @@
     <string name="transactions_title">Transações</string>
     <string name="ranking_title">Ranking</string>
     <string name="settings_title">Definições</string>
+    <string name="iota_settings_title">O meu saldo</string>
     <string name="recover_pass_title">Recuperação da palavra-passe</string>
 
     <!-- Home -->
@@ -249,7 +250,7 @@
 
     <!-- Transactions: Buy -->
     <string name="buy_enegery">Comprar energia aos meus vizinhos</string>
-    <string name="price_lower_EEM">Mais barato do que pago à EEM</string>
+    <string name="price_lower_EEM">Valor que pago à EEM ou mais barato</string>
     <string name="price_EEM_plus">Valor que pago à EEM</string>
     <string name="price_EEM_plus_explanation">Selecione esta opção se está disposto a pagar mais do que o valor que paga à EEM</string>
     <string name="timers_buy_title">Configuração dos periodos de compra</string>

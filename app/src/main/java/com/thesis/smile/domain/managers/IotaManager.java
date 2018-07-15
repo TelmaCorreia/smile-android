@@ -1,10 +1,7 @@
 package com.thesis.smile.domain.managers;
 
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 
 import com.thesis.smile.Constants;
-import com.thesis.smile.R;
 import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.domain.models_iota.Address;
 import com.thesis.smile.iota.IotaTaskManager;
@@ -13,16 +10,8 @@ import com.thesis.smile.iota.requests.GetNewAddressRequest;
 import com.thesis.smile.iota.requests.NodeInfoRequest;
 import com.thesis.smile.iota.requests.ReplayBundleRequest;
 import com.thesis.smile.iota.requests.SendTransferRequest;
-import com.thesis.smile.iota.responses.GetAccountDataResponse;
-import com.thesis.smile.iota.responses.GetNewAddressResponse;
-import com.thesis.smile.iota.responses.NodeInfoResponse;
-import com.thesis.smile.iota.responses.SendTransferResponse;
-import com.thesis.smile.iota.responses.error.NetworkError;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,7 +23,6 @@ public class IotaManager {
     public static final String TAG = IotaManager.class.getSimpleName();
     private SharedPrefs sharedPrefs;
     private IotaTaskManager iotaTaskManager;
-    private final String seed;
     List<Address>addresses;
 
     @Inject
@@ -43,25 +31,29 @@ public class IotaManager {
         this.sharedPrefs = sharedPrefs;
         this.addresses = new ArrayList<>();
 
-        seed = sharedPrefs.getSeed();
     }
 
 
-    public void generateNewAddress() {
+    public void generateNewAddress(String seed) {
         GetNewAddressRequest gtr = new GetNewAddressRequest();
         gtr.setSeed(String.valueOf(seed));
         iotaTaskManager.startNewRequestTask(gtr);
     }
 
-    public void attachNewAddress(String address) {
+    public void attachNewAddress(String seed, String address) {
         //0 value transfer is required to attachToTangle
         SendTransferRequest sendTransferRequest = new SendTransferRequest(seed, address, "0", "", Constants.NEW_ADDRESS_TAG);
         iotaTaskManager.startNewRequestTask(sendTransferRequest);
     }
 
-    public void getAccountData() {
-        GetAccountDataRequest getAccountDataRequest = new GetAccountDataRequest(seed);
-        iotaTaskManager.startNewRequestTask(getAccountDataRequest);
+    public void getAccountData(String seed) {
+        try {
+            GetAccountDataRequest getAccountDataRequest = new GetAccountDataRequest(seed);
+            iotaTaskManager.startNewRequestTask(getAccountDataRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void getNodeInfo() {
@@ -70,8 +62,8 @@ public class IotaManager {
 
     }
 
-    public void sendTransfer(String address) {
-        SendTransferRequest sendTransferRequest = new SendTransferRequest(seed, address, "1", "", Constants.NEW_TRANSFER_TAG);
+    public void sendTransfer(String address, String seed, String value ) {
+        SendTransferRequest sendTransferRequest = new SendTransferRequest(seed, address, value, "", Constants.NEW_TRANSFER_TAG);
         iotaTaskManager.startNewRequestTask(sendTransferRequest);
     }
 
@@ -80,5 +72,9 @@ public class IotaManager {
         ReplayBundleRequest replayBundleRequest = new ReplayBundleRequest(hash);
         iotaTaskManager.startNewRequestTask(replayBundleRequest);
 
+    }
+
+    public String getSeed() {
+        return sharedPrefs.getSeed();
     }
 }

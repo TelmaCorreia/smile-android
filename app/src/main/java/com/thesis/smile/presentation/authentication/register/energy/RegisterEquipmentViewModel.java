@@ -167,7 +167,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     public void generateNewAddress() {
         setRegisterEnabled(false);
-        iotaManager.generateNewAddress();
+        iotaManager.generateNewAddress(seed);
     }
 
     private void onPicComplete() {
@@ -246,7 +246,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     public void attachNewAddress(String address) {
-        iotaManager.attachNewAddress(address);
+        iotaManager.attachNewAddress(address, seed);
     }
 
     @Bindable

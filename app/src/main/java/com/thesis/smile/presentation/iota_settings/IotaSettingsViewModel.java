@@ -1,7 +1,6 @@
 package com.thesis.smile.presentation.iota_settings;
 
 import android.databinding.Bindable;
-import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
@@ -12,11 +11,10 @@ import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.User;
 import com.thesis.smile.domain.models_iota.Address;
 import com.thesis.smile.domain.models_iota.Transfer;
-import com.thesis.smile.iota.requests.ReplayBundleRequest;
-import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.presentation.utils.actions.events.DialogEvent;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.iota.AESCrypt;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -37,10 +35,13 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     private User user;
     private PublishRelay<DialogEvent> showSeedDialog = PublishRelay.create();
     private PublishRelay<DialogEvent> insertPassSeedDialog = PublishRelay.create();
+    private PublishRelay<Event> startPaymentServiceEvent = PublishRelay.create();
     private boolean confirmed;
     private String seed = "";
     private boolean seedVisible = false;
-
+    private String balanceIota = "";
+    private String balanceEuro = "";
+    private boolean isLoading = false;
 
     @Inject
     public IotaSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager, IotaManager iotaManager) {
@@ -49,8 +50,8 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         this.addresses = new ArrayList<>();
         this.userManager = userManager;
         this.address = userManager.getAddress();
-
     }
+
 
     @Bindable
     public String getSeed() {
@@ -66,6 +67,26 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
     @Bindable
+    public String getBalanceEuro() {
+        return this.balanceEuro;
+    }
+
+    public void setBalanceEuro(String euro) {
+        this.balanceEuro=euro;
+        notifyPropertyChanged(BR.balanceEuro);
+    }
+
+    @Bindable
+    public String getBalanceIota() {
+        return this.balanceIota;
+    }
+
+    public void setBalanceIota(String iota) {
+        this.balanceIota=iota;
+        notifyPropertyChanged(BR.balanceIota);
+    }
+
+    @Bindable
     public int getSeedVisible() {
         return !seedVisible? View.VISIBLE:View.GONE;
     }
@@ -74,20 +95,32 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     public int getHideSeedVisible() {
         return seedVisible? View.VISIBLE:View.GONE;
     }
+
+    @Bindable
+    public boolean isProgress(){
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading){
+        this.isLoading = loading;
+        notifyPropertyChanged(BR.progress);
+    }
+
     public void generateNewAddress() {
-        iotaManager.generateNewAddress();
+        iotaManager.generateNewAddress(seed);
     }
 
     public void attachNewAddress(String s) {
-        iotaManager.attachNewAddress(s);
+        iotaManager.attachNewAddress(seed, s);
     }
 
     public void getAccountData() {
-        iotaManager.getAccountData();
+        iotaManager.getAccountData(seed);
     }
 
     public void onGetIotaClick(){
-        insertPassSeedDialog.accept(new DialogEvent());
+        startPaymentServiceEvent.accept(new Event());
+        //insertPassSeedDialog.accept(new DialogEvent());
     }
 
     public void message(String  msg){
@@ -121,7 +154,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
 
-    public void decrypSeed(String input) {
+    public void decryptSeed(String input) {
         String seed = "";
         this.user = userManager.getCurrentUser();
         if (user!=null && user.getEncryptedSeed()!=null){
@@ -131,6 +164,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
             } catch (Exception e) {
                 getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed_decypher));
             }
+            setSeed(seed);
             userManager.saveSeed(seed);
         }
     }
@@ -143,9 +177,16 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         return insertPassSeedDialog;
     }
 
+    Observable<Event> observeStartPaymentServiceEvent(){
+        return startPaymentServiceEvent;
+    }
 
-    public void getFreeIotas() {
-        if(userManager.getAddress()!=null){
+
+    public void getMyBalance() {
+        setLoading(true);
+        getAccountData();
+
+        /*if(userManager.getAddress()!=null){
             List<Transfer> transfers = getTransfers();
             if(transfers!=null && transfers.size()>0 && !transfers.get(0).getPersistence()){
                 iotaManager.reattachAddress(transfers.get(0).getHash());
@@ -154,23 +195,19 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
             }
         }else{
             generateNewAddress();
-        }
+        }*/
     }
-
 
     public void saveTransfer(List<Transfer> transfers) {
         userManager.saveTransfers(transfers);
     }
 
-
-
     public List<Transfer> getTransfers() {
         return userManager.getTransfers();
     }
 
-
     public void showSeed(String input) {
-        decrypSeed(input);
+        decryptSeed(input);
         setSeed(userManager.getSeed());
     }
 }

@@ -118,6 +118,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
+        //Payment service
+        <service
+            android:name=".iota.service.PaymentService"
+            android:exported="false"/>
+
         //FIREBASE
         <service
             android:name=".utils.notifications.MyFirebaseMessagingService"

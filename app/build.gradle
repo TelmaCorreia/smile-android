@@ -171,9 +171,14 @@ dependencies {
     //event bus
     api 'com.google.guava:guava:25.1-android'
 
+    //currency
+    implementation 'org.knowm.xchange:xchange-core:4.3.0'
+    implementation 'org.knowm.xchange:xchange-bitstamp:4.3.0'
+    implementation 'org.knowm.xchange:xchange-bitfinex:4.3.0'
+    implementation 'org.knowm.xchange:xchange-okcoin:4.3.0'
+
     //charts
     //implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-
     implementation project(path: ':MPChartLibCustom')
 }
 

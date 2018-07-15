@@ -22,7 +22,7 @@ import javax.inject.Inject;
 public class SharedPrefs extends BasePreferences {
 
     @Inject
-    SharedPrefs(Context context) {
+    public SharedPrefs(Context context) {
         super(context);
     }
 
