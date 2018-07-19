@@ -1,6 +1,7 @@
 package com.thesis.smile.data.remote.services;
 
 import com.thesis.smile.data.remote.endpoints.TransactionsSettingsApi;
+import com.thesis.smile.data.remote.models.AddressRemote;
 import com.thesis.smile.data.remote.models.BuySettingsRemote;
 import com.thesis.smile.data.remote.models.InfoPriceRemote;
 import com.thesis.smile.data.remote.models.NeighbourRemote;
@@ -11,10 +12,12 @@ import com.thesis.smile.data.remote.models.TimeIntervalsRemote;
 import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.services.base.ApiService;
+import com.thesis.smile.domain.mapper.AddressMapper;
 import com.thesis.smile.domain.mapper.BuySettingsMapper;
 import com.thesis.smile.domain.mapper.NeighbourMapper;
 import com.thesis.smile.domain.mapper.SellSettingsMapper;
 import com.thesis.smile.domain.mapper.TimeIntervalMapper;
+import com.thesis.smile.domain.models.Address;
 import com.thesis.smile.domain.models.BuySettings;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.SellSettings;
@@ -138,6 +141,5 @@ public class TransactionsSettingsService extends ApiService {
                 .compose(networkMapTransform())
                 .map(BaseResponse::getCode);
     }
-
 
 }

@@ -38,6 +38,13 @@ public class UserService extends ApiService{
                 .map(UserMapper.INSTANCE::remoteToDomain);
     }
 
+    public Single<String> getAccountSeed(){
+        return api.getSeed()
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
     public Single<UserRemote> updateUserWithToken(String token, User user){
         return api.updateUserWithToken(token, UserMapper.INSTANCE.domainToRemote(user))
                 .compose(networkMapTransform())

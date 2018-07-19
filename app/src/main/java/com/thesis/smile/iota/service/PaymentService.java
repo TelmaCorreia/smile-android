@@ -9,30 +9,22 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.thesis.smile.Constants;
-import com.thesis.smile.SmileApp;
+
 import com.thesis.smile.data.preferences.SharedPrefs;
-import com.thesis.smile.data.remote.services.TransactionsService;
 import com.thesis.smile.domain.managers.IotaManager;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.iota.IotaTaskManager;
 
-import javax.inject.Inject;
 
-import jota.IotaAPI;
-import jota.error.ArgumentException;
-import jota.model.Transfer;
+
+import dagger.android.AndroidInjection;
 
 public class PaymentService extends Service {
 
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
-    private IotaManager iotaManager;
-    private TransactionsManager transactionsManager;
 
     public PaymentService(){}
 
@@ -42,33 +34,28 @@ public class PaymentService extends Service {
         private IotaManager iotaManager;
         private TransactionsManager transactionsManager;
 
-        public ServiceHandler(Looper looper, IotaManager iotaManager, TransactionsManager transactionsManager) {
+        public ServiceHandler(Looper looper) {
             super(looper);
             this.iotaManager = new IotaManager(new IotaTaskManager(getApplicationContext()),  new SharedPrefs(getApplicationContext()));
+            this.transactionsManager = transactionsManager;
         }
         @Override
         public void handleMessage(Message msg) {
             String seed = iotaManager.getSeed();
-            Log.d(PaymentService.class.getCanonicalName(),  "Seed" + iotaManager.getSeed());
-            String protocol = Constants.PREFERENCE_NODE_DEFAULT_PROTOCOL;
-            String host = Constants.PREFERENCE_NODE_DEFAULT_IP;
-            int port = Integer.parseInt(Constants.PREFERENCE_NODE_DEFAULT_PORT);
-            final IotaAPI iotaApi = new IotaAPI.Builder().protocol(protocol).host(host).port(((Integer) port).toString()).build();
             String address = "IQIEXYFVLAFBJRSLWAULEWENEQEWARUSZWKCAIJIPAMHMUUXIJVGIAXK9O9ERT9YUBGDPZNYISNPDLHNCNPRSJQKCW";
-            iotaManager.sendTransfer(address, seed, "1");
+            iotaManager.generateNewAddress(seed);
             stopSelf(msg.arg1);
         }
     }
 
     @Override
     public void onCreate() {
-
         HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
 
         // Get the HandlerThread's Looper and use it for our Handler
         mServiceLooper = thread.getLooper();
-        mServiceHandler = new ServiceHandler(mServiceLooper, iotaManager, transactionsManager);
+        mServiceHandler = new ServiceHandler(mServiceLooper);
     }
 
     @Override
@@ -91,6 +78,5 @@ public class PaymentService extends Service {
     public void onDestroy() {
         Toast.makeText(this, "payment service done", Toast.LENGTH_SHORT).show();
     }
-
 
 }

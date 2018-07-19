@@ -109,9 +109,19 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.registerEnabled);
     }
     public void onRegisterClick() {
+        setLoading(true);
+        userManager.getAccountSeed()
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onSeedReceived, this::onError);
+    }
+
+    private void onSeedReceived(String s) {
+        setSeed(s);
+        setLoading(false);
         automaticConfigDialogObservable.accept(new OpenDialogEvent());
         seedDialogObservable.accept(new OpenDialogEvent());
-        registerObservable.accept(new Event());
+
     }
 
     public void onGeneralInfoClick() {
@@ -152,9 +162,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     private void onRegisterComplete() {
-        //Generate an address to receive money (only one)
-        generateNewAddress();
-        //next();
+        next();
         if (request.getPicture()!=null){
             userManager.updateUserProfilePic(request.getPicture())
                     .compose(loadingTransformCompletable())
@@ -163,11 +171,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
                     .subscribe(this::onPicComplete, this::onError);
         }
 
-    }
-
-    public void generateNewAddress() {
-        setRegisterEnabled(false);
-        iotaManager.generateNewAddress(seed);
     }
 
     private void onPicComplete() {
@@ -180,9 +183,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     public Configs getConfigs() {
         return utilsManager.getConfigs();
-    }
-    Observable<Event> observeRegister(){
-        return registerObservable;
     }
 
     Observable<NavigationEvent> observeStartMain(){
@@ -218,10 +218,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.registerEnabled);
     }
 
-    public String generateSeed(){
-        this.setSeed(SeedRandomGenerator.generateNewSeed());
-        return getSeed();
-    }
     public void encryptSeed(String password) {
         try {
             AESCrypt aes = new AESCrypt(password);
@@ -245,9 +241,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         getUiEvents().showToast("Password inválida. Introduza pelo menos 5 caracteres.");
     }
 
-    public void attachNewAddress(String address) {
-        iotaManager.attachNewAddress(address, seed);
-    }
 
     @Bindable
     public boolean isLoadingVisible(){
@@ -259,10 +252,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         notifyPropertyChanged(BR.loadingVisible);
     }
 
-    public void saveAddress(String address) {
-        userManager.saveAddress(address);
-
-    }
 
     public void next() {
         if (request.isManual()){
@@ -272,10 +261,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         }
     }
 
-    public void sendAddress(){
-        getUiEvents().showToast("Endereço gerado, verifique a sua conta dentro de 1h!");
-        next();
-    }
 
     @Override
     protected void onError(Throwable e){
@@ -287,10 +272,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
             getUiEvents().showToast("Erro ao enviar o endereço. Vá às definições da conta IOTA e envie um novo endereço!");
             next();
         }
-    }
-
-    private void onAddressUpdated(User user) {
-
     }
 
 }

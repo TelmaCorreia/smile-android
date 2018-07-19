@@ -5,8 +5,6 @@ import com.thesis.smile.di.modules.ApplicationModule;
 import com.thesis.smile.di.modules.NetworkModule;
 import com.thesis.smile.di.modules.activities.binding.ActivityBindingModule;
 
-import org.threeten.bp.LocalDate;
-
 import javax.inject.Singleton;
 
 import dagger.Component;

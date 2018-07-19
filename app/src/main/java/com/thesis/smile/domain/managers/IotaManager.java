@@ -6,6 +6,7 @@ import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.domain.models_iota.Address;
 import com.thesis.smile.iota.IotaTaskManager;
 import com.thesis.smile.iota.requests.GetAccountDataRequest;
+import com.thesis.smile.iota.requests.GetBundleRequest;
 import com.thesis.smile.iota.requests.GetNewAddressRequest;
 import com.thesis.smile.iota.requests.NodeInfoRequest;
 import com.thesis.smile.iota.requests.ReplayBundleRequest;
@@ -61,6 +62,8 @@ public class IotaManager {
         iotaTaskManager.startNewRequestTask(nir);
 
     }
+
+
 
     public void sendTransfer(String address, String seed, String value ) {
         SendTransferRequest sendTransferRequest = new SendTransferRequest(seed, address, value, "", Constants.NEW_TRANSFER_TAG);

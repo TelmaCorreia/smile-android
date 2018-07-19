@@ -4,6 +4,8 @@ package com.thesis.smile.domain.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
@@ -19,10 +21,12 @@ public class Transaction implements Parcelable{
     private double quantity;
     private double total;
     private String dateString;
+    private String address;
+    private String state;
 
     public Transaction(){}
 
-    public Transaction(String id, String from, String to, String url, String type, LocalDateTime date, double priceKWH, double quantity, double total) {
+    public Transaction(String id, String from, String to, String url, String type, LocalDateTime date, double priceKWH, double quantity, double total, String address, String state) {
         this.id = id;
         this.from = from;
         this.to = to;
@@ -32,6 +36,8 @@ public class Transaction implements Parcelable{
         this.priceKWH = priceKWH;
         this.quantity = quantity;
         this.total = total;
+        this.state = state;
+        this.address = address;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
         this.dateString = date.format(formatter);
     }
@@ -46,6 +52,8 @@ public class Transaction implements Parcelable{
         quantity = in.readDouble();
         total = in.readDouble();
         dateString = in.readString();
+        address = in.readString();
+        state = in.readString();
     }
 
     public static final Creator<Transaction> CREATOR = new Creator<Transaction>() {
@@ -133,13 +141,28 @@ public class Transaction implements Parcelable{
         this.dateString = dateString;
     }
 
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     @Override
@@ -158,5 +181,7 @@ public class Transaction implements Parcelable{
         parcel.writeDouble(quantity);
         parcel.writeDouble(total);
         parcel.writeString(dateString);
+        parcel.writeString(address);
+        parcel.writeString(state);
     }
 }

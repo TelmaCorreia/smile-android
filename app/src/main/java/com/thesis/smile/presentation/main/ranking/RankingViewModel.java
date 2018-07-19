@@ -1,6 +1,9 @@
 package com.thesis.smile.presentation.main.ranking;
 
+import android.databinding.Bindable;
+
 import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.BR;
 import com.thesis.smile.domain.managers.RankingsManager;
 import com.thesis.smile.domain.models.RankingHeader;
 import com.thesis.smile.domain.models.RankingModelList;
@@ -21,9 +24,8 @@ import io.reactivex.Observable;
 public class RankingViewModel extends BaseViewModel {
 
     private final List<RankingHeader> rankingHeaders;
-
     private RankingsManager rankingsManager;
-
+    private boolean loading = false;
     private PublishRelay<Event> rankingsChanged = PublishRelay.create();
 
     @Inject
@@ -39,7 +41,18 @@ public class RankingViewModel extends BaseViewModel {
         return rankingHeaders;
     }
 
+    @Bindable
+    public boolean isProgress(){
+        return loading;
+    }
+
+    public void setProgress(boolean loading){
+        this.loading = loading;
+        notifyPropertyChanged(BR.progress);
+    }
+
     public void getRankingFromServer() {
+        setProgress(true);
         rankingsManager.getRankingRenewablesUsage()
             .doOnSubscribe(this::addDisposable)
             .compose(schedulersTransformSingleIo())
@@ -47,6 +60,7 @@ public class RankingViewModel extends BaseViewModel {
     }
 
     private void onRankingReceived(List<RankingModelList> rankingModelLists) {
+        setProgress(false);
         int pos = 0;
         for (RankingModelList list : rankingModelLists){
             String title = (list.getRankings().size()>0)?list.getRankings().get(0).getDate().toString():"empty";
@@ -62,7 +76,11 @@ public class RankingViewModel extends BaseViewModel {
         rankingsChanged.accept(new Event());
     }
 
-
+    @Override
+    public void onError(Throwable e){
+        setProgress(false);
+        super.onError(e);
+    }
 
     Observable<Event> observeRankings(){
         return rankingsChanged;

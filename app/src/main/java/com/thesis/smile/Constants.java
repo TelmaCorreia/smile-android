@@ -14,6 +14,11 @@ public class Constants {
     public static final String PREFERENCE_NODE_IP = "preference_node_ip";
     public static final String PREFERENCE_NODE_PORT = "preference_node_port";
 
+    //Transactions status
+    public static final String STATUS_NOT_ATTACHED = "not_attached";
+    public static final String STATUS_ATTACHED = "attached";
+    public static final String STATUS_VALIDATED = "validated";
+
     //currency
     public static final String IOTA_CURRENCY = "IOT";
     public static final String BTC_CURRENCY = "BTC";

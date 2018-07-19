@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.thesis.smile.presentation.main.ranking.RankingViewModel" />
@@ -26,13 +26,29 @@
             android:layout_height="wrap_content"
             android:text="@string/ranking_title_top"/>
 
-        <android.support.v7.widget.RecyclerView
-            style="@style/Common"
-            android:id="@+id/rankingList"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                style="@style/Common"
+                android:id="@+id/rankingList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ProgressBar
+                    android:id="@+id/loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{viewModel.progress ? View.VISIBLE : View.INVISIBLE}" />
+            </LinearLayout>
 
-        </android.support.v7.widget.RecyclerView>
+        </FrameLayout>
+
 
     </LinearLayout>
 

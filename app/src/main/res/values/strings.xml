@@ -172,7 +172,8 @@
     <string name="wallet_title">Valor Actual</string>
     <string name="wallet_value_euro">10.5 €</string>
     <string name="wallet_value_iota">10 iota</string>
-    <string name="wallet_get_free_iota">Obter IOTAs gratuitamente</string>
+    <string name="wallet_pay_bills">Pagar as minhas despesas</string>
+    <string name="wallet_attach_address">Adicionar endereços</string>
     <string name="wallet_get_more_iota">Obter mais IOTAs</string>
     <string name="wallet_my_seed">A MINHA CHAVE</string>
     <string name="show_seed">Ver a minha chave IOTA</string>
@@ -329,6 +330,9 @@
     <string name="notification_attaching_new_address_response_succeeded_title">Endereço criado com sucesso!</string>
     <string name="notification_attaching_new_address_request_title">A criar o endereço...</string>
     <string name="userSmartMeterAlert">Selecione o id do seu smart meter</string>
+
+    <!-- Iota Settings info -->
+    <string name="no_transactions_to_pay">"Não há transações disponíveis para pagar. Tente mais tarde"</string>
 
 
 </resources>

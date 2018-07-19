@@ -27,6 +27,8 @@ public class AlternateValueManager {
         return calculator.calculateValue((float) walletBalanceGigaIota, currency);
     }
 
+
+
     public void updateExchangeRatesAsync(boolean updateSelective) {
         ExchangeRateStorage storage = new ExchangeRateStorage(PreferenceManager.getDefaultSharedPreferences(context));
 

@@ -123,6 +123,18 @@
             android:name=".iota.service.PaymentService"
             android:exported="false"/>
 
+        <service
+            android:name=".iota.service.GenerateAddressJobService"
+            android:label="Word service"
+            android:permission="android.permission.BIND_JOB_SERVICE" >
+        </service>
+
+        <receiver android:name=".iota.service.StartGenerateAddressJobServiceReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         //FIREBASE
         <service
             android:name=".utils.notifications.MyFirebaseMessagingService"

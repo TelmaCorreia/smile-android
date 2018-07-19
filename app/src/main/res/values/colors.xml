@@ -45,9 +45,7 @@
     <color name="light_blue">#00ccff</color>
     <color name="light_pink">#dfb1e6</color>
     <color name="light_yellow">#ffaa4c</color>
-
-
-
+    <color name="colorBlackFilter">#59000000</color>
 
 
 </resources>

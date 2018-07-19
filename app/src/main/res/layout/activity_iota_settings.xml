@@ -9,7 +9,9 @@
             name="viewModel"
             type="com.thesis.smile.presentation.iota_settings.IotaSettingsViewModel" />
     </data>
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -90,8 +92,21 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="28dp"
-                    android:onClick="@{v -> viewModel.onGetIotaClick()}"
-                    android:text="@string/wallet_get_free_iota" />
+                    android:enabled="@{viewModel.layoutEnabled}"
+                    android:onClick="@{v -> viewModel.onPayMyBillsClick()}"
+                    android:text="@string/wallet_pay_bills" />
+
+                <Button
+                    style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="4dp"
+                    android:enabled="@{viewModel.layoutEnabled}"
+                    android:onClick="@{v -> viewModel.onAttachAddressClick()}"
+                    android:text="@string/wallet_attach_address" />
 
                 <TextView
                     style="@style/Text16"
@@ -137,6 +152,7 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:enabled="@{viewModel.layoutEnabled}"
                     android:visibility="@{viewModel.seedVisible}"
                     tools:visibility="visible"
                     android:onClick="@{v -> viewModel.onShowSeedClick()}"
@@ -152,6 +168,7 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:enabled="@{viewModel.layoutEnabled}"
                     android:visibility="@{viewModel.hideSeedVisible}"
                     tools:visibility="gone"
                     android:onClick="@{v -> viewModel.onHideSeedClick()}"
@@ -168,6 +185,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             app:tabMode="fixed"
+            android:enabled="@{viewModel.layoutEnabled}"
             android:layout_marginTop="8dp"
             app:backgroundTint="@android:color/transparent"
             app:tabBackground="@color/colorWhite"
@@ -188,4 +206,19 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="@{viewModel.blockScreenVisible}"
+        android:background="@color/colorBlackFilter">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shadowColor="@color/colorBlack" />
+
+
+    </LinearLayout>
+</FrameLayout>
 </layout>

@@ -2,6 +2,7 @@ package com.thesis.smile.data.remote.endpoints;
 
 import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.data.remote.models.response.UserResponse;
+import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 
 import io.reactivex.Single;
 import okhttp3.MultipartBody;
@@ -17,6 +18,9 @@ public interface UserApi {
 
     @GET("users/{token}")
     Single<Response<UserResponse>> userWithId(@Path("token") String userId);
+
+    @GET("users/seed/")
+    Single<Response<BaseResponse<String>>> getSeed();
 
     @PUT("users/{token}")
     Single<Response<UserResponse>> updateUserWithToken(@Path("token") String userId, @Body UserRemote user);

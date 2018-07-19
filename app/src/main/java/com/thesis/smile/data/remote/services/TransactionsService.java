@@ -8,6 +8,10 @@ import com.thesis.smile.data.remote.models.TransactionsRemote;
 import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.services.base.ApiService;
+import com.thesis.smile.domain.mapper.AddressMapper;
+import com.thesis.smile.domain.mapper.TransactionMapper;
+import com.thesis.smile.domain.models.Address;
+import com.thesis.smile.domain.models.Transaction;
 
 import org.threeten.bp.LocalDate;
 
@@ -87,4 +91,77 @@ public class TransactionsService extends ApiService{
                 .map(BaseResponse::getData);
     }
 
+    public Single<TotalsRemote> getDailyTotals(String token){
+        return api.getDailyTotals(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
+    public Single<TotalsRemote> getWeeklyTotals(String token){
+        return api.getWeeklyTotals(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
+    public Single<TotalsRemote> getMonthlyTotals(String token){
+        return api.getMonthlyTotals(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
+    public  Single<String> updateAddressBundle(String token, Address address){
+        return api.updateAddressBundle(token, AddressMapper.INSTANCE.domainToRemote(address))
+                .compose(networkMapTransform())
+                .map(BaseResponse::getCode);
+    }
+    public  Single<String> updateTransaction(String token, Transaction transaction){
+        return api.updateTransaction(token, TransactionMapper.INSTANCE.domainToRemote(transaction))
+                .compose(networkMapTransform())
+                .map(BaseResponse::getCode);
+    }
+
+    public  Single<String> postAddress(String token, Address address){
+        return api.postAddress(token, AddressMapper.INSTANCE.domainToRemote(address))
+                .compose(networkMapTransform())
+                .map(BaseResponse::getCode);
+    }
+
+    public Single<List<TransactionRemote>> getTransactionsToPay(String token){
+        return api.getTransactionsToPay(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData)
+                .map(TransactionsRemote::getTransactions);
+    }
+
+    public Single<TotalsRemote> getValidatedTotals(String token){
+        return api.getTotalsValidatedTransactions(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
+    public Single<TotalsRemote> getAttachedTotals(String token){
+        return api.getTotalsAttachedTransactions(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
+    public Single<TotalsRemote> getNonAttachedTotals(String token){
+        return api.getTotalsNonAttachedTransactions(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
+    public Single<TotalsRemote> getValidatedAndAttachedTotals(String token){
+        return api.getTotalsValidatedAndAttachedTransactions(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
 }

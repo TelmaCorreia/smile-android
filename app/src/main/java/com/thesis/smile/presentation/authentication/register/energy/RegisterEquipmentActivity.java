@@ -183,7 +183,7 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
 
     private void seedDialogEvent(DialogEvent event){
         if(dialoSeedConfig == null){
-            String seed = getViewModel().generateSeed();
+            String seed = getViewModel().getSeed();
             dialoSeedConfig = new SeedPasswordDialog(RegisterEquipmentActivity.this);
             dialoSeedConfig.setTitle(R.string.dialog_seed_title);
             dialoSeedConfig.setMessage(getString(R.string.dialog_seed_info) + "\nChave:\n"+seed);
@@ -205,48 +205,5 @@ public class RegisterEquipmentActivity extends BaseActivity<ActivityRegisterEqui
         }
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        EventBus.getDefault().register(this);
-    }
 
-    @Override
-    public void onPause(){
-        super.onPause();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe
-    public void onEvent(GetNewAddressResponse getNewAddressResponse) {
-        //attach new
-        getViewModel().saveAddress(getNewAddressResponse.getAddresses().get(0));
-        getViewModel().attachNewAddress(getNewAddressResponse.getAddresses().get(0));
-    }
-
-    @Subscribe
-    public void onEvent(SendTransferResponse str) {
-        if (Arrays.asList(str.getSuccessfully()).contains(true))
-            getViewModel().sendAddress();
-    }
-
-
-
-    @Subscribe
-    public void onEvent(NetworkError error) {
-        switch (error.getErrorType()) {
-            case ACCESS_ERROR:
-                Log.d(TAG, "Access error!");
-                break;
-            case REMOTE_NODE_ERROR:
-                Log.d(TAG, "Remote node error!");
-                if (request_count<3){
-                    request_count++;
-                    getViewModel().generateNewAddress();
-                }else{
-                    getViewModel().next();
-                }
-                break;
-        }
-    }
 }

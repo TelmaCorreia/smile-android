@@ -1,5 +1,6 @@
 package com.thesis.smile.data.remote.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.gson.annotations.Expose;
 
 import org.threeten.bp.LocalDateTime;
@@ -25,10 +26,14 @@ public class TransactionRemote {
     private double quantity;
     @Expose
     private double total;
+    @Expose
+    private String address;
+    @Expose
+    private String state;
 
     public TransactionRemote(){}
 
-    public TransactionRemote(String id, String from, String to, String url, String type, LocalDateTime date, double priceKWH, double quantity, double total) {
+    public TransactionRemote(String id, String from, String to, String url, String type, LocalDateTime date, double priceKWH, double quantity, double total, String address, String state) {
         this.id = id;
         this.from = from;
         this.to = to;
@@ -38,6 +43,8 @@ public class TransactionRemote {
         this.priceKWH = priceKWH;
         this.quantity = quantity;
         this.total = total;
+        this.address = address;
+        this.state = state;
     }
 
     public String getId() {
@@ -112,4 +119,19 @@ public class TransactionRemote {
         this.to = to;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

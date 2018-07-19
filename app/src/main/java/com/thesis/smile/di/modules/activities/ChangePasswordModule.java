@@ -1,6 +1,5 @@
 package com.thesis.smile.di.modules.activities;
 
-import com.thesis.smile.presentation.authentication.register.RegisterUserActivity;
 import com.thesis.smile.presentation.settings.user_settings.ChangePasswordActivity;
 
 import dagger.Module;

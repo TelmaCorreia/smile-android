@@ -5,9 +5,12 @@ import android.view.View;
 
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
+import com.thesis.smile.Constants;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.IotaManager;
+import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.managers.UserManager;
+import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.domain.models.User;
 import com.thesis.smile.domain.models_iota.Address;
 import com.thesis.smile.domain.models_iota.Transfer;
@@ -32,6 +35,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     private String address;
     private IotaManager iotaManager;
     private UserManager userManager;
+    private TransactionsManager transactionsManager;
     private User user;
     private PublishRelay<DialogEvent> showSeedDialog = PublishRelay.create();
     private PublishRelay<DialogEvent> insertPassSeedDialog = PublishRelay.create();
@@ -39,19 +43,25 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     private boolean confirmed;
     private String seed = "";
     private boolean seedVisible = false;
+    private boolean screenBlocked = false;
     private String balanceIota = "";
     private String balanceEuro = "";
     private boolean isLoading = false;
+    private List<Transaction> transactions;
+    private final int addressQuantity=3;
+    private int askAddressTimes = 0;
+
 
     @Inject
-    public IotaSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager, IotaManager iotaManager) {
+    public IotaSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager, IotaManager iotaManager, TransactionsManager transactionsManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.iotaManager = iotaManager;
+        this.transactionsManager=transactionsManager;
         this.addresses = new ArrayList<>();
         this.userManager = userManager;
         this.address = userManager.getAddress();
-    }
 
+    }
 
     @Bindable
     public String getSeed() {
@@ -61,7 +71,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     public void setSeed(String seed) {
         this.seedVisible=true;
         this.seed=seed;
-        userManager.saveSeed(seed); // FIXME: just for test
         notifyPropertiesChanged(BR.seed, BR.seedVisible, BR.hideSeedVisible);
 
     }
@@ -96,12 +105,27 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         return seedVisible? View.VISIBLE:View.GONE;
     }
 
+
+    @Bindable
+    public boolean getLayoutEnabled() {
+        return !screenBlocked;
+    }
+    @Bindable
+    public int getBlockScreenVisible() {
+        return screenBlocked? View.VISIBLE:View.GONE;
+    }
+
+    public void setScreenBlocked(boolean screenBlocked){
+        this.screenBlocked = screenBlocked;
+        notifyPropertiesChanged(BR.blockScreenVisible, BR.layoutEnabled);
+    }
+
     @Bindable
     public boolean isProgress(){
         return isLoading;
     }
 
-    public void setLoading(boolean loading){
+    public void setProgress(boolean loading){
         this.isLoading = loading;
         notifyPropertyChanged(BR.progress);
     }
@@ -112,15 +136,48 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
     public void attachNewAddress(String s) {
         iotaManager.attachNewAddress(seed, s);
+        transactionsManager.insertAddress(new com.thesis.smile.domain.models.Address(s))
+                            .doOnSubscribe(this::addDisposable)
+                            .compose(schedulersTransformSingleIo())
+                            .subscribe(this::onAddressInserted, this::onError);
+    }
+
+    private void onAddressInserted(String s) {
+        this.askAddressTimes++;
+        if (askAddressTimes<addressQuantity){
+            generateNewAddress();
+        }else{
+            setScreenBlocked(false);
+        }
     }
 
     public void getAccountData() {
         iotaManager.getAccountData(seed);
     }
 
-    public void onGetIotaClick(){
-        startPaymentServiceEvent.accept(new Event());
-        //insertPassSeedDialog.accept(new DialogEvent());
+    public void onPayMyBillsClick(){
+        transactionsManager.getTransactionsToPay()
+                .doOnSubscribe(this::addDisposable)
+                .compose(schedulersTransformSingleIo())
+                .subscribe(this::onTransactionsToPayReceived, this::onError);
+    }
+
+    private void onTransactionsToPayReceived(List<Transaction> transactions) {
+        this.transactions = new ArrayList<>(transactions);
+        if (transactions.size()>0){
+            setScreenBlocked(true);
+            startPaymentServiceEvent.accept(new Event());
+        }else{
+            getUiEvents().showToast(getResourceProvider().getString(R.string.no_transactions_to_pay));
+        }
+
+
+    }
+
+    public void onAttachAddressClick(){
+        setScreenBlocked(true);
+        iotaManager.generateNewAddress(seed);
+
     }
 
     public void message(String  msg){
@@ -136,12 +193,33 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
                 .subscribe(this::onAddressUpdated, this::onError);
     }
 
-    private void onAddressUpdated(User user) {
-        message("address updated!!!");
+    public void sendTransfer(Transaction transaction, String iotaBalance){
+        iotaManager.sendTransfer(transaction.getAddress(), seed, iotaBalance);
     }
 
-    public void saveAddress(String s) {
-        userManager.saveAddress(s);
+    public void updateState(int index){
+
+        if (index>0 && index<transactions.size()){
+            transactions.get(index).setState(Constants.STATUS_ATTACHED);
+            transactionsManager.updateTransaction(transactions.get(index))
+                .doOnSubscribe(this::addDisposable)
+                .compose(schedulersTransformSingleIo())
+                .subscribe(this::onTransactionStateUpdated, this::onError);
+        }
+    }
+
+    @Override
+    public void onError(Throwable e){
+        setScreenBlocked(false);
+        super.onError(e);
+    }
+    private void onTransactionStateUpdated(String s) {
+        setScreenBlocked(false);
+        getUiEvents().showToast("transaction state updated");
+    }
+
+    private void onAddressUpdated(User user) {
+        message("address updated!!!");
     }
 
     public void onShowSeedClick(){
@@ -152,7 +230,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         this.seedVisible = false;
         notifyPropertiesChanged(BR.seedVisible, BR.hideSeedVisible);
     }
-
 
     public void decryptSeed(String input) {
         String seed = "";
@@ -183,7 +260,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
 
     public void getMyBalance() {
-        setLoading(true);
+        setProgress(true);
         getAccountData();
 
         /*if(userManager.getAddress()!=null){
@@ -209,5 +286,28 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     public void showSeed(String input) {
         decryptSeed(input);
         setSeed(userManager.getSeed());
+    }
+
+    public void decryptSeedWithoutShow(String input) {
+        String seed = "";
+        this.user = userManager.getCurrentUser();
+        if (user!=null && user.getEncryptedSeed()!=null){
+            try {
+                AESCrypt aes = new AESCrypt(input);
+                seed = aes.decrypt(user.getEncryptedSeed());
+                this.seed = seed;
+            } catch (Exception e) {
+                getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed_decypher));
+                insertPassSeedDialog.accept(new DialogEvent());
+            }
+        }
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void getBundle() {
+       // iotaManager.
     }
 }

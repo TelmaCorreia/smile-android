@@ -5,7 +5,9 @@ import com.thesis.smile.data.remote.services.TransactionsService;
 import com.thesis.smile.domain.mapper.CurrentEnergyMapper;
 import com.thesis.smile.domain.mapper.TotalsMapper;
 import com.thesis.smile.domain.mapper.TransactionMapper;
+import com.thesis.smile.domain.models.Address;
 import com.thesis.smile.domain.models.CurrentEnergy;
+import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.Totals;
 import com.thesis.smile.domain.models.Transaction;
 
@@ -87,6 +89,69 @@ public class TransactionsManager {
     public Single<Totals> getTotals(){
         String token = sharedPrefs.getUserToken();
         return transactionsService.getTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getDailyTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getDailyTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getWeeklyTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getWeeklyTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getMonthlyTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getMonthlyTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<String> updateAddressBundle(Address address){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.updateAddressBundle(token,address );
+    }
+
+    public Single<String> updateTransaction(Transaction transaction){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.updateTransaction(token,transaction );
+    }
+
+    public Single<String> insertAddress(Address address){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.postAddress(token,address );
+    }
+
+    public Single<List<Transaction>> getTransactionsToPay(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getTransactionsToPay(token)
+                .map(TransactionMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getValidatedTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getValidatedTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getAttachedTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getAttachedTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getValidatedAndAttachedTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getValidatedAndAttachedTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getNonAttachedTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getNonAttachedTotals(token)
                 .map(TotalsMapper.INSTANCE::remoteToDomain);
     }
 }

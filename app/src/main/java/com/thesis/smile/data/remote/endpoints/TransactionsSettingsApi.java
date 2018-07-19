@@ -1,5 +1,6 @@
 package com.thesis.smile.data.remote.endpoints;
 
+import com.thesis.smile.data.remote.models.AddressRemote;
 import com.thesis.smile.data.remote.models.BuySettingsRemote;
 import com.thesis.smile.data.remote.models.NeighbourRemote;
 import com.thesis.smile.data.remote.models.NeighboursRemote;
@@ -77,5 +78,6 @@ public interface TransactionsSettingsApi {
 
     @PUT("transactions/neighbours/buy/{token}")
     Single<Response<BaseResponse>> updateNeighboursBuy(@Path("token") String userId, @Body NeighboursRemote neighbours);
+
 
 }
