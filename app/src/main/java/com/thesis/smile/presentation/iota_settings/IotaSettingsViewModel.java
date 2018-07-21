@@ -132,7 +132,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
     public void attachNewAddress(String s) {
-        setScreenBlocked(true);
         iotaManager.attachNewAddress(seed, s);
         transactionsManager.insertAddress(new com.thesis.smile.domain.models.Address(s))
                             .doOnSubscribe(this::addDisposable)

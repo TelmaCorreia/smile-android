@@ -66,7 +66,7 @@ public class MonthIotaViewModel extends BaseViewModel {
     @Bindable
     public String getIncomeValidated() {
         if (totalsValidated!=null){
-            return String.format("%.2f", totalsValidated.getTotalSold()) + getResourceProvider().getString(R.string.coin);
+            return String.format("%.2f", totalsValidated.getTotalSold()) + getResourceProvider().getString(R.string.slash);
         }
 
         return getResourceProvider().getString(R.string.no_data_placeholder_slash);
@@ -75,7 +75,7 @@ public class MonthIotaViewModel extends BaseViewModel {
     @Bindable
     public String getOutcome() {
         if (totals!=null){
-            return String.format("%.2f", totals.getTotalBought()) + getResourceProvider().getString(R.string.coin) + getResourceProvider().getString(R.string.slash);
+            return String.format("%.2f", totals.getTotalBought()) + getResourceProvider().getString(R.string.coin) ;
         }
 
         return getResourceProvider().getString(R.string.no_data_placeholder);
@@ -84,7 +84,7 @@ public class MonthIotaViewModel extends BaseViewModel {
     @Bindable
     public String getOutcomeValidated() {
         if (totalsValidated!=null){
-            return String.format("%.2f", totalsValidated.getTotalBought()) + getResourceProvider().getString(R.string.coin) + getResourceProvider().getString(R.string.slash);
+            return String.format("%.2f", totalsValidated.getTotalBought()) + getResourceProvider().getString(R.string.slash);
         }
 
         return getResourceProvider().getString(R.string.no_data_placeholder_slash);
