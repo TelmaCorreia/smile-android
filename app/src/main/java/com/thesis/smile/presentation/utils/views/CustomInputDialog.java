@@ -108,6 +108,6 @@ public class CustomInputDialog extends Dialog {
     public void setDismissible(boolean isDismissible){
         this.isDismissible = isDismissible;
         super.setCancelable(isDismissible);
-        binding.close.setVisibility(isDismissible ? View.VISIBLE : View.GONE);
+       // binding.close.setVisibility(isDismissible ? View.VISIBLE : View.GONE);
     }
 }

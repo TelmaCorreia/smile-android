@@ -285,6 +285,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="Text22">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
     <style name="TextWithState">
         <item name="android:textColor">@color/text_color_selector</item>
         <item name="android:fontFamily">@font/roboto_regular</item>

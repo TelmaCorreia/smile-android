@@ -32,7 +32,6 @@ import io.reactivex.Observable;
 public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
     List<Address> addresses;
-    private String address;
     private IotaManager iotaManager;
     private UserManager userManager;
     private TransactionsManager transactionsManager;
@@ -40,7 +39,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     private PublishRelay<DialogEvent> showSeedDialog = PublishRelay.create();
     private PublishRelay<DialogEvent> insertPassSeedDialog = PublishRelay.create();
     private PublishRelay<Event> startPaymentServiceEvent = PublishRelay.create();
-    private boolean confirmed;
     private String seed = "";
     private boolean seedVisible = false;
     private boolean screenBlocked = false;
@@ -48,9 +46,9 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     private String balanceEuro = "";
     private boolean isLoading = false;
     private List<Transaction> transactions;
-    private final int addressQuantity=3;
+    private final int addressQuantity=10;
     private int askAddressTimes = 0;
-
+    private boolean gettingAddresses = false;
 
     @Inject
     public IotaSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager, IotaManager iotaManager, TransactionsManager transactionsManager) {
@@ -59,7 +57,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         this.transactionsManager=transactionsManager;
         this.addresses = new ArrayList<>();
         this.userManager = userManager;
-        this.address = userManager.getAddress();
 
     }
 
@@ -135,6 +132,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
     public void attachNewAddress(String s) {
+        setScreenBlocked(true);
         iotaManager.attachNewAddress(seed, s);
         transactionsManager.insertAddress(new com.thesis.smile.domain.models.Address(s))
                             .doOnSubscribe(this::addDisposable)
@@ -156,6 +154,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
     public void onPayMyBillsClick(){
+        setGettingAddresses(false);
         transactionsManager.getTransactionsToPay()
                 .doOnSubscribe(this::addDisposable)
                 .compose(schedulersTransformSingleIo())
@@ -171,10 +170,10 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
             getUiEvents().showToast(getResourceProvider().getString(R.string.no_transactions_to_pay));
         }
 
-
     }
 
     public void onAttachAddressClick(){
+        setGettingAddresses(true);
         setScreenBlocked(true);
         iotaManager.generateNewAddress(seed);
 
@@ -238,11 +237,11 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
             try {
                 AESCrypt aes = new AESCrypt(input);
                 seed = aes.decrypt(user.getEncryptedSeed());
+                setSeed(seed);
+                userManager.saveSeed(seed);
             } catch (Exception e) {
                 getUiEvents().showToast(getResourceProvider().getString(R.string.err_seed_decypher));
             }
-            setSeed(seed);
-            userManager.saveSeed(seed);
         }
     }
 
@@ -250,7 +249,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         return showSeedDialog;
     }
 
-    Observable<DialogEvent> observeInsertPassSeedDialog(){
+    Observable<DialogEvent> observeInsertPasswordSeedDialog(){
         return insertPassSeedDialog;
     }
 
@@ -262,21 +261,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     public void getMyBalance() {
         setProgress(true);
         getAccountData();
-
-        /*if(userManager.getAddress()!=null){
-            List<Transfer> transfers = getTransfers();
-            if(transfers!=null && transfers.size()>0 && !transfers.get(0).getPersistence()){
-                iotaManager.reattachAddress(transfers.get(0).getHash());
-            }else{
-                sendAddress(userManager.getAddress());
-            }
-        }else{
-            generateNewAddress();
-        }*/
-    }
-
-    public void saveTransfer(List<Transfer> transfers) {
-        userManager.saveTransfers(transfers);
     }
 
     public List<Transfer> getTransfers() {
@@ -309,5 +293,13 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
     public void getBundle() {
        // iotaManager.
+    }
+
+    public boolean isGettingAddresses() {
+        return gettingAddresses;
+    }
+
+    public void setGettingAddresses(boolean gettingAddresses) {
+        this.gettingAddresses = gettingAddresses;
     }
 }

@@ -164,4 +164,25 @@ public class TransactionsService extends ApiService{
                 .onErrorResumeNext(Single::error)
                 .map(BaseResponse::getData);
     }
+
+    public Single<TotalsRemote> getValidatedAndAttachedDailyTotals(String token){
+        return api.getTotalsValidatedAndAttachedDailyTransactions(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
+    public Single<TotalsRemote> getValidatedAndAttachedWeeklyTotals(String token){
+        return api.getTotalsValidatedAndAttachedWeeklyTransactions(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
+
+    public Single<TotalsRemote> getValidatedAndAttachedMonthlyTotals(String token){
+        return api.getTotalsValidatedAndAttachedMonthlyTransactions(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData);
+    }
 }

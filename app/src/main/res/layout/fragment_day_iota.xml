@@ -32,13 +32,26 @@
                 android:visibility="@{viewModel.userTypeProsumer}"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/Text5"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.income}"
-                    android:textAlignment="center"
-                    tools:text="0.34€"/>
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/Text22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.incomeValidated}"
+                        tools:text="00.30/"/>
+                    <TextView
+                        style="@style/Text22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.income}"
+                        android:textAlignment="center"
+                        tools:text="00.34€"/>
+                </LinearLayout>
+
 
                 <TextView
                     style="@style/Text6"
@@ -57,13 +70,27 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/Text5"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="@{viewModel.outcome}"
-                    tools:text="0.34€"/>
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/Text22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{viewModel.outcomeValidated}"
+                        tools:text="00.34/"/>
+
+                    <TextView
+                        style="@style/Text22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="@{viewModel.outcome}"
+                        tools:text="00.34€"/>
+                </LinearLayout>
 
                 <TextView
                     style="@style/Text6"

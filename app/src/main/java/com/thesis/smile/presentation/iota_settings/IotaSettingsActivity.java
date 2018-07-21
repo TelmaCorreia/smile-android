@@ -33,7 +33,7 @@ import jota.utils.IotaUnitConverter;
 public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettingsBinding, IotaSettingsViewModel> {
 
     private CustomInputDialog showSeedDialog;
-    private SeedPasswordDialog insertPasswordDialog;
+    private CustomInputDialog insertPasswordDialog;
     TemporalIotaViewPagerAdapter pagerAdapter;
     private AlternateValueManager alternateValueManager;
     private  int transactionsSize=0;
@@ -74,6 +74,10 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::showSeedDialog);
 
+        getViewModel().observeInsertPasswordSeedDialog()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event->{insertPasswordDialog.dismiss(); secureSeedDialog();});
+
         getViewModel().observeStartPaymentServiceEvent()
                     .doOnSubscribe(this::addDisposable)
                     .subscribe(this::sendTransfers);
@@ -90,7 +94,7 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
 
     @Subscribe
     public void onEvent(SendTransferResponse str) {
-        if (transactionsSize==0){
+        if (transactionsSize==0 && !getViewModel().isGettingAddresses()){
             getViewModel().setScreenBlocked(false);
         }else{
             getViewModel().updateState(transactionIndex);
@@ -169,16 +173,19 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
     }
 
     private void secureSeedDialog() {
-        insertPasswordDialog = new SeedPasswordDialog(this);
+        insertPasswordDialog = new CustomInputDialog(this);
         insertPasswordDialog.setTitle(R.string.dialog_show_seed_title);
         insertPasswordDialog.setMessage(R.string.dialog_show_seed_description);
         insertPasswordDialog.setOkButtonText(R.string.button_ok);
-        insertPasswordDialog.setDismissible(true);
+        insertPasswordDialog.setCloseButtonText(R.string.button_back);
+        insertPasswordDialog.setDismissible(false);
         insertPasswordDialog.setOnOkClickListener(() -> {
             getViewModel().decryptSeedWithoutShow(insertPasswordDialog.getInput());
-            getViewModel().getMyBalance();
-            insertPasswordDialog.dismiss();
+            if (!getViewModel().getSeed().isEmpty()){
+                getViewModel().getMyBalance();
+                insertPasswordDialog.dismiss();}
         });
+        insertPasswordDialog.setOnCloseClickListener(() ->{insertPasswordDialog.dismiss(); this.onBackPressed();});
         insertPasswordDialog.show();
     }
 

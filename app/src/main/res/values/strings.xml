@@ -183,6 +183,7 @@
     <string name="wallet_tab_day">Dia</string>
     <string name="wallet_tab_month">Mês</string>
     <string name="wallet_tab_week">Semana</string>
+    <string name="slash"> / </string>
 
     <!-- Units -->
     <string name="watt">W</string>
@@ -318,6 +319,7 @@
     <string name="alert_equipment">Selecione a unica opção dísponivel</string>
     <string name="empty_transactions">Não há transações disponíveis para os filtros aplicados</string>
     <string name="no_data_placeholder">--.--</string>
+    <string name="no_data_placeholder_slash">--.-- / </string>
     <string name="no_data_placeholder1">--</string>
     <string name="no_data_msg">Não há dados dísponiveis</string>
     <string name="notification_title">title</string>

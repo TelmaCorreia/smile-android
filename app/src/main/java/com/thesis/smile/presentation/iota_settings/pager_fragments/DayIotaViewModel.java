@@ -21,7 +21,7 @@ public class DayIotaViewModel extends BaseViewModel {
     private UserManager userManager;
     private TransactionsManager transactionsManager;
     private Totals totals;
-
+    private Totals totalsValidated;
     @Inject
     public DayIotaViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
                             UiEvents uiEvents, UserManager userManager, TransactionsManager transactionsManager) {
@@ -33,6 +33,15 @@ public class DayIotaViewModel extends BaseViewModel {
                 .compose(schedulersTransformSingleIo())
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::onTotalsReceived, this::onError);
+        transactionsManager.getValidatedAndAttachedDailyTotals()
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onDailyTotalsReceived, this::onError);
+    }
+
+    private void onDailyTotalsReceived(Totals totals) {
+        this.totalsValidated = totals;
+        notifyChange();
     }
 
     private void onTotalsReceived(Totals totals) {
@@ -48,11 +57,20 @@ public class DayIotaViewModel extends BaseViewModel {
 
     @Bindable
     public String getIncome() {
-       if (totals!=null){
+        if (totals!=null){
             return String.format("%.2f", totals.getTotalSold()) + getResourceProvider().getString(R.string.coin);
         }
 
         return getResourceProvider().getString(R.string.no_data_placeholder);
+    }
+
+    @Bindable
+    public String getIncomeValidated() {
+        if (totalsValidated!=null){
+            return String.format("%.2f", totalsValidated.getTotalSold()) + getResourceProvider().getString(R.string.coin) + getResourceProvider().getString(R.string.slash);
+        }
+
+        return getResourceProvider().getString(R.string.no_data_placeholder_slash);
     }
 
     @Bindable
@@ -62,6 +80,15 @@ public class DayIotaViewModel extends BaseViewModel {
         }
 
         return getResourceProvider().getString(R.string.no_data_placeholder);
+    }
+
+    @Bindable
+    public String getOutcomeValidated() {
+        if (totalsValidated!=null){
+            return String.format("%.2f", totalsValidated.getTotalBought()) + getResourceProvider().getString(R.string.coin) + getResourceProvider().getString(R.string.slash) ;
+        }
+
+        return getResourceProvider().getString(R.string.no_data_placeholder_slash);
     }
 
 

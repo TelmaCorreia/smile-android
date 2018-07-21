@@ -19,6 +19,7 @@ public class MonthIotaViewModel extends BaseViewModel {
     private UserManager userManager;
     private TransactionsManager transactionsManager;
     private Totals totals;
+    private Totals totalsValidated;
 
     @Inject
     public MonthIotaViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
@@ -30,6 +31,16 @@ public class MonthIotaViewModel extends BaseViewModel {
                 .compose(schedulersTransformSingleIo())
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::onTotalsReceived, this::onError);
+
+        transactionsManager.getValidatedAndAttachedMonthlyTotals()
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onMonthlyTotalsReceived, this::onError);
+    }
+
+    private void onMonthlyTotalsReceived(Totals totals) {
+        this.totalsValidated = totals;
+        notifyChange();
     }
 
     private void onTotalsReceived(Totals totals) {
@@ -53,12 +64,30 @@ public class MonthIotaViewModel extends BaseViewModel {
     }
 
     @Bindable
+    public String getIncomeValidated() {
+        if (totalsValidated!=null){
+            return String.format("%.2f", totalsValidated.getTotalSold()) + getResourceProvider().getString(R.string.coin);
+        }
+
+        return getResourceProvider().getString(R.string.no_data_placeholder_slash);
+    }
+
+    @Bindable
     public String getOutcome() {
         if (totals!=null){
-            return String.format("%.2f", totals.getTotalBought()) + getResourceProvider().getString(R.string.coin);
+            return String.format("%.2f", totals.getTotalBought()) + getResourceProvider().getString(R.string.coin) + getResourceProvider().getString(R.string.slash);
         }
 
         return getResourceProvider().getString(R.string.no_data_placeholder);
+    }
+
+    @Bindable
+    public String getOutcomeValidated() {
+        if (totalsValidated!=null){
+            return String.format("%.2f", totalsValidated.getTotalBought()) + getResourceProvider().getString(R.string.coin) + getResourceProvider().getString(R.string.slash);
+        }
+
+        return getResourceProvider().getString(R.string.no_data_placeholder_slash);
     }
 
 

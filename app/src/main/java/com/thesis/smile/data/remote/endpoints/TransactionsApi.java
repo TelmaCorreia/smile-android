@@ -77,5 +77,14 @@ public interface TransactionsApi {
     @GET("transactions/totals/validatedattached/{token}")
     Single<Response<TotalsResponse>> getTotalsValidatedAndAttachedTransactions(@Path("token") String token);
 
+    @GET("transactions/totals/validatedattached/daily/{token}")
+    Single<Response<TotalsResponse>> getTotalsValidatedAndAttachedDailyTransactions(@Path("token") String token);
+
+    @GET("transactions/totals/validatedattached/weekly/{token}")
+    Single<Response<TotalsResponse>> getTotalsValidatedAndAttachedWeeklyTransactions(@Path("token") String token);
+
+    @GET("transactions/totals/validatedattached/monthly/{token}")
+    Single<Response<TotalsResponse>> getTotalsValidatedAndAttachedMonthlyTransactions(@Path("token") String token);
+
 
 }

@@ -143,6 +143,24 @@ public class TransactionsManager {
                 .map(TotalsMapper.INSTANCE::remoteToDomain);
     }
 
+    public Single<Totals> getValidatedAndAttachedDailyTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getValidatedAndAttachedDailyTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getValidatedAndAttachedWeeklyTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getValidatedAndAttachedWeeklyTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
+    public Single<Totals> getValidatedAndAttachedMonthlyTotals(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getValidatedAndAttachedMonthlyTotals(token)
+                .map(TotalsMapper.INSTANCE::remoteToDomain);
+    }
+
     public Single<Totals> getValidatedAndAttachedTotals(){
         String token = sharedPrefs.getUserToken();
         return transactionsService.getValidatedAndAttachedTotals(token)

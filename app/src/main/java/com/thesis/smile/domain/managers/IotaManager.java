@@ -31,9 +31,7 @@ public class IotaManager {
         this.iotaTaskManager = iotaTaskManager;
         this.sharedPrefs = sharedPrefs;
         this.addresses = new ArrayList<>();
-
     }
-
 
     public void generateNewAddress(String seed) {
         GetNewAddressRequest gtr = new GetNewAddressRequest();
