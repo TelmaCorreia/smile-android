@@ -92,6 +92,12 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(event -> editPicture());
 
+        getViewModel().openLearMoreObservable()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    ShareDataInfoActivity.launch(getContext());
+                });
+
     }
 
     private void initRadioButton() {

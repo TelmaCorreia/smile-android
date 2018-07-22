@@ -42,6 +42,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     private PublishRelay<Event> radioChanged = PublishRelay.create();
     private PublishRelay<Event> changeRadio = PublishRelay.create();
     private PublishRelay<DialogEvent> showSeedDialog = PublishRelay.create();
+    private PublishRelay<NavigationEvent> openLearnMore = PublishRelay.create();
 
     @Inject
     public UserSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager) {
@@ -201,7 +202,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     }
 
     public void onLearnMoreClick(){
-
+        openLearnMore.accept(new NavigationEvent());
     }
 
     private void onUpdateComplete(User user) {
@@ -236,6 +237,9 @@ public class UserSettingsViewModel extends BaseViewModel {
         return showSeedDialog;
     }
 
+    Observable<NavigationEvent> openLearMoreObservable(){
+        return openLearnMore;
+    }
 
     public void setProfilePicture(File profilePictureFile) {
         //TODO

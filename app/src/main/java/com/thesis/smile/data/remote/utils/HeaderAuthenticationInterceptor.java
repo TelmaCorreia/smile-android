@@ -1,5 +1,7 @@
 package com.thesis.smile.data.remote.utils;
 
+import android.util.Log;
+
 import com.thesis.smile.BuildConfig;
 import com.thesis.smile.data.preferences.SharedPrefs;
 
@@ -32,6 +34,7 @@ public class HeaderAuthenticationInterceptor implements Interceptor{
         builder.addHeader("x-app-platform", "android");
 
         if(userToken != null && !hasAuthorizationHeader(request)) {
+            //Log.d("Header", "token request " + userToken);
             builder.addHeader("Authorization", userToken);
             request = builder.build();
         }
@@ -39,6 +42,7 @@ public class HeaderAuthenticationInterceptor implements Interceptor{
         Response response = chain.proceed(request);
 
         if (hasAuthorizationHeader(response)) {
+            //Log.d("Header", "token response");
             sharedPrefs.saveUserAuthorizationHeader(response.header("Authorization"));
         }
 

@@ -86,5 +86,7 @@ public interface TransactionsApi {
     @GET("transactions/totals/validatedattached/monthly/{token}")
     Single<Response<TotalsResponse>> getTotalsValidatedAndAttachedMonthlyTransactions(@Path("token") String token);
 
+    @GET("transactions/addresses/{token}")
+    Single<Response<BaseResponse<String>>> getAddressesQuantity(@Path("token")String token);
 
 }

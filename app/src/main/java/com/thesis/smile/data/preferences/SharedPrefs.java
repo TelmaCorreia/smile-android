@@ -99,7 +99,7 @@ public class SharedPrefs extends BasePreferences {
     }
 
     public void deleteUserData() {
-        deletePreferences(Keys.USER_TOKEN, Keys.USER_DATA, Keys.USER_AUTH_HEADER, Keys.SEED, Keys.ADDRESS, Keys.TRANSFERS);
+        deletePreferences(Keys.USER_TOKEN, Keys.USER_DATA, Keys.USER_AUTH_HEADER, Keys.USER_TOKEN, Keys.SEED, Keys.ADDRESS, Keys.TRANSFERS);
     }
 
     public String getFirebaseToken(){

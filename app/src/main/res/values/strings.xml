@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">smile</string>
+    <string name="app_name">Power Share</string>
 
     <!-- Toolbar menu -->
     <string name="logout">Logout</string>
@@ -76,6 +76,15 @@
 
     <string name="automatic_settings_subtitle_buy">Configurações automáticas para compra</string>
     <string name="automatic_settings_subtitle_sell">Configurações automáticas para venda</string>
+
+    <!-- Share Data Info -->
+    <string name="share_data_info_title">Dados partilhados com a comunidade</string>
+    <string name="share_data_intro">A aplicação partilhará a seguinte informação com os seus vizinhos: </string>
+    <string name="share_data_list">- o seu nome;\n- a sua foto de perfil; \n- a quantidade de energia renovável que usou (percentagem do consumo semanal)\n- transações (um utilizador só pode ver transações entre você e o mesmo) </string>
+    <string name="share_data_subtitle">Negar a partilha de dados</string>
+    <string name="share_data_sub_intro">Se negar a partilha de dados, a seguinte informação será invisivel para os seus vizinhos: </string>
+    <string name="share_data_sub_list">- o seu nome;\n- a sua foto de perfil; \n- a quantidade de energia renovável que usou (percentagem do consumo semanal) </string>
+    <string name="share_data_sub_par1">Se negar a partilha de dados, o seu nome não vai constar no ranking de energias renováveis. </string>
 
     <!-- usertype -->
     <string name="consumer">CONSUMER</string>

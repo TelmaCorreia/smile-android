@@ -172,4 +172,9 @@ public class TransactionsManager {
         return transactionsService.getNonAttachedTotals(token)
                 .map(TotalsMapper.INSTANCE::remoteToDomain);
     }
+
+    public Single<String> getAddressesQuantity(){
+        String token = sharedPrefs.getUserToken();
+        return transactionsService.getAddressesQuantity(token);
+    }
 }

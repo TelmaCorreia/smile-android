@@ -118,6 +118,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity
+            android:name=".presentation.settings.user_settings.ShareDataInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
         //Payment service
         <service
             android:name=".iota.service.PaymentService"

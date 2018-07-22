@@ -185,4 +185,10 @@ public class TransactionsService extends ApiService{
                 .onErrorResumeNext(Single::error)
                 .map(BaseResponse::getData);
     }
+
+    public Single<String> getAddressesQuantity(String token) {
+        return api.getAddressesQuantity(token)
+                .compose(networkMapTransform())
+                .map(BaseResponse::getData);
+    }
 }

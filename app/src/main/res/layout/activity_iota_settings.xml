@@ -109,12 +109,21 @@
                     android:text="@string/wallet_attach_address" />
 
                 <TextView
+                    style="@style/Text9"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.addresses}"
+                    android:textAlignment="center"
+                    tools:text="Endereços em falta: 15"/>
+
+                <TextView
                     style="@style/Text16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+
                     android:visibility="@{viewModel.hideSeedVisible}"
                     tools:visibility="gone"
                     android:text="@string/wallet_my_seed"

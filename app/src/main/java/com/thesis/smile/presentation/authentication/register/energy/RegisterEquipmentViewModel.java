@@ -269,8 +269,6 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
             setLoading(false);
         }else{
             super.onError(e);
-            getUiEvents().showToast("Erro ao enviar o endereço. Vá às definições da conta IOTA e envie um novo endereço!");
-            next();
         }
     }
 

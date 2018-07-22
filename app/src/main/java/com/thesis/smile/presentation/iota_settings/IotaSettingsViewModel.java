@@ -46,9 +46,10 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     private String balanceEuro = "";
     private boolean isLoading = false;
     private List<Transaction> transactions;
-    private final int addressQuantity=10;
+    private final int addressQuantity=3;
     private int askAddressTimes = 0;
     private boolean gettingAddresses = false;
+    private String addressesQuantity = "";
 
     @Inject
     public IotaSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager, IotaManager iotaManager, TransactionsManager transactionsManager) {
@@ -57,7 +58,18 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         this.transactionsManager=transactionsManager;
         this.addresses = new ArrayList<>();
         this.userManager = userManager;
+        getAddressesFromServer();
+    }
 
+    private void getAddressesFromServer() {
+        transactionsManager.getAddressesQuantity()
+                .compose(schedulersTransformSingleIo())
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::onAddressesReceived, this::onError);
+    }
+
+    private void onAddressesReceived(String s) {
+        setAddresses(s);
     }
 
     @Bindable
@@ -70,6 +82,16 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         this.seed=seed;
         notifyPropertiesChanged(BR.seed, BR.seedVisible, BR.hideSeedVisible);
 
+    }
+
+    @Bindable
+    public String getAddresses() {
+        return this.addressesQuantity;
+    }
+
+    public void setAddresses(String addresses) {
+        this.addressesQuantity =addresses;
+        notifyPropertyChanged(BR.addresses);
     }
 
     @Bindable
@@ -135,7 +157,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         iotaManager.attachNewAddress(seed, s);
         transactionsManager.insertAddress(new com.thesis.smile.domain.models.Address(s))
                             .doOnSubscribe(this::addDisposable)
-                            .compose(schedulersTransformSingleIo())
                             .subscribe(this::onAddressInserted, this::onError);
     }
 
