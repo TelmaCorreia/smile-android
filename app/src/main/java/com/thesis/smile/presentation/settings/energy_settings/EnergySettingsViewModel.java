@@ -21,6 +21,8 @@ import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -48,7 +50,8 @@ public class EnergySettingsViewModel extends BaseViewModel {
                 .putContentName("Settings:energy")
                 .putContentType("Section Settings")
                 .putContentId("settings_energy")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         getUserFromSP();
     }
 

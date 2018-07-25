@@ -31,6 +31,8 @@ import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.iota.AESCrypt;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -166,7 +168,8 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private void onRegisterComplete() {
         Answers.getInstance().logSignUp(new SignUpEvent()
                 .putSuccess(true)
-                .putCustomAttribute("email", request.getEmail()));
+                .putCustomAttribute("email", request.getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         next();
         if (request.getPicture()!=null){
             userManager.updateUserProfilePic(request.getPicture())
@@ -271,7 +274,8 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     protected void onError(Throwable e){
         Answers.getInstance().logSignUp(new SignUpEvent()
                 .putSuccess(false)
-                .putCustomAttribute("email", request.getEmail()));
+                .putCustomAttribute("email", request.getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         if(e instanceof NotAcceptableException) {
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_smart_meter_id));
             setLoading(false);

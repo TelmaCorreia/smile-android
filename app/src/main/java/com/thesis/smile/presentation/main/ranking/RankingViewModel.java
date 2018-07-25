@@ -17,6 +17,8 @@ import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 
+import org.threeten.bp.LocalTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,8 @@ public class RankingViewModel extends BaseViewModel {
                 .putContentName("Ranking")
                 .putContentType("Section Ranking")
                 .putContentId("ranking")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         getRankingFromServer();
 
     }

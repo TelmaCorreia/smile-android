@@ -22,6 +22,8 @@ import com.thesis.smile.presentation.utils.databinding.ExclusiveObservableList;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +69,8 @@ public class BuyViewModel extends BaseViewModel {
                 .putContentName("Transactions:buy settings")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_buy_settings")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 
     @Bindable
@@ -206,7 +209,8 @@ public class BuyViewModel extends BaseViewModel {
                 .putContentName("Transactions:buy settings price info")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_buy_settings_price_info")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         openPriceInfoObservable.accept(new NavigationEvent());
     }
 
@@ -359,7 +363,8 @@ public class BuyViewModel extends BaseViewModel {
                 .putContentName("Transactions:buy settings save")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_buy_settings_save")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         alertDialog.accept(new OpenDialogEvent());
     }
 

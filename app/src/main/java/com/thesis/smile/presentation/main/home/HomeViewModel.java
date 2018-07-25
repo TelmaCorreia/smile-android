@@ -18,6 +18,8 @@ import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -44,7 +46,8 @@ public class HomeViewModel extends BaseViewModel {
                 .putContentName("Home")
                 .putContentType("Section Home")
                 .putContentId("home")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
 
         getCurrentEnergyFromServer();
     }
@@ -151,7 +154,8 @@ public class HomeViewModel extends BaseViewModel {
                 .putContentName("Home:Check sold details")
                 .putContentType("Section Home")
                 .putContentId("home_sold_details")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         openHomeSoldDetails.accept(new NavigationEvent());
     }
 
@@ -160,7 +164,8 @@ public class HomeViewModel extends BaseViewModel {
                 .putContentName("Home:Check bought details")
                 .putContentType("Section Home")
                 .putContentId("home_bought_details")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         openHomeBoughtDetails.accept(new NavigationEvent());
     }
 

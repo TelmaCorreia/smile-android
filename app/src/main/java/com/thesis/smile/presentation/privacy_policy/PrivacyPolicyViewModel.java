@@ -11,6 +11,8 @@ import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -30,7 +32,8 @@ public class PrivacyPolicyViewModel extends BaseViewModel {
                 .putContentName("Privacy Policy")
                 .putContentType("Section Pivacy Policy")
                 .putContentId("privacy_policy")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 
     public void onCloseClick(){

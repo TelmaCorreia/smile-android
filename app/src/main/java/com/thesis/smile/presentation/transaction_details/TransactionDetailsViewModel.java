@@ -12,6 +12,8 @@ import com.thesis.smile.presentation.utils.actions.UiEvents;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import javax.inject.Inject;
 
 public class TransactionDetailsViewModel extends BaseToolbarViewModel {
@@ -28,7 +30,8 @@ public class TransactionDetailsViewModel extends BaseToolbarViewModel {
                 .putContentName("Transactions:historical get transaction details")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_historical_details")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 
     @Bindable

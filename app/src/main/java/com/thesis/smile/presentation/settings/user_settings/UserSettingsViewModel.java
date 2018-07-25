@@ -24,6 +24,8 @@ import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.iota.AESCrypt;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import java.io.File;
 
 import javax.inject.Inject;
@@ -55,7 +57,8 @@ public class UserSettingsViewModel extends BaseViewModel {
                 .putContentName("Settings:user")
                 .putContentType("Section Settings")
                 .putContentId("settings_user")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         getUserFromSP();
     }
 

@@ -25,6 +25,7 @@ import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalTime;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +66,8 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
                 .putContentName("Transactions:historical")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_historical")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 
     private void initDates() {

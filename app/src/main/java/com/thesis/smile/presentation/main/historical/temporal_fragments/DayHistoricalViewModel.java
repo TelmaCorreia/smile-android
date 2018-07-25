@@ -17,6 +17,7 @@ import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalTime;
 
 import java.util.List;
 
@@ -50,7 +51,8 @@ public class DayHistoricalViewModel extends BaseViewModel {
                 .putContentName("Historical:day")
                 .putContentType("Section Historical")
                 .putContentId("historical_day")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 
     @Bindable

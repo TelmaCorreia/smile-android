@@ -23,6 +23,8 @@ import com.thesis.smile.utils.schedulers.SchedulerProvider;
 import com.thesis.smile.BR;
 
 
+import org.threeten.bp.LocalTime;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +70,8 @@ public class SellViewModel extends BaseViewModel {
                 .putContentName("Transactions:sell settings")
                 .putContentType("Section Transations")
                 .putContentId("transactions_sell_settings")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 
     @Bindable
@@ -411,7 +414,9 @@ public class SellViewModel extends BaseViewModel {
                     .putContentName("Transactions:sell settings save")
                     .putContentType("Section Transactions")
                     .putContentId("transactions_sell_settings_save")
-                    .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                    .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                    .putCustomAttribute("hour", LocalTime.now().getHour()));
+
             alertDialog.accept(new OpenDialogEvent());
         }
     }

@@ -28,6 +28,8 @@ import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
@@ -154,7 +156,8 @@ public class LoginViewModel extends BaseViewModel {
     private void onLoginComplete(){
         Answers.getInstance().logLogin(new LoginEvent()
                 .putSuccess(true)
-                .putCustomAttribute("email", email));
+                .putCustomAttribute("email", email)
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
 
         startLoginObservable.accept(new Event());
        /* userManager.updateFirebaseToken()
@@ -173,7 +176,8 @@ public class LoginViewModel extends BaseViewModel {
     protected void onError(Throwable e){
         Answers.getInstance().logLogin(new LoginEvent()
                 .putSuccess(false)
-                .putCustomAttribute("email", email));
+                .putCustomAttribute("email", email)
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         if (e instanceof InvalidCredentialsException) {
             getUiEvents().showToast(e.getMessage());
         } else if(e instanceof UnauthorizedException){

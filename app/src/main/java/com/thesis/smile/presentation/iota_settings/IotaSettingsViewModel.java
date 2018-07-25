@@ -25,6 +25,8 @@ import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.iota.AESCrypt;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
+import org.threeten.bp.LocalTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +67,8 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
                 .putContentName("IotaSettings")
                 .putContentType("Section Iota")
                 .putContentId("iota_settings")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         getAddressesFromServer();
     }
 
@@ -186,7 +189,8 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
                 .putContentName("IotaSettings: pay bills")
                 .putContentType("Section Iota")
                 .putContentId("iota_settings_pay_bills")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
 
         setGettingAddresses(false);
         transactionsManager.getTransactionsToPay()
@@ -211,7 +215,8 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
                 .putContentName("IotaSettings: attach address")
                 .putContentType("Section Iota")
                 .putContentId("iota_settings_attach_address")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         setGettingAddresses(true);
         setScreenBlocked(true);
         iotaManager.generateNewAddress(seed);
@@ -252,7 +257,8 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
                 .putContentName("IotaSettings: attach address success")
                 .putContentType("Section Iota")
                 .putContentId("iota_settings_attach_address_success")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("hour", LocalTime.now().getHour()));
         if (BuildConfig.DEBUG){
             message("address updated!!!");
         }
