@@ -3,8 +3,11 @@ package com.thesis.smile.presentation.iota_settings;
 import android.databinding.Bindable;
 import android.view.View;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
+import com.thesis.smile.BuildConfig;
 import com.thesis.smile.Constants;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.IotaManager;
@@ -58,6 +61,11 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         this.transactionsManager=transactionsManager;
         this.addresses = new ArrayList<>();
         this.userManager = userManager;
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("IotaSettings")
+                .putContentType("Section Iota")
+                .putContentId("iota_settings")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         getAddressesFromServer();
     }
 
@@ -174,6 +182,12 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
     public void onPayMyBillsClick(){
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("IotaSettings: pay bills")
+                .putContentType("Section Iota")
+                .putContentId("iota_settings_pay_bills")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+
         setGettingAddresses(false);
         transactionsManager.getTransactionsToPay()
                 .doOnSubscribe(this::addDisposable)
@@ -193,6 +207,11 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
     public void onAttachAddressClick(){
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("IotaSettings: attach address")
+                .putContentType("Section Iota")
+                .putContentId("iota_settings_attach_address")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         setGettingAddresses(true);
         setScreenBlocked(true);
         iotaManager.generateNewAddress(seed);
@@ -201,15 +220,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
     public void message(String  msg){
         getUiEvents().showToast(msg);
-    }
-
-    public void sendAddress(String address){
-        getUiEvents().showToast(userManager.getSeed());
-        userManager.saveAddress(address);
-        userManager.updateIotaAddress()
-                .doOnSubscribe(this::addDisposable)
-                .compose(schedulersTransformSingleIo())
-                .subscribe(this::onAddressUpdated, this::onError);
     }
 
     public void sendTransfer(Transaction transaction, String iotaBalance){
@@ -238,7 +248,14 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
 
     private void onAddressUpdated(User user) {
-        message("address updated!!!");
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("IotaSettings: attach address success")
+                .putContentType("Section Iota")
+                .putContentId("iota_settings_attach_address_success")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
+        if (BuildConfig.DEBUG){
+            message("address updated!!!");
+        }
     }
 
     public void onShowSeedClick(){
@@ -277,14 +294,9 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         return startPaymentServiceEvent;
     }
 
-
     public void getMyBalance() {
         setProgress(true);
         getAccountData();
-    }
-
-    public List<Transfer> getTransfers() {
-        return userManager.getTransfers();
     }
 
     public void showSeed(String input) {
@@ -309,10 +321,6 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
     public List<Transaction> getTransactions() {
         return transactions;
-    }
-
-    public void getBundle() {
-       // iotaManager.
     }
 
     public boolean isGettingAddresses() {

@@ -2,7 +2,10 @@ package com.thesis.smile.presentation.transaction_details;
 
 import android.databinding.Bindable;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.thesis.smile.R;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
@@ -15,10 +18,17 @@ public class TransactionDetailsViewModel extends BaseToolbarViewModel {
     
 
     Transaction transaction;
+    UserManager userManager;
 
     @Inject
-    public TransactionDetailsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents) {
+    public TransactionDetailsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
+        this.userManager = userManager;
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Transactions:historical get transaction details")
+                .putContentType("Section Transactions")
+                .putContentId("transactions_historical_details")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
     }
 
     @Bindable

@@ -2,6 +2,8 @@ package com.thesis.smile.presentation.authentication.register.energy;
 
 import android.databinding.Bindable;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.SignUpEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.BuildConfig;
@@ -162,6 +164,9 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
 
     private void onRegisterComplete() {
+        Answers.getInstance().logSignUp(new SignUpEvent()
+                .putSuccess(true)
+                .putCustomAttribute("email", request.getEmail()));
         next();
         if (request.getPicture()!=null){
             userManager.updateUserProfilePic(request.getPicture())
@@ -264,6 +269,9 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     @Override
     protected void onError(Throwable e){
+        Answers.getInstance().logSignUp(new SignUpEvent()
+                .putSuccess(false)
+                .putCustomAttribute("email", request.getEmail()));
         if(e instanceof NotAcceptableException) {
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_smart_meter_id));
             setLoading(false);

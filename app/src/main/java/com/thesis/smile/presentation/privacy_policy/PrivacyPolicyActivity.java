@@ -2,10 +2,14 @@ package com.thesis.smile.presentation.privacy_policy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityPrivacyPolicyBinding;
 import com.thesis.smile.presentation.base.BaseActivity;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 
 public class PrivacyPolicyActivity  extends BaseActivity<ActivityPrivacyPolicyBinding, PrivacyPolicyViewModel>{
 
@@ -26,6 +30,47 @@ public class PrivacyPolicyActivity  extends BaseActivity<ActivityPrivacyPolicyBi
 
     @Override
     protected void initViews(ActivityPrivacyPolicyBinding binding) {
+        String email= getString(R.string.project_email);
+        String iota_link= getString(R.string.privacy_policy_subtitle1_1_text_1);
+
+        SpannableString ss=  new SpannableString(iota_link);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), iota_link.indexOf(getString(R.string.iota_link)), iota_link.indexOf(getString(R.string.iota_link))+getString(R.string.iota_link).length(), 0);
+        binding.link.setText(ss);
+
+        ss=  new SpannableString(email);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), email.indexOf(getString(R.string.project_email)), email.indexOf(getString(R.string.project_email))+getString(R.string.project_email).length(), 0);
+        binding.email.setText(ss);
+    }
+
+    @Override
+    protected void registerObservables() {
+        super.registerObservables();
+
+        getViewModel().observeClose()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(event -> {
+                    finish();
+                });
+
+        getViewModel().observeLink()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::openLink);
+
+        getViewModel().observeEmail()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::openEmail);
+    }
+
+    private void openLink(Event event) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.iota_link)));
+        startActivity(browserIntent);
+    }
+
+    private void openEmail(Event event) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { getString(R.string.project_email) });
+        startActivity(Intent.createChooser(intent, ""));
 
     }
 }

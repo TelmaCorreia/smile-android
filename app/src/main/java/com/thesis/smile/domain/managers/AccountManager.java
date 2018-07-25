@@ -2,6 +2,8 @@ package com.thesis.smile.domain.managers;
 
 import android.util.Log;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.LoginEvent;
 import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.models.LoginRemote;
 import com.thesis.smile.data.remote.models.request.RegisterRequest;
@@ -47,7 +49,7 @@ public class AccountManager {
     }
 
     private Completable onLoginSuccess(LoginRemote loginRemote){
-        Log.d(TAG,"Login/Register Successful");
+       Log.d(TAG,"Login/Register Successful");
         sharedPrefs.saveUserToken(loginRemote.getToken());
         return Completable.fromAction(() -> sharedPrefs.saveUserData(UserMapper.INSTANCE.remoteToDomain(loginRemote.getUserRemote())));
     }

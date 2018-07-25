@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.util.Log;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.google.gson.Gson;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
@@ -49,7 +51,11 @@ public class UserSettingsViewModel extends BaseViewModel {
         super(resourceProvider, schedulerProvider, uiEvents);
         imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_add_a_photo, null);
         this.userManager = userManager;
-
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Settings:user")
+                .putContentType("Section Settings")
+                .putContentId("settings_user")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         getUserFromSP();
     }
 

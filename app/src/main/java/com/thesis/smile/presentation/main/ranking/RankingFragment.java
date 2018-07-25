@@ -34,7 +34,6 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding, Rankin
         //initRankings(new Event());
     }
 
-
     @Override
     protected void registerObservables() {
         super.registerObservables();

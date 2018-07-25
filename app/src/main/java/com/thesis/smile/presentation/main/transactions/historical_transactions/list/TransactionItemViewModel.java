@@ -2,6 +2,9 @@ package com.thesis.smile.presentation.main.transactions.historical_transactions.
 
 import android.databinding.Bindable;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.Transaction;
 import com.thesis.smile.presentation.base.BaseViewModelInstance;
 

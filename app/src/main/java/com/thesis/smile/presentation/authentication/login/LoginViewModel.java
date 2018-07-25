@@ -6,6 +6,8 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.LoginEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.BuildConfig;
@@ -150,6 +152,10 @@ public class LoginViewModel extends BaseViewModel {
     }
 
     private void onLoginComplete(){
+        Answers.getInstance().logLogin(new LoginEvent()
+                .putSuccess(true)
+                .putCustomAttribute("email", email));
+
         startLoginObservable.accept(new Event());
        /* userManager.updateFirebaseToken()
                 .compose(schedulersTransformSingleIo())
@@ -165,6 +171,9 @@ public class LoginViewModel extends BaseViewModel {
 
     @Override
     protected void onError(Throwable e){
+        Answers.getInstance().logLogin(new LoginEvent()
+                .putSuccess(false)
+                .putCustomAttribute("email", email));
         if (e instanceof InvalidCredentialsException) {
             getUiEvents().showToast(e.getMessage());
         } else if(e instanceof UnauthorizedException){

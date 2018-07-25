@@ -5,6 +5,8 @@ import android.databinding.ObservableList;
 import android.view.View;
 
 import com.annimon.stream.Stream;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.jakewharton.rxrelay2.PublishRelay;
@@ -59,6 +61,11 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
         transactionMap = new HashMap<>();
         initDates();
         getTotals();
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Transactions:historical")
+                .putContentType("Section Transactions")
+                .putContentId("transactions_historical")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
     }
 
     private void initDates() {

@@ -1,5 +1,7 @@
 package com.thesis.smile.presentation.main.home;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentHomeBinding;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;

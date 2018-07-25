@@ -3,8 +3,11 @@ package com.thesis.smile.presentation.main.historical.temporal_fragments;
 import android.databinding.Bindable;
 import android.view.View;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.domain.managers.HistoricalManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.HistoricalData;
 import com.thesis.smile.domain.models.HistoricalDataPoint;
 import com.thesis.smile.presentation.base.BaseViewModel;
@@ -28,16 +31,26 @@ public class DayHistoricalViewModel extends BaseViewModel {
     private HistoricalData currentData;
     private HistoricalDataPoint currentDay;
     private LocalDate currentDate = LocalDate.now();
+    private UserManager userManager;
 
     private PublishRelay<Event> dataReceived = PublishRelay.create();
+    private PublishRelay<Event> wasteDetailsObservable = PublishRelay.create();
+    private PublishRelay<Event> soldDetailsObservable = PublishRelay.create();
+
     private boolean isLoading = false;
 
     @Inject
     public DayHistoricalViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
-                                  UiEvents uiEvents, HistoricalManager historicalManager) {
+                                  UiEvents uiEvents, HistoricalManager historicalManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.historicalManager = historicalManager;
+        this.userManager=userManager;
         getHistoricalDataFromServer();
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Historical:day")
+                .putContentType("Section Historical")
+                .putContentId("historical_day")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
     }
 
     @Bindable
@@ -245,6 +258,14 @@ public class DayHistoricalViewModel extends BaseViewModel {
                 .subscribe(this::onHistoricalDataReceived, this::onError);
     }
 
+    public void onEnergySoldDetailsClick(){
+        soldDetailsObservable.accept(new Event());
+    }
+
+    public void onEnergyWastedDetailsClick(){
+        wasteDetailsObservable.accept(new Event());
+    }
+
     private void onHistoricalDataReceived(List<HistoricalData> data) {
         this.historicalDataList = data;
         if(data !=null && data.size()>0){
@@ -264,6 +285,12 @@ public class DayHistoricalViewModel extends BaseViewModel {
 
     public Observable<Event> observeHistoricalData() {
         return dataReceived;
+    }
+    public Observable<Event> observeWasteDetails() {
+        return wasteDetailsObservable;
+    }
+    public Observable<Event> observeSoldDetails() {
+        return soldDetailsObservable;
     }
 
     public List<HistoricalData> getHistoricalDataList() {

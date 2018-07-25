@@ -3,9 +3,12 @@ package com.thesis.smile.presentation.main.transactions.sell;
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.TransactionsSettingsManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.SellSettings;
 import com.thesis.smile.domain.models.TimeInterval;
@@ -38,7 +41,7 @@ public class SellViewModel extends BaseViewModel {
     private SellSettings sellSettings;
     private SellSettings previousSettings;
     private TransactionsSettingsManager sellSettingsManager;
-
+    private UserManager userManager;
     private Map<String, TimeInterval> timersToUpdate;
     private PublishRelay<OpenDialogEvent> alertDialog = PublishRelay.create();
     private PublishRelay<NavigationEvent> openPriceInfoObservable = PublishRelay.create();
@@ -51,15 +54,21 @@ public class SellViewModel extends BaseViewModel {
     private PublishRelay<Event> switchChanged = PublishRelay.create();
 
     @Inject
-    public SellViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents,  TransactionsSettingsManager sellSettingsManager) {
+    public SellViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents,  TransactionsSettingsManager sellSettingsManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.sellSettingsManager = sellSettingsManager;
         timeIntervals = new ExclusiveObservableList<>();
         neighbours = new ArrayList<>();
         neighboursToUpdate = new HashMap<>();
         timersToUpdate = new HashMap<>();
+        this.userManager = userManager;
         getTimeIntervalsFromServer();
         getSellSettingsFromServer();
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Transactions:sell settings")
+                .putContentType("Section Transations")
+                .putContentId("transactions_sell_settings")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
     }
 
     @Bindable
@@ -398,6 +407,11 @@ public class SellViewModel extends BaseViewModel {
         if(sellSettings.isSpecificPrice() && sellSettings.getSpecificPriceValue()==0){
             getUiEvents().showToast(getResourceProvider().getString(R.string.alert_price));
         }else{
+            Answers.getInstance().logContentView(new ContentViewEvent()
+                    .putContentName("Transactions:sell settings save")
+                    .putContentType("Section Transactions")
+                    .putContentId("transactions_sell_settings_save")
+                    .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
             alertDialog.accept(new OpenDialogEvent());
         }
     }

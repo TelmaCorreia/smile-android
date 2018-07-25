@@ -3,6 +3,8 @@ package com.thesis.smile.presentation.settings.energy_settings;
 import android.databinding.Bindable;
 import android.util.Log;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.R;
@@ -42,7 +44,11 @@ public class EnergySettingsViewModel extends BaseViewModel {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.userManager = userManager;
         this.utilsManager = utilsManager;
-
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Settings:energy")
+                .putContentType("Section Settings")
+                .putContentId("settings_energy")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         getUserFromSP();
     }
 

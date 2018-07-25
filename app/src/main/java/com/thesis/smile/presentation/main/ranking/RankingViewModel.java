@@ -2,9 +2,12 @@ package com.thesis.smile.presentation.main.ranking;
 
 import android.databinding.Bindable;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.domain.managers.RankingsManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.RankingHeader;
 import com.thesis.smile.domain.models.RankingModelList;
 import com.thesis.smile.presentation.base.BaseViewModel;
@@ -27,12 +30,19 @@ public class RankingViewModel extends BaseViewModel {
     private RankingsManager rankingsManager;
     private boolean loading = false;
     private PublishRelay<Event> rankingsChanged = PublishRelay.create();
+    private UserManager userManager;
 
     @Inject
-    public RankingViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, RankingsManager rankingsManager) {
+    public RankingViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, RankingsManager rankingsManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.rankingsManager = rankingsManager;
         this.rankingHeaders = new ArrayList<>();
+        this.userManager = userManager;
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Ranking")
+                .putContentType("Section Ranking")
+                .putContentId("ranking")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         getRankingFromServer();
 
     }

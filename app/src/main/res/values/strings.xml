@@ -86,11 +86,57 @@
     <string name="share_data_sub_list">- o seu nome;\n- a sua foto de perfil; \n- a quantidade de energia renovável que usou (percentagem do consumo semanal) </string>
     <string name="share_data_sub_par1">Se negar a partilha de dados, o seu nome não vai constar no ranking de energias renováveis. </string>
 
+
+    <!-- Privacy Policy Info -->
+    <string name="privacy_policy_title">Politica de Privacidade</string>
+    <string name="privacy_policy_par1">Ao partilhar a sua informação connosco, nós conseguimos fazer melhor o nosso trabalho - para lhe mostrar um feedback personalizado do seu consumo e produção de energia e ajudar a conectar-se mais facilmente com compradores e vendedores. Ao usar os nossos serviços, queremos deixar claro de que forma vamos utilizar a informação que nos fornece e de que forma protegemos a sua privacidade. Esta politica aplica-se à informação que nos fornece automaticamente ao utilizar a nossa aplicação, quando se regista e interage com conteúdo ou utiliza componentes que são fornecidos por entidades externas. \n\n
+Esta política define:\n\n
+- Quem guarda a informação e porquê;\n
+- Que tipo de informação é guardada;\n
+- Como é usada a informação que é guardada;\n
+- Os seus direitos de ver e alterar a informção que nos forneceu voluntariamente;\n
+- Como asseguramos a informação.</string>
+    <string name="privacy_policy_subtitle1">Quem guarda a informação e porquê</string>
+    <string name="privacy_policy_subtitle1_text">A informação que nos fornece ao utilizar a aplicação é guardada pelo Madeira-Interactive Technologies Institute (M-ITI) e é usada apenas para fins cientificos.\n\nEsta aplicação pretende testar a possibilidade de um modelo de negócio para as soluções tecnológicas implementadas no âmbito do projeto SMILE. O modelo de negócio testado é baseado na análise das transações que o utilizador fará na plataforma, nas interações com as mesmas e na informação adicional que decidir partilhar connosco, como quais os seus padrões de produção e consumo de energia. Tenha em consideração que as transações efectuadas na aplicação vão ser simuladas, uma vez que não há troca de energia e/ou dinheiro, e o utilizador não tem que nos fornecer qualquer informação bancária.</string>
+    <string name="privacy_policy_subtitle1_1">Entidades Externas</string>
+    <string name="privacy_policy_subtitle1_1_text_0">As transações realizadas na aplicação estaram alojadas num Open Source Distributed Ledger fornecido pela fundação IOTA (FI). A FI pode guardar ou receber informação sobre a sua utilização da aplicação e o seu histórico ao longo do tempo. No entanto, toda a informação guardada pela FI é Informação Não-Pessoal Identificável (INPI), ou seja, são dados anónimos que não permitem a identificação do utilizador. Para mais informação sobre a politica de privacidade da FI e praticas de negócio, por favor consulte a a página de politica de privacidade da mesma</string>
+    <string name="privacy_policy_subtitle1_1_text_1">(https://www.iota.org/research/privacy-policy).</string>
+    <string name="privacy_policy_subtitle1_1_text_2">Se tiver questões sobre a informação que recolhemos, como a utilizaremos ou que entidades externas têm acess a essa informação através da utilização da nossa aplicação, deve contactar-nos para:</string>
+    <string name="project_email">smile.miti2018@gmail.com</string>
+    <string name="iota_link">https://www.iota.org/research/privacy-policy</string>
+    <string name="privacy_policy_subtitle1_2">Ligação a websites externos</string>
+    <string name="privacy_policy_subtitle1_2_text">A nossa aplicação inclui ligação ao website da EEM que não é operado nem controlado por nós. Tenha em consideração que não somos responsáveis pelas politicas de privacidade e segurança deste website. Encorajamos a consultar e rever as politicas de pivacidade do website da EEM e a ter consciência da informação que submete. </string>
+    <string name="privacy_policy_subtitle2">Que tipo de informação é guardada</string>
+    <string name="privacy_policy_subtitle2_1">Informação que fornece diretamente</string>
+    <string name="privacy_policy_subtitle2_1_text">Ao utilizar a aplicação está a fornecer informaçãoo sobre quando utiliza a aplicação, incluindo quando se regista e quando faz log in.\n\nEsta informaçãp inclui, mas não é limitada a, Informação Pessoal Identificável (IPI): nome, enderço de email, identificador do dispositivo e outras informações que o podem identificar.\n\nNão é considerada informação pessoal aquela que inclui informação que foi anonimizada ou agregada e que não pode ser utilizada para identificar uma pessoa especifica, seja em combinação com outras informações ou não.\n\nA Informação Não-Pessoal Identificável, inclui:\n\n
+- Informaçãos sobre as atividades realizadas na aplicação;\n
+- Informação sobre os padrões de consumo e produção de energia;\n
+- Informação sobre o seu contrato de energia elétrica, nomeadamente: tensão de distribuição, portência contratada, tarifa e ciclo (se aplicável);\n
+- Informação sobre o seu sistema fotovoltaico (numero de paineis e respetiva potência) e medidores de energia (numero de série). </string>
+    <string name="privacy_policy_subtitle2_2">Informação que guardamos automaticamente</string>
+    <string name="privacy_policy_subtitle2_2_text">Ao utilizar a aplicação íremos receber e guardar informação acerda do(s) seu(s) dispositivo(s) automáticamente usando technologia de recolha de dados. Esta informação inclui:\n\n
+- O identificador do seu dispositivo;\n
+- O tipo de dispositivo móvel e sistema operativoque utiliza para aceder à nossa aplicação;\n
+- O seu endereço IP;\n
+- O conteúdo que visualiza, os componentes que utiliza, e a data e hora de visita;\n
+- Informação guardada por entidades externas que nos fornecem serviços.\n</string>
+    <string name="privacy_policy_subtitle3">Como é usada a informação que é guardada</string>
+    <string name="privacy_policy_subtitle3_text">Todos os dados mencionados anteriormente e a informação recolhida durant o estudo vão ser utilizados pelo M-ITI somente para fins de investigação. No entanto, a sua informação pessoal nunca será revelada em qualquer publicação ou dissertação.\n\nAdicionalmente a utilizações mencionadas no paragrafo 1 (Quem guarda a informação e porquê), nós poderemos utilizar a informação recebida para:\n\n- Relembrar a informação, de forma a que não tenha que re-introduzir a mesma da próxima vez que utilizar a aplicação;\n- Fornecer, melhorar, testar e monitorizar a eficiência da plataforma;\n- Diagnosticar ou fixar problemas tecnológicos;\n- Comunicar consigo acerca da sua conta e para resolver problemas acerca da mesma. Quando necessitarmos de o contactar por estas razões, será contactado via e-mail, telemóvel, SMS e notificações na aplicação. </string>
+    <string name="privacy_policy_subtitle3_1">Informação que partilhamos com os utilizadores</string>
+    <string name="privacy_policy_subtitle3_1_text">A informação que partilhará com os outros utilizadores é:\n\n- o seu nome;\n-a sua foto de perfil;\n-transações (apenas poderá ver as transações em que é comprador ou vendedor).\n\nA qualquer momento, acedendo às "definições", poderá modificar o seu nome e/ou foto de perfil, assim como negar o direito de partilhar essa informação(nome e fotografia) com os outros utilizadores.</string>
+    <string name="privacy_policy_subtitle4">Os seus direitos de ver e alterar a informção que nos forneceu voluntariamente</string>
+    <string name="privacy_policy_subtitle4_text">Tem o direito de aceder, modificar ou apagar a informação que nos forneceu acedendo a opção de "Definições". </string>
+    <string name="privacy_policy_subtitle5">Até quando guardamos a sua informação</string>
+    <string name="privacy_policy_subtitle5_text"> A sua informação será guardada pelo tempo necessário ao serviços desta plataforma. Este periodo poderá ir até ao final do projeto SMILE, Maio de 2021</string>
+    <string name="privacy_policy_subtitle6">Como asseguramos a informação</string>
+    <string name="privacy_policy_subtitle6_text">Foram implementada medidas de segurança para proteger a informação que vamos obter através da aplicação. São estas medidas contra perda, uso indevido, acesso não autorizado, divulgação, alteração ou destruição. O acesso a dados e technologia relacionada com a informação do utilizador é protegido com palavra-passe e limitado a acesso pessoal. Em adição, usamos technologia standard para manter a informação de cada utilizador segura enquanto esta está no servidor do M-ITI.  No entanto, tirando estas medidas, os nossos sistemas de TI podem ser comprometidos por entidades malfeitoras que não tenham acesso autorizado aos dados através erros técnicos ou humanos. Ao utilizar, aceder e registar-se na aplicação, concorda que o M-ITI não é responsavel por qualquer perda ou danos de qualquer tipo decorrente ou relacionado com falhas de segurança, violação de quaisquer regras de privacidade ou medidas de segurança ou interceção das transmissões de dados. Qualquer transamissão de dados feita por si é da sua unica e exclusiva responsabilidade.\n\nA segurança da sua informação depende também de si. É lhe dado acesso à informação através de uma palavra-passe escolhida por si. É responsável por manter esta palavra-passe confidencial. Pedimos-lhe que não a partihe com ninguém. </string>
+
+
     <!-- usertype -->
     <string name="consumer">CONSUMER</string>
     <string name="prosumer">PROSUMER</string>
 
-    <!-- Dialog Share data permissions -->
+    <!-- Share data permissions -->
     <string name="share_data_tilte">A aplicação precisa da sua permissão para partilhar alguns dados com a comunidade</string>
     <string name="share_data_description">Se pretende comparar a sua utilização de energias renováveis com os a dos seus vizinhos, precisamos da sua permissão para partilhar os dados de consumo de energias renováveis.</string>
     <string name="share_data_changes">Pode alterar esta escolha a qualquer momento nas definições em \"Definições da Conta\".</string>
@@ -321,6 +367,16 @@
     <string name="button_back">voltar</string>
     <string name="button_continue">Continuar</string>
     <string name="alert_price">O preço selecionado deve ser superior a 0</string>
+
+    <!-- Dialog Wasted Energy Alert -->
+    <string name="wasted_energy_alert_tilte">Energia desperdiçada</string>
+    <string name="wasted_energy_alert_description">Está a desperdiçar energia.\nSe colocar o preço de venda muito elevado pode não ter vizinhos dispostos a pagar.  </string>
+    <string name="wasted_energy_alert_info">Verifique se as suas definições de venda de energia e considere mudar as mesmas</string>
+
+    <!-- Dialog Sold Energy Details -->
+    <string name="sold_energy_details_tilte">Energia vendida</string>
+    <string name="sold_energy_detais_description">Os valores de venda e autoconsumo são superiores à sua produção?</string>
+    <string name="sold_energy_details_info">Vendeu energia acumulada na sua bateria.</string>
 
     <!--Others-->
     <string name="select_all">Selecionar Todos</string>

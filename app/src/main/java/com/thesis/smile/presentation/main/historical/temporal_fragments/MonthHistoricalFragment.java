@@ -17,6 +17,7 @@ import com.thesis.smile.databinding.FragmentMonthHistoricalBinding;
 import com.thesis.smile.domain.models.HistoricalDataPoint;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.utils.actions.events.Event;
+import com.thesis.smile.presentation.utils.views.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
 
     private BarChart barChart;
     private List<HistoricalDataPoint> list;
-
+    CustomDialog dialog = null;
     private Boolean isStarted = false;
     private Boolean isVisible = false;
 
@@ -61,6 +62,14 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
         getViewModel().observeHistoricalData()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::initData);
+
+        getViewModel().observeSoldDetails()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::soldEnergyDialog);
+
+        getViewModel().observeWasteDetails()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::wastedEnergyDialog);
     }
 
     @Override
@@ -254,5 +263,28 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
     public void viewDidAppear() {
         getViewModel().getHistoricalDataFromServer();
     }
+
+    private void soldEnergyDialog(Event event) {
+        dialog = new CustomDialog(getActivity());
+        dialog.setTitle(R.string.sold_energy_details_tilte);
+        dialog.setMessage(R.string.sold_energy_detais_description);
+        dialog.setSecondMessage(R.string.sold_energy_details_info);
+        dialog.setOkButtonText(R.string.button_ok);
+        dialog.setDismissible(false);
+        dialog.setOnOkClickListener(() -> {dialog.dismiss();});
+        dialog.show();
+    }
+
+    private void wastedEnergyDialog(Event event) {
+        dialog = new CustomDialog(getActivity());
+        dialog.setTitle(R.string.wasted_energy_alert_tilte);
+        dialog.setMessage(R.string.wasted_energy_alert_description);
+        dialog.setSecondMessage(R.string.wasted_energy_alert_info);
+        dialog.setOkButtonText(R.string.button_ok);
+        dialog.setDismissible(false);
+        dialog.setOnOkClickListener(() -> {dialog.dismiss();});
+        dialog.show();
+    }
+
 
 }

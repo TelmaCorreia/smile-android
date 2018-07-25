@@ -516,6 +516,7 @@
                                     android:src="@drawable/ic_more_details"
                                     android:tint="@color/colorBlack"
                                     android:visibility="@{viewModel.showEnergySoldDetails ? View.VISIBLE : View.INVISIBLE}"
+                                    android:onClick="@{v -> viewModel.onEnergySoldDetailsClick()}"
                                     app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tvLegend1b"/>
@@ -678,6 +679,7 @@
                                     android:src="@drawable/ic_warning"
                                     android:tint="@color/colorRed"
                                     android:visibility="@{viewModel.alertWastedEnergy ? View.VISIBLE : View.INVISIBLE}"
+                                    android:onClick="@{v -> viewModel.onEnergyWastedDetailsClick()}"
                                     app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/tvLegend1c"/>

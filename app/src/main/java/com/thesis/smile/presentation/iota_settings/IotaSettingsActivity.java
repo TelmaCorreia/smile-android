@@ -2,8 +2,10 @@ package com.thesis.smile.presentation.iota_settings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
+import com.thesis.smile.BuildConfig;
 import com.thesis.smile.Constants;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.ActivityIotaSettingsBinding;
@@ -104,13 +106,17 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
         transactionIndex++;
         transactionsSize--;
         if (Arrays.asList(str.getSuccessfully()).contains(true)){
-            getViewModel().message("Send transfer response!");
+            if(BuildConfig.DEBUG) {
+                getViewModel().message("Send transfer response!");
+            }
         }
     }
 
     @Subscribe
     public void onEvent(GetAccountDataResponse gad) {
-        getViewModel().message("Account data response!");
+        if(BuildConfig.DEBUG) {
+            getViewModel().message("Account data response!");
+        }
         onAccountDataResponse(gad);
     }
 
@@ -118,7 +124,9 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
 
     @Subscribe
     public void onEvent(ReplayBundleResponse rbr) {
-        getViewModel().message("Replay bundle response!");
+        if(BuildConfig.DEBUG) {
+            getViewModel().message("Replay bundle response!");
+        }
         if (Arrays.asList(rbr.getSuccessfully()).contains(true)){
             getViewModel().getAccountData();
         }
@@ -132,12 +140,12 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
         Log.d("Transfer", "Error!! transactions index: " +transactionsSize);
         switch (error.getErrorType()) {
             case ACCESS_ERROR:
-                getViewModel().message("Access error!");
+                getViewModel().message(getResources().getString(R.string.err_api_iota));
                 getViewModel().setProgress(false);
                 getViewModel().setScreenBlocked(false);
                 break;
             case REMOTE_NODE_ERROR:
-                getViewModel().message("Remote node error!");
+                getViewModel().message(getResources().getString(R.string.err_api_iota));
                 getViewModel().setProgress(false);
                 getViewModel().setScreenBlocked(false);
                 break;

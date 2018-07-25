@@ -3,6 +3,8 @@ package com.thesis.smile.presentation.main.home;
 import android.databinding.Bindable;
 import android.view.View;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.NoContentException;
@@ -37,6 +39,12 @@ public class HomeViewModel extends BaseViewModel {
 
         this.transactionsManager = transactionsManager;
         this.userManager = userManager;
+
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Home")
+                .putContentType("Section Home")
+                .putContentId("home")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
 
         getCurrentEnergyFromServer();
     }
@@ -139,10 +147,20 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void onEnergySoldDetailsClick(){
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Home:Check sold details")
+                .putContentType("Section Home")
+                .putContentId("home_sold_details")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         openHomeSoldDetails.accept(new NavigationEvent());
     }
 
     public void onEnergyBoughtDetailsClick(){
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Home:Check bought details")
+                .putContentType("Section Home")
+                .putContentId("home_bought_details")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         openHomeBoughtDetails.accept(new NavigationEvent());
     }
 

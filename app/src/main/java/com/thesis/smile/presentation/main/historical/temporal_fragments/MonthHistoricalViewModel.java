@@ -2,8 +2,11 @@ package com.thesis.smile.presentation.main.historical.temporal_fragments;
 
 import android.databinding.Bindable;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.domain.managers.HistoricalManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.HistoricalData;
 import com.thesis.smile.domain.models.HistoricalDataPoint;
 import com.thesis.smile.presentation.base.BaseViewModel;
@@ -27,15 +30,24 @@ public class MonthHistoricalViewModel extends BaseViewModel {
     private HistoricalData currentData;
     private HistoricalDataPoint currentMonth;
     private LocalDate currentDate = LocalDate.now();
+    private UserManager userManager;
 
     private PublishRelay<Event> dataReceived = PublishRelay.create();
+    private PublishRelay<Event> wasteDetailsObservable = PublishRelay.create();
+    private PublishRelay<Event> soldDetailsObservable = PublishRelay.create();
     private boolean isLoading = false;
 
     @Inject
     public MonthHistoricalViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider,
-                                    UiEvents uiEvents, HistoricalManager historicalManager) {
+                                    UiEvents uiEvents, HistoricalManager historicalManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.historicalManager = historicalManager;
+        this.userManager = userManager;
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Historical:month")
+                .putContentType("Section Historical")
+                .putContentId("historical_month")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         getHistoricalDataFromServer();
     }
 
@@ -210,6 +222,15 @@ public class MonthHistoricalViewModel extends BaseViewModel {
                 .subscribe(this::onHistoricalDataReceived, this::onError);
     }
 
+    public void onEnergySoldDetailsClick(){
+        soldDetailsObservable.accept(new Event());
+    }
+
+    public void onEnergyWastedDetailsClick(){
+        wasteDetailsObservable.accept(new Event());
+    }
+
+
     public void onNextClick(){
         setLoading(true);
         currentDate = currentDate.plusMonths(1);
@@ -238,6 +259,12 @@ public class MonthHistoricalViewModel extends BaseViewModel {
 
     public Observable<Event> observeHistoricalData() {
         return dataReceived;
+    }
+    public Observable<Event> observeWasteDetails() {
+        return wasteDetailsObservable;
+    }
+    public Observable<Event> observeSoldDetails() {
+        return soldDetailsObservable;
     }
 
     public List<HistoricalData> getHistoricalDataList() {

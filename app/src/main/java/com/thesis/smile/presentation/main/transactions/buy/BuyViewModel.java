@@ -3,10 +3,13 @@ package com.thesis.smile.presentation.main.transactions.buy;
 import android.databinding.Bindable;
 import android.databinding.ObservableList;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.BR;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.managers.TransactionsSettingsManager;
+import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.BuySettings;
 import com.thesis.smile.domain.models.Neighbour;
 import com.thesis.smile.domain.models.TimeInterval;
@@ -37,6 +40,7 @@ public class BuyViewModel extends BaseViewModel {
     private BuySettings buySettings;
     private BuySettings previousSettings;
     private TransactionsSettingsManager buySettingsManager;
+    private UserManager userManager;
 
     private Map<String, TimeInterval> timersToUpdate;
     private PublishRelay<OpenDialogEvent> alertDialog = PublishRelay.create();
@@ -49,15 +53,21 @@ public class BuyViewModel extends BaseViewModel {
 
 
     @Inject
-    public BuyViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsSettingsManager buySettingsManager) {
+    public BuyViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsSettingsManager buySettingsManager, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.buySettingsManager = buySettingsManager;
         timeIntervals = new ExclusiveObservableList<>();
         neighbours = new ArrayList<>();
         neighboursToUpdate = new HashMap<>();
         timersToUpdate = new HashMap<>();
+        this.userManager=userManager;
         getTimeIntervalsFromServer();
         getBuySettingsFromServer();
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Transactions:buy settings")
+                .putContentType("Section Transactions")
+                .putContentId("transactions_buy_settings")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
     }
 
     @Bindable
@@ -192,6 +202,11 @@ public class BuyViewModel extends BaseViewModel {
     }
 
     public void onPriceInfoClick(){
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Transactions:buy settings price info")
+                .putContentType("Section Transactions")
+                .putContentId("transactions_buy_settings_price_info")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         openPriceInfoObservable.accept(new NavigationEvent());
     }
 
@@ -340,6 +355,11 @@ public class BuyViewModel extends BaseViewModel {
      * **/
 
     public void onSaveClick() {
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Transactions:buy settings save")
+                .putContentType("Section Transactions")
+                .putContentId("transactions_buy_settings_save")
+                .putCustomAttribute("email", userManager.getCurrentUser().getEmail()));
         alertDialog.accept(new OpenDialogEvent());
     }
 
