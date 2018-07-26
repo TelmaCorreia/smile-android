@@ -16,10 +16,11 @@ import java.util.List;
 public class RankingAdapter extends ExpandableRecyclerViewAdapter<RankingParentViewHolder,RankingChildViewHolder> {
 
     private LayoutInflater inflater;
-
+    private Context context;
     public RankingAdapter(Context context, List<? extends ExpandableGroup> groups) {
         super(groups);
         inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class RankingAdapter extends ExpandableRecyclerViewAdapter<RankingParentV
     @Override
     public void onBindChildViewHolder(RankingChildViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
         Ranking ranking = ((RankingHeader) group).getItems().get(childIndex);
-        holder.onBind(ranking);
+        holder.onBind(ranking,context );
     }
 
     @Override

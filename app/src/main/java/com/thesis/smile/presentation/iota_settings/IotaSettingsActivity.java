@@ -98,7 +98,7 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
     public void onEvent(SendTransferResponse str) {
         if (transactionsSize==0 && !getViewModel().isGettingAddresses()){
             getViewModel().setScreenBlocked(false);
-        }else{
+        }else if (!getViewModel().isGettingAddresses()){
             getViewModel().updateState(transactionIndex);
         }
         Log.d("Transfer", "Response!! transactions size: " +transactionsSize);
@@ -108,6 +108,8 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
         if (Arrays.asList(str.getSuccessfully()).contains(true)){
             if(BuildConfig.DEBUG) {
                 getViewModel().message("Send transfer response!");
+                getViewModel().setProgressText(getViewModel().getAskAddressTimes()+"/"+getViewModel().getAddressQuantity());
+
             }
         }
     }

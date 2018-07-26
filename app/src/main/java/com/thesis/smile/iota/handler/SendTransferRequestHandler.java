@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.thesis.smile.BuildConfig;
 import com.thesis.smile.Constants;
 import com.thesis.smile.R;
 import com.thesis.smile.iota.requests.ApiRequest;
@@ -40,7 +41,7 @@ public class SendTransferRequestHandler extends IotaRequestHandler {
         if (((SendTransferRequest) request).getValue().equals("0")
                 && ((SendTransferRequest) request).getTag().equals(Constants.NEW_ADDRESS_TAG)) {
                 Log.d(SendTransferRequestHandler.class.getCanonicalName(), "Attaching new address" );
-                NotificationHelper.requestNotification(context, R.drawable.ic_add, context.getString(R.string.notification_attaching_new_address_request_title), notificationId);
+                if (BuildConfig.DEBUG)NotificationHelper.requestNotification(context, R.drawable.ic_add, context.getString(R.string.notification_attaching_new_address_request_title), notificationId);
             } else {
                 Log.d(SendTransferRequestHandler.class.getCanonicalName(), "Sending transfer" );
            }
@@ -80,7 +81,7 @@ public class SendTransferRequestHandler extends IotaRequestHandler {
                     error.setErrorType(NetworkErrorType.NETWORK_ERROR);
                 }
                 if (((SendTransferRequest) request).getValue().equals("0") && ((SendTransferRequest) request).getTag().equals(Constants.NEW_ADDRESS_TAG)) {
-                    NotificationHelper.responseNotification(context, R.drawable.ic_address, context.getString(R.string.notification_attaching_new_address_response_failed_title), notificationId);
+                    if (BuildConfig.DEBUG)NotificationHelper.responseNotification(context, R.drawable.ic_address, context.getString(R.string.notification_attaching_new_address_response_failed_title), notificationId);
                     Log.e(SendTransferRequestHandler.class.getCanonicalName(), "Attaching new address failed" );
                 } else {
                     Log.e(SendTransferRequestHandler.class.getCanonicalName(), "Transaction failed" );
@@ -93,11 +94,11 @@ public class SendTransferRequestHandler extends IotaRequestHandler {
         if (response instanceof SendTransferResponse && ((SendTransferRequest) request).getValue().equals("0")
                 && ((SendTransferRequest) request).getTag().equals(Constants.NEW_ADDRESS_TAG)) {
             if (Arrays.asList(((SendTransferResponse) response).getSuccessfully()).contains(true)) {
-                NotificationHelper.responseNotification(context, R.drawable.ic_address, context.getString(R.string.notification_attaching_new_address_response_succeeded_title), notificationId);
+                if (BuildConfig.DEBUG)NotificationHelper.responseNotification(context, R.drawable.ic_address, context.getString(R.string.notification_attaching_new_address_response_succeeded_title), notificationId);
 
                 Log.d(SendTransferRequestHandler.class.getCanonicalName(), "Attaching new address executed" );
             }else {
-                NotificationHelper.responseNotification(context, R.drawable.ic_address, context.getString(R.string.notification_attaching_new_address_response_failed_title), notificationId);
+                if (BuildConfig.DEBUG)NotificationHelper.responseNotification(context, R.drawable.ic_address, context.getString(R.string.notification_attaching_new_address_response_failed_title), notificationId);
                 Log.e(SendTransferRequestHandler.class.getCanonicalName(), "Attaching new address failed" );
             }
         } else if (response instanceof SendTransferResponse) {

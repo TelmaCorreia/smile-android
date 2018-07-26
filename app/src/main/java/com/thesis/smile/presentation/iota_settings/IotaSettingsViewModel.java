@@ -51,10 +51,12 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     private String balanceEuro = "";
     private boolean isLoading = false;
     private List<Transaction> transactions;
-    private final int addressQuantity=3;
+    private final int addressQuantity=10;
     private int askAddressTimes = 0;
     private boolean gettingAddresses = false;
     private String addressesQuantity = "";
+    private String progressText = askAddressTimes+"/"+addressQuantity;
+
 
     @Inject
     public IotaSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager, IotaManager iotaManager, TransactionsManager transactionsManager) {
@@ -177,6 +179,8 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
             generateNewAddress();
         }else{
             setScreenBlocked(false);
+            this.askAddressTimes = 0;
+            getAddressesFromServer();
         }
     }
 
@@ -249,19 +253,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
     }
     private void onTransactionStateUpdated(String s) {
         setScreenBlocked(false);
-        getUiEvents().showToast("transaction state updated");
-    }
-
-    private void onAddressUpdated(User user) {
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName("IotaSettings: attach address success")
-                .putContentType("Section Iota")
-                .putContentId("iota_settings_attach_address_success")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
-                .putCustomAttribute("hour", LocalTime.now().getHour()));
-        if (BuildConfig.DEBUG){
-            message("address updated!!!");
-        }
+        getUiEvents().showToast("Transação paga");
     }
 
     public void onShowSeedClick(){
@@ -335,5 +327,22 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
     public void setGettingAddresses(boolean gettingAddresses) {
         this.gettingAddresses = gettingAddresses;
+    }
+    @Bindable
+    public String getProgressText() {
+        return progressText;
+    }
+
+    public void setProgressText(String progressText) {
+        this.progressText = progressText;
+        notifyPropertyChanged(BR.progressText);
+    }
+
+    public int getAskAddressTimes() {
+        return askAddressTimes;
+    }
+
+    public int getAddressQuantity() {
+        return addressQuantity;
     }
 }

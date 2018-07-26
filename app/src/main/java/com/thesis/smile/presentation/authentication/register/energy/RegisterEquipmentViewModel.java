@@ -170,19 +170,20 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
                 .putSuccess(true)
                 .putCustomAttribute("email", request.getEmail())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
-        next();
+
         if (request.getPicture()!=null){
             userManager.updateUserProfilePic(request.getPicture())
-                    .compose(loadingTransformCompletable())
                     .compose(schedulersTransformCompletableIo())
                     .doOnSubscribe(this::addDisposable)
                     .subscribe(this::onPicComplete, this::onError);
+        }else {
+            next();
         }
 
     }
 
     private void onPicComplete() {
-        startMainObservable.accept(new NavigationEvent());
+        next();
     }
 
     public void setRegisterRequest(RegisterRequest registerRequest){

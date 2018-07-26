@@ -50,7 +50,7 @@ public class RegisterUserViewModel extends BaseViewModel {
     public RegisterUserViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, SharedPrefs sharedPrefs) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.sharedPrefs = sharedPrefs;
-        imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_add_a_photo, null);
+        imgForeground = getResourceProvider().getDrawable(R.drawable.ic_add_a_photo);
 
     }
 
@@ -195,7 +195,7 @@ public class RegisterUserViewModel extends BaseViewModel {
         this.profilePictureFile = profilePictureFile;
         setProfileImage(profilePictureFile.getAbsolutePath());
         notifyPropertyChanged(BR.profileImage);
-       /* userManager.updateUserProfilePic(file)
+        /*user.updateUserProfilePic(file)
                 .doOnSubscribe(d -> {
                     addDisposable(d);
                     endEdition();

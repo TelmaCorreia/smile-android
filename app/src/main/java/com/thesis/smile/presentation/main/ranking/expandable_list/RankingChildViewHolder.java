@@ -1,11 +1,16 @@
 package com.thesis.smile.presentation.main.ranking.expandable_list;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.thesis.smile.R;
 import com.thesis.smile.domain.models.Ranking;
+import com.thesis.smile.presentation.main.MainActivity;
+import com.thesis.smile.presentation.main.ranking.RankingFragment;
+import com.thesis.smile.presentation.utils.databinding.ImageBindings;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 
 public class RankingChildViewHolder extends ChildViewHolder{
@@ -24,10 +29,12 @@ public class RankingChildViewHolder extends ChildViewHolder{
 
     }
 
-    public void onBind(Ranking ranking) {
+    public void onBind(Ranking ranking, Context context) {
         position.setText(ranking.getPosition());
         name.setText(ranking.getName());
         description.setText(ranking.getDescription());
+        ImageBindings.setImageCircleUrl(pic, ranking.getPicture(), context.getResources().getDrawable(R.drawable.ic_person));
+
     }
 
     public void setName(TextView name) {
