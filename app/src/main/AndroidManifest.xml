@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.thesis.smile">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -176,6 +177,8 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="95ab9728df1c3e13238f1a6e22891ac4433dd84a" />
+
+        <meta-data android:name="com.bumptech.glide.integration.okhttp.OkHttpGlideModule" tools:node="remove" />
 
     </application>
 
