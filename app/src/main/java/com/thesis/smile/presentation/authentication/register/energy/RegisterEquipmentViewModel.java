@@ -1,5 +1,6 @@
 package com.thesis.smile.presentation.authentication.register.energy;
 
+import android.annotation.SuppressLint;
 import android.databinding.Bindable;
 
 import com.crashlytics.android.answers.Answers;
@@ -33,6 +34,7 @@ import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import org.threeten.bp.LocalTime;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -152,6 +154,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
             getUiEvents().showToast(getResourceProvider().getString(R.string.userSmartMeterAlert));
         }else{
             setLoading(true);
+            setRegisterEnabled(false);
             request.setType(userType);
             request.setManual(manual);
             request.setSmartMeterId(smartMeterId);
@@ -165,15 +168,17 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     }
 
+    @SuppressLint("CheckResult")
     private void onRegisterComplete() {
         Answers.getInstance().logSignUp(new SignUpEvent()
                 .putSuccess(true)
                 .putCustomAttribute("email", request.getEmail())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
 
-        if (request.getPicture()!=null){
-            userManager.updateUserProfilePic(request.getPicture())
-                    .compose(schedulersTransformCompletableIo())
+        if (request.getFilePath()!=null && !request.getFilePath().isEmpty()){
+            File file = new File (request.getFilePath());
+            userManager.updateUserProfilePic(file)
+                    .compose(schedulersTransformSingleIo())
                     .doOnSubscribe(this::addDisposable)
                     .subscribe(this::onPicComplete, this::onError);
         }else {
@@ -182,7 +187,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     }
 
-    private void onPicComplete() {
+    private void onPicComplete(User user) {
         next();
     }
 

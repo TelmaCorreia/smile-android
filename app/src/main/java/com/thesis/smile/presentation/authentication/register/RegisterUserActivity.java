@@ -187,6 +187,7 @@ public class RegisterUserActivity extends BaseActivity<ActivityRegisterUserBindi
     }
 
     private void uploadImage(){
+        getViewModel().setFilePath(imageHelper.getProfilePictureUri().getPath());
         getViewModel().setProfilePicture(new File(imageHelper.getProfilePictureUri().getPath()));
 
        // getViewModel().setProfilePicture(imageHelper.getProfilePictureFile());

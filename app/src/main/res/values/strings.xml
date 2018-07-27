@@ -262,6 +262,7 @@ Esta política define:\n\n
 
     <!--utils-->
     <string name="profile_picture">ProfilePicture</string>
+    <string name="profile_picture_update">ProfilePictureUpdate</string>
     <string name="details_sold_energy">SOLD</string>
     <string name="details_bought_energy">BOUGHT</string>
     <string name="date_format_transactions">dd/MM/yy HH:mm</string>

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.thesis.smile.presentation.utils.actions.Utils;
 
@@ -44,6 +45,8 @@ public class ImageBindings {
                 .load(url)
                 .apply(new RequestOptions().placeholder(imageView.getDrawable()))
                 .apply(new RequestOptions().error(error))
+                .apply(RequestOptions.skipMemoryCacheOf(true))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
                 .into(imageView);
     }
 
@@ -56,6 +59,8 @@ public class ImageBindings {
                 .apply(new RequestOptions().placeholder(imageView.getDrawable()))
                 .apply(new RequestOptions().error(error))
                 .apply(RequestOptions.circleCropTransform())
+                .apply(RequestOptions.skipMemoryCacheOf(true))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
                 .into(imageView);
     }
 
@@ -74,6 +79,8 @@ public class ImageBindings {
                         .placeholder(error))
                 .apply(new RequestOptions()
                         .error(error))
+                .apply(RequestOptions.skipMemoryCacheOf(true))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
                 .into(imageView);
     }
 }

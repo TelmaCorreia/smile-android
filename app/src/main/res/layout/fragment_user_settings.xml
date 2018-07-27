@@ -30,7 +30,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    imageCircleError="@{@drawable/ic_person}"
+                    imageCircleError="@{@drawable/ic_circle}"
                     imageCircleUrl="@{viewModel.profileImage}"
                     android:id="@+id/ivProfile"
                     android:layout_width="70dp"
@@ -39,8 +39,7 @@
                     android:layout_marginBottom="16dp"
                     android:foreground="@{viewModel.imgForeground}"
                     android:onClick="@{v -> viewModel.editProfilePicture()}"
-                    tools:foreground="@drawable/ic_add_a_photo"
-                    tools:src="@drawable/ic_person" />
+                    tools:foreground="@drawable/ic_edit_pad" />
 
                 <android.support.design.widget.TextInputLayout
                     style="@style/TextInputLayout"

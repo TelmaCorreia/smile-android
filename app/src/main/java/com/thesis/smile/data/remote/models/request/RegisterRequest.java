@@ -40,6 +40,9 @@ public class RegisterRequest{
     @Expose
     private String smartMeterId;
 
+    @Expose
+    private String filePath;
+
     private File picture;
 
     public RegisterRequest(){}
@@ -153,5 +156,13 @@ public class RegisterRequest{
 
     public void setSmartMeterId(String smartMeterId) {
         this.smartMeterId = smartMeterId;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

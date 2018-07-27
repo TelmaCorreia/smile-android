@@ -39,12 +39,9 @@ public class UserManager {
         return sharedPrefs.isUserDataPresent() ? Completable.complete() : Completable.error(NoUserLoggedException::new);
     }
 
-    public Completable updateUserProfilePic(File file){
+    public Single<User> updateUserProfilePic(File file){
         String token = sharedPrefs.getUserToken();
-
-        return Completable.fromAction(()->
-                userService.updateUserProfilePic(token, file)
-                .map(UserMapper.INSTANCE::remoteToDomain));
+        return userService.updateUserProfilePic(token, file).map(UserMapper.INSTANCE::remoteToDomain);
     }
 
     public Single<User> updateUser(User user){

@@ -17,8 +17,8 @@
 
 
     <ImageView
-        imageUrl="@{viewModel.url}"
-        imageError="@{@drawable/ic_person}"
+        imageCircleUrl="@{viewModel.url}"
+        imageCircleError="@{@drawable/ic_person}"
         android:id="@+id/ivUser"
         android:layout_width="40dp"
         android:layout_height="40dp"

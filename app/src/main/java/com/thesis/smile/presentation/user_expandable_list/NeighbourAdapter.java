@@ -29,11 +29,13 @@ public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<Nei
     public static final int NEIGHBOUR_VIEW_TYPE = 4;
     /** Use values > 2. That's because ExpandableListPosition.CHILD and ExpandableListPositon.GROUP are 1 and 2 respectively so they are already taken.**/
 
+    private Context context;
     private OnSwitchClickListener onSwichClickListener;
 
 
     public NeighbourAdapter(Context context, List<? extends ExpandableGroup> groups, OnSwitchClickListener onSwichClickListener) {
         super(groups);
+        this.context = context;
         this.onSwichClickListener = onSwichClickListener;
         inflater = LayoutInflater.from(context);
     }
@@ -53,7 +55,7 @@ public class NeighbourAdapter extends MultiTypeExpandableRecyclerViewAdapter<Nei
                 return new SelectAllChildViewHolder(selectAll, onSwichClickListener);
             case NEIGHBOUR_VIEW_TYPE:
                 View neighbour =  inflater.inflate(R.layout.list_item_user, viewGroup, false);
-                return new NeighbourChildViewHolder(neighbour, onSwichClickListener);
+                return new NeighbourChildViewHolder(neighbour, onSwichClickListener, context);
             default:
                 throw new IllegalArgumentException("Invalid viewType");
         }

@@ -71,7 +71,7 @@ public class UserService extends ApiService{
 
     public Single<UserRemote> updateUserProfilePic(String currentUserId, File file) {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("", file.getName(), requestFile);
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
 
         return api.updateUserImage(currentUserId, imagePart)
                 .compose(networkMapTransform())

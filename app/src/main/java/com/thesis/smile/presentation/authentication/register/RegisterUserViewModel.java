@@ -37,6 +37,7 @@ public class RegisterUserViewModel extends BaseViewModel {
     private String password = "";
     private String confirmPassword = "";
     private File profilePictureFile;
+    private String filePath;
     private Drawable imgForeground;
     private RegisterRequest user = new RegisterRequest();
     private boolean share;
@@ -167,7 +168,10 @@ public class RegisterUserViewModel extends BaseViewModel {
         user.setLastName(lastName);
         user.setVisible(share);
         user.setFirebaseToken(sharedPrefs.getFirebaseToken());
-        if (profilePictureFile!=null) {user.setPicture(profilePictureFile);}
+        if (profilePictureFile!=null) {
+            user.setPicture(profilePictureFile);
+            user.setFilePath(filePath);
+        }
         nextObservable.accept(new NavigationEvent());
     }
 
@@ -225,4 +229,11 @@ public class RegisterUserViewModel extends BaseViewModel {
     }
 
 
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 }

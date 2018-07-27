@@ -37,7 +37,6 @@ public class UserSettingsViewModel extends BaseViewModel {
     private String profileImage = "";
     private File profilePictureFile;
     private Drawable imgForeground;
-
     private UserManager userManager;
     private User user;
     private User previousUser;
@@ -51,7 +50,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     @Inject
     public UserSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
-        imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_add_a_photo, null);
+        imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_edit_pad, null);
         this.userManager = userManager;
         Answers.getInstance().logContentView(new ContentViewEvent()
                 .putContentName("Settings:user")
@@ -76,9 +75,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     @Bindable
     public String getProfileImage() {
         if (user != null){
-            //return user.getUrl();
-            return "http://tellma.m-iti.org:8080/users/USFmfypUzrM/image";
-           // return "https://www.google.pt/search?biw=1440&bih=720&tbm=isch&sa=1&ei=4HUNW9XaBaPJgAbTprKwDA&q=desenhos&oq=des&gs_l=img.1.0.0l10.3641.4413.0.5873.3.3.0.0.0.0.160.361.1j2.3.0....0...1c.1.64.img..0.3.358...35i39k1.0.FliPRxfO1hU#imgrc=omv5ScsP6V54cM:";
+            return user.getUrl();
         }
         return null;
     }
@@ -175,7 +172,8 @@ public class UserSettingsViewModel extends BaseViewModel {
                     && user.getLastName().equals(previousUser.getLastName())
                     && user.getEmail().equals(previousUser.getEmail())
                     && user.getType().equals(previousUser.getType())
-                    && user.isVisible()==previousUser.isVisible());
+                    && user.isVisible()==previousUser.isVisible()
+                    && profilePictureFile==null);
         }
         return false;
     }
@@ -202,10 +200,18 @@ public class UserSettingsViewModel extends BaseViewModel {
         if (!isEmailValid(user.getEmail())){
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_invalid_email));
         }else{
-            userManager.updateUser(user)
+            if (profilePictureFile!=null){
+            userManager.updateUserProfilePic(profilePictureFile)
                     .compose(schedulersTransformSingleIo())
                     .doOnSubscribe(this::addDisposable)
-                    .subscribe(this::onUpdateComplete, this::onError);
+                    .subscribe(this::onPicComplete, this::onError);
+            }else{
+                userManager.updateUser(user)
+                        .compose(schedulersTransformSingleIo())
+                        .doOnSubscribe(this::addDisposable)
+                        .subscribe(this::onUpdateComplete, this::onError);
+            }
+
         }
 
     }
@@ -219,6 +225,8 @@ public class UserSettingsViewModel extends BaseViewModel {
         getUiEvents().showToast(getResourceProvider().getString(R.string.msg_update_sucess));
         this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getType(), user.isVisible());
         this.user = user;
+        setProfileImage(user.getUrl());
+        notifyPropertyChanged(BR.profileImage);
         notifyPropertyChanged(BR.saveEnabled);
     }
 
@@ -250,15 +258,21 @@ public class UserSettingsViewModel extends BaseViewModel {
         return openLearnMore;
     }
 
-    public void setProfilePicture(File profilePictureFile) {
-        //TODO
-        this.profilePictureFile = profilePictureFile;
-        setProfileImage(profilePictureFile.getAbsolutePath());
-        userManager.updateUserProfilePic(profilePictureFile)
-                .doOnSubscribe(this::addDisposable)
-                .subscribe();
+    public void setProfilePicture(String profilePictureFile) {
+        setImgForeground(Drawable.createFromPath(profilePictureFile));
+        setProfilePictureFile(new File(profilePictureFile));
     }
 
+    private void onPicComplete(User user) {
+        setProfilePictureFile(null);
+        userManager.saveUser(user);
+        if (isSaveEnabled()){
+            userManager.updateUser(user)
+                    .compose(schedulersTransformSingleIo())
+                    .doOnSubscribe(this::addDisposable)
+                    .subscribe(this::onUpdateComplete, this::onError);
+        }
+    }
 
 
     public File getProfilePictureFile() {
@@ -267,6 +281,7 @@ public class UserSettingsViewModel extends BaseViewModel {
 
     public void setProfilePictureFile(File profilePictureFile) {
         this.profilePictureFile = profilePictureFile;
+        notifyPropertyChanged(BR.saveEnabled);
     }
 
     public void getUserFromSP() {
@@ -275,7 +290,6 @@ public class UserSettingsViewModel extends BaseViewModel {
         this.previousUser = new User(user.getFirstName(), user.getLastName(), user.getEmail(), user.getType(),  user.isVisible());
         notifyChange();
     }
-
 
 
 }

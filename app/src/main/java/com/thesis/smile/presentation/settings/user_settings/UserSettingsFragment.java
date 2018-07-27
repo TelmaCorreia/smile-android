@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.thesis.smile.R;
@@ -160,7 +161,7 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
 
     private void requestImage(){
         File tempFile = cameraHelper.setUpForPossiblePhoto();
-        Intent chooserIntent = intentHelper.createRequestImageIntent(this.getActivity(), tempFile, getResourceProvider().getString(R.string.profile_picture));
+        Intent chooserIntent = intentHelper.createRequestImageIntent(this.getActivity(), tempFile, getResourceProvider().getString(R.string.profile_picture_update));
         startActivityForResult(chooserIntent, REQUEST_USER_PROFILE_PICTURE);
     }
 
@@ -209,14 +210,15 @@ public class UserSettingsFragment extends BaseFragment<FragmentUserSettingsBindi
                 .withAspectRatio(1, 1)
                 .withOptions(options)
                 .withMaxResultSize(1000, 1000)
-                .start( this.getActivity());
+                .start( this.getActivity(), this);
     }
 
     private void uploadImage(){
-        getViewModel().setProfilePicture(new File(imageHelper.getProfilePictureUri().getPath()));
+        Toast.makeText(this.getActivity(), "cenas", Toast.LENGTH_SHORT);
+        getViewModel().setProfilePicture(imageHelper.getProfilePictureUri().getPath());
 
         // getViewModel().setProfilePicture(imageHelper.getProfilePictureFile());
-        getViewModel().setImgForeground(null);
+        //getViewModel().setImgForeground(null);
     }
 
 }
