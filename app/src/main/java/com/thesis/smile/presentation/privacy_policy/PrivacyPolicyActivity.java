@@ -32,10 +32,15 @@ public class PrivacyPolicyActivity  extends BaseActivity<ActivityPrivacyPolicyBi
     protected void initViews(ActivityPrivacyPolicyBinding binding) {
         String email= getString(R.string.project_email);
         String iota_link= getString(R.string.privacy_policy_subtitle1_1_text_1);
+        String fabric_link= getString(R.string.privacy_policy_subtitle1_1_text_3);
 
         SpannableString ss=  new SpannableString(iota_link);
         ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), iota_link.indexOf(getString(R.string.iota_link)), iota_link.indexOf(getString(R.string.iota_link))+getString(R.string.iota_link).length(), 0);
         binding.link.setText(ss);
+
+        ss=  new SpannableString(fabric_link);
+        ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), fabric_link.indexOf(getString(R.string.fabric_link)), fabric_link.indexOf(getString(R.string.fabric_link))+getString(R.string.fabric_link).length(), 0);
+        binding.link1.setText(ss);
 
         ss=  new SpannableString(email);
         ss.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorUnderline)), email.indexOf(getString(R.string.project_email)), email.indexOf(getString(R.string.project_email))+getString(R.string.project_email).length(), 0);
@@ -56,6 +61,10 @@ public class PrivacyPolicyActivity  extends BaseActivity<ActivityPrivacyPolicyBi
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::openLink);
 
+        getViewModel().observeLink1()
+                .doOnSubscribe(this::addDisposable)
+                .subscribe(this::openLink1);
+
         getViewModel().observeEmail()
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::openEmail);
@@ -63,6 +72,11 @@ public class PrivacyPolicyActivity  extends BaseActivity<ActivityPrivacyPolicyBi
 
     private void openLink(Event event) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.iota_link)));
+        startActivity(browserIntent);
+    }
+
+    private void openLink1(Event event) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.fabric_link)));
         startActivity(browserIntent);
     }
 

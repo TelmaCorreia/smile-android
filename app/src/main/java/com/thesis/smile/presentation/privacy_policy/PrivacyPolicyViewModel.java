@@ -22,6 +22,7 @@ public class PrivacyPolicyViewModel extends BaseViewModel {
     private PublishRelay<NavigationEvent> closeObservable = PublishRelay.create();
     private PublishRelay<Event> emailObservable = PublishRelay.create();
     private PublishRelay<Event> linkObservable = PublishRelay.create();
+    private PublishRelay<Event> link1Observable = PublishRelay.create();
     private UserManager userManager;
 
     @Inject
@@ -44,6 +45,11 @@ public class PrivacyPolicyViewModel extends BaseViewModel {
         linkObservable.accept(new NavigationEvent());
     }
 
+    public void onLink1Click(){
+        link1Observable.accept(new NavigationEvent());
+    }
+
+
     public void onEmailClick(){
         emailObservable.accept(new NavigationEvent());
     }
@@ -54,6 +60,10 @@ public class PrivacyPolicyViewModel extends BaseViewModel {
 
     Observable<Event> observeLink(){
         return linkObservable;
+    }
+
+    Observable<Event> observeLink1(){
+        return link1Observable;
     }
 
     Observable<Event> observeEmail(){

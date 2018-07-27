@@ -127,6 +127,26 @@
                     android:text="@string/privacy_policy_subtitle1_1_text_2"/>
                 <TextView
                     style="@style/Text2"
+                    android:id="@+id/link1"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center_vertical"
+                    android:onClick="@{v -> viewModel.onLink1Click()}"
+                    android:text="@string/privacy_policy_subtitle1_1_text_3"/>
+                <TextView
+                    style="@style/Text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/privacy_policy_subtitle1_1_text_4"/>
+
+                <TextView
+                    style="@style/Text2"
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
