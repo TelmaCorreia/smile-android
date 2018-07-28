@@ -84,7 +84,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     @Bindable
     public boolean isRegisterEnabled() {
-        return isEquipmentVisible()? !smartMeterId.isEmpty() &&registerEnabled:registerEnabled;
+        return !smartMeterId.isEmpty() &&registerEnabled;
     }
 
     public void  setRegisterEnabled(boolean registerEnabled){
@@ -132,6 +132,10 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
 
     public void onGeneralInfoClick() {
         getUiEvents().showToast(getResourceProvider().getString(R.string.alert_equipment));
+    }
+
+    public void onSmartMeterInfoClick() {
+        getUiEvents().showToast(getResourceProvider().getString(R.string.info_smart_meter));
     }
 
     public void onConsumerClick(){
@@ -285,6 +289,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
         if(e instanceof NotAcceptableException) {
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_smart_meter_id));
             setLoading(false);
+            setRegisterEnabled(true);
         }else{
             super.onError(e);
         }

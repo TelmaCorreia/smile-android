@@ -71,8 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:enabled="@{viewModel.equipmentEnabled}"
-                        android:visibility="@{viewModel.equipmentVisible ? View.VISIBLE : View.INVISIBLE}">
+                        android:enabled="@{viewModel.equipmentEnabled}">
 
                         <TextView
                             style="@style/TextTitles"
@@ -85,34 +84,8 @@
                             style="@style/TextSubtitles"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="56dp"
+                            android:layout_marginBottom="16dp"
                             android:text="@string/sentence_energy_details_info" />
-                        <android.support.v7.widget.AppCompatSpinner
-                            style="@style/Widget.AppCompat.Spinner.Underlined"
-                            android:id="@+id/spBattery"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                        <include
-                            android:id="@+id/infoCategory"
-                            android:layout_height="wrap_content"
-                            android:layout_width="match_parent"
-                            android:layout_marginBottom="16dp"
-                            android:onClick="@{v -> viewModel.onGeneralInfoClick()}"
-                            layout="@layout/layout_help" />
-
-                        <android.support.v7.widget.AppCompatSpinner
-                            style="@style/Widget.AppCompat.Spinner.Underlined"
-                            android:id="@+id/spSolarPanel"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                        <include
-                            android:id="@+id/infoPower"
-                            android:layout_height="wrap_content"
-                            android:layout_width="match_parent"
-                            android:layout_marginBottom="16dp"
-                            android:onClick="@{v -> viewModel.onGeneralInfoClick()}"
-                            layout="@layout/layout_help" />
 
                         <android.support.v7.widget.AppCompatSpinner
                             style="@style/Widget.AppCompat.Spinner.Underlined"
@@ -124,6 +97,37 @@
                             android:id="@+id/infoTariff"
                             android:layout_height="wrap_content"
                             android:layout_width="match_parent"
+                            android:layout_marginBottom="16dp"
+                            android:onClick="@{v -> viewModel.onSmartMeterInfoClick()}"
+                            layout="@layout/layout_help" />
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            style="@style/Widget.AppCompat.Spinner.Underlined"
+                            android:id="@+id/spBattery"
+                            android:visibility="@{viewModel.equipmentVisible ? View.VISIBLE : View.GONE}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <include
+                            android:id="@+id/infoCategory"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:visibility="@{viewModel.equipmentVisible ? View.VISIBLE : View.INVISIBLE}"
+                            android:layout_marginBottom="16dp"
+                            android:onClick="@{v -> viewModel.onGeneralInfoClick()}"
+                            layout="@layout/layout_help" />
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            style="@style/Widget.AppCompat.Spinner.Underlined"
+                            android:id="@+id/spSolarPanel"
+                            android:visibility="@{viewModel.equipmentVisible ? View.VISIBLE : View.INVISIBLE}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <include
+                            android:id="@+id/infoPower"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:visibility="@{viewModel.equipmentVisible ? View.VISIBLE : View.INVISIBLE}"
                             android:layout_marginBottom="16dp"
                             android:onClick="@{v -> viewModel.onGeneralInfoClick()}"
                             layout="@layout/layout_help" />

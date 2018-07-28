@@ -50,7 +50,7 @@ public class UserSettingsViewModel extends BaseViewModel {
     @Inject
     public UserSettingsViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, UserManager userManager) {
         super(resourceProvider, schedulerProvider, uiEvents);
-        imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_edit_pad, null);
+        //imgForeground = VectorDrawableCompat.create(getResourceProvider().getResources(), R.drawable.ic_edit_grey, null);
         this.userManager = userManager;
         Answers.getInstance().logContentView(new ContentViewEvent()
                 .putContentName("Settings:user")

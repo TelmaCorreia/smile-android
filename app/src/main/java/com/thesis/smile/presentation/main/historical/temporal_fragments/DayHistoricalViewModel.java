@@ -272,7 +272,8 @@ public class DayHistoricalViewModel extends BaseViewModel {
         this.historicalDataList = data;
         if(data !=null && data.size()>0){
             this.currentData =data.get(0);
-            this.currentDay=data.get(0).getDataPoints().get(LocalDate.now().getDayOfWeek().getValue());
+            int dayOfWeekValue= LocalDate.now().getDayOfWeek().getValue();
+            this.currentDay=data.get(0).getDataPoints().get(dayOfWeekValue==7?0:dayOfWeekValue);
             notifyChange();
         }
         this.setLoading(false);

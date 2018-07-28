@@ -30,7 +30,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    imageCircleError="@{@drawable/ic_circle}"
+                    imageCircleError="@{@drawable/ic_circle_blue}"
                     imageCircleUrl="@{viewModel.profileImage}"
                     android:id="@+id/ivProfile"
                     android:layout_width="70dp"

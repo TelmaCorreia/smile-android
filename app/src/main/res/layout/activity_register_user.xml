@@ -29,9 +29,10 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
+
                 <ImageView
-                    imageError="@{@drawable/ic_person}"
-                    imageUri="@{viewModel.profileImage}"
+                    imageCircleUriError="@{@drawable/ic_add_a_photo}"
+                    imageCircleUri="@{viewModel.profileImage}"
                     android:id="@+id/ivProfile"
                     android:layout_width="70dp"
                     android:layout_height="64dp"

@@ -83,4 +83,18 @@ public class ImageBindings {
                 .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
                 .into(imageView);
     }
+
+    @BindingAdapter({"imageCircleUri", "imageCircleUriError"})
+    public static void setImageCircleUri(ImageView imageView, String uri, Drawable error) {
+        Glide.with(imageView.getContext())
+                .load("file://" + uri)
+                .apply(new RequestOptions()
+                        .placeholder(error))
+                .apply(new RequestOptions()
+                        .error(error))
+                .apply(RequestOptions.circleCropTransform())
+                .apply(RequestOptions.skipMemoryCacheOf(true))
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                .into(imageView);
+    }
 }
