@@ -4,6 +4,7 @@ import android.databinding.Bindable;
 import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 
 import com.crashlytics.android.answers.Answers;
@@ -86,15 +87,17 @@ public class LoginViewModel extends BaseViewModel {
     @Bindable
     public SpannableString getRegister() {
         String content = getResourceProvider().getString(R.string.sentence_register);
-        SpannableString spString = (SpannableString) SpanUtils.underlineString(content, "Registe-se agora");
-        return spString;
+        SpannableString ss=  new SpannableString(content);
+        ss.setSpan(new ForegroundColorSpan(getResourceProvider().getResources().getColor(R.color.colorUnderline)), content.indexOf("Registe-se agora"), content.indexOf("Registe-se agora")+"Registe-se agora".length(), 0);
+        return ss;
     }
     @Bindable
     public SpannableString getRecover() {
-
         String content = getResourceProvider().getString(R.string.sentence_recover_password);
-        SpannableString spString = (SpannableString) SpanUtils.underlineString(content, "Recuperar");
-        return spString;
+        SpannableString ss=  new SpannableString(content);
+        ss.setSpan(new ForegroundColorSpan(getResourceProvider().getResources().getColor(R.color.colorUnderline)), content.indexOf("Recuperar"), content.indexOf("Recuperar")+"Recuperar".length(), 0);
+
+        return ss;
 
     }
 

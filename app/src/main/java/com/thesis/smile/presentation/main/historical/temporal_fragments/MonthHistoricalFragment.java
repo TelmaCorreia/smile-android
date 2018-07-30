@@ -110,6 +110,14 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
         ArrayList<BarEntry> barConsumption = new ArrayList<BarEntry>();
         ArrayList<BarEntry> barProduction = new ArrayList<BarEntry>();
 
+        float max =0;
+        for (HistoricalDataPoint hdp: list){
+            float temporary = (float) hdp.getEnergyBoughtNeighbours()+(float) hdp.getEnergyBoughtEem();
+            if (temporary > max){
+                max = temporary;
+            }
+        }
+
         int i = 0;
         for (HistoricalDataPoint hdp : list) {
             float surplus_sold = (float) hdp.getEnergySurplusNeighbours();
@@ -118,14 +126,18 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
             float auto_consumption_from_panels = (float) hdp.getEnergyAutoConsumptionPanels();
             float bought_neighbors = (float) hdp.getEnergyBoughtNeighbours();
             float bought_eem = (float) hdp.getEnergyBoughtEem();
+            float hack = max - ((float) hdp.getEnergyBoughtNeighbours()+(float) hdp.getEnergyBoughtEem());
+
             barConsumption.add(new BarEntry(
                     i++,
-                    new float[]{ (float) hdp.getTotalConsumption() },
+                    new float[]{ hack,
+                            (float) hdp.getTotalConsumption() },
                     hdp, false));
 
             barAll.add(new BarEntry(
                     i++,
-                    new float[]{ bought_eem,
+                    new float[]{ hack,
+                            bought_eem,
                             bought_neighbors,
                             auto_consumption_from_panels,
                             auto_consumption_from_battery,
@@ -134,13 +146,16 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
                     hdp, true));
             barSum.add(new BarEntry(
                     i++,
-                    new float[]{ bought_eem+bought_neighbors,
+                    new float[]{ hack,
+                            bought_eem+bought_neighbors,
                             auto_consumption_from_panels + auto_consumption_from_battery,
                             surplus_not_used+surplus_sold},
                     hdp, false));
             barProduction.add(new BarEntry(
                     i++,
-                    new float[]{ bought_eem+bought_neighbors, (float) hdp.getTotalProduction()},
+                    new float[]{
+                            hack,
+                            bought_eem+bought_neighbors, (float) hdp.getTotalProduction()},
                     hdp, false));
 
         }
@@ -173,8 +188,8 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
         setSum.setDrawIcons(false);
         setSum.setDrawValues(false);
         setSum.setColors(getColorsBarSum());
-        setSum.setBarBorderColor(getResources().getColor(R.color.colorBlack));
-        setSum.setBarBorderWidth(BORDER_WIDTH);
+      //  setSum.setBarBorderColor(getResources().getColor(R.color.colorBlack));
+    //    setSum.setBarBorderWidth(BORDER_WIDTH);
         setSum.setHighLightAlpha(ALPHA_ACTIVE);
         setSum.setBarWidth(SECONDARY_BAR_WIDTH);
 
@@ -211,7 +226,7 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
 
     private int[] getColorsBarAll() {
 
-        int[] colors = {getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
+        int[] colors = {getResources().getColor(R.color.colorWhite), getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
                 getResources().getColor(R.color.light_pink),getResources().getColor(R.color.dark_pink),
                 getResources().getColor(R.color.light_blue), getResources().getColor(R.color.dark_blue)};
 
@@ -220,7 +235,7 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
 
     private int[] getColorsBarSum() {
 
-        int[] colors = {getResources().getColor(R.color.outline_yellow),
+        int[] colors = {getResources().getColor(R.color.colorWhite), getResources().getColor(R.color.outline_yellow),
                 getResources().getColor(R.color.outline_pink),
                 getResources().getColor(R.color.outline_blue)};
 
@@ -229,15 +244,15 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
 
     private int[] getColorsBarConsumption() {
 
-        int[] colors = {getResources().getColor(R.color.colorBlack)};
+        int[] colors = {getResources().getColor(R.color.colorWhite), getResources().getColor(R.color.colorBlack)};
 
         return colors;
     }
 
     private int[] getColorsBarProduction() {
 
-        int[] colors = {getResources().getColor(R.color.colorWhite),
-                getResources().getColor(R.color.colorGrey2)};
+        int[] colors = {getResources().getColor(R.color.colorWhite), getResources().getColor(R.color.colorWhite),
+                getResources().getColor(R.color.colorGreen)};
 
         return colors;
     }

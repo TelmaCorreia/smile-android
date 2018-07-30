@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:src="@drawable/ic_nav_left"
+                app:srcCompat="@drawable/ic_nav_left"
                 android:tint="@color/colorGrey2"
                 android:onClick="@{v -> viewModel.onPreviousClick()}"
                 app:layout_constraintEnd_toStartOf="@id/tvDate"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:src="@drawable/ic_nav_right"
+                app:srcCompat="@drawable/ic_nav_right"
                 android:tint="@color/colorGrey2"
                 android:onClick="@{v -> viewModel.onNextClick()}"
                 app:layout_constraintLeft_toRightOf="@id/tvDate"
@@ -259,7 +259,7 @@
                                 android:layout_height="2dp"
                                 android:layout_marginRight="8dp"
                                 android:layout_marginTop="8dp"
-                                android:background="@color/colorGrey2"
+                                android:background="@color/colorGreen"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -314,7 +314,8 @@
 
                             <android.support.constraint.ConstraintLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp">
 
                                 <FrameLayout
                                     android:id="@+id/ivCircle1a"
@@ -327,12 +328,12 @@
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        android:src="@drawable/ic_circle_outline"
+                                        app:srcCompat="@drawable/ic_circle_outline"
                                         android:tint="@color/colorBlack" />
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        android:src="@drawable/ic_circle"
+                                        app:srcCompat="@drawable/ic_circle"
                                         android:tint="@color/outline_blue" />
                                 </FrameLayout>
 
@@ -372,7 +373,8 @@
 
                             <android.support.constraint.ConstraintLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp">
 
                                 <FrameLayout
                                     android:id="@+id/ivCircle2a"
@@ -385,12 +387,12 @@
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        android:src="@drawable/ic_circle_outline"
+                                        app:srcCompat="@drawable/ic_circle_outline"
                                         android:tint="@color/colorBlack" />
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        android:src="@drawable/ic_circle"
+                                        app:srcCompat="@drawable/ic_circle"
                                         android:tint="@color/outline_pink" />
                                 </FrameLayout>
 
@@ -443,12 +445,12 @@
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        android:src="@drawable/ic_circle_outline"
+                                        app:srcCompat="@drawable/ic_circle_outline"
                                         android:tint="@color/colorBlack" />
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        android:src="@drawable/ic_circle"
+                                        app:srcCompat="@drawable/ic_circle"
                                         android:tint="@color/outline_yellow" />
                                 </FrameLayout>
 
@@ -498,14 +500,15 @@
 
                             <android.support.constraint.ConstraintLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp">
 
                                 <ImageView
                                     android:id="@+id/ivCircle1b"
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    android:src="@drawable/ic_circle"
+                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/dark_blue"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -544,27 +547,28 @@
                                 <ImageView
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:src="@drawable/ic_more_details"
-                                    android:tint="@color/colorBlack"
+                                    app:srcCompat="@drawable/ic_info"
                                     android:visibility="@{viewModel.showEnergySoldDetails ? View.VISIBLE : View.INVISIBLE}"
                                     android:onClick="@{v -> viewModel.onEnergySoldDetailsClick()}"
+                                    android:layout_marginLeft="2dp"
                                     app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/tvLegend1b"/>
+                                    app:layout_constraintTop_toTopOf="parent"/>
 
 
                             </android.support.constraint.ConstraintLayout>
 
                             <android.support.constraint.ConstraintLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp">
 
                                 <ImageView
                                     android:id="@+id/ivCircle2b"
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    android:src="@drawable/ic_circle"
+                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/dark_pink"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -612,7 +616,7 @@
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    android:src="@drawable/ic_circle"
+                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/dark_yellow"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -661,14 +665,15 @@
 
                             <android.support.constraint.ConstraintLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp">
 
                                 <ImageView
                                     android:id="@+id/ivCircle1c"
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    android:src="@drawable/ic_circle"
+                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/light_blue"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -707,7 +712,7 @@
                                 <ImageView
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:src="@drawable/ic_warning"
+                                    app:srcCompat="@drawable/ic_warning"
                                     android:tint="@color/colorRed"
                                     android:visibility="@{viewModel.alertWastedEnergy ? View.VISIBLE : View.INVISIBLE}"
                                     android:onClick="@{v -> viewModel.onEnergyWastedDetailsClick()}"
@@ -719,14 +724,15 @@
 
                             <android.support.constraint.ConstraintLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp">
 
                                 <ImageView
                                     android:id="@+id/ivCircle2c"
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    android:src="@drawable/ic_circle"
+                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/light_pink"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -774,7 +780,7 @@
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    android:src="@drawable/ic_circle"
+                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/light_yellow"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />

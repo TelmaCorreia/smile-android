@@ -32,6 +32,10 @@ public class RankingChildViewHolder extends ChildViewHolder{
     public void onBind(Ranking ranking, Context context) {
         position.setText(ranking.getPosition());
         name.setText(ranking.getName());
+        if (ranking.getName().contains("tu")){
+            name.setTextColor(context.getResources().getColor(R.color.colorUnderline));
+            position.setTextColor(context.getResources().getColor(R.color.colorUnderline));
+        }
         description.setText(ranking.getDescription());
         ImageBindings.setImageCircleUrl(pic, ranking.getPicture(), context.getResources().getDrawable(R.drawable.ic_person));
 

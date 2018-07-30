@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.thesis.smile.presentation.settings.user_settings.UserSettingsViewModel"/>
@@ -29,17 +30,34 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    imageCircleError="@{@drawable/ic_circle_blue}"
-                    imageCircleUrl="@{viewModel.profileImage}"
-                    android:id="@+id/ivProfile"
-                    android:layout_width="70dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="16dp"
-                    android:foreground="@{viewModel.imgForeground}"
-                    android:onClick="@{v -> viewModel.editProfilePicture()}"
-                    tools:foreground="@drawable/ic_edit_pad" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        imageCircleError="@{@drawable/ic_add_a_photo}"
+                        imageCircleUrl="@{viewModel.profileImage}"
+                        android:id="@+id/ivProfile"
+                        android:layout_width="70dp"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="16dp"
+                        android:visibility="@{viewModel.uriVisible ? View.INVISIBLE : View.VISIBLE}"
+                        android:onClick="@{v -> viewModel.editProfilePicture()}" />
+
+                    <ImageView
+                        imageCircleUriError="@{@drawable/ic_edit_grey}"
+                        imageCircleUri="@{viewModel.profileImageUri}"
+                        android:id="@+id/ivProfile1"
+                        android:layout_width="70dp"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginBottom="16dp"
+                        android:visibility="@{viewModel.uriVisible ? View.VISIBLE : View.INVISIBLE}"
+                        android:onClick="@{v -> viewModel.editProfilePicture()}" />
+
+                </FrameLayout>
+
 
                 <android.support.design.widget.TextInputLayout
                     style="@style/TextInputLayout"

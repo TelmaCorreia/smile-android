@@ -72,7 +72,7 @@
     <string name="automatic_settings_info_title">Configurações automáticas da compra e venda de energia:</string>
     <string name="automatic_settings_par_intro">Ao selecionar as definições automáticas para configuração de compra e/ou venda de energia, o sistema vai configurar as suas definições. Especificando: </string>
     <string name="automatic_settings_par_buy">O sistema vai comprar energia aos seus vizinhos a qualquer momento sempre que o preço por kwH for mais barato do que o que paga atualmente à empresa de eletricidade. </string>
-    <string name="automatic_settings_par_sell">O sistema vai vender a energia que produz e não está a consumir no momento (e a que está guardada na bateria) a um preço 10% superior ao valor que paga atualmente à empresa de eletricidade</string>
+    <string name="automatic_settings_par_sell">O sistema vai vender a energia que produz e não está a consumir no momento (e a que está guardada na bateria) a um preço igual ao valor que paga atualmente à empresa de eletricidade</string>
 
     <string name="automatic_settings_subtitle_buy">Configurações automáticas para compra</string>
     <string name="automatic_settings_subtitle_sell">Configurações automáticas para venda</string>
@@ -154,13 +154,13 @@ Esta política define:\n\n
     <string name="button_cancel">Cancelar</string>
 
     <!-- Dialog seed password -->
-    <string name="dialog_seed_title">Insira uma password para proteger a sua conta:</string>
+    <string name="dialog_seed_title">Insira uma password para proteger a sua conta IOTA:</string>
     <string name="dialog_seed_info">A aplicação está associada a uma conta com uma moeda virtual (IOTA). A sua chave para aceder à conta foi gerada e deve ser guardada por si num local seguro. Para proteger a sua conta insira uma password.\n\nATENÇÃO sem esta password perde o acesso à sua conta, por favor certifique-se que não se esquece da mesma.</string>
     <string name="prompt_pass">Insira a palavra-passe</string>
 
     <!-- Dialog show seed -->
     <string name="dialog_show_seed_title">Insira a palavra-passe:</string>
-    <string name="dialog_show_seed_description">Por favor insira a palavra-passe para podermos obter a sua chave</string>
+    <string name="dialog_show_seed_description">Por favor insira a palavra-passe da conta IOTA para podermos obter a sua chave</string>
 
     <!-- Dialog Automatic Config -->
     <string name="automatic_config_tilte">Gestão das Transações</string>
@@ -299,7 +299,7 @@ Esta política define:\n\n
     <string name="sell_enegery">Vender energia aos meus vizinhos</string>
     <string name="eem_value">Ver o valor que eu pago à EEM</string>
     <string name="concrete_price_">Preço específico</string>
-    <string name="price_plus">Valor que eu pago por kWh</string>
+    <string name="price_plus">Valor que eu pago por kWh à EEM</string>
     <string name="battery_title">Bateria</string>
     <string name="battery_description">Selecione a quantidade de energia que pretende armazenar para auto-consumo</string>
     <string name="timers_sell_title">Configuração dos períodos de venda</string>
@@ -312,7 +312,7 @@ Esta política define:\n\n
     <!-- Transactions: Buy -->
     <string name="buy_enegery">Comprar energia aos meus vizinhos</string>
     <string name="price_lower_EEM">Valor que pago à EEM ou mais barato</string>
-    <string name="price_EEM_plus">Valor que pago à EEM</string>
+    <string name="price_EEM_plus">Valor que pago por kWh à EEM</string>
     <string name="price_EEM_plus_explanation">Selecione esta opção se está disposto a pagar mais do que o valor que paga à EEM</string>
     <string name="timers_buy_title">Configuração dos periodos de compra</string>
     <string name="timers_buy_description">Selecione o(s) intervalo(s) de tempo para comprar enrergia</string>
@@ -380,7 +380,7 @@ Esta política define:\n\n
     <!-- Dialog Sold Energy Details -->
     <string name="sold_energy_details_tilte">Energia vendida</string>
     <string name="sold_energy_detais_description">Os valores de venda e autoconsumo são superiores à sua produção?</string>
-    <string name="sold_energy_details_info">Vendeu energia acumulada na sua bateria.</string>
+    <string name="sold_energy_details_info">Vendeu energia acumulada na sua bateria durante os dias anterioes.</string>
 
     <!--Others-->
     <string name="select_all">Selecionar Todos</string>

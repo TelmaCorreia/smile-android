@@ -40,6 +40,7 @@ public class TransactionsFragment extends BaseFragment<FragmentTransactionsBindi
     protected void initViews(FragmentTransactionsBinding binding) {
         pagerAdapter = new TransactionsViewPagerAdapter(getChildFragmentManager(), getResourceProvider(), getViewModel().isProsumer());
         binding.viewpager.setAdapter(pagerAdapter);
+        binding.viewpager.setOffscreenPageLimit(2);
         binding.tabs.setupWithViewPager(binding.viewpager);
         binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

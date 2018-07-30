@@ -1,5 +1,7 @@
 package com.thesis.smile.presentation.main.historical.temporal_fragments;
 
+import android.util.Log;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -110,6 +112,14 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         ArrayList<BarEntry> barProduction = new ArrayList<BarEntry>();
 
         int i = 0;
+
+        float max =0;
+        for (HistoricalDataPoint hdp: list){
+            float temporary = (float) hdp.getEnergyBoughtNeighbours()+(float) hdp.getEnergyBoughtEem();
+            if (temporary > max){
+                max = temporary;
+            }
+        }
         for (HistoricalDataPoint hdp : list) {
             float surplus_sold = (float) hdp.getEnergySurplusNeighbours();
             float surplus_not_used = (float) hdp.getEnergySurplusNotUsed();
@@ -117,14 +127,16 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
             float auto_consumption_from_panels = (float) hdp.getEnergyAutoConsumptionPanels();
             float bought_neighbors = (float) hdp.getEnergyBoughtNeighbours();
             float bought_eem = (float) hdp.getEnergyBoughtEem();
+            float hack = max - ((float) hdp.getEnergyBoughtNeighbours()+(float) hdp.getEnergyBoughtEem());
             barConsumption.add(new BarEntry(
                     i++,
-                    new float[]{ (float) hdp.getTotalConsumption() },
+                    new float[]{ hack, (float) hdp.getTotalConsumption() },
                     hdp, false));
 
             barAll.add(new BarEntry(
                     i++,
-                    new float[]{ bought_eem,
+                    new float[]{ hack,
+                                bought_eem,
                                 bought_neighbors,
                                 auto_consumption_from_panels,
                                 auto_consumption_from_battery,
@@ -133,13 +145,14 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
                                 hdp, true));
             barSum.add(new BarEntry(
                     i++,
-                    new float[]{ bought_eem+bought_neighbors,
+                    new float[]{ hack,
+                            bought_eem+bought_neighbors,
                             auto_consumption_from_panels + auto_consumption_from_battery,
                             surplus_not_used+surplus_sold},
                             hdp, false));
             barProduction.add(new BarEntry(
                     i++,
-                    new float[]{ bought_eem+bought_neighbors, (float) hdp.getTotalProduction()},
+                    new float[]{ hack, bought_eem+bought_neighbors, (float) hdp.getTotalProduction()},
                     hdp, false));
 
         }
@@ -172,8 +185,8 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
         setSum.setDrawIcons(false);
         setSum.setDrawValues(false);
         setSum.setColors(getColorsBarSum());
-        setSum.setBarBorderColor(getResources().getColor(R.color.colorBlack));
-        setSum.setBarBorderWidth(BORDER_WIDTH);
+       // setSum.setBarBorderColor(getResources().getColor(R.color.colorBlack));
+       // setSum.setBarBorderWidth(BORDER_WIDTH);
         setSum.setHighLightAlpha(ALPHA_ACTIVE);
         setSum.setBarWidth(SECONDARY_BAR_WIDTH);
 
@@ -211,7 +224,7 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
 
     private int[] getColorsBarAll() {
 
-        int[] colors = {getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
+        int[] colors = {getResources().getColor(R.color.colorWhite), getResources().getColor(R.color.light_yellow),getResources().getColor(R.color.dark_yellow),
                 getResources().getColor(R.color.light_pink),getResources().getColor(R.color.dark_pink),
                 getResources().getColor(R.color.light_blue), getResources().getColor(R.color.dark_blue)};
 
@@ -220,7 +233,7 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
 
     private int[] getColorsBarSum() {
 
-        int[] colors = {getResources().getColor(R.color.outline_yellow),
+        int[] colors = {getResources().getColor(R.color.colorWhite), getResources().getColor(R.color.outline_yellow),
                 getResources().getColor(R.color.outline_pink),
                 getResources().getColor(R.color.outline_blue)};
 
@@ -229,15 +242,15 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
 
     private int[] getColorsBarConsumption() {
 
-        int[] colors = {getResources().getColor(R.color.colorBlack)};
+        int[] colors = {getResources().getColor(R.color.colorWhite),getResources().getColor(R.color.colorBlack)};
 
         return colors;
     }
 
     private int[] getColorsBarProduction() {
 
-        int[] colors = {getResources().getColor(R.color.colorWhite),
-                getResources().getColor(R.color.colorGrey2)};
+        int[] colors = {getResources().getColor(R.color.colorWhite),getResources().getColor(R.color.colorWhite),
+                getResources().getColor(R.color.colorGreen)};
 
         return colors;
     }
