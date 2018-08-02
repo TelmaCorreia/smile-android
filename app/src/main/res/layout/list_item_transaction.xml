@@ -45,7 +45,7 @@
         android:id="@+id/ivTransactionDetails"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_nav_right"
+        app:srcCompat="@drawable/ic_nav_right"
         android:tint="@color/colorWhite"
         android:background="@drawable/iv_bg_circle"
         android:onClick="@{v -> viewModel.onTransactionClick()}"

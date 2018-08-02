@@ -175,7 +175,7 @@
                             android:layout_gravity="center_vertical"
                             android:tint="@color/colorTextGrey"
                             android:onClick="@{v -> viewModel.onInitialDateClick()}"
-                            android:src="@drawable/ic_date"/>
+                            app:srcCompat="@drawable/ic_date"/>
 
                         <TextView
                             style="@style/Text7"
@@ -203,7 +203,7 @@
                             android:layout_gravity="center_vertical"
                             android:tint="@color/colorTextGrey"
                             android:onClick="@{v -> viewModel.onFinalDateClick()}"
-                            android:src="@drawable/ic_date"/>
+                            app:srcCompat="@drawable/ic_date"/>
 
                         <TextView
                             style="@style/Text7"

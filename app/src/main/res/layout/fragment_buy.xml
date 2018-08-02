@@ -94,7 +94,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="2dp"
-                            android:src="@drawable/ic_info" />
+                            app:srcCompat="@drawable/ic_info" />
 
                         <TextView
                             style="@style/TextHelp"
@@ -218,7 +218,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:src="@drawable/ic_add"
+                        app:srcCompat="@drawable/ic_add"
                         android:tint="@color/colorWhite"
                         android:background="@drawable/iv_bg_circle"
                         app:layout_constraintTop_toTopOf="parent"

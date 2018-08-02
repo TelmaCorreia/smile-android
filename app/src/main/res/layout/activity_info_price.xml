@@ -39,7 +39,7 @@
                 android:layout_weight="3"
                 android:gravity="right"
                 android:onClick="@{v -> viewModel.onCloseClick()}"
-                android:src="@drawable/ic_close"/>
+                app:srcCompat="@drawable/ic_close"/>
 
         </LinearLayout>
 

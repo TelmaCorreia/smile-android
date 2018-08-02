@@ -34,7 +34,7 @@
                 android:id="@+id/home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_home" />
+                app:srcCompat="@drawable/ic_home" />
             <TextView
                 android:id="@+id/homeLabel"
                 style="@style/TextNavigationBottomBar"
@@ -56,7 +56,7 @@
                 android:id="@+id/historical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_historical" />
+                app:srcCompat="@drawable/ic_historical" />
             <TextView
                 android:id="@+id/historicalLabel"
                 style="@style/TextNavigationBottomBar"
@@ -79,7 +79,7 @@
                 android:id="@+id/transactions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_transaction" />
+                app:srcCompat="@drawable/ic_transaction" />
 
             <TextView
                 android:id="@+id/transactionsLabel"
@@ -103,7 +103,7 @@
                 android:id="@+id/ranking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_trophy" />
+                app:srcCompat="@drawable/ic_trophy" />
 
             <TextView
                 android:id="@+id/rankingLabel"

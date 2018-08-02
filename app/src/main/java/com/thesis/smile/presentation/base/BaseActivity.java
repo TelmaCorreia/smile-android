@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,9 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseActivity<ViewBinding extends ViewDataBinding, ViewModel extends BaseViewModel>
         extends DaggerAppCompatActivity {
 
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     @Inject
     ResourceProvider resourceProvider;
 

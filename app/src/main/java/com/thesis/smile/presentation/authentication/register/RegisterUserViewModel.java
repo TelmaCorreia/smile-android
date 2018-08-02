@@ -51,7 +51,6 @@ public class RegisterUserViewModel extends BaseViewModel {
     public RegisterUserViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, SharedPrefs sharedPrefs) {
         super(resourceProvider, schedulerProvider, uiEvents);
         this.sharedPrefs = sharedPrefs;
-        imgForeground = getResourceProvider().getDrawable(R.drawable.ic_add_a_photo);
 
     }
 

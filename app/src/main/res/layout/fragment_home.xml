@@ -208,7 +208,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/iv_bg_circle"
-                            android:src="@drawable/ic_nav_right"
+                            app:srcCompat="@drawable/ic_nav_right"
                             android:onClick="@{v -> viewModel.onEnergyBoughtDetailsClick()}"
                             android:layout_marginRight="16dp" />
                     </LinearLayout>
@@ -272,7 +272,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/iv_bg_circle"
-                            android:src="@drawable/ic_nav_right"
+                            app:srcCompat="@drawable/ic_nav_right"
                             android:onClick="@{v -> viewModel.onEnergySoldDetailsClick()}"
                             android:layout_marginRight="16dp" />
                     </LinearLayout>

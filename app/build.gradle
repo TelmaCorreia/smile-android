@@ -33,7 +33,7 @@ android {
 
         buildConfigField "int", "VERSION_BUILD", "${build}"
 
-        vectorDrawables.useSupportLibrary = true
+        //vectorDrawables.useSupportLibrary = true
     }
 
     dataBinding {
