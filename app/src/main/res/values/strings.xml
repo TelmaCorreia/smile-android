@@ -405,6 +405,22 @@ Esta política define:\n\n
 
     <!-- Iota Settings info -->
     <string name="no_transactions_to_pay">"Não há transações disponíveis para pagar. Tente mais tarde"</string>
+    <string name="today_boughs">Compras de Hoje</string>
+    <string name="today_boughs_hours">Horário das compras de hoje</string>
+    <string name="today_sells">Vendas de Hoje</string>
+    <string name="today_sell_hours">Horário das vendas de hoje</string>
 
+    <!--renewable message-->
+    <string name="renewable_bad">Consegues que melhorar</string>
+    <string name="renewable_avg">Boa, ainda podes melhorar</string>
+    <string name="renewable_good">Estás a ir bem!</string>
+    <string name="renewable_excellent">Muito bem, continua assim!</string>
+    <string name="renewable_sentence">Até hoje, esta é a sua percentagem de energia renovável</string>
+
+    <string name="home_page_battery">Bateria</string>
+    <string name="home_page_transactions">Transações</string>
+    <string name="home_page_renewables">Renováveis</string>
+    <string name="home_title_cons_prod">Consumo e produção</string>
+    <string name="historical_alert">ATENÇÃO: Ao analisar os dados considere que, devido às características da sua bateria, terá perdas de 20% ao armazenar energia.</string>
 
 </resources>

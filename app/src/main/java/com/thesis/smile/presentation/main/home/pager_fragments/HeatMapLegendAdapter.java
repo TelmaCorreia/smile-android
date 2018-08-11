@@ -7,16 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.thesis.smile.R;
 
 import java.util.List;
 
-public class HeatMapAdapter extends BaseAdapter {
+public class HeatMapLegendAdapter extends BaseAdapter {
     private final Context context;
-    private final List<Integer> list;
+    private final List<String> list;
 
-    public HeatMapAdapter(Context paramContext, List<Integer> paramList)
+    public HeatMapLegendAdapter(Context paramContext, List<String> paramList)
     {
         this.context = paramContext;
         this.list = paramList;
@@ -48,35 +49,10 @@ public class HeatMapAdapter extends BaseAdapter {
     {
         paramViewGroup = (ViewGroup) paramView;
         if (paramView == null) {
-            paramViewGroup = (ViewGroup) LayoutInflater.from(this.context).inflate(R.layout.layout_heatmap, null);
+            paramViewGroup = (ViewGroup) LayoutInflater.from(this.context).inflate(R.layout.layout_heatmap_text, null);
         }
-        paramView = (ImageView)paramViewGroup.findViewById(R.id.iv);
-        if (((Integer)this.list.get(paramInt)).intValue() == 1)
-        {
-            paramView.setBackgroundColor(this.context.getResources().getColor(R.color.colorZero));
-            return paramViewGroup;
-        }
-        if (((Integer)this.list.get(paramInt)).intValue() == 2)
-        {
-            paramView.setBackgroundColor(this.context.getResources().getColor(R.color.colorOne));
-            return paramViewGroup;
-        }
-        if (((Integer)this.list.get(paramInt)).intValue() == 3)
-        {
-            paramView.setBackgroundColor(this.context.getResources().getColor(R.color.colorTwo));
-            return paramViewGroup;
-        }
-        if (((Integer)this.list.get(paramInt)).intValue() == 4)
-        {
-            paramView.setBackgroundColor(this.context.getResources().getColor(R.color.colorThree));
-            return paramViewGroup;
-        }
-        if (((Integer)this.list.get(paramInt)).intValue() == 5)
-        {
-            paramView.setBackgroundColor(this.context.getResources().getColor(R.color.colorFour));
-            return paramViewGroup;
-        }
-        paramView.setBackgroundColor(this.context.getResources().getColor(R.color.colorWhite));
+
+        ((TextView)paramViewGroup.findViewById(R.id.tv)).setText(this.list.get(paramInt));
         return paramViewGroup;
     }
 }

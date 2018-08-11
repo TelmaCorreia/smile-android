@@ -4,332 +4,247 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.thesis.smile.presentation.main.home.HomeViewModel" />
     </data>
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/colorWhite"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/home_title_cons_prod"
+            style="@style/Text4" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:weightSum="5.0">
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/Text4"
-                    android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:weightSum="3.0"
+                android:layout_weight="3.0">
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_weight="2.0">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lineChart"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="16.0dip"
+                        android:layout_marginRight="16.0dip" />
+                    <ProgressBar
+                        android:layout_gravity="center"
+                        android:id="@id/loading"
+                        android:visibility="@{viewModel.progress ? View.VISIBLE : View.INVISIBLE}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+                <android.support.constraint.ConstraintLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/current_info_title" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:orientation="vertical">
-
-                    <LinearLayout
+                    android:layout_marginLeft="8.0dip"
+                    android:layout_marginRight="8.0dip">
+                    <TextView
+                        android:id="@+id/lb0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/lb1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb0"
+                        app:layout_constraintRight_toLeftOf="@id/lb2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb1"
+                        app:layout_constraintRight_toLeftOf="@id/lb3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="8"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb2"
+                        app:layout_constraintRight_toLeftOf="@id/lb4"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb3"
+                        app:layout_constraintRight_toLeftOf="@id/lb5"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb4"
+                        app:layout_constraintRight_toLeftOf="@id/lb6"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb5"
+                        app:layout_constraintRight_toLeftOf="@id/lb7"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="16" app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb6"
+                        app:layout_constraintRight_toLeftOf="@id/lb8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="18"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb7"
+                        app:layout_constraintRight_toLeftOf="@id/lb9"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb8"
+                        app:layout_constraintRight_toLeftOf="@id/lb10"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                    <TextView
+                        android:id="@+id/lb10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="22"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@id/lb9"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        style="@style/Text2" />
+                </android.support.constraint.ConstraintLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_marginLeft="16.0dip"
+                    android:layout_marginRight="16.0dip"
+                    android:weightSum="2.0"
+                    android:layout_weight="1.0">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
                         android:visibility="@{viewModel.getUserTypeProsumer}"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:paddingLeft="16dp"
-                        android:layout_gravity="right"
-                        android:orientation="horizontal">
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0">
                         <TextView
-                            style="@style/Text5"
+                            android:textColor="@color/colorProd"
                             android:id="@+id/tvProduction"
+                            android:text="@{viewModel.production}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAlignment="gravity"
-                            android:text="@{viewModel.production}"
-                            tools:text="584" />
+                            style="@style/Text5" />
                         <TextView
-                            style="@style/Text5"
-                            android:paddingLeft="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/watt" />
+                            android:text="@string/current_production_description"
+                            style="@style/Text6" />
                     </LinearLayout>
-
-                    <TextView
-                        style="@style/Text6"
-                        android:paddingLeft="16dp"
-                        android:visibility="@{viewModel.getUserTypeProsumer}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/current_production_description" />
-
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:paddingLeft="16dp"
-                        android:orientation="horizontal">
+                        android:layout_weight="1.0">
                         <TextView
-                            style="@style/Text5"
+                            android:textColor="@color/colorCons"
                             android:id="@+id/tvConsumption"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="@{viewModel.consumption}"
-                            tools:text="1127" />
-                        <TextView
-                            style="@style/Text5"
-                            android:paddingLeft="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/watt" />
+                            style="@style/Text5" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/current_consumption_description"
+                            style="@style/Text6" />
                     </LinearLayout>
-
-                    <TextView
-                        style="@style/Text6"
-                        android:paddingLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/current_consumption_description" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.getUserTypeProsumer}"
-                        android:layout_marginTop="16dp"
-                        android:paddingLeft="16dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            style="@style/Text5"
-                            android:id="@+id/tvBatteryLevel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.batteryLevel}"
-                            tools:text="21" />
-                        <TextView
-                            style="@style/Text5"
-                            android:paddingLeft="4dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/percentage" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.getUserTypeProsumer}"
-                        android:layout_marginBottom="8dp"
-                        android:paddingLeft="16dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            style="@style/Text7"
-                            android:id="@+id/tvBatteryLevelKWH"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.batteryKWH}"
-                            tools:text="1.1" />
-                        <TextView
-                            style="@style/Text7"
-                            android:paddingLeft="4dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/kWHour" />
-                    </LinearLayout>
-
-                    <TextView
-                        style="@style/Text6"
-                        android:visibility="@{viewModel.getUserTypeProsumer}"
-                        android:paddingLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/battery_level_description" />
-
                 </LinearLayout>
-
-                <TextView
-                    style="@style/Text4"
-                    android:layout_marginTop="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/today_info_title" />
-
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/energy_bought_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:paddingLeft="16dp">
-
-                    <TextView
-                        style="@style/Text7"
-                        android:id="@+id/energy_bought"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/energy_bought"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                    <LinearLayout
-                        android:id="@+id/llBought"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.energyBoughtVisible}"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/Text7"
-                            android:id="@+id/energy_bought_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            android:text="@{viewModel.totalBought}"
-                            tools:text="0.67" />
-
-                        <TextView
-                            style="@style/Text7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/coin"
-                            android:layout_marginRight="8dp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/iv_bg_circle"
-                            app:srcCompat="@drawable/ic_nav_right"
-                            android:onClick="@{v -> viewModel.onEnergyBoughtDetailsClick()}"
-                            android:layout_marginRight="16dp" />
-                    </LinearLayout>
-
-                </android.support.constraint.ConstraintLayout>
-
-                <TextView
-                    style="@style/Text6"
-                    android:id="@+id/tvNotEnergyBought"
-                    android:paddingLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.energyBoughtInvisible}"
-                    android:text="@string/not_energy_bought" />
-
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/energy_sold_details"
-                    android:visibility="@{viewModel.getUserTypeProsumer}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:paddingLeft="16dp">
-
-                    <TextView
-                        style="@style/Text7"
-                        android:id="@+id/energy_sold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/energy_sold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
-
-                    <LinearLayout
-                        android:id="@+id/llSold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.energySoldVisible}"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/Text7"
-                            android:id="@+id/energy_sold_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="4dp"
-                            android:text="@{viewModel.totalSold}"
-                            tools:text="0.67" />
-
-                        <TextView
-                            style="@style/Text7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/coin"
-                            android:layout_marginRight="8dp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/iv_bg_circle"
-                            app:srcCompat="@drawable/ic_nav_right"
-                            android:onClick="@{v -> viewModel.onEnergySoldDetailsClick()}"
-                            android:layout_marginRight="16dp" />
-                    </LinearLayout>
-
-
-                </android.support.constraint.ConstraintLayout>
-
-                <TextView
-                    style="@style/Text6"
-                    android:id="@+id/tvNotEnergySold"
-                    android:paddingLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.energySoldInvisible}"
-                    android:text="@string/not_energy_sold" />
-
-                <TextView
-                    style="@style/Text4"
-                    android:layout_marginTop="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/this_week_info_title" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:paddingLeft="16dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        style="@style/Text5"
-                        android:id="@+id/tvRenewableConsumption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.totalSolarEnergy}"
-                        tools:text="40" />
-                    <TextView
-                        style="@style/Text5"
-                        android:paddingLeft="4dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/percentage" />
-                </LinearLayout>
-
-                <TextView
-                    style="@style/Text7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="@string/solar_consumption" />
-
-
             </LinearLayout>
-
-        </android.support.v4.widget.NestedScrollView>
-    </android.support.constraint.ConstraintLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_weight="2.0">
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8.0dip"
+                    app:backgroundTint="@android:color/transparent"
+                    app:tabBackground="@color/colorBackgroundGrey"
+                    app:tabGravity="fill"
+                    app:tabMaxWidth="0.0dip"
+                    app:tabMode="fixed"
+                    app:tabTextColor="@color/colorNavigationBar"
+                    style="@style/TabsHome" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="16.0dip"
+                    android:layout_marginRight="16.0dip" />
+            </LinearLayout>
+        </LinearLayout>
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
 
 </layout>

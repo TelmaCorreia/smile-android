@@ -12,28 +12,36 @@ import com.thesis.smile.data.remote.exceptions.api.NoContentException;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.CurrentEnergy;
+import com.thesis.smile.domain.models.User;
 import com.thesis.smile.presentation.base.BaseViewModel;
+import com.thesis.smile.presentation.base.ViewModelFactory_Factory;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import org.threeten.bp.LocalTime;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-public class BatteryViewModel extends BaseViewModel {
+public class TransactionsHomeViewModel extends BaseViewModel {
 
     private CurrentEnergy currentEnergy;
+    private PublishRelay<Event> dataReceived = PublishRelay.create();
+    private List<String> legendList = new ArrayList();
+    public PublishRelay<NavigationEvent> openHomeBoughtDetails = PublishRelay.create();
+    public PublishRelay<NavigationEvent> openHomeSoldDetails = PublishRelay.create();
     private TransactionsManager transactionsManager;
     private UserManager userManager;
 
     @Inject
-    public BatteryViewModel(ResourceProvider paramResourceProvider, SchedulerProvider paramSchedulerProvider, UiEvents paramUiEvents, UserManager paramUserManager, TransactionsManager paramTransactionsManager)
+    public TransactionsHomeViewModel(ResourceProvider paramResourceProvider, SchedulerProvider paramSchedulerProvider, UiEvents paramUiEvents, UserManager paramUserManager, TransactionsManager paramTransactionsManager)
     {
         super(paramResourceProvider, paramSchedulerProvider, paramUiEvents);
         this.userManager = paramUserManager;
@@ -45,60 +53,12 @@ public class BatteryViewModel extends BaseViewModel {
     {
         this.currentEnergy = paramCurrentEnergy;
         notifyChange();
+        this.dataReceived.accept(new Event());
     }
 
-    @Bindable
-    public Drawable getBatteryImage()
+    public CurrentEnergy getCurrentEnergy()
     {
-        if ((this.currentEnergy != null) && (this.currentEnergy != null))
-        {
-            double d = this.currentEnergy.getBatteryKWH();
-            if (d == 0.0D) {
-                return getResourceProvider().getDrawable(R.drawable.battery);
-            }
-            if (d < 20.0D) {
-                return getResourceProvider().getDrawable(R.drawable.battery_one);
-            }
-            if (d < 40.0D) {
-                return getResourceProvider().getDrawable(R.drawable.battery_two);
-            }
-            if (d < 60.0D) {
-                return getResourceProvider().getDrawable(R.drawable.batery_three);
-            }
-            if (d < 80.0D) {
-                return getResourceProvider().getDrawable(R.drawable.battery_four);
-            }
-            return getResourceProvider().getDrawable(R.drawable.battery_five);
-        }
-        return getResourceProvider().getDrawable(R.drawable.battery);
-    }
-
-    @Bindable
-    public String getBatteryKWH()
-    {
-        if (this.currentEnergy != null)
-        {
-            StringBuilder localStringBuilder = new StringBuilder();
-            localStringBuilder.append(String.format("%.2f", new Object[] { Double.valueOf(this.currentEnergy.getBatteryKWH()) }));
-            localStringBuilder.append(" ");
-            localStringBuilder.append(getResourceProvider().getString(R.string.kWHour));
-            return localStringBuilder.toString();
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
-    }
-
-    @Bindable
-    public String getBatteryLevel()
-    {
-        if (this.currentEnergy != null)
-        {
-            StringBuilder localStringBuilder = new StringBuilder();
-            localStringBuilder.append(String.format("%.2f", new Object[] { Double.valueOf(this.currentEnergy.getBatteryLevel()) }));
-            localStringBuilder.append(" ");
-            localStringBuilder.append(getResourceProvider().getString(R.string.kWHour));
-            return localStringBuilder.toString();
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
+        return this.currentEnergy;
     }
 
     public void getCurrentEnergyFromServer() {
@@ -108,6 +68,120 @@ public class BatteryViewModel extends BaseViewModel {
                 .subscribe(this::onReceiveHomeData, this::onError);
 
     }
+
+    @Bindable
+    public int getEnergySoldVisible(){
+        if(currentEnergy !=  null){
+            return currentEnergy.getTotalSold() > 0 ? View.VISIBLE : View.GONE;
+        }
+        return View.GONE;
+    }
+
+    @Bindable
+    public int getEnergyBoughtVisible(){
+        if(currentEnergy !=  null){
+            return currentEnergy.getTotalBought() > 0 ? View.VISIBLE : View.GONE;
+        }
+        return View.GONE;
+    }
+
+    @Bindable
+    public int getEnergyBoughtInvisible(){
+        if(getEnergyBoughtVisible()== View.GONE){
+            return View.VISIBLE;
+        }
+        return View.GONE;
+    }
+
+    @Bindable
+    public int getUserTypeProsumer(){
+        if(userManager.getCurrentUser()!=null && userManager.getCurrentUser().getType() !=null ){
+            return userManager.getCurrentUser().getType().equals(getResourceProvider().getString(R.string.consumer))? View.GONE : View.VISIBLE;
+        }
+        return View.VISIBLE;
+
+    }
+
+    @Bindable
+    public int getEnergySoldInvisible(){
+        if(getEnergySoldVisible()== View.GONE && getUserTypeProsumer()!=View.GONE){
+            return View.VISIBLE;
+        }
+        return View.GONE;
+    }
+
+    public List<String> getLegendList()
+    {
+        this.legendList.add("");
+        this.legendList.add("2");
+        this.legendList.add("");
+        this.legendList.add("4");
+        this.legendList.add("");
+        this.legendList.add("6");
+        this.legendList.add("");
+        this.legendList.add("8");
+        this.legendList.add("");
+        this.legendList.add("10");
+        this.legendList.add("");
+        this.legendList.add("12");
+        this.legendList.add("");
+        this.legendList.add("14");
+        this.legendList.add("");
+        this.legendList.add("16");
+        this.legendList.add("");
+        this.legendList.add("18");
+        this.legendList.add("");
+        this.legendList.add("20");
+        this.legendList.add("");
+        this.legendList.add("22");
+        this.legendList.add("");
+        this.legendList.add("");
+        return this.legendList;
+    }
+
+    @Bindable
+    public String getTotalBought() {
+        if(currentEnergy != null){
+            return String.format("%.2f", currentEnergy.getTotalBought()) + " " + getResourceProvider().getString(R.string.coin);
+        }
+        return null;
+    }
+
+    @Bindable
+    public String getTotalSold() {
+        if(currentEnergy != null){
+            return String.format("%.2f", currentEnergy.getTotalSold()) + " " + getResourceProvider().getString(R.string.coin);
+        }
+        return null;
+    }
+
+    public Observable<Event> observeData()
+    {
+        return this.dataReceived;
+    }
+
+    Observable<NavigationEvent> observeOpenHomeBoughtDetails()
+    {
+        return this.openHomeBoughtDetails;
+    }
+
+    Observable<NavigationEvent> observeOpenHomeSoldDetails()
+    {
+        return this.openHomeSoldDetails;
+    }
+
+    public void onEnergyBoughtDetailsClick()
+    {
+        Answers.getInstance().logContentView((ContentViewEvent)((ContentViewEvent)new ContentViewEvent().putContentName("Home:Check bought details").putContentType("Section Home").putContentId("home_bought_details").putCustomAttribute("email", this.userManager.getCurrentUser().getEmail())).putCustomAttribute("hour", Integer.valueOf(LocalTime.now().getHour())));
+        this.openHomeBoughtDetails.accept(new NavigationEvent());
+    }
+
+    public void onEnergySoldDetailsClick()
+    {
+        Answers.getInstance().logContentView((ContentViewEvent)((ContentViewEvent)new ContentViewEvent().putContentName("Home:Check sold details").putContentType("Section Home").putContentId("home_sold_details").putCustomAttribute("email", this.userManager.getCurrentUser().getEmail())).putCustomAttribute("hour", Integer.valueOf(LocalTime.now().getHour())));
+        this.openHomeSoldDetails.accept(new NavigationEvent());
+    }
+
     @Override
     public void onError(Throwable paramThrowable)
     {

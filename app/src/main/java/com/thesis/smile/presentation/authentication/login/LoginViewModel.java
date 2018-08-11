@@ -162,11 +162,11 @@ public class LoginViewModel extends BaseViewModel {
                 .putCustomAttribute("email", email)
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
 
-        startLoginObservable.accept(new Event());
-       /* userManager.updateFirebaseToken()
+       // startLoginObservable.accept(new Event());
+        userManager.updateFirebaseToken()
                 .compose(schedulersTransformSingleIo())
                 .doOnSubscribe(this::addDisposable)
-                .subscribe(this::onUpdateFirebaseTokenComplete, this::onError);*/
+                .subscribe(this::onUpdateFirebaseTokenComplete, this::onError);
 
     }
 

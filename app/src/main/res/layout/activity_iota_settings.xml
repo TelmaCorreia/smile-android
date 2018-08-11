@@ -193,6 +193,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0.0dip"
             app:tabMode="fixed"
             android:enabled="@{viewModel.layoutEnabled}"
             android:layout_marginTop="8dp"

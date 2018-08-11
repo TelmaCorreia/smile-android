@@ -1,53 +1,32 @@
-package com.thesis.smile.presentation.main.home;
+package com.thesis.smile.presentation.main.home.pager_fragments;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
 import com.thesis.smile.R;
+import com.thesis.smile.databinding.FragmentBatteryBinding;
 import com.thesis.smile.databinding.FragmentHomeBinding;
-import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.base.BaseFragment;
-import com.thesis.smile.presentation.base.toolbar.BaseToolbarFragment;
-import com.thesis.smile.presentation.base.toolbar.ToolbarActionType;
+import com.thesis.smile.presentation.main.home.HomeDetailsActivity;
+import com.thesis.smile.presentation.main.home.HomeViewModel;
 
-public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
+public class BatteryFragment extends BaseFragment<FragmentBatteryBinding, BatteryViewModel> {
+    public static BatteryFragment newInstance() {
+        return new BatteryFragment();
     }
+
+    @Override
+    protected void initViews(FragmentBatteryBinding paramFragmentBatteryBinding) {}
 
     @Override
     protected int layoutResId() {
-        return R.layout.fragment_home;
-    }
-
-    @Override
-    protected Class<HomeViewModel> viewModelClass() {
-        return HomeViewModel.class;
-    }
-
-    @Override
-    protected void initViews(FragmentHomeBinding binding) {
+        return R.layout.fragment_battery;
     }
 
     @Override
     protected void registerObservables() {
         super.registerObservables();
-
-        getViewModel()
-                .observeOpenHomeBoughtDetails()
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(event -> {
-                    HomeDetailsActivity.launch(getContext(), getResources().getString(R.string.details_bought_energy));
-                });
-
-        getViewModel()
-                .observeOpenHomeSoldDetails()
-                .doOnSubscribe(this::addDisposable)
-                .subscribe(event -> {
-                    HomeDetailsActivity.launch(getContext(), getResources().getString(R.string.details_sold_energy));
-                });
     }
 
-
-
+    @Override
+    protected Class<BatteryViewModel> viewModelClass() {
+        return BatteryViewModel.class;
+    }
 }

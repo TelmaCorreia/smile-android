@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</android.support.constraint.ConstraintLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.main.home.pager_fragments.BatteryViewModel" />
+    </data>
+
+    <LinearLayout
+        style="@style/Common"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/colorWhite"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20.0dip"
+        android:layout_marginBottom="20.0dip"
+        android:weightSum="5.0">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16.0dip"
+            android:layout_weight="2.0">
+            <TextView
+                android:id="@+id/tvBatteryLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="100 %"
+                android:text="@{viewModel.batteryLevel}"
+                style="@style/Text5" />
+            <TextView
+                android:id="@+id/tvBatteryLevelKWH"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="3.0 kWH"
+                android:text="@{viewModel.batteryKWH}"
+                style="@style/Text7" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/battery_level_description"
+                style="@style/Text6" />
+
+        </LinearLayout>
+        <ImageView
+            android:padding="16.0dip"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.0"
+            android:src="@{viewModel.batteryImage}"
+            tools:src="@drawable/battery"
+            />
+    </LinearLayout>
+</layout>

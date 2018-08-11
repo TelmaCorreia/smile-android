@@ -2,7 +2,7 @@ package com.thesis.smile.data.remote.models;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.Map;
+import java.util.List;
 
 public class CurrentEnergyDataRemote {
 
@@ -20,9 +20,17 @@ public class CurrentEnergyDataRemote {
     private double totalSold;
     @Expose
     private double totalSolarEnergy;
+    @Expose
+    private List<Integer> boughtList;
+    @Expose
+    private List<Integer> soldList;
+    @Expose
+    private List<Double> productionList;
+    @Expose
+    private List<Double> consumptionList;
 
     public CurrentEnergyDataRemote(){}
-    public CurrentEnergyDataRemote(double production, double consumption, double batteryLevel, double batteryKWH, double totalBought, double totalSold, double totalSolarEnergy) {
+    public CurrentEnergyDataRemote(double production, double consumption, double batteryLevel, double batteryKWH, double totalBought, double totalSold, double totalSolarEnergy, List<Integer> boughtList, List<Integer> soldList, List<Double> productionList, List<Double> consumptionList) {
         this.production = production;
         this.consumption = consumption;
         this.batteryLevel = batteryLevel;
@@ -30,6 +38,10 @@ public class CurrentEnergyDataRemote {
         this.totalBought = totalBought;
         this.totalSold = totalSold;
         this.totalSolarEnergy = totalSolarEnergy;
+        this.boughtList = boughtList;
+        this.soldList = soldList;
+        this.productionList = productionList;
+        this.consumptionList = consumptionList;
     }
 
     public double getProduction() {
@@ -86,5 +98,37 @@ public class CurrentEnergyDataRemote {
 
     public void setTotalSolarEnergy(double totalSolarEnergy) {
         this.totalSolarEnergy = totalSolarEnergy;
+    }
+
+    public List<Integer> getBoughtList() {
+        return boughtList;
+    }
+
+    public void setBoughtList(List<Integer> boughtList) {
+        this.boughtList = boughtList;
+    }
+
+    public List<Integer> getSoldList() {
+        return soldList;
+    }
+
+    public void setSoldList(List<Integer> soldList) {
+        this.soldList = soldList;
+    }
+
+    public List<Double> getProductionList() {
+        return productionList;
+    }
+
+    public void setProductionList(List<Double> productionList) {
+        this.productionList = productionList;
+    }
+
+    public List<Double> getConsumptionList() {
+        return consumptionList;
+    }
+
+    public void setConsumptionList(List<Double> consumptionList) {
+        this.consumptionList = consumptionList;
     }
 }

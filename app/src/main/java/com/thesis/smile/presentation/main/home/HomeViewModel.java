@@ -6,6 +6,7 @@ import android.view.View;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.BR;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.NoContentException;
 import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
@@ -14,6 +15,7 @@ import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.CurrentEnergy;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.presentation.utils.actions.events.NavigationEvent;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
@@ -28,10 +30,9 @@ import io.reactivex.Observable;
 
 public class HomeViewModel extends BaseViewModel {
 
-    public PublishRelay<NavigationEvent> openHomeBoughtDetails = PublishRelay.create();
-    public PublishRelay<NavigationEvent> openHomeSoldDetails = PublishRelay.create();
-
     private CurrentEnergy currentEnergy;
+    private PublishRelay<Event> dataReceived = PublishRelay.create();
+    private boolean isLoading = false;
     private TransactionsManager transactionsManager;
     private UserManager userManager;
 
@@ -52,10 +53,14 @@ public class HomeViewModel extends BaseViewModel {
         getCurrentEnergyFromServer();
     }
 
+    public CurrentEnergy getCurrentEnergy()
+    {
+        return this.currentEnergy;
+    }
     @Bindable
     public String getProduction() {
         if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getProduction());
+            return String.format("%.2f", currentEnergy.getProduction()) + " " + getResourceProvider().getString(R.string.watt) ;
         }
         return getResourceProvider().getString(R.string.no_data_placeholder);
     }
@@ -63,73 +68,9 @@ public class HomeViewModel extends BaseViewModel {
     @Bindable
     public String getConsumption() {
         if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getConsumption());
+            return String.format("%.2f", currentEnergy.getConsumption()) + " " + getResourceProvider().getString(R.string.watt);
         }
         return getResourceProvider().getString(R.string.no_data_placeholder);
-    }
-
-    @Bindable
-    public String getBatteryLevel() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getBatteryLevel());
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
-    }
-
-    @Bindable
-    public String getBatteryKWH() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getBatteryKWH());
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
-    }
-
-    @Bindable
-    public String getTotalBought() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getTotalBought());
-        }
-        return null;
-    }
-
-    @Bindable
-    public String getTotalSold() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getTotalSold());
-        }
-        return null;
-    }
-
-    @Bindable
-    public String getTotalSolarEnergy() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getTotalSolarEnergy());
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
-    }
-
-    @Bindable
-    public int getEnergyBoughtVisible(){
-        if(currentEnergy !=  null){
-            return currentEnergy.getTotalBought() > 0 ? View.VISIBLE : View.GONE;
-        }
-        return View.GONE;
-    }
-
-    @Bindable
-    public int getEnergyBoughtInvisible(){
-        if(getEnergyBoughtVisible()== View.GONE){
-            return View.VISIBLE;
-        }
-        return View.GONE;
-    }
-
-    @Bindable
-    public int getEnergySoldVisible(){
-        if(currentEnergy !=  null){
-            return currentEnergy.getTotalSold() > 0 ? View.VISIBLE : View.GONE;
-        }
-        return View.GONE;
     }
 
     @Bindable
@@ -142,40 +83,21 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     @Bindable
-    public int getEnergySoldInvisible(){
-        if(getEnergySoldVisible()== View.GONE && getUserTypeProsumer()!=View.GONE){
-            return View.VISIBLE;
+    public int getEnergySoldVisible(){
+        if(currentEnergy !=  null){
+            return currentEnergy.getTotalSold() > 0 ? View.VISIBLE : View.GONE;
         }
         return View.GONE;
     }
 
-    public void onEnergySoldDetailsClick(){
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName("Home:Check sold details")
-                .putContentType("Section Home")
-                .putContentId("home_sold_details")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
-                .putCustomAttribute("hour", LocalTime.now().getHour()));
-        openHomeSoldDetails.accept(new NavigationEvent());
+    @Bindable
+    public boolean isProgress()
+    {
+        return this.isLoading;
     }
 
-    public void onEnergyBoughtDetailsClick(){
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName("Home:Check bought details")
-                .putContentType("Section Home")
-                .putContentId("home_bought_details")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
-                .putCustomAttribute("hour", LocalTime.now().getHour()));
-        openHomeBoughtDetails.accept(new NavigationEvent());
-    }
-
-
-    Observable<NavigationEvent> observeOpenHomeBoughtDetails(){
-        return openHomeBoughtDetails;
-    }
-
-    Observable<NavigationEvent> observeOpenHomeSoldDetails(){
-        return openHomeSoldDetails;
+    Observable<Event> observeData(){
+        return dataReceived;
     }
 
 
@@ -189,8 +111,10 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     private void onReceiveHomeData(CurrentEnergy currentEnergy) {
+        setLoading(false);
         this.currentEnergy = currentEnergy;
         notifyChange();
+        this.dataReceived.accept(new Event());
     }
 
     @Override
@@ -199,6 +123,12 @@ public class HomeViewModel extends BaseViewModel {
             getUiEvents().showToast(getResourceProvider().getString(R.string.no_data_msg));
         }
 
+    }
+
+    public void setLoading(boolean paramBoolean)
+    {
+        this.isLoading = paramBoolean;
+        notifyPropertyChanged(BR.progress);
     }
 
 

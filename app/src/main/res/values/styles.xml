@@ -62,6 +62,18 @@
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
+    <style name="TabsHome">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">@color/colorNavigationBar</item>
+        <item name="android:gravity">left</item>
+        <item name="android:background">@color/colorBackgroundGrey</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="tabIndicatorColor">@color/transparent</item>
+        <item name="tabIndicatorHeight">4.0dip</item>
+        <item name="tabSelectedTextColor">@color/colorNavigationBar</item>
+    </style>
+
     <style name="TabsLight">
         <item name="android:background">@color/colorWhite</item>
         <item name="android:textSize">14sp</item>
@@ -164,6 +176,12 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="Text2_1">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="Text3">
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
@@ -184,6 +202,12 @@
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="Text5_1">
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
     <style name="Text6">

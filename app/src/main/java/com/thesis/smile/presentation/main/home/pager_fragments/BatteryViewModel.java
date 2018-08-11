@@ -1,6 +1,7 @@
-package com.thesis.smile.presentation.main.home;
+package com.thesis.smile.presentation.main.home.pager_fragments;
 
 import android.databinding.Bindable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import com.crashlytics.android.answers.Answers;
@@ -8,7 +9,6 @@ import com.crashlytics.android.answers.ContentViewEvent;
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.NoContentException;
-import com.thesis.smile.data.remote.exceptions.http.ConnectionTimeoutException;
 import com.thesis.smile.domain.managers.TransactionsManager;
 import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.CurrentEnergy;
@@ -26,179 +26,94 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
-public class HomeViewModel extends BaseViewModel {
-
-    public PublishRelay<NavigationEvent> openHomeBoughtDetails = PublishRelay.create();
-    public PublishRelay<NavigationEvent> openHomeSoldDetails = PublishRelay.create();
+public class BatteryViewModel extends BaseViewModel {
 
     private CurrentEnergy currentEnergy;
     private TransactionsManager transactionsManager;
     private UserManager userManager;
 
     @Inject
-    public HomeViewModel(ResourceProvider resourceProvider, SchedulerProvider schedulerProvider, UiEvents uiEvents, TransactionsManager transactionsManager, UserManager userManager) {
-        super(resourceProvider, schedulerProvider, uiEvents);
-
-        this.transactionsManager = transactionsManager;
-        this.userManager = userManager;
-
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName("Home")
-                .putContentType("Section Home")
-                .putContentId("home")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
-                .putCustomAttribute("hour", LocalTime.now().getHour()));
-
+    public BatteryViewModel(ResourceProvider paramResourceProvider, SchedulerProvider paramSchedulerProvider, UiEvents paramUiEvents, UserManager paramUserManager, TransactionsManager paramTransactionsManager)
+    {
+        super(paramResourceProvider, paramSchedulerProvider, paramUiEvents);
+        this.userManager = paramUserManager;
+        this.transactionsManager = paramTransactionsManager;
         getCurrentEnergyFromServer();
     }
 
-    @Bindable
-    public String getProduction() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getProduction());
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder);
+    private void onReceiveHomeData(CurrentEnergy paramCurrentEnergy)
+    {
+        this.currentEnergy = paramCurrentEnergy;
+        notifyChange();
     }
 
     @Bindable
-    public String getConsumption() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getConsumption());
+    public Drawable getBatteryImage()
+    {
+        if ((this.currentEnergy != null) && (this.currentEnergy != null))
+        {
+            double d = this.currentEnergy.getBatteryKWH();
+            if (d == 0.0D) {
+                return getResourceProvider().getDrawable(R.drawable.battery);
+            }
+            if (d < 20.0D) {
+                return getResourceProvider().getDrawable(R.drawable.battery_one);
+            }
+            if (d < 40.0D) {
+                return getResourceProvider().getDrawable(R.drawable.battery_two);
+            }
+            if (d < 60.0D) {
+                return getResourceProvider().getDrawable(R.drawable.batery_three);
+            }
+            if (d < 80.0D) {
+                return getResourceProvider().getDrawable(R.drawable.battery_four);
+            }
+            return getResourceProvider().getDrawable(R.drawable.battery_five);
         }
-        return getResourceProvider().getString(R.string.no_data_placeholder);
+        return getResourceProvider().getDrawable(R.drawable.battery);
     }
 
     @Bindable
-    public String getBatteryLevel() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getBatteryLevel());
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
-    }
-
-    @Bindable
-    public String getBatteryKWH() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getBatteryKWH());
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
-    }
-
-    @Bindable
-    public String getTotalBought() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getTotalBought());
-        }
-        return null;
-    }
-
-    @Bindable
-    public String getTotalSold() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getTotalSold());
-        }
-        return null;
-    }
-
-    @Bindable
-    public String getTotalSolarEnergy() {
-        if(currentEnergy != null){
-            return String.format("%.2f", currentEnergy.getTotalSolarEnergy());
+    public String getBatteryKWH()
+    {
+        if (this.currentEnergy != null)
+        {
+            StringBuilder localStringBuilder = new StringBuilder();
+            localStringBuilder.append(String.format("%.2f", new Object[] { Double.valueOf(this.currentEnergy.getBatteryKWH()) }));
+            localStringBuilder.append(" ");
+            localStringBuilder.append(getResourceProvider().getString(R.string.kWHour));
+            return localStringBuilder.toString();
         }
         return getResourceProvider().getString(R.string.no_data_placeholder1);
     }
 
     @Bindable
-    public int getEnergyBoughtVisible(){
-        if(currentEnergy !=  null){
-            return currentEnergy.getTotalBought() > 0 ? View.VISIBLE : View.GONE;
+    public String getBatteryLevel()
+    {
+        if (this.currentEnergy != null)
+        {
+            StringBuilder localStringBuilder = new StringBuilder();
+            localStringBuilder.append(String.format("%.2f", new Object[] { Double.valueOf(this.currentEnergy.getBatteryLevel()) }));
+            localStringBuilder.append(" ");
+            localStringBuilder.append(getResourceProvider().getString(R.string.kWHour));
+            return localStringBuilder.toString();
         }
-        return View.GONE;
+        return getResourceProvider().getString(R.string.no_data_placeholder1);
     }
-
-    @Bindable
-    public int getEnergyBoughtInvisible(){
-        if(getEnergyBoughtVisible()== View.GONE){
-            return View.VISIBLE;
-        }
-        return View.GONE;
-    }
-
-    @Bindable
-    public int getEnergySoldVisible(){
-        if(currentEnergy !=  null){
-            return currentEnergy.getTotalSold() > 0 ? View.VISIBLE : View.GONE;
-        }
-        return View.GONE;
-    }
-
-    @Bindable
-    public int getUserTypeProsumer(){
-        if(userManager.getCurrentUser()!=null && userManager.getCurrentUser().getType() !=null ){
-            return userManager.getCurrentUser().getType().equals(getResourceProvider().getString(R.string.consumer))? View.GONE : View.VISIBLE;
-        }
-        return View.VISIBLE;
-
-    }
-
-    @Bindable
-    public int getEnergySoldInvisible(){
-        if(getEnergySoldVisible()== View.GONE && getUserTypeProsumer()!=View.GONE){
-            return View.VISIBLE;
-        }
-        return View.GONE;
-    }
-
-    public void onEnergySoldDetailsClick(){
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName("Home:Check sold details")
-                .putContentType("Section Home")
-                .putContentId("home_sold_details")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
-                .putCustomAttribute("hour", LocalTime.now().getHour()));
-        openHomeSoldDetails.accept(new NavigationEvent());
-    }
-
-    public void onEnergyBoughtDetailsClick(){
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName("Home:Check bought details")
-                .putContentType("Section Home")
-                .putContentId("home_bought_details")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
-                .putCustomAttribute("hour", LocalTime.now().getHour()));
-        openHomeBoughtDetails.accept(new NavigationEvent());
-    }
-
-
-    Observable<NavigationEvent> observeOpenHomeBoughtDetails(){
-        return openHomeBoughtDetails;
-    }
-
-    Observable<NavigationEvent> observeOpenHomeSoldDetails(){
-        return openHomeSoldDetails;
-    }
-
 
     public void getCurrentEnergyFromServer() {
 
         transactionsManager.getHomeData()
                 .compose(schedulersTransformSingleIo())
-                .repeatWhen(completed -> completed.delay(1, TimeUnit.MINUTES))
                 .subscribe(this::onReceiveHomeData, this::onError);
 
     }
-
-    private void onReceiveHomeData(CurrentEnergy currentEnergy) {
-        this.currentEnergy = currentEnergy;
-        notifyChange();
-    }
-
     @Override
-    public void onError(Throwable e){
-        if(!(e instanceof NoContentException)) {
+    public void onError(Throwable paramThrowable)
+    {
+        if (!(paramThrowable instanceof NoContentException)) {
             getUiEvents().showToast(getResourceProvider().getString(R.string.no_data_msg));
         }
-
     }
 
 

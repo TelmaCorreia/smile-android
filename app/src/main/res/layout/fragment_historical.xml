@@ -19,6 +19,8 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabMaxWidth="0.0dip"
         app:tabMode="fixed"
         app:backgroundTint="@android:color/transparent"
         app:tabBackground="@color/colorNavigationBar"

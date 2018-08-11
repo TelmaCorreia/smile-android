@@ -1,6 +1,6 @@
 package com.thesis.smile.domain.models;
 
-import java.util.Map;
+import java.util.List;
 
 public class CurrentEnergy {
 
@@ -11,9 +11,14 @@ public class CurrentEnergy {
     private double totalBought;
     private double totalSold;
     private double totalSolarEnergy;
+    private List<Integer> boughtList;
+    private List<Integer> soldList;
+    private List<Double> productionList;
+    private List<Double> consumptionList;
+
 
     public CurrentEnergy(){}
-    public CurrentEnergy(double production, double consumption, double batteryLevel, double batteryKWH, double totalBought, double totalSold, double totalSolarEnergy) {
+    public CurrentEnergy(double production, double consumption, double batteryLevel, double batteryKWH, double totalBought, double totalSold, double totalSolarEnergy, List<Integer> boughtList, List<Integer> soldList, List<Double> productionList, List<Double> consumptionList) {
         this.production = production;
         this.consumption = consumption;
         this.batteryLevel = batteryLevel;
@@ -21,6 +26,10 @@ public class CurrentEnergy {
         this.totalBought = totalBought;
         this.totalSold = totalSold;
         this.totalSolarEnergy = totalSolarEnergy;
+        this.boughtList = boughtList;
+        this.soldList = soldList;
+        this.productionList = productionList;
+        this.consumptionList = consumptionList;
     }
 
     public double getProduction() {
@@ -77,5 +86,39 @@ public class CurrentEnergy {
 
     public void setTotalSolarEnergy(double totalSolarEnergy) {
         this.totalSolarEnergy = totalSolarEnergy;
+    }
+
+
+    public List<Integer> getBoughtList() {
+        return boughtList;
+    }
+
+    public void setBoughtList(List<Integer> boughtList) {
+        this.boughtList = boughtList;
+    }
+
+    public List<Integer> getSoldList() {
+        return soldList;
+    }
+
+    public void setSoldList(List<Integer> soldList) {
+        this.soldList = soldList;
+    }
+
+
+    public List<Double> getProductionList() {
+        return productionList;
+    }
+
+    public void setProductionList(List<Double> productionList) {
+        this.productionList = productionList;
+    }
+
+    public List<Double> getConsumptionList() {
+        return consumptionList;
+    }
+
+    public void setConsumptionList(List<Double> consumptionList) {
+        this.consumptionList = consumptionList;
     }
 }

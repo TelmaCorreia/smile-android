@@ -49,6 +49,17 @@
     <color name="colorBlackFilter">#59000000</color>
     <color name="colorInfoButton">#ff9900</color>
 
+    <color name="colorZero">#fff2fbe8</color>
+    <color name="colorOne">#ffcbeda6</color>
+    <color name="colorTwo">#ffb2e57a</color>
+    <color name="colorThree">#ff9bdd55</color>
+    <color name="colorFour">#ff75c026</color>
+
+    <color name="colorCons">#fff15a24</color>
+    <color name="colorProd">#ff2962ff</color>
+
+
+
 
 
 

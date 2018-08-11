@@ -1,11 +1,11 @@
 package com.thesis.smile.di.modules.fragments;
 
 import com.thesis.smile.presentation.main.home.pager_fragments.BatteryFragment;
-import com.thesis.smile.presentation.main.transactions.buy.BuyFragment;
+import com.thesis.smile.presentation.main.home.pager_fragments.TransactionsHomeFragment;
 
 import dagger.Module;
 
 @Module
-public abstract class BatteryFragmentModule extends BaseFragmentModule<BatteryFragment> {
+public abstract class TransactionsHomeFragmentModule extends BaseFragmentModule<TransactionsHomeFragment> {
 
 }

@@ -3,6 +3,8 @@ package com.thesis.smile.presentation.main.home.pager_fragments;
 import android.databinding.Bindable;
 import android.graphics.drawable.Drawable;
 
+import com.jakewharton.rxrelay2.PublishRelay;
+import com.thesis.smile.BR;
 import com.thesis.smile.R;
 import com.thesis.smile.data.remote.exceptions.api.NoContentException;
 import com.thesis.smile.domain.managers.TransactionsManager;
@@ -10,19 +12,24 @@ import com.thesis.smile.domain.managers.UserManager;
 import com.thesis.smile.domain.models.CurrentEnergy;
 import com.thesis.smile.presentation.base.BaseViewModel;
 import com.thesis.smile.presentation.utils.actions.UiEvents;
+import com.thesis.smile.presentation.utils.actions.events.Event;
 import com.thesis.smile.utils.ResourceProvider;
 import com.thesis.smile.utils.schedulers.SchedulerProvider;
 
 import javax.inject.Inject;
 
-public class RenewableHomeViewModel extends BaseViewModel {
+import io.reactivex.Observable;
+
+public class RenewableViewModel extends BaseViewModel {
 
     private CurrentEnergy currentEnergy;
+    private PublishRelay<Event> dataReceived = PublishRelay.create();
+    private boolean isLoading = false;
     private TransactionsManager transactionsManager;
     private UserManager userManager;
 
     @Inject
-    public RenewableHomeViewModel(ResourceProvider paramResourceProvider, SchedulerProvider paramSchedulerProvider, UiEvents paramUiEvents, UserManager paramUserManager, TransactionsManager paramTransactionsManager)
+    public RenewableViewModel(ResourceProvider paramResourceProvider, SchedulerProvider paramSchedulerProvider, UiEvents paramUiEvents, UserManager paramUserManager, TransactionsManager paramTransactionsManager)
     {
         super(paramResourceProvider, paramSchedulerProvider, paramUiEvents);
         this.userManager = paramUserManager;
@@ -30,64 +37,15 @@ public class RenewableHomeViewModel extends BaseViewModel {
         getCurrentEnergyFromServer();
     }
 
-    private void onReceiveHomeData(CurrentEnergy paramCurrentEnergy)
-    {
+    private void onReceiveHomeData(CurrentEnergy paramCurrentEnergy) {
+        setLoading(false);
         this.currentEnergy = paramCurrentEnergy;
         notifyChange();
+        this.dataReceived.accept(new Event());
     }
 
-    @Bindable
-    public Drawable getBatteryImage()
-    {
-        if ((this.currentEnergy != null) && (this.currentEnergy != null))
-        {
-            double d = this.currentEnergy.getBatteryKWH();
-            if (d == 0.0D) {
-                return getResourceProvider().getDrawable(R.drawable.battery);
-            }
-            if (d < 20.0D) {
-                return getResourceProvider().getDrawable(R.drawable.battery_one);
-            }
-            if (d < 40.0D) {
-                return getResourceProvider().getDrawable(R.drawable.battery_two);
-            }
-            if (d < 60.0D) {
-                return getResourceProvider().getDrawable(R.drawable.batery_three);
-            }
-            if (d < 80.0D) {
-                return getResourceProvider().getDrawable(R.drawable.battery_four);
-            }
-            return getResourceProvider().getDrawable(R.drawable.battery_five);
-        }
-        return getResourceProvider().getDrawable(R.drawable.battery);
-    }
-
-    @Bindable
-    public String getBatteryKWH()
-    {
-        if (this.currentEnergy != null)
-        {
-            StringBuilder localStringBuilder = new StringBuilder();
-            localStringBuilder.append(String.format("%.2f", new Object[] { Double.valueOf(this.currentEnergy.getBatteryKWH()) }));
-            localStringBuilder.append(" ");
-            localStringBuilder.append(getResourceProvider().getString(R.string.kWHour));
-            return localStringBuilder.toString();
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
-    }
-
-    @Bindable
-    public String getBatteryLevel()
-    {
-        if (this.currentEnergy != null)
-        {
-            StringBuilder localStringBuilder = new StringBuilder();
-            localStringBuilder.append(String.format("%.2f", new Object[] { Double.valueOf(this.currentEnergy.getBatteryLevel()) }));
-            localStringBuilder.append(" ");
-            localStringBuilder.append(getResourceProvider().getString(R.string.kWHour));
-            return localStringBuilder.toString();
-        }
-        return getResourceProvider().getString(R.string.no_data_placeholder1);
+    public CurrentEnergy getCurrentEnergy() {
+        return this.currentEnergy;
     }
 
     public void getCurrentEnergyFromServer() {
@@ -97,6 +55,89 @@ public class RenewableHomeViewModel extends BaseViewModel {
                 .subscribe(this::onReceiveHomeData, this::onError);
 
     }
+
+    @Bindable
+    public String getResultText()
+    {
+        if (this.currentEnergy != null)
+        {
+            double d = this.currentEnergy.getTotalSolarEnergy();
+            if (d < 10.0D) {
+                return getResourceProvider().getString(R.string.renewable_bad);
+            }
+            if (d < 25.0D) {
+                return getResourceProvider().getString(R.string.renewable_avg);
+            }
+            if (d < 75.0D) {
+                return getResourceProvider().getString(R.string.renewable_good);
+            }
+            return getResourceProvider().getString(R.string.renewable_excellent);
+        }
+        return null;
+    }
+
+    @Bindable
+    public Drawable getSmileImage()
+    {
+        if (this.currentEnergy != null)
+        {
+            if (this.currentEnergy != null)
+            {
+                double d = this.currentEnergy.getTotalSolarEnergy();
+                if (d < 10.0D) {
+                    return getResourceProvider().getDrawable(R.drawable.smile_bad);
+                }
+                if (d < 25.0D) {
+                    return getResourceProvider().getDrawable(R.drawable.smile_average);
+                }
+                if (d < 75.0D) {
+                    return getResourceProvider().getDrawable(R.drawable.smile_good);
+                }
+                return getResourceProvider().getDrawable(R.drawable.smile_excellent);
+            }
+            return null;
+        }
+        return getResourceProvider().getDrawable(R.drawable.ic_broken_image);
+    }
+    @Bindable
+    public String getTotalSolarEnergy()
+    {
+        if (this.currentEnergy != null)
+        {
+            StringBuilder localStringBuilder = new StringBuilder();
+            localStringBuilder.append(String.format("%.2f", new Object[] { Double.valueOf(this.currentEnergy.getTotalSolarEnergy()) }));
+            localStringBuilder.append(" ");
+            localStringBuilder.append(getResourceProvider().getString(R.string.percentage));
+            return localStringBuilder.toString();
+        }
+        return getResourceProvider().getString(R.string.no_data_placeholder1);
+    }
+
+    public float getValue()
+    {
+        if (this.currentEnergy != null) {
+            return (float)this.currentEnergy.getTotalSolarEnergy();
+        }
+        return 0.0F;
+    }
+
+    @Bindable
+    public boolean isProgress()
+    {
+        return this.isLoading;
+    }
+
+    public Observable<Event> observeData()
+    {
+        return this.dataReceived;
+    }
+
+    public void setLoading(boolean paramBoolean)
+    {
+        this.isLoading = paramBoolean;
+        notifyPropertyChanged(BR.progress);
+    }
+
     @Override
     public void onError(Throwable paramThrowable)
     {
