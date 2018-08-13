@@ -411,8 +411,8 @@ Esta política define:\n\n
     <string name="today_sell_hours">Horário das vendas de hoje</string>
 
     <!--renewable message-->
-    <string name="renewable_bad">Consegues que melhorar</string>
-    <string name="renewable_avg">Boa, ainda podes melhorar</string>
+    <string name="renewable_bad">Consegues melhorar</string>
+    <string name="renewable_avg">Ainda podes melhorar</string>
     <string name="renewable_good">Estás a ir bem!</string>
     <string name="renewable_excellent">Muito bem, continua assim!</string>
     <string name="renewable_sentence">Até hoje, esta é a sua percentagem de energia renovável</string>
