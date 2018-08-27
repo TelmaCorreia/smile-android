@@ -1,6 +1,7 @@
 package com.thesis.smile.presentation.main.home;
 
 import android.graphics.Color;
+import android.support.v7.widget.LinearLayoutManager;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
@@ -14,10 +15,14 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.thesis.smile.R;
 import com.thesis.smile.databinding.FragmentHomeBinding;
+import com.thesis.smile.domain.models.TimeInterval;
+import com.thesis.smile.domain.models.Users;
 import com.thesis.smile.presentation.authentication.login.LoginActivity;
 import com.thesis.smile.presentation.base.BaseFragment;
 import com.thesis.smile.presentation.base.toolbar.BaseToolbarFragment;
 import com.thesis.smile.presentation.base.toolbar.ToolbarActionType;
+import com.thesis.smile.presentation.main.home.super_user_list.UsersAdapter;
+import com.thesis.smile.presentation.timers.timer_list.TimeIntervalAdapter;
 import com.thesis.smile.presentation.utils.actions.events.Event;
 
 import java.util.ArrayList;
@@ -28,6 +33,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private LineChart lineChart;
     HomePagerAdapter pagerAdapter;
+    private UsersAdapter usersAdapterAdapter;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -49,6 +55,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.viewpager.setAdapter(this.pagerAdapter);
         binding.tabs.setupWithViewPager(binding.viewpager);
         this.lineChart = binding.lineChart;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        usersAdapterAdapter = new UsersAdapter(getViewModel().getUsers(), this::onUsersSelected);
+        binding.usersrv.setLayoutManager(layoutManager);
+        binding.usersrv.setAdapter(usersAdapterAdapter);
+
+    }
+
+    private void onUsersSelected(Users users) {
+        getViewModel().updateToken(users.getToken());
+
     }
 
     @Override

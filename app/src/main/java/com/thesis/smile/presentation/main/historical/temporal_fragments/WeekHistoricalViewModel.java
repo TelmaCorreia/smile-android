@@ -72,7 +72,7 @@ public class WeekHistoricalViewModel extends BaseViewModel {
     @Bindable
     public String getTotalEnergySurplus(){
         if (currentWeek!=null){
-            return String.format("%.2f", currentWeek.getEnergySurplus());
+            return String.format("%.2f", currentWeek.getEnergySurplusNeighbours()+ currentWeek.getEnergySurplusNotUsed());
         }
         return null;
     }

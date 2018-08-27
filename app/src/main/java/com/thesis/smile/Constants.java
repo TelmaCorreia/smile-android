@@ -8,6 +8,8 @@ public class Constants {
 
     public static final int PAGE_SIZE = 10;
 
+    public static final String ROOT_EMAIL = "telmasrcorreia@gmail.com";
+
     public static final String NEW_ADDRESS_TAG = "NEW9ADDRESS9999999999999999";
     public static final String NEW_TRANSFER_TAG = "ANDROID9WALLET9TRANSFER9999";
     public static final String PREFERENCE_NODE_PROTOCOL = "preference_node_protocol";
@@ -46,6 +48,7 @@ public class Constants {
     public static float BORDER_WIDTH = 0.1f;
     public static int ALPHA_ACTIVE = 20;
     public static int ALPHA_INACTIVE = 0;
+
 
 
 }

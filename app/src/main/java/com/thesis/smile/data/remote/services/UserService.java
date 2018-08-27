@@ -2,15 +2,20 @@ package com.thesis.smile.data.remote.services;
 
 import com.thesis.smile.data.remote.endpoints.UserApi;
 import com.thesis.smile.data.remote.models.UserRemote;
+import com.thesis.smile.data.remote.models.UsersListRemote;
+import com.thesis.smile.data.remote.models.UsersRemote;
+import com.thesis.smile.data.remote.models.response.UsersResponse;
 import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 import com.thesis.smile.data.remote.services.base.ApiError;
 import com.thesis.smile.data.remote.services.base.ApiService;
 import com.thesis.smile.domain.mapper.EnergyParamsMapper;
 import com.thesis.smile.domain.mapper.UserMapper;
+import com.thesis.smile.domain.mapper.UsersMapper;
 import com.thesis.smile.domain.models.EnergyParams;
 import com.thesis.smile.domain.models.User;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -76,5 +81,13 @@ public class UserService extends ApiService{
         return api.updateUserImage(currentUserId, imagePart)
                 .compose(networkMapTransform())
                 .map(BaseResponse::getData);
+    }
+
+    public Single<List<UsersRemote>> getUsers(String token){
+        return api.getUsers(token)
+                .compose(networkMapTransform())
+                .onErrorResumeNext(Single::error)
+                .map(BaseResponse::getData)
+                .map(UsersListRemote::getUsers);
     }
 }

@@ -423,4 +423,7 @@ Esta política define:\n\n
     <string name="home_title_cons_prod">Consumo e produção</string>
     <string name="historical_alert">ATENÇÃO: Ao analisar os dados considere que, devido às características da sua bateria, terá perdas de 20% ao armazenar energia.</string>
 
+    <!--ROOT layout-->
+    <string name="root_division">SUPER USER section</string>
+
 </resources>

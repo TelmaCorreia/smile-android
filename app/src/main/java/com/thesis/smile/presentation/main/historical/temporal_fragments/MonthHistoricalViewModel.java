@@ -72,7 +72,7 @@ public class MonthHistoricalViewModel extends BaseViewModel {
     @Bindable
     public String getTotalEnergySurplus(){
         if (currentMonth !=null){
-            return String.format("%.2f", currentMonth.getEnergySurplus());
+            return String.format("%.2f", currentMonth.getEnergySurplusNeighbours()+ currentMonth.getEnergySurplusNotUsed());
         }
         return null;
     }

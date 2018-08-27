@@ -95,7 +95,7 @@ public class BatteryViewModel extends BaseViewModel {
             StringBuilder localStringBuilder = new StringBuilder();
             localStringBuilder.append(String.format("%.2f", new Object[] { Double.valueOf(this.currentEnergy.getBatteryLevel()) }));
             localStringBuilder.append(" ");
-            localStringBuilder.append(getResourceProvider().getString(R.string.kWHour));
+            localStringBuilder.append(getResourceProvider().getString(R.string.percentage));
             return localStringBuilder.toString();
         }
         return getResourceProvider().getString(R.string.no_data_placeholder1);

@@ -8,8 +8,10 @@ import com.thesis.smile.data.preferences.SharedPrefs;
 import com.thesis.smile.data.remote.services.UserService;
 import com.thesis.smile.domain.exceptions.NoUserLoggedException;
 import com.thesis.smile.domain.mapper.UserMapper;
+import com.thesis.smile.domain.mapper.UsersMapper;
 import com.thesis.smile.domain.models.EnergyParams;
 import com.thesis.smile.domain.models.User;
+import com.thesis.smile.domain.models.Users;
 import com.thesis.smile.domain.models_iota.Address;
 import com.thesis.smile.domain.models_iota.Transfer;
 
@@ -21,6 +23,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @Singleton
@@ -106,5 +109,15 @@ public class UserManager {
 
     public List<Transfer> getTransfers() {
         return sharedPrefs.getTransfers();
+    }
+
+    public Single<List<Users>>  getUsers() {
+        String token = sharedPrefs.getUserToken();
+        return userService.getUsers(token)
+                .map(UsersMapper.INSTANCE::remoteToDomain);
+    }
+
+    public void setCurrenUserToken(String token) {
+        sharedPrefs.saveUserToken(token);
     }
 }

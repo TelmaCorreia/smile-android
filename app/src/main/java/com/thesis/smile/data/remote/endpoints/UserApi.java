@@ -2,6 +2,7 @@ package com.thesis.smile.data.remote.endpoints;
 
 import com.thesis.smile.data.remote.models.UserRemote;
 import com.thesis.smile.data.remote.models.response.UserResponse;
+import com.thesis.smile.data.remote.models.response.UsersResponse;
 import com.thesis.smile.data.remote.models.response.base.BaseResponse;
 
 import io.reactivex.Single;
@@ -39,5 +40,5 @@ public interface UserApi {
     Single<Response<UserResponse>> updateUserImage(@Path("token") String userId, @Part(encoding = "form-data") MultipartBody.Part image);
 
     @GET("users/root/{token}")
-    Single<Response<UserResponse>> getU(@Path("token") String userId);
+    Single<Response<UsersResponse>> getUsers(@Path("token") String userId);
 }

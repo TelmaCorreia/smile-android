@@ -74,7 +74,7 @@ public class DayHistoricalViewModel extends BaseViewModel {
     @Bindable
     public String getTotalEnergySurplus(){
         if (currentDay!=null){
-            return String.format("%.2f", currentDay.getEnergySurplus());
+            return String.format("%.2f", currentDay.getEnergySurplusNeighbours()+ currentDay.getEnergySurplusNotUsed());
         }
         return null;
     }

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.thesis.smile.presentation.main.home.super_user_list.UsersItemViewModel"/>
+    </data>
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/ivCircle"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/ic_circle"
+        android:tint="@{context.getColor(viewModel.color)}"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivCircle">
+
+            <TextView
+                style="@style/Text7"
+                android:id="@+id/info"
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Dinarte Correia"
+                android:text="@{viewModel.info}"
+                android:textIsSelectable="true" />
+            <TextView
+                style="@style/Text6"
+                android:id="@+id/email"
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Dinarte Correia"
+                android:text="@{viewModel.email}"
+                android:textIsSelectable="true" />
+
+            <TextView
+                style="@style/Text6"
+                android:id="@+id/tecinfo"
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.tecInfo}"
+                tools:text="Dinarte Correia"
+                android:textIsSelectable="true" />
+
+        </LinearLayout>
+
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switchCompact"
+        android:theme="@style/Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:onClick="@{v -> viewModel.onStateChangeClick()}"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
+</layout>
