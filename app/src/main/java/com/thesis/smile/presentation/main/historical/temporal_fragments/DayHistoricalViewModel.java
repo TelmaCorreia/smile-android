@@ -215,7 +215,7 @@ public class DayHistoricalViewModel extends BaseViewModel {
     @Bindable
     public  boolean isAlertWastedEnergy(){
         if (currentDay!=null) {
-            return currentDay.getWastedEnergy()>0?true:false;
+            return currentDay.getEnergySurplusNotUsed()>0?true:false;
         }
         return false;
     }

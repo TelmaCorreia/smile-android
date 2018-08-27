@@ -723,13 +723,14 @@
                                 <ImageView
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
+                                    android:layout_marginLeft="2dp"
                                     app:srcCompat="@drawable/ic_warning"
                                     android:tint="@color/colorRed"
                                     android:visibility="@{viewModel.alertWastedEnergy ? View.VISIBLE : View.INVISIBLE}"
                                     android:onClick="@{v -> viewModel.onEnergyWastedDetailsClick()}"
                                     app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/tvLegend1c"/>
+                                    app:layout_constraintTop_toTopOf="parent"/>
 
                             </android.support.constraint.ConstraintLayout>
 

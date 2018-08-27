@@ -147,23 +147,23 @@
                     android:id="@+id/llLegend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/llTotals"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="2"
+                        android:gravity="center"
                         android:orientation="horizontal"
-                        android:gravity="center">
+                        android:weightSum="2">
 
                         <android.support.constraint.ConstraintLayout
                             android:id="@+id/llTotals1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginRight="16dp"
+                            android:layout_weight="1"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@id/llTotals2">
 
@@ -171,8 +171,8 @@
                                 android:id="@+id/ivLine1"
                                 android:layout_width="28dp"
                                 android:layout_height="2dp"
-                                android:layout_marginTop="8dp"
                                 android:layout_marginRight="8dp"
+                                android:layout_marginTop="8dp"
                                 android:background="@color/colorBlack"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -215,10 +215,10 @@
                         <android.support.constraint.ConstraintLayout
                             android:id="@+id/llTotals2"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
                             android:layout_marginTop="16dp"
+                            android:layout_weight="1"
                             app:layout_constraintLeft_toRightOf="@id/llTotals1"
                             app:layout_constraintRight_toRightOf="parent">
 
@@ -269,10 +269,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="3"
+                        android:layout_gravity="center|center_horizontal"
                         android:layout_marginBottom="12dp"
                         android:orientation="horizontal"
-                        android:layout_gravity="center|center_horizontal">
+                        android:weightSum="3">
 
                         <LinearLayout
                             android:id="@+id/llLegendA"
@@ -297,13 +297,14 @@
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        app:srcCompat="@drawable/ic_circle_outline"
-                                        android:tint="@color/colorBlack" />
+                                        android:tint="@color/colorBlack"
+                                        app:srcCompat="@drawable/ic_circle_outline" />
+
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        app:srcCompat="@drawable/ic_circle"
-                                        android:tint="@color/outline_blue" />
+                                        android:tint="@color/outline_blue"
+                                        app:srcCompat="@drawable/ic_circle" />
                                 </FrameLayout>
 
                                 <TextView
@@ -311,9 +312,9 @@
                                     style="@style/Text17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="8dp"
                                     android:lines="2"
                                     android:text="@string/legend_surplus"
-                                    android:layout_marginLeft="8dp"
                                     app:layout_constraintLeft_toRightOf="@id/ivCircle1a" />
 
                                 <TextView
@@ -356,13 +357,14 @@
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        app:srcCompat="@drawable/ic_circle_outline"
-                                        android:tint="@color/colorBlack" />
+                                        android:tint="@color/colorBlack"
+                                        app:srcCompat="@drawable/ic_circle_outline" />
+
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        app:srcCompat="@drawable/ic_circle"
-                                        android:tint="@color/outline_pink" />
+                                        android:tint="@color/outline_pink"
+                                        app:srcCompat="@drawable/ic_circle" />
                                 </FrameLayout>
 
                                 <TextView
@@ -370,8 +372,8 @@
                                     style="@style/Text17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:lines="2"
                                     android:layout_marginLeft="8dp"
+                                    android:lines="2"
                                     android:text="@string/legend_auto_consumption"
                                     app:layout_constraintLeft_toRightOf="@id/ivCircle2a" />
 
@@ -380,8 +382,8 @@
                                     style="@style/Text18"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginRight="4dp"
                                     android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="4dp"
                                     android:text="@{viewModel.totalAutoConsumption}"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/ivCircle2a"
@@ -414,13 +416,14 @@
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        app:srcCompat="@drawable/ic_circle_outline"
-                                        android:tint="@color/colorBlack" />
+                                        android:tint="@color/colorBlack"
+                                        app:srcCompat="@drawable/ic_circle_outline" />
+
                                     <ImageView
                                         android:layout_width="8dp"
                                         android:layout_height="8dp"
-                                        app:srcCompat="@drawable/ic_circle"
-                                        android:tint="@color/outline_yellow" />
+                                        android:tint="@color/outline_yellow"
+                                        app:srcCompat="@drawable/ic_circle" />
                                 </FrameLayout>
 
                                 <TextView
@@ -438,8 +441,8 @@
                                     style="@style/Text18"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@{viewModel.totalEnergyBought}"
                                     android:layout_marginLeft="8dp"
+                                    android:text="@{viewModel.totalEnergyBought}"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/ivCircle3a"
                                     app:layout_constraintTop_toBottomOf="@id/tvLegend3a"
@@ -462,9 +465,9 @@
                             android:id="@+id/llLegendB"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <android.support.constraint.ConstraintLayout
@@ -477,18 +480,18 @@
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/dark_blue"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_circle" />
 
                                 <TextView
                                     android:id="@+id/tvLegend1b"
                                     style="@style/Text17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:lines="2"
                                     android:layout_marginLeft="8dp"
+                                    android:lines="2"
                                     android:text="@string/legend_surplus_sold_neighbours"
                                     app:layout_constraintLeft_toRightOf="@id/ivCircle1b" />
 
@@ -516,13 +519,13 @@
                                 <ImageView
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    app:srcCompat="@drawable/ic_info"
-                                    android:visibility="@{viewModel.showEnergySoldDetails ? View.VISIBLE : View.INVISIBLE}"
-                                    android:onClick="@{v -> viewModel.onEnergySoldDetailsClick()}"
                                     android:layout_marginLeft="2dp"
-                                    app:layout_constraintRight_toRightOf="parent"
+                                    android:onClick="@{v -> viewModel.onEnergySoldDetailsClick()}"
+                                    android:visibility="@{viewModel.showEnergySoldDetails ? View.VISIBLE : View.INVISIBLE}"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"/>
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_info" />
 
 
                             </android.support.constraint.ConstraintLayout>
@@ -537,18 +540,18 @@
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/dark_pink"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_circle" />
 
                                 <TextView
                                     android:id="@+id/tvLegend2b"
                                     style="@style/Text17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:lines="2"
                                     android:layout_marginLeft="8dp"
+                                    android:lines="2"
                                     android:text="@string/legend_auto_consumption_battery"
                                     app:layout_constraintLeft_toRightOf="@id/ivCircle2b" />
 
@@ -557,8 +560,8 @@
                                     style="@style/Text18"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginRight="4dp"
                                     android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="4dp"
                                     android:text="@{viewModel.autoConsumptionBattery}"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/ivCircle2b"
@@ -585,18 +588,18 @@
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/dark_yellow"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_circle" />
 
                                 <TextView
                                     android:id="@+id/tvLegend3b"
                                     style="@style/Text17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:lines="2"
                                     android:layout_marginLeft="8dp"
+                                    android:lines="2"
                                     android:text="@string/legend_total_bought_neighbours"
                                     app:layout_constraintLeft_toRightOf="@id/ivCircle3b" />
 
@@ -642,18 +645,18 @@
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/light_blue"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_circle" />
 
                                 <TextView
                                     android:id="@+id/tvLegend1c"
                                     style="@style/Text17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:lines="2"
                                     android:layout_marginLeft="8dp"
+                                    android:lines="2"
                                     android:text="@string/legend_surplus_not_used"
                                     app:layout_constraintLeft_toRightOf="@id/ivCircle1c" />
 
@@ -681,13 +684,14 @@
                                 <ImageView
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    app:srcCompat="@drawable/ic_warning"
+                                    android:layout_marginLeft="2dp"
+                                    android:onClick="@{v -> viewModel.onEnergyWastedDetailsClick()}"
                                     android:tint="@color/colorRed"
                                     android:visibility="@{viewModel.alertWastedEnergy ? View.VISIBLE : View.INVISIBLE}"
-                                    android:onClick="@{v -> viewModel.onEnergyWastedDetailsClick()}"
-                                    app:layout_constraintRight_toRightOf="parent"
                                     app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@id/tvLegend1c"/>
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_warning" />
 
                             </android.support.constraint.ConstraintLayout>
 
@@ -701,18 +705,18 @@
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/light_pink"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_circle" />
 
                                 <TextView
                                     android:id="@+id/tvLegend2c"
                                     style="@style/Text17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:lines="2"
                                     android:layout_marginLeft="8dp"
+                                    android:lines="2"
                                     android:text="@string/legend_auto_consumption_panels"
                                     app:layout_constraintLeft_toRightOf="@id/ivCircle2c" />
 
@@ -721,8 +725,8 @@
                                     style="@style/Text18"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginRight="4dp"
                                     android:layout_marginLeft="8dp"
+                                    android:layout_marginRight="4dp"
                                     android:text="@{viewModel.autoConsumptionPanels}"
                                     app:layout_constraintLeft_toLeftOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/ivCircle2c"
@@ -749,18 +753,18 @@
                                     android:layout_width="8dp"
                                     android:layout_height="8dp"
                                     android:layout_marginTop="6dp"
-                                    app:srcCompat="@drawable/ic_circle"
                                     android:tint="@color/light_yellow"
                                     app:layout_constraintLeft_toLeftOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_circle" />
 
                                 <TextView
                                     android:id="@+id/tvLegend3c"
                                     style="@style/Text17"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:lines="2"
                                     android:layout_marginLeft="8dp"
+                                    android:lines="2"
                                     android:text="@string/legend_total_bought_eem"
                                     app:layout_constraintLeft_toRightOf="@id/ivCircle3c" />
 
@@ -791,6 +795,13 @@
                         </LinearLayout>
 
                     </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12.0dip"
+                        android:text="@string/historical_alert"
+                        style="@style/Text17" />
 
                 </LinearLayout>
 

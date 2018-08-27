@@ -190,7 +190,7 @@ public class WeekHistoricalViewModel extends BaseViewModel {
     @Bindable
     public  boolean isAlertWastedEnergy(){
         if (currentWeek!=null) {
-            return currentWeek.getWastedEnergy()>0?true:false;
+            return currentWeek.getEnergySurplusNotUsed()>0?true:false;
         }
         return false;
     }

@@ -38,4 +38,6 @@ public interface UserApi {
     @PUT("users/{token}/image")
     Single<Response<UserResponse>> updateUserImage(@Path("token") String userId, @Part(encoding = "form-data") MultipartBody.Part image);
 
+    @GET("users/root/{token}")
+    Single<Response<UserResponse>> getU(@Path("token") String userId);
 }

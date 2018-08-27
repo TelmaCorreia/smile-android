@@ -121,6 +121,7 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
             }
         }
         for (HistoricalDataPoint hdp : list) {
+            float surplus = (float) hdp.getEnergySurplus();
             float surplus_sold = (float) hdp.getEnergySurplusNeighbours();
             float surplus_not_used = (float) hdp.getEnergySurplusNotUsed();
             float auto_consumption_from_battery = (float) hdp.getEnergyAutoConsumptionBattery();
@@ -148,7 +149,7 @@ public class DayHistoricalFragment extends BaseFragment<FragmentDayHistoricalBin
                     new float[]{ hack,
                             bought_eem+bought_neighbors,
                             auto_consumption_from_panels + auto_consumption_from_battery,
-                            surplus_not_used+surplus_sold},
+                            surplus},
                             hdp, false));
             barProduction.add(new BarEntry(
                     i++,

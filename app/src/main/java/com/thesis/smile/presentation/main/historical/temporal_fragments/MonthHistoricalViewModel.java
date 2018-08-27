@@ -190,7 +190,7 @@ public class MonthHistoricalViewModel extends BaseViewModel {
     @Bindable
     public  boolean isAlertWastedEnergy(){
         if (currentMonth !=null) {
-            return currentMonth.getWastedEnergy()>0?true:false;
+            return currentMonth.getEnergySurplusNotUsed()>0?true:false;
         }
         return false;
     }
