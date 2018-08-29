@@ -66,8 +66,6 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
         secureSeedDialog();
     }
 
-
-
     @Override
     protected void registerObservables() {
         super.registerObservables();
@@ -108,8 +106,9 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
         if (Arrays.asList(str.getSuccessfully()).contains(true)){
             if(BuildConfig.DEBUG) {
                 getViewModel().message("Send transfer response!");
+            }
+            if (getViewModel().isGettingAddresses()){
                 getViewModel().setProgressText(getViewModel().getAskAddressTimes()+"/"+getViewModel().getAddressQuantity());
-
             }
         }
     }
@@ -209,6 +208,7 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
             String balanceIota = IotaUnitConverter.convertRawIotaAmountToDisplayText(iotaBalance, false);
             Log.d("Transfer", "iota: " +iotaBalance + " : " +balanceIota + "\naddress: " + t.getAddress());
             getViewModel().sendTransfer(t, String.valueOf(iotaBalance));
+            getViewModel().setProgressText(transactionIndex+"/"+transactionsSize);
         }
     }
     private float iotaToEuro(long walletBalanceIota) {
@@ -223,7 +223,7 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
 
     public void onAccountDataResponse(GetAccountDataResponse gad) {
         alternateValueManager.updateExchangeRatesAsync(false);
-        String balanceIota = IotaUnitConverter.convertRawIotaAmountToDisplayText(gad.getBalance(), false);
+        String balanceIota = IotaUnitConverter.convertRawIotaAmountToDisplayText(gad.getBalance(), true);
         float euroBalance = iotaToEuro(gad.getBalance());
         String balanceEuro = AlternateValueUtils.formatAlternateBalanceText(euroBalance, new Currency(Constants.EUR_CURRENCY));
         getViewModel().setBalanceIota(balanceIota);

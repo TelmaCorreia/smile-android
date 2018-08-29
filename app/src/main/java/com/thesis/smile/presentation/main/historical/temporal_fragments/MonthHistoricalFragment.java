@@ -292,10 +292,16 @@ public class MonthHistoricalFragment extends BaseFragment<FragmentMonthHistorica
     }
 
     private void wastedEnergyDialog(Event event) {
+        String message = "";
+        if (getViewModel().getCurrentDay().getWastedEnergy()>0){
+            message = String.format("%.2f", getViewModel().getCurrentDay().getWastedEnergy()) + getResourceProvider().getString(R.string.wasted_energy_alert_value);
+        }
+
+        message +=getResourceProvider().getString(R.string.wasted_energy_alert_info);
         dialog = new CustomDialog(getActivity());
         dialog.setTitle(R.string.wasted_energy_alert_tilte);
         dialog.setMessage(R.string.wasted_energy_alert_description);
-        dialog.setSecondMessage(R.string.wasted_energy_alert_info);
+        dialog.setSecondMessage(message);
         dialog.setOkButtonText(R.string.button_ok);
         dialog.setDismissible(false);
         dialog.setOnOkClickListener(() -> {dialog.dismiss();});

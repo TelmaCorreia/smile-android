@@ -374,6 +374,7 @@ Esta política define:\n\n
 
     <!-- Dialog Wasted Energy Alert -->
     <string name="wasted_energy_alert_tilte">Energia desperdiçada</string>
+    <string name="wasted_energy_alert_value"> kWh não foram armazenados (por falta de capacidade da bateria), nem vendidos.</string>
     <string name="wasted_energy_alert_description">Esta energia foi armazenada na sua bateria mas não utilizada. \nPode vender energia aos seus vizinhos para rentabilizar o seu excesso de produção. \nSe colocar o preço de venda muito elevado pode não ter vizinhos dispostos a pagar.  </string>
     <string name="wasted_energy_alert_info">Verifique se as suas definições de venda de energia e considere mudar as mesmas</string>
 

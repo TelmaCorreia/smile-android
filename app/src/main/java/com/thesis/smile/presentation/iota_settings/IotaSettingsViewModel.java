@@ -233,6 +233,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
     public void sendTransfer(Transaction transaction, String iotaBalance){
         iotaManager.sendTransfer(transaction.getAddress(), seed, iotaBalance);
+        iotaManager.sendTransfer(transaction.getAddress(), seed, iotaBalance);
     }
 
     public void updateState(int index){
