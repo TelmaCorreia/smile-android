@@ -93,7 +93,7 @@ public class UserManager {
         return sharedPrefs.getSeed();
     }
 
-    public Single<String> getAccountSeed(){ return userService.getAccountSeed();}
+    public Single<String> getAccountSeed(String id){ return userService.getAccountSeed(id);}
 
     public void saveAddress(String address){
         sharedPrefs.saveAddress(address);

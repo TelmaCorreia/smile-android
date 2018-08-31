@@ -172,13 +172,25 @@ public class TransactionsHomeViewModel extends BaseViewModel {
 
     public void onEnergyBoughtDetailsClick()
     {
-        Answers.getInstance().logContentView((ContentViewEvent)((ContentViewEvent)new ContentViewEvent().putContentName("Home:Check bought details").putContentType("Section Home").putContentId("home_bought_details").putCustomAttribute("email", this.userManager.getCurrentUser().getEmail())).putCustomAttribute("hour", Integer.valueOf(LocalTime.now().getHour())));
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Home:Check bought details")
+                .putContentType("Section Home")
+                .putContentId("home_bought_details")
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
+                .putCustomAttribute("hour", Integer.valueOf(LocalTime.now().getHour())));
+
         this.openHomeBoughtDetails.accept(new NavigationEvent());
     }
 
     public void onEnergySoldDetailsClick()
     {
-        Answers.getInstance().logContentView((ContentViewEvent)((ContentViewEvent)new ContentViewEvent().putContentName("Home:Check sold details").putContentType("Section Home").putContentId("home_sold_details").putCustomAttribute("email", this.userManager.getCurrentUser().getEmail())).putCustomAttribute("hour", Integer.valueOf(LocalTime.now().getHour())));
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName("Home:Check sold details")
+                .putContentType("Section Home")
+                .putContentId("home_sold_details")
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
+                .putCustomAttribute("hour", Integer.valueOf(LocalTime.now().getHour())));
+
         this.openHomeSoldDetails.accept(new NavigationEvent());
     }
 

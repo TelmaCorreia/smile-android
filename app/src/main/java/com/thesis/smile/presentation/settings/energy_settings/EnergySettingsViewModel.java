@@ -50,7 +50,7 @@ public class EnergySettingsViewModel extends BaseViewModel {
                 .putContentName("Settings:energy")
                 .putContentType("Section Settings")
                 .putContentId("settings_energy")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         getUserFromSP();
     }

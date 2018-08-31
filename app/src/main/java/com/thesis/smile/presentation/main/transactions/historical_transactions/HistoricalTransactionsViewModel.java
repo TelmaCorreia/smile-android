@@ -66,7 +66,7 @@ public class HistoricalTransactionsViewModel extends BaseViewModel {
                 .putContentName("Transactions:historical")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_historical")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 

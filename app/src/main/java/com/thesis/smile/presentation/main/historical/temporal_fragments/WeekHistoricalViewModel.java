@@ -48,7 +48,7 @@ public class WeekHistoricalViewModel extends BaseViewModel {
                 .putContentName("Historical:week")
                 .putContentType("Section Historical")
                 .putContentId("historical_week")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         getHistoricalDataFromServer();
     }

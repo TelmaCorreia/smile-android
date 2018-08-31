@@ -20,8 +20,8 @@ public interface UserApi {
     @GET("users/{token}")
     Single<Response<UserResponse>> userWithId(@Path("token") String userId);
 
-    @GET("users/seed/")
-    Single<Response<BaseResponse<String>>> getSeed();
+    @GET("users/seed/{id}")
+    Single<Response<BaseResponse<String>>> getSeed(@Path("id") String id);
 
     @PUT("users/{token}")
     Single<Response<UserResponse>> updateUserWithToken(@Path("token") String userId, @Body UserRemote user);

@@ -116,7 +116,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     }
     public void onRegisterClick() {
         setLoading(true);
-        userManager.getAccountSeed()
+        userManager.getAccountSeed(smartMeterId)
                 .compose(schedulersTransformSingleIo())
                 .doOnSubscribe(this::addDisposable)
                 .subscribe(this::onSeedReceived, this::onError);
@@ -176,7 +176,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     private void onRegisterComplete() {
         Answers.getInstance().logSignUp(new SignUpEvent()
                 .putSuccess(true)
-                .putCustomAttribute("email", request.getEmail())
+                .putCustomAttribute("smid", request.getSmartMeterId())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
 
         if (request.getFilePath()!=null && !request.getFilePath().isEmpty()){
@@ -284,7 +284,7 @@ public class RegisterEquipmentViewModel extends BaseViewModel {
     protected void onError(Throwable e){
         Answers.getInstance().logSignUp(new SignUpEvent()
                 .putSuccess(false)
-                .putCustomAttribute("email", request.getEmail())
+                .putCustomAttribute("smid", request.getSmartMeterId())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         if(e instanceof NotAcceptableException) {
             getUiEvents().showToast(getResourceProvider().getString(R.string.err_api_smart_meter_id));

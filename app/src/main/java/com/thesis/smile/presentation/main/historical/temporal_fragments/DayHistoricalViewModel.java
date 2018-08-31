@@ -51,7 +51,7 @@ public class DayHistoricalViewModel extends BaseViewModel {
                 .putContentName("Historical:day")
                 .putContentType("Section Historical")
                 .putContentId("historical_day")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 

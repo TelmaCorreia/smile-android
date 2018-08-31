@@ -70,7 +70,7 @@ public class SellViewModel extends BaseViewModel {
                 .putContentName("Transactions:sell settings")
                 .putContentType("Section Transations")
                 .putContentId("transactions_sell_settings")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 
@@ -414,7 +414,7 @@ public class SellViewModel extends BaseViewModel {
                     .putContentName("Transactions:sell settings save")
                     .putContentType("Section Transactions")
                     .putContentId("transactions_sell_settings_save")
-                    .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                    .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                     .putCustomAttribute("hour", LocalTime.now().getHour()));
 
             alertDialog.accept(new OpenDialogEvent());

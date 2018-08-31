@@ -56,7 +56,7 @@ public class HomeViewModel extends BaseViewModel {
                 .putContentName("Home")
                 .putContentType("Section Home")
                 .putContentId("home")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
 
         getCurrentEnergyFromServer();

@@ -33,7 +33,7 @@ public class PrivacyPolicyViewModel extends BaseViewModel {
                 .putContentName("Privacy Policy")
                 .putContentType("Section Pivacy Policy")
                 .putContentId("privacy_policy")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 

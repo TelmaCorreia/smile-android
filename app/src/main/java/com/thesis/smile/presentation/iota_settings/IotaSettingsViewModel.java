@@ -69,7 +69,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
                 .putContentName("IotaSettings")
                 .putContentType("Section Iota")
                 .putContentId("iota_settings")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         getAddressesFromServer();
     }
@@ -193,7 +193,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
                 .putContentName("IotaSettings: pay bills")
                 .putContentType("Section Iota")
                 .putContentId("iota_settings_pay_bills")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
 
         setGettingAddresses(false);
@@ -219,7 +219,7 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
                 .putContentName("IotaSettings: attach address")
                 .putContentType("Section Iota")
                 .putContentId("iota_settings_attach_address")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         setGettingAddresses(true);
         setScreenBlocked(true);
@@ -233,18 +233,28 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
 
     public void sendTransfer(Transaction transaction, String iotaBalance){
         iotaManager.sendTransfer(transaction.getAddress(), seed, iotaBalance);
-        iotaManager.sendTransfer(transaction.getAddress(), seed, iotaBalance);
+
     }
 
     public void updateState(int index){
 
         if (index>0 && index<transactions.size()){
-            transactions.get(index).setState(Constants.STATUS_ATTACHED);
+            transactions.get(index).setState(Constants.STATUS_VALIDATED);
             transactionsManager.updateTransaction(transactions.get(index))
+                    .doOnSubscribe(this::addDisposable)
+                    .compose(schedulersTransformSingleIo())
+                    .subscribe(this::onTransactionStateUpdated, this::onError);
+        }
+    }
+
+    public void updateStateTry(Transaction transaction){
+
+        transaction.setState(Constants.STATUS_ATTACHED);
+        transactionsManager.updateTransaction(transaction)
                 .doOnSubscribe(this::addDisposable)
                 .compose(schedulersTransformSingleIo())
-                .subscribe(this::onTransactionStateUpdated, this::onError);
-        }
+                .subscribe(this::onTransactionStateUpdatedTry, this::onError);
+
     }
 
     @Override
@@ -252,6 +262,14 @@ public class IotaSettingsViewModel extends BaseToolbarViewModel {
         setScreenBlocked(false);
         super.onError(e);
     }
+
+    private void onTransactionStateUpdatedTry(String s) {
+        if (BuildConfig.DEBUG){
+            getUiEvents().showToast("transaction updated");
+        }
+
+    }
+
     private void onTransactionStateUpdated(String s) {
         setScreenBlocked(false);
         getUiEvents().showToast("Transação paga");

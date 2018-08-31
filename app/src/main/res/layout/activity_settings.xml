@@ -30,6 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0.0dip"
             app:backgroundTint="@android:color/transparent"
             app:tabBackground="@color/colorNavigationBar"
             app:layout_constraintLeft_toLeftOf="parent"

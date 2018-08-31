@@ -48,7 +48,7 @@ public class MonthHistoricalViewModel extends BaseViewModel {
                 .putContentName("Historical:month")
                 .putContentType("Section Historical")
                 .putContentId("historical_month")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         getHistoricalDataFromServer();
     }

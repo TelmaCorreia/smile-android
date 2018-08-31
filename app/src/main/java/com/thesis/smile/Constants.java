@@ -31,6 +31,13 @@ public class Constants {
     public static final String PREFERENCE_NODE_DEFAULT_PROTOCOL = "http";
     public static final String PREFERENCE_NODE_DEFAULT_IP = "176.58.98.99";
     public static final String PREFERENCE_NODE_DEFAULT_PORT = "14265";
+
+    /*
+    public static final String PREFERENCE_NODE_DEFAULT_PROTOCOL = "https";
+    public static final String PREFERENCE_NODE_DEFAULT_IP = "pow1.iota.community";
+    public static final String PREFERENCE_NODE_DEFAULT_PORT = "443";
+    */
+
     public static final String AUTH_PREFIX = "Bearer ";
 
 

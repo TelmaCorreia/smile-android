@@ -54,7 +54,7 @@ public class UserSettingsViewModel extends BaseViewModel {
                 .putContentName("Settings:user")
                 .putContentType("Section Settings")
                 .putContentId("settings_user")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         getUserFromSP();
     }

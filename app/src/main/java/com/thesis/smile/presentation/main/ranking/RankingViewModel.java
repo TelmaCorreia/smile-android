@@ -44,7 +44,7 @@ public class RankingViewModel extends BaseViewModel {
                 .putContentName("Ranking")
                 .putContentType("Section Ranking")
                 .putContentId("ranking")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         getRankingFromServer();
 

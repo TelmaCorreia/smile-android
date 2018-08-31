@@ -69,7 +69,7 @@ public class BuyViewModel extends BaseViewModel {
                 .putContentName("Transactions:buy settings")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_buy_settings")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
     }
 
@@ -209,7 +209,7 @@ public class BuyViewModel extends BaseViewModel {
                 .putContentName("Transactions:buy settings price info")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_buy_settings_price_info")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         openPriceInfoObservable.accept(new NavigationEvent());
     }
@@ -363,7 +363,7 @@ public class BuyViewModel extends BaseViewModel {
                 .putContentName("Transactions:buy settings save")
                 .putContentType("Section Transactions")
                 .putContentId("transactions_buy_settings_save")
-                .putCustomAttribute("email", userManager.getCurrentUser().getEmail())
+                .putCustomAttribute("smid", userManager.getCurrentUser().getCons_smart_meter_id())
                 .putCustomAttribute("hour", LocalTime.now().getHour()));
         alertDialog.accept(new OpenDialogEvent());
     }

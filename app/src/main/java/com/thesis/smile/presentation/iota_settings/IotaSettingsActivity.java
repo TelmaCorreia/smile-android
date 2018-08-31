@@ -208,6 +208,7 @@ public class IotaSettingsActivity extends BaseToolbarActivity<ActivityIotaSettin
             String balanceIota = IotaUnitConverter.convertRawIotaAmountToDisplayText(iotaBalance, false);
             Log.d("Transfer", "iota: " +iotaBalance + " : " +balanceIota + "\naddress: " + t.getAddress());
             getViewModel().sendTransfer(t, String.valueOf(iotaBalance));
+            getViewModel().updateStateTry(t);
             getViewModel().setProgressText(transactionIndex+"/"+transactionsSize);
         }
     }

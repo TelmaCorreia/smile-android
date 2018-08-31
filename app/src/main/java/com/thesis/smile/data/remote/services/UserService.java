@@ -43,8 +43,8 @@ public class UserService extends ApiService{
                 .map(UserMapper.INSTANCE::remoteToDomain);
     }
 
-    public Single<String> getAccountSeed(){
-        return api.getSeed()
+    public Single<String> getAccountSeed(String id){
+        return api.getSeed(id)
                 .compose(networkMapTransform())
                 .onErrorResumeNext(Single::error)
                 .map(BaseResponse::getData);
